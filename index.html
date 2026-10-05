@@ -217,7 +217,7 @@
         .card-youtube  { order: 2; grid-column: 2; }
         .card-shop     { order: 3; grid-column: 1; }
         .card-bilibili { order: 4; grid-column: 2; }
-        .card-sub      { order: 5; grid-column: 1; } /* 電腦版在 Shop 正下方 */
+        .card-sub      { order: 5; grid-column: 1; }
 
         /* =========================================
            INSTAGRAM & PORTFOLIO (無框裸露終端指令)
@@ -782,7 +782,7 @@
             .card-youtube  { order: 2; grid-column: 1; }
             .card-bilibili { order: 3; grid-column: 1; }
             .card-shop     { order: 4; grid-column: 1; }
-            .card-sub      { order: 5; grid-column: 1; } /* 手機版順移至 Shop 正下方 */
+            .card-sub      { order: 5; grid-column: 1; }
 
             /* 手機版 4 主卡片呼吸燈與交錯延遲 */
             .channel-card {
@@ -852,7 +852,7 @@
 </head>
 <body>
 
-    <!-- 頂部高亮警戒條：釘死固定在瀏覽器頂部 (標題改為 投餵快樂水與貓飯⚠) -->
+    <!-- 頂部高亮警戒條：釘死固定在瀏覽器頂部 -->
     <div class="support-banner">
         <div class="banner-inner">
             <div class="banner-title">
@@ -883,7 +883,7 @@
                 <span style="font-size: 0.85rem; opacity: 0.7;">Digital art wage-slave grinding code by day; cyber deadpan director sipping happy water & developing indie sims by night.</span>
             </p>
             
-            <!-- 跨平台實況矩陣 (主卡片 + 下方對齊單一子終端卡片) -->
+            <!-- 跨平台實況矩陣 (4 大主卡片 + 終端微型指令) -->
             <div class="social-matrix">
                 <!-- 1. Twitch -->
                 <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" class="channel-card card-twitch">
@@ -933,7 +933,7 @@
                     </p>
                 </a>
 
-                <!-- 5. 裸露終端指令代碼 (無框，電腦版與手機版均固定排在 Shop 正下方) -->
+                <!-- 5. 裸露終端指令代碼 (無框，固定排在 Shop 正下方) -->
                 <div class="sub-links-container card-sub">
                     <a href="https://instagram.com/humanleathercouch" target="_blank" class="terminal-line-link">
                         <span class="term-prefix pink-prefix">&gt;_</span>
@@ -1054,7 +1054,8 @@
                     </div>
 
                     <div class="qr-display mode-qr" style="margin-top: 1rem;">
-                        <img id="supportQrImage" src="" alt="QR Code" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'180\' height=\'180\'><rect width=\'100%\' height=\'100%\' fill=\'%23fff\'/><text x=\'50%\' y=\'50%\' fill=\'%23000\' font-family=\'monospace\' font-size=\'14\' text-anchor=\'middle\'>QR CODE</text></svg>'">
+                        <!-- 移除了引發預載報錯的 src=""，改由 JS 智慧探測載入 -->
+                        <img id="supportQrImage" alt="QR Code">
                         
                         <div id="supportQrHint"></div>
 
@@ -1094,7 +1095,6 @@
     <button id="backToTop" class="back-to-top" onclick="scrollToTop()" aria-label="Back to top">↑ TOP</button>
 
     <script>
-        // 完全參照最新設定與修正之文案 (所有「點擊上方」均已修正為「點擊下方」)
         const SUPPORT_QR_CODES = {
             jkopay: { 
                 type: "qr", 
@@ -1138,6 +1138,37 @@
         };
 
         let currentPayMethod = 'TWQR 街口等';
+
+        // 智慧型多副檔名與多路徑自動探測載入器
+        function loadQrWithFallback(imgEl, basePath) {
+            const rawPath = basePath.replace(/\.(jpg|jpeg|png|webp)$/i, '');
+            const extMatch = basePath.match(/\.(jpg|jpeg|png|webp)$/i);
+            const originalExt = extMatch ? extMatch[0].toLowerCase() : '.jpg';
+
+            // 自動探測候選路徑：優先原副檔名 -> 自動轉探 .png -> .jpeg -> 根目錄 -> 重複前綴
+            const candidates = [
+                basePath,
+                originalExt === '.jpg' ? rawPath + '.png' : rawPath + '.jpg',
+                rawPath + '.jpeg',
+                rawPath + '.webp',
+                basePath.replace(/^images\//, ''),
+                basePath.replace(/^images\//, '').replace(/\.(jpg|jpeg|png|webp)$/i, '.png'),
+                basePath.replace(/^images\//, 'images/images')
+            ];
+
+            let idx = 0;
+            function tryNext() {
+                if (idx < candidates.length) {
+                    const nextSrc = candidates[idx++];
+                    imgEl.onerror = tryNext;
+                    imgEl.src = nextSrc;
+                } else {
+                    imgEl.onerror = null;
+                    imgEl.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180"><rect width="100%" height="100%" fill="%23fff"/><text x="50%" y="45%" fill="%23d91153" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle">找不到 QR CODE</text><text x="50%" y="62%" fill="%23666" font-family="monospace" font-size="11" text-anchor="middle">請確認圖檔已放入 images</text></svg>';
+                }
+            }
+            tryNext();
+        }
 
         // 獨立分開：按台灣進去只顯示台灣，按海外進去只顯示海外
         function openDonate(regionKey) {
@@ -1185,6 +1216,7 @@
                 qrDisplay.classList.remove('mode-qr');
             } else {
                 imgEl.style.display = 'block';
+                loadQrWithFallback(imgEl, data.img);
                 qrDisplay.classList.add('mode-qr');
                 qrDisplay.classList.remove('mode-link');
             }
