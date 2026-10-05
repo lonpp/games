@@ -112,7 +112,7 @@
             animation: pulse-border 2.5s infinite;
         }
 
-        /* 按鈕內旋轉快樂水圖標 (等比例不變形) */
+        /* 按鈕內旋轉快樂水圖標 */
         .btn-water-icon {
             width: auto;
             height: 22px;
@@ -178,16 +178,21 @@
             line-height: 1.8;
         }
 
-        /* 跨平台實況矩陣 (電腦版維持原樣) */
+        /* 跨平台實況矩陣 (完整等高等寬 6 卡片排版) */
         .social-matrix {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin-top: 1.5rem;
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 1.2rem; 
+            margin-top: 1.5rem;
         }
 
         .channel-card {
             border: var(--border-thin); padding: 1.2rem; background-color: #0d0610;
-            display: flex; flex-direction: column; gap: 0.4rem;
+            display: flex; flex-direction: column; justify-content: flex-start; gap: 0.4rem;
             transition: all 0.15s ease;
             position: relative; overflow: hidden;
+            height: 100%;
+            min-height: 140px;
         }
         .channel-card::before {
             content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
@@ -276,7 +281,7 @@
             text-shadow: 0 0 8px rgba(255, 204, 0, 0.5);
         }
 
-        /* 終端機內：旋轉快樂水大展示框 (四角冷光青藍 HUD + 完美比例修復) */
+        /* 終端機內：旋轉快樂水大展示框 (四角冷光青藍 HUD) */
         .water-showcase-container {
             display: flex;
             justify-content: center;
@@ -298,6 +303,8 @@
             align-items: center;
             padding: 1.5rem 1rem;
             overflow: hidden;
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
         }
 
         /* HUD 四角裝飾 (青藍冷光) */
@@ -313,10 +320,10 @@
         .hud-bl { bottom: -1px; left: -1px; border-bottom: 2px solid var(--cyber-blue); border-left: 2px solid var(--cyber-blue); }
         .hud-br { bottom: -1px; right: -1px; border-bottom: 2px solid var(--cyber-blue); border-right: 2px solid var(--cyber-blue); }
 
-        /* 易開罐 GIF 專屬：半透明藍色呼吸燈光圈特效 (放慢至 5.5s 柔和深沉週期) */
+        /* 易開罐 GIF 專屬：半透明藍色呼吸燈光圈特效 (5.5s 柔和週期) */
         @keyframes cyber-blue-aura {
             0% {
-                filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.3))
+                filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.35))
                         drop-shadow(0 0 16px rgba(0, 240, 255, 0.15));
             }
             50% {
@@ -324,12 +331,12 @@
                         drop-shadow(0 0 35px rgba(0, 240, 255, 0.45));
             }
             100% {
-                filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.3))
+                filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.35))
                         drop-shadow(0 0 16px rgba(0, 240, 255, 0.15));
             }
         }
 
-        /* 嚴格保持原比例，防止拉伸變形 */
+        /* 嚴格保持原比例，加上 3D 硬體獨立解碼通道，徹底修復 iOS WebKit 凍結動圖 Bug */
         .water-img-lg {
             width: auto;
             max-width: 85%;
@@ -337,7 +344,11 @@
             max-height: 250px;
             object-fit: contain;
             display: block;
-            image-rendering: pixelated; /* 保持像素風格清晰不模糊 */
+            image-rendering: pixelated;
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
             animation: cyber-blue-aura 5.5s infinite ease-in-out;
         }
 
@@ -440,20 +451,19 @@
             position: relative;
             border: 1px dashed var(--cyber-blue); 
             background-color: rgba(0, 0, 0, 0); 
-            padding: 1.4rem; 
+            padding: 1.5rem 1.4rem; 
             text-align: center; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            justify-content: space-between; /* 均勻分佈內部元素 */
-            gap: 1rem;
             overflow: hidden;
-            height: 440px; /* 固定統一高度，杜絕尺寸跳動 */
-            min-height: 440px;
+            height: 520px;
+            min-height: 520px;
             width: 100%;
+            box-sizing: border-box;
         }
 
-        /* 虛線框背景：旋轉快樂水透明 GIF 水印 (等比例自動縮放 contain + 慢速呼吸燈) */
+        /* 虛線框背景：旋轉快樂水透明 GIF 水印 */
         .qr-display::before {
             content: '';
             position: absolute;
@@ -464,7 +474,7 @@
             background-image: url('images/happy-water-lg.gif');
             background-repeat: no-repeat;
             background-position: center center;
-            background-size: contain; /* 自動維持易開罐瘦長比例，不變形 */
+            background-size: contain;
             pointer-events: none;
             z-index: 0;
             animation: modal-bg-aura 5.5s infinite ease-in-out;
@@ -475,81 +485,96 @@
             opacity: 0.32;
         }
 
-        /* 確保 QR 碼內容在背景之上 */
-        .qr-display > * {
-            position: relative;
-            z-index: 1;
-        }
-
+        /* QR Code 絕對位置：LinePay、街口、支付寶 100% 絕對同高同位 (頂部距邊框 2.5rem) */
         .qr-display img#supportQrImage {
-            width: 180px;
-            height: 180px;
+            position: absolute;
+            top: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 175px;
+            height: 175px;
             object-fit: contain;
             background-color: #ffffff;
             border: 2px solid var(--cyber-pink);
             padding: 0.4rem;
             box-shadow: 0 0 15px rgba(255, 42, 127, 0.3);
-            flex-shrink: 0;
+            z-index: 2;
         }
 
-        /* 沒有 QR CODE 時的連結外框：高度彈性撐滿中央，維持垂直置中 */
-        #linkWrap {
-            display: none;
-            flex: 1;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
+        /* 說明文字區塊：精準垂直居中 */
         #supportQrHint {
             font-size: 0.85rem;
             color: var(--text-soft);
-            line-height: 1.8;
-            display: block;
+            line-height: 1.7;
             width: 100%;
+            z-index: 1;
         }
 
-        .cyber-launch-btn {
-            display: inline-block;
-            padding: 0.65rem 1.2rem;
-            background-color: rgba(255, 42, 127, 0.15);
-            color: var(--cyber-pink);
-            border: 1px solid var(--cyber-pink);
+        /* 當有 QR Code 時 (mode-qr)：文字剛好卡在 QR Code 和 底部按鈕 的正中間 */
+        .qr-display.mode-qr #supportQrHint {
+            position: absolute;
+            top: calc(2.5rem + 175px);
+            bottom: calc(2.5rem + 44px);
+            left: 1.4rem;
+            right: 1.4rem;
+            width: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin: 0;
+            padding: 0.5rem 0;
+        }
+
+        /* 當無 QR Code 時 (mode-link，即藍新、PayPal)：文字完全垂直置中於 頂部邊界 與 底部按鈕 之間 */
+        .qr-display.mode-link #supportQrHint {
+            position: absolute;
+            top: 2.5rem;
+            bottom: calc(2.5rem + 44px);
+            left: 1.4rem;
+            right: 1.4rem;
+            width: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin: 0;
+            padding: 0.5rem 0;
+        }
+
+        /* 所有跳轉按鈕（手機喚起、藍新、PayPal 等）共用單一按鈕，100% 一模一樣的絕對位置且等高等寬 */
+        #actionBtn {
+            position: absolute;
+            bottom: 2.5rem; /* 距下邊框 2.5rem，與 QR Code 距上邊框完全相等對稱 */
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 2.8rem);
+            max-width: 320px;
+            height: 44px; /* 統一等高等寬 */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            white-space: nowrap;
             font-family: inherit;
-            font-size: 0.88rem;
+            font-size: 0.86rem;
             font-weight: bold;
             text-decoration: none;
             cursor: pointer;
             clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+            background-color: rgba(255, 42, 127, 0.15);
+            color: var(--cyber-pink);
+            border: 1px solid var(--cyber-pink);
             box-shadow: 0 0 10px rgba(255, 42, 127, 0.2);
             transition: all 0.15s ease;
+            z-index: 5;
         }
-        .cyber-launch-btn:hover {
+
+        #actionBtn:hover {
             background-color: var(--cyber-pink);
             color: #000;
-            box-shadow: 0 0 15px var(--cyber-pink);
-        }
-
-        .action-link-btn {
-            display: inline-flex; align-items: center; justify-content: center;
-            padding: 0.8rem 1.5rem; width: 100%; max-width: 320px;
-            background-color: transparent; border: 1px solid var(--cyber-blue);
-            color: var(--cyber-blue); font-weight: 900; text-transform: uppercase; 
-            transition: all 0.2s; font-size: 0.85rem;
-            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-        }
-        .action-link-btn:hover { 
-            background-color: var(--cyber-blue); color: #000;
-            box-shadow: 0 0 15px var(--cyber-blue);
-        }
-
-        .btn-priority {
-            border-color: var(--cyber-pink); color: var(--cyber-pink);
-            background: rgba(255, 42, 127, 0.05);
-        }
-        .btn-priority:hover {
-            background-color: var(--cyber-pink); color: #000;
             box-shadow: 0 0 15px var(--cyber-pink);
         }
 
@@ -582,9 +607,46 @@
         footer { border-top: var(--border-thin); padding-top: 2rem; text-align: center; font-size: 0.85rem; color: var(--text-muted); }
 
         /* =========================================
+           BACK TO TOP BUTTON (半透明賽博回到頂部)
+        ========================================= */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 999;
+            background: rgba(11, 7, 16, 0.75);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            color: var(--cyber-blue);
+            border: 1px solid var(--cyber-blue);
+            padding: 0.5rem 0.9rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.25);
+            transition: all 0.25s ease;
+        }
+        .back-to-top.visible {
+            opacity: 0.85;
+            pointer-events: auto;
+        }
+        .back-to-top:hover {
+            opacity: 1;
+            background-color: var(--cyber-blue);
+            color: #000;
+            box-shadow: 0 0 18px var(--cyber-blue);
+            transform: translateY(-2px);
+        }
+
+        /* =========================================
            RWD 響應式配置
         ========================================= */
-        /* 手機版卡片呼吸燈特效 (與頂部按鈕同源之脈衝微光) */
+        /* 手機版卡片呼吸燈特效 */
         @keyframes card-pulse {
             0% { 
                 box-shadow: inset 0 0 6px rgba(255, 42, 127, 0.15), 0 0 6px rgba(255, 42, 127, 0.2);
@@ -601,7 +663,7 @@
         }
 
         @media (max-width: 768px) {
-            /* Banner 手機端固定與緊湊排版 (防溢出、防拖曳) */
+            /* Banner 手機端固定與緊湊排版 */
             .support-banner { 
                 padding: 0.55rem 0.8rem !important; 
             }
@@ -628,7 +690,7 @@
                 gap: 0.5rem; 
             }
             
-            /* 手機版按鈕微調，防止圖標+文字擠破排版 */
+            /* 手機版按鈕微調 */
             .cyber-btn { 
                 width: 100%;
                 padding: 0.45rem 0.2rem; 
@@ -642,7 +704,7 @@
                 height: 18px;
             }
 
-            /* Container 預留高度確保不被固定 Banner 遮擋 */
+            /* Container 預留高度 */
             .container { 
                 padding-top: calc(90px + 1.5rem) !important;
                 padding-left: 1rem;
@@ -651,14 +713,16 @@
             }
             h1 { font-size: 1.7rem; }
 
-            /* 手機版實況矩陣卡片呼吸燈與交錯延遲 */
+            /* 手機版 6 張卡片呼吸燈與交錯延遲 */
             .channel-card {
-                animation: card-pulse 3.2s infinite ease-in-out;
+                animation: card-pulse 3.6s infinite ease-in-out;
             }
             .social-matrix .channel-card:nth-child(1) { animation-delay: 0s; }
-            .social-matrix .channel-card:nth-child(2) { animation-delay: 0.8s; }
-            .social-matrix .channel-card:nth-child(3) { animation-delay: 1.6s; }
-            .social-matrix .channel-card:nth-child(4) { animation-delay: 2.4s; }
+            .social-matrix .channel-card:nth-child(2) { animation-delay: 0.6s; }
+            .social-matrix .channel-card:nth-child(3) { animation-delay: 1.2s; }
+            .social-matrix .channel-card:nth-child(4) { animation-delay: 1.8s; }
+            .social-matrix .channel-card:nth-child(5) { animation-delay: 2.4s; }
+            .social-matrix .channel-card:nth-child(6) { animation-delay: 3.0s; }
 
             .window-content { padding: 1.2rem; }
 
@@ -682,8 +746,8 @@
 
             /* 手機版固定框高度維持統一 */
             .qr-display {
-                height: 480px;
-                min-height: 480px;
+                height: 520px;
+                min-height: 520px;
             }
 
             .pay-tabs {
@@ -694,8 +758,14 @@
                 font-size: 0.75rem;
                 padding: 0.4rem 0.1rem;
             }
-            .action-link-btn { max-width: 100%; }
             .modal-body { padding: 1.1rem; }
+
+            .back-to-top {
+                bottom: 1.5rem;
+                right: 1.2rem;
+                padding: 0.45rem 0.75rem;
+                font-size: 0.75rem;
+            }
         }
     </style>
 </head>
@@ -710,7 +780,6 @@
             </div>
 
             <div class="link-group">
-                <!-- 移除 🇹🇼 與 🌍 Emoji，僅保留透明背景動態圖標與純淨文字 -->
                 <button class="cyber-btn" onclick="openDonate('tw')">
                     <img src="images/happy-water-lg.gif" alt="快樂水" class="btn-water-icon" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\'><text x=\'50%25\' y=\'55%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'16\'>🥤</text></svg>'">
                     TAIWAN NODE
@@ -733,10 +802,10 @@
                 <span style="font-size: 0.85rem; opacity: 0.7;">Digital art wage-slave grinding code by day; cyber deadpan director sipping tea & developing indie sims by night.</span>
             </p>
             
-            <!-- 跨平台實況矩陣 -->
+            <!-- 跨平台實況矩陣 (完整等高等寬 6 卡片排版) -->
             <div class="social-matrix">
-                <!-- Twitch -->
-                <a href="https://www.twitch.tv" target="_blank" class="channel-card">
+                <!-- 1. Twitch -->
+                <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" class="channel-card">
                     <div class="channel-top">
                         <span class="platform-name">Twitch</span>
                         <span class="badge">CHILL LIVE</span>
@@ -747,8 +816,8 @@
                     </p>
                 </a>
 
-                <!-- YouTube -->
-                <a href="https://www.youtube.com" target="_blank" class="channel-card">
+                <!-- 2. YouTube -->
+                <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" class="channel-card">
                     <div class="channel-top">
                         <span class="platform-name">YouTube</span>
                         <span class="badge">CLIPS VOD</span>
@@ -759,7 +828,7 @@
                     </p>
                 </a>
 
-                <!-- Bilibili -->
+                <!-- 3. Bilibili -->
                 <a href="https://space.bilibili.com/452768274" target="_blank" class="channel-card">
                     <div class="channel-top">
                         <span class="platform-name">Bilibili</span>
@@ -771,7 +840,31 @@
                     </p>
                 </a>
 
-                <!-- 數位貓爬架 / 個人官網 -->
+                <!-- 4. Instagram -->
+                <a href="https://instagram.com/humanleathercouch" target="_blank" class="channel-card">
+                    <div class="channel-top">
+                        <span class="platform-name">Instagram</span>
+                        <span class="badge">DAILY LOG</span>
+                    </div>
+                    <p class="channel-desc">
+                        【工廠動態快訊 / 兩隻主子日常】<br>
+                        Factory dev logs, feline overlord sightings & visual snippets.
+                    </p>
+                </a>
+
+                <!-- 5. Shop -->
+                <a href="shop.html" class="channel-card">
+                    <div class="channel-top">
+                        <span class="platform-name">Shop 商店</span>
+                        <span class="badge badge-blue">OFFICIAL MERCH</span>
+                    </div>
+                    <p class="channel-desc">
+                        【沙發工廠物資配給 / 實體與數位周邊】<br>
+                        Official merchandise, digital assets & couch factory supply.
+                    </p>
+                </a>
+
+                <!-- 6. 數位貓爬架 / 個人官網 -->
                 <a href="https://lonp.pages.dev" target="_blank" class="channel-card">
                     <div class="channel-top">
                         <span class="platform-name">Portfolio</span>
@@ -875,28 +968,27 @@
                 <div>
                     <p style="font-size: 0.88rem; font-weight: bold; margin-bottom: 0.8rem; color: var(--cyber-blue);">STEP 1. 選擇支付方式並完成贊助：</p>
                     
-                    <!-- 台灣本地選項 (獨立顯示，完全參照 index - 複製，已刪除綠界科技) -->
+                    <!-- 台灣本地選項 (獨立顯示，已刪除綠界科技) -->
                     <div class="pay-tabs" id="twPayTabs">
                         <button type="button" class="pay-tab active" onclick="switchSupportQR('jkopay', this)">街口等<br>TWQR</button>
                         <button type="button" class="pay-tab" onclick="switchSupportQR('linepay', this)">LinePay</button>
                         <button type="button" class="pay-tab" onclick="switchSupportQR('newebpay', this)">信用卡 轉帳<br>ApplePay</button>
                     </div>
 
-                    <!-- 海外選項 (獨立顯示，完全參照 index - 複製) -->
+                    <!-- 海外選項 (獨立顯示) -->
                     <div class="pay-tabs" id="usPayTabs" style="display: none;">
                         <button type="button" class="pay-tab active" onclick="switchSupportQR('newebpay_os', this)">CreditCard<br>ApplePay</button>
                         <button type="button" class="pay-tab" onclick="switchSupportQR('paypal', this)">PayPal<br>Ko-fi</button>
                         <button type="button" class="pay-tab" onclick="switchSupportQR('alipay', this)">Alipay</button>
                     </div>
 
-                    <div class="qr-display" style="margin-top: 1rem;">
+                    <div class="qr-display mode-qr" style="margin-top: 1rem;">
                         <img id="supportQrImage" src="" alt="QR Code" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'180\' height=\'180\'><rect width=\'100%\' height=\'100%\' fill=\'%23fff\'/><text x=\'50%\' y=\'50%\' fill=\'%23000\' font-family=\'monospace\' font-size=\'14\' text-anchor=\'middle\'>QR CODE</text></svg>'">
                         
-                        <div id="linkWrap">
-                            <a id="linkBtn" href="#" target="_blank" class="action-link-btn btn-priority" style="display:inline-flex; width: 100%; max-width: 320px; text-align:center;">[ 前往安全支付頁面 ↗ ]</a>
-                        </div>
+                        <div id="supportQrHint"></div>
 
-                        <span id="supportQrHint"></span>
+                        <!-- 統一共用單一跳轉按鈕：位置絕對固定，尺寸等高等寬 -->
+                        <a id="actionBtn" href="#" target="_blank"></a>
                     </div>
                 </div>
 
@@ -927,15 +1019,51 @@
         </div>
     </div>
 
+    <!-- 回到頂部按鈕 -->
+    <button id="backToTop" class="back-to-top" onclick="scrollToTop()" aria-label="Back to top">↑ TOP</button>
+
     <script>
-        // 完全參照 index - 複製 裡的 QR 碼設定與文案
+        // 嚴格將按鈕文案與純提示文字分離，所有「點擊上方」均已修正為「點擊下方」
         const SUPPORT_QR_CODES = {
-            jkopay:  { type: "qr", img: "images/qr-jkopay.jpg",  hint: "請使用 街口、全支付、悠遊付、台灣Pay、台新Pay、玉山Wallet 等支援 TWQR 之 APP 掃描上方條碼，<span class='desktop-br-hint'><br></span>金額不限，每一份支持都是推動我持續創作的動力。<br><br><a href='http://www.jkos.com/index.html?j=S%2344234c39-bcaa-11f1-8ac0-c81f66f0c432%3AP%23' target='_blank' class='cyber-launch-btn'>手機端請點擊這裡喚起 APP 跳轉 ↗</a>" },
-            linepay: { type: "qr", img: "images/qr-linepay.jpg", hint: "請使用 LinePay 掃描上方條碼，金額不限，每一份支持都是推動我持續創作的動力。<br><br><a href='https://qrcodepay.line.me/qr/payment/VZOOBJ5y7WSsSkslC9BcR3B0xvW49AvRzmQ3bA%252BUGlhnls2hfP6lLE5grrpI5xTE' target='_blank' class='cyber-launch-btn'>手機端請點擊這裡喚起 APP 跳轉 ↗</a>" },
-            alipay:  { type: "qr", img: "images/qr-alipay.jpg",  hint: "請掃描上方條碼，金額不限，每一份支持都是推動我持續創作的動力。<br><br><a href='https://qr.alipay.com/tsx19374p5wcn9a7dp9dwe4' target='_blank' class='cyber-launch-btn'>手機端請點擊這裡喚起 APP 跳轉 ↗</a>" },
-            newebpay: { type: "link", url: "請在這裡貼上你的藍新收款網址", btnText: "前往藍新安全支付頁面 ↗", hint: "點擊上方按鈕前往藍新金流安全支付頁面，支援轉帳、信用卡與 Apple Pay，金額不限，每一份支持都是推動我持續創作的動力。" },
-            newebpay_os: { type: "link", url: "請在這裡貼上你的藍新收款網址", btnText: "Go to NewebPay Secure Checkout ↗", hint: "點擊上方按鈕前往藍新金流安全支付頁面，支援轉帳、跨國信用卡與 Apple Pay，金額不限，每一份支持都是推動我持續創作的動力。<br><br>Click the button above to pay securely via NewebPay, supporting Transfer, international Credit Cards and Apple Pay. Enter any amount you wish—every little bit helps!" },
-            paypal: { type: "link", url: "https://ko-fi.com/lonsthx", btnText: "Go to Ko-fi / PayPal Checkout ↗", hint: "點擊上方按鈕前往 Ko-fi 頁面，支援 PayPal 與跨國信用卡，金額不限，每一份支持都是推動我持續創作的動力。<br><br>Click the button above to go to the Ko-fi page, supporting PayPal and international Credit Cards. Enter any amount you wish—every little bit helps!" }
+            jkopay: { 
+                type: "qr", 
+                img: "images/qr-jkopay.jpg", 
+                hint: "請使用 街口、全支付、悠遊付、台灣Pay、台新Pay、玉山Wallet 等支援 TWQR 之 APP 掃描上方條碼，<span class='desktop-br-hint'><br></span>金額不限，每一份支持都是推動我持續創作的動力。",
+                url: "http://www.jkos.com/index.html?j=S%2344234c39-bcaa-11f1-8ac0-c81f66f0c432%3AP%23",
+                btnText: "手機端請點擊這裡喚起 APP 跳轉 ↗"
+            },
+            linepay: { 
+                type: "qr", 
+                img: "images/qr-linepay.jpg", 
+                hint: "請使用 LinePay 掃描上方條碼，金額不限，每一份支持都是推動我持續創作的動力。",
+                url: "https://qrcodepay.line.me/qr/payment/VZOOBJ5y7WSsSkslC9BcR3B0xvW49AvRzmQ3bA%252BUGlhnls2hfP6lLE5grrpI5xTE",
+                btnText: "手機端請點擊這裡喚起 APP 跳轉 ↗"
+            },
+            alipay: { 
+                type: "qr", 
+                img: "images/qr-alipay.jpg", 
+                hint: "請掃描上方條碼，金額不限，每一份支持都是推動我持續創作的動力。<br><br>Please scan the QR code above with Alipay to complete your payment. Enter any amount you wish—every little bit helps!",
+                url: "https://qr.alipay.com/tsx19374p5wcn9a7dp9dwe4",
+                btnText: "手機端請點擊這裡喚起 APP 跳轉 ↗"
+            },
+            newebpay: { 
+                type: "link", 
+                url: "請在這裡貼上你的藍新收款網址", 
+                btnText: "前往藍新安全支付頁面 ↗", 
+                hint: "點擊下方按鈕前往藍新金流安全支付頁面，支援轉帳、信用卡與 Apple Pay，金額不限，每一份支持都是推動我持續創作的動力。" 
+            },
+            newebpay_os: { 
+                type: "link", 
+                url: "請在這裡貼上你的藍新收款網址", 
+                btnText: "Go to NewebPay Secure Checkout ↗", 
+                hint: "點擊下方按鈕前往藍新金流安全支付頁面，支援轉帳、跨國信用卡與 Apple Pay，金額不限，每一份支持都是推動我持續創作的動力。<br><br>Click the button below to pay securely via NewebPay, supporting Transfer, international Credit Cards and Apple Pay. Enter any amount you wish—every little bit helps!" 
+            },
+            paypal: { 
+                type: "link", 
+                url: "https://ko-fi.com/lonsthx", 
+                btnText: "Go to Ko-fi / PayPal Checkout ↗", 
+                hint: "點擊下方按鈕前往 Ko-fi 頁面，支援 PayPal 與跨國信用卡，金額不限，每一份支持都是推動我持續創作的動力。<br><br>Click the button below to go to the Ko-fi page, supporting PayPal and international Credit Cards. Enter any amount you wish—every little bit helps!" 
+            }
         };
 
         let currentPayMethod = 'TWQR 街口等';
@@ -968,6 +1096,7 @@
             document.getElementById('donateModal').classList.remove('active');
         }
 
+        // 統一切換邏輯：確保 QR Code、說明文字與底部按鈕絕對定位統一不跳動
         function switchSupportQR(type, btn) {
             document.querySelectorAll('#donateModal .pay-tab').forEach(el => el.classList.remove('active'));
             if(btn) btn.classList.add('active');
@@ -976,21 +1105,23 @@
             
             const data = SUPPORT_QR_CODES[type];
             const imgEl = document.getElementById('supportQrImage');
-            const linkWrap = document.getElementById('linkWrap');
-            const linkBtn = document.getElementById('linkBtn');
+            const actionBtn = document.getElementById('actionBtn');
+            const qrDisplay = document.querySelector('.qr-display');
             
             if (data.type === 'link') {
                 imgEl.style.display = 'none';
-                linkWrap.style.display = 'flex'; /* 使用 flex 垂直居中按鈕 */
-                linkBtn.href = data.url;
-                linkBtn.innerHTML = data.btnText;
+                qrDisplay.classList.add('mode-link');
+                qrDisplay.classList.remove('mode-qr');
             } else {
                 imgEl.style.display = 'block';
-                linkWrap.style.display = 'none';
                 imgEl.src = data.img;
+                qrDisplay.classList.add('mode-qr');
+                qrDisplay.classList.remove('mode-link');
             }
             
             document.getElementById('supportQrHint').innerHTML = data.hint;
+            actionBtn.href = data.url;
+            actionBtn.innerHTML = data.btnText;
         }
 
         function submitSupportMessage(e) {
@@ -1012,6 +1143,19 @@ ${message}
 
             window.location.href = `mailto:arts.lonp@gmail.com?subject=${subject}&body=${body}`;
             closeModal();
+        }
+
+        // 回到頂部按鈕監聽
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 </body>
