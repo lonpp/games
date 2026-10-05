@@ -49,7 +49,7 @@
         a:hover { color: var(--cyber-blue); text-shadow: 0 0 8px var(--cyber-blue); }
 
         /* =========================================
-           TOP WARNING BANNER (全端固定釘死於頂部)
+           TOP WARNING BANNER (等比放大尺寸)
         ========================================= */
         .support-banner {
             position: fixed !important; 
@@ -62,7 +62,7 @@
             background: rgba(11, 7, 16, 0.95);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            padding: 0.75rem 1.5rem;
+            padding: 0.95rem 1.8rem;
             box-shadow: 0 4px 20px rgba(255, 42, 127, 0.3), 0 2px 0px rgba(0, 240, 255, 0.3);
             transform: translateZ(0);
             -webkit-transform: translateZ(0);
@@ -70,39 +70,39 @@
 
         .banner-inner {
             max-width: 1040px; margin: 0 auto;
-            display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;
+            display: flex; justify-content: space-between; align-items: center; gap: 1.2rem; flex-wrap: wrap;
         }
 
         .banner-title {
-            font-size: 0.95rem; font-weight: 900; letter-spacing: 1px;
+            font-size: 1.05rem; font-weight: 900; letter-spacing: 1px;
             color: var(--cyber-pink);
             text-transform: uppercase;
             text-shadow: 0 0 10px rgba(255, 42, 127, 0.6);
-            display: flex; flex-direction: column; line-height: 1.2;
+            display: flex; flex-direction: column; line-height: 1.25;
         }
         
-        /* ⚠ 符號保留警示黃 */
         .banner-warning-sign {
             color: var(--cyber-yellow);
             text-shadow: 0 0 8px var(--cyber-yellow);
-            margin-right: 2px;
+            margin-left: 4px;
+            font-size: 1.15rem;
         }
 
-        .banner-title-en { font-size: 0.75rem; color: var(--cyber-blue); text-shadow: none; font-style: italic;}
+        .banner-title-en { font-size: 0.82rem; color: var(--cyber-blue); text-shadow: none; font-style: italic; margin-top: 2px; }
 
-        .link-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .link-group { display: flex; gap: 1.1rem; flex-wrap: wrap; }
 
-        /* 高亮賽博按鈕 (整合動態圖標排版) */
+        /* 高亮賽博按鈕 */
         .cyber-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
+            gap: 0.6rem;
             background-color: transparent; 
             color: var(--cyber-pink);
             border: 1px solid var(--cyber-pink); 
-            padding: 0.5rem 1rem;
-            font-weight: 900; font-family: inherit; font-size: 0.85rem;
+            padding: 0.62rem 1.25rem;
+            font-weight: 900; font-family: inherit; font-size: 0.92rem;
             cursor: pointer; 
             text-transform: uppercase;
             clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
@@ -115,7 +115,7 @@
         /* 按鈕內旋轉快樂水圖標 */
         .btn-water-icon {
             width: auto;
-            height: 22px;
+            height: 25px;
             object-fit: contain;
             flex-shrink: 0;
             filter: drop-shadow(0 0 3px rgba(255, 42, 127, 0.4));
@@ -138,12 +138,12 @@
         }
 
         /* =========================================
-           MAIN CONTAINER & HEADER (預留頂部避讓高度)
+           MAIN CONTAINER & HEADER
         ========================================= */
         .container { 
             max-width: 960px; 
             margin: 0 auto; 
-            padding: calc(75px + 2.5rem) 1.5rem 3rem 1.5rem; 
+            padding: calc(88px + 2.5rem) 1.5rem 3rem 1.5rem; 
             display: flex; 
             flex-direction: column; 
             gap: 3.5rem; 
@@ -157,7 +157,6 @@
             clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
         }
         
-        /* 賽博粉標籤 */
         .sys-tag { 
             font-size: 0.85rem; font-weight: 900; 
             background-color: var(--cyber-pink); color: #000; 
@@ -178,10 +177,10 @@
             line-height: 1.8;
         }
 
-        /* 跨平台實況矩陣 (完整等高等寬 6 卡片排版) */
+        /* 跨平台實況矩陣 (4 大主卡片 + 無框終端指令) */
         .social-matrix {
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            grid-template-columns: repeat(2, 1fr); 
             gap: 1.2rem; 
             margin-top: 1.5rem;
         }
@@ -212,6 +211,67 @@
         .badge-blue { border-color: var(--cyber-blue); color: var(--cyber-blue); text-shadow: 0 0 6px var(--cyber-blue); }
         
         .channel-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; margin-top: 0.3rem;}
+
+        /* 電腦版佈局：Shop 在第 1 欄，指令代碼精準排在 Shop 正下方 */
+        .card-twitch   { order: 1; grid-column: 1; }
+        .card-youtube  { order: 2; grid-column: 2; }
+        .card-shop     { order: 3; grid-column: 1; }
+        .card-bilibili { order: 4; grid-column: 2; }
+        .card-sub      { order: 5; grid-column: 1; } /* 電腦版在 Shop 正下方 */
+
+        /* =========================================
+           INSTAGRAM & PORTFOLIO (無框裸露終端指令)
+        ========================================= */
+        .sub-links-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.2rem 0.2rem;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        .terminal-line-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.82rem;
+            line-height: 1.4;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            width: fit-content;
+        }
+
+        .terminal-line-link:hover {
+            color: var(--text-soft);
+            transform: translateX(4px);
+        }
+        .terminal-line-link:hover .term-name {
+            color: #fff;
+            text-shadow: 0 0 8px var(--cyber-blue);
+        }
+
+        .term-prefix {
+            font-weight: 900;
+            font-size: 0.82rem;
+        }
+        .pink-prefix { color: var(--cyber-pink); text-shadow: 0 0 6px rgba(255, 42, 127, 0.6); }
+        .blue-prefix { color: var(--cyber-blue); text-shadow: 0 0 6px rgba(0, 240, 255, 0.6); }
+
+        .term-name {
+            font-weight: 800;
+            color: var(--text-soft);
+            letter-spacing: 0.5px;
+        }
+
+        .term-desc {
+            font-size: 0.76rem;
+            color: var(--text-muted);
+        }
 
         /* =========================================
            TERMINAL MANIFESTO (終端機視窗)
@@ -336,7 +396,7 @@
             }
         }
 
-        /* 嚴格保持原比例，加上 3D 硬體獨立解碼通道，徹底修復 iOS WebKit 凍結動圖 Bug */
+        /* 保持原比例，加上 3D 硬體解碼通道以防 iOS WebKit 凍結動圖 */
         .water-img-lg {
             width: auto;
             max-width: 85%;
@@ -446,7 +506,7 @@
             }
         }
 
-        /* QR 碼與支付跳轉容器 (固定統一高度，背景與 GIF 絕對不縮小塌陷) */
+        /* QR 碼與支付跳轉容器 (固定統一高度) */
         .qr-display {
             position: relative;
             border: 1px dashed var(--cyber-blue); 
@@ -485,7 +545,7 @@
             opacity: 0.32;
         }
 
-        /* QR Code 絕對位置：LinePay、街口、支付寶 100% 絕對同高同位 (頂部距邊框 2.5rem) */
+        /* QR Code 絕對位置：距頂部 2.5rem */
         .qr-display img#supportQrImage {
             position: absolute;
             top: 2.5rem;
@@ -510,7 +570,7 @@
             z-index: 1;
         }
 
-        /* 當有 QR Code 時 (mode-qr)：文字剛好卡在 QR Code 和 底部按鈕 的正中間 */
+        /* 有 QR Code 時：文字剛好卡在 QR Code 與 底部按鈕 正中間 */
         .qr-display.mode-qr #supportQrHint {
             position: absolute;
             top: calc(2.5rem + 175px);
@@ -527,7 +587,7 @@
             padding: 0.5rem 0;
         }
 
-        /* 當無 QR Code 時 (mode-link，即藍新、PayPal)：文字完全垂直置中於 頂部邊界 與 底部按鈕 之間 */
+        /* 無 QR Code 時：文字完全垂直置中於 頂部邊界 與 底部按鈕 之間 */
         .qr-display.mode-link #supportQrHint {
             position: absolute;
             top: 2.5rem;
@@ -547,12 +607,12 @@
         /* 所有跳轉按鈕（手機喚起、藍新、PayPal 等）共用單一按鈕，100% 一模一樣的絕對位置且等高等寬 */
         #actionBtn {
             position: absolute;
-            bottom: 2.5rem; /* 距下邊框 2.5rem，與 QR Code 距上邊框完全相等對稱 */
+            bottom: 2.5rem;
             left: 50%;
             transform: translateX(-50%);
             width: calc(100% - 2.8rem);
             max-width: 320px;
-            height: 44px; /* 統一等高等寬 */
+            height: 44px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -663,9 +723,9 @@
         }
 
         @media (max-width: 768px) {
-            /* Banner 手機端固定與緊湊排版 */
+            /* Banner 手機端固定與緊湊排版 (等比稍微放大) */
             .support-banner { 
-                padding: 0.55rem 0.8rem !important; 
+                padding: 0.65rem 0.9rem !important; 
             }
             .banner-inner { 
                 flex-direction: column; 
@@ -674,11 +734,11 @@
             }
             .banner-title { 
                 text-align: center; 
-                font-size: 0.82rem; 
-                line-height: 1.2;
+                font-size: 0.9rem; 
+                line-height: 1.25;
             }
             .banner-title-en { 
-                font-size: 0.62rem; 
+                font-size: 0.68rem; 
                 white-space: normal;
                 word-break: break-word;
                 line-height: 1.2;
@@ -693,36 +753,57 @@
             /* 手機版按鈕微調 */
             .cyber-btn { 
                 width: 100%;
-                padding: 0.45rem 0.2rem; 
-                font-size: 0.72rem; 
+                padding: 0.5rem 0.3rem; 
+                font-size: 0.78rem; 
                 letter-spacing: 0px;
                 text-align: center; 
                 white-space: nowrap; 
                 gap: 0.3rem;
             }
             .btn-water-icon {
-                height: 18px;
+                height: 20px;
             }
 
             /* Container 預留高度 */
             .container { 
-                padding-top: calc(90px + 1.5rem) !important;
+                padding-top: calc(100px + 1.5rem) !important;
                 padding-left: 1rem;
                 padding-right: 1rem;
                 gap: 2rem; 
             }
             h1 { font-size: 1.7rem; }
 
-            /* 手機版 6 張卡片呼吸燈與交錯延遲 */
+            /* 手機版單列排版與順序：Twitch -> YouTube -> Bilibili -> Shop -> 裸露終端指令 */
+            .social-matrix {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .card-twitch   { order: 1; grid-column: 1; }
+            .card-youtube  { order: 2; grid-column: 1; }
+            .card-bilibili { order: 3; grid-column: 1; }
+            .card-shop     { order: 4; grid-column: 1; }
+            .card-sub      { order: 5; grid-column: 1; } /* 手機版順移至 Shop 正下方 */
+
+            /* 手機版 4 主卡片呼吸燈與交錯延遲 */
             .channel-card {
                 animation: card-pulse 3.6s infinite ease-in-out;
             }
-            .social-matrix .channel-card:nth-child(1) { animation-delay: 0s; }
-            .social-matrix .channel-card:nth-child(2) { animation-delay: 0.6s; }
-            .social-matrix .channel-card:nth-child(3) { animation-delay: 1.2s; }
-            .social-matrix .channel-card:nth-child(4) { animation-delay: 1.8s; }
-            .social-matrix .channel-card:nth-child(5) { animation-delay: 2.4s; }
-            .social-matrix .channel-card:nth-child(6) { animation-delay: 3.0s; }
+            .social-matrix .card-twitch   { animation-delay: 0s; }
+            .social-matrix .card-youtube  { animation-delay: 0.8s; }
+            .social-matrix .card-bilibili { animation-delay: 1.6s; }
+            .social-matrix .card-shop     { animation-delay: 2.4s; }
+
+            /* 手機版終端指令自適應 */
+            .sub-links-container {
+                padding: 0.2rem 0.2rem;
+                gap: 0.45rem;
+            }
+            .terminal-line-link {
+                font-size: 0.76rem;
+            }
+            .term-desc {
+                font-size: 0.7rem;
+            }
 
             .window-content { padding: 1.2rem; }
 
@@ -771,22 +852,22 @@
 </head>
 <body>
 
-    <!-- 頂部高亮警戒條：釘死固定在瀏覽器頂部 -->
+    <!-- 頂部高亮警戒條：釘死固定在瀏覽器頂部 (標題改為 投餵快樂水與貓飯⚠) -->
     <div class="support-banner">
         <div class="banner-inner">
             <div class="banner-title">
-                <span><span class="banner-warning-sign">⚠</span> 投餵快樂水與貓飯</span>
+                <span>投餵快樂水與貓飯<span class="banner-warning-sign">⚠</span></span>
                 <span class="banner-title-en">CYBER RATIONS // Happy Water & Feline Fuel</span>
             </div>
 
             <div class="link-group">
                 <button class="cyber-btn" onclick="openDonate('tw')">
                     <img src="images/happy-water-lg.gif" alt="快樂水" class="btn-water-icon" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\'><text x=\'50%25\' y=\'55%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'16\'>🥤</text></svg>'">
-                    TAIWAN NODE
+                    台灣斗內
                 </button>
                 <button class="cyber-btn" onclick="openDonate('us')">
                     <img src="images/happy-water-lg.gif" alt="快樂水" class="btn-water-icon" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\'><text x=\'50%25\' y=\'55%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'16\'>🥤</text></svg>'">
-                    OVERSEAS NODE
+                    DONATE
                 </button>
             </div>
         </div>
@@ -798,14 +879,14 @@
             <div class="sys-tag">SYS.STATUS: NEON GRID // EXTREME SURVIVAL ACTIVE</div>
             <h1>冷冷不冷的沙發工廠<br>HUMAN LEATHER COUCH FACTORY - lonlon</h1>
             <p class="tagline">
-                白天是在神經網路裡撸代碼的數位藝術社畜；深夜是喝著熱茶、伴隨兩隻主子打呼聲開發模擬遊戲的賽博黑心廠長。<br>
-                <span style="font-size: 0.85rem; opacity: 0.7;">Digital art wage-slave grinding code by day; cyber deadpan director sipping tea & developing indie sims by night.</span>
+                白天是在神經網路裡撸代碼的數位藝術社畜；深夜是喝著快樂水、伴隨兩隻主子打呼聲開發模擬遊戲的賽博黑心廠長。<br>
+                <span style="font-size: 0.85rem; opacity: 0.7;">Digital art wage-slave grinding code by day; cyber deadpan director sipping happy water & developing indie sims by night.</span>
             </p>
             
-            <!-- 跨平台實況矩陣 (完整等高等寬 6 卡片排版) -->
+            <!-- 跨平台實況矩陣 (主卡片 + 下方對齊單一子終端卡片) -->
             <div class="social-matrix">
                 <!-- 1. Twitch -->
-                <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" class="channel-card">
+                <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" class="channel-card card-twitch">
                     <div class="channel-top">
                         <span class="platform-name">Twitch</span>
                         <span class="badge">CHILL LIVE</span>
@@ -817,7 +898,7 @@
                 </a>
 
                 <!-- 2. YouTube -->
-                <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" class="channel-card">
+                <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" class="channel-card card-youtube">
                     <div class="channel-top">
                         <span class="platform-name">YouTube</span>
                         <span class="badge">CLIPS VOD</span>
@@ -828,32 +909,8 @@
                     </p>
                 </a>
 
-                <!-- 3. Bilibili -->
-                <a href="https://space.bilibili.com/452768274" target="_blank" class="channel-card">
-                    <div class="channel-top">
-                        <span class="platform-name">Bilibili</span>
-                        <span class="badge badge-blue">DATA RECAP</span>
-                    </div>
-                    <p class="channel-desc">
-                        【賽博求生錄播 / 工廠檔案庫】<br>
-                        原汁原味的無讀檔受虐回放與中文社群基地。
-                    </p>
-                </a>
-
-                <!-- 4. Instagram -->
-                <a href="https://instagram.com/humanleathercouch" target="_blank" class="channel-card">
-                    <div class="channel-top">
-                        <span class="platform-name">Instagram</span>
-                        <span class="badge">DAILY LOG</span>
-                    </div>
-                    <p class="channel-desc">
-                        【工廠動態快訊 / 兩隻主子日常】<br>
-                        Factory dev logs, feline overlord sightings & visual snippets.
-                    </p>
-                </a>
-
-                <!-- 5. Shop -->
-                <a href="shop.html" class="channel-card">
+                <!-- 3. Shop 商店 -->
+                <a href="shop.html" class="channel-card card-shop" style="border-color: rgba(0, 240, 255, 0.4);">
                     <div class="channel-top">
                         <span class="platform-name">Shop 商店</span>
                         <span class="badge badge-blue">OFFICIAL MERCH</span>
@@ -864,17 +921,31 @@
                     </p>
                 </a>
 
-                <!-- 6. 數位貓爬架 / 個人官網 -->
-                <a href="https://lonp.pages.dev" target="_blank" class="channel-card">
+                <!-- 4. Bilibili -->
+                <a href="https://space.bilibili.com/452768274" target="_blank" class="channel-card card-bilibili">
                     <div class="channel-top">
-                        <span class="platform-name">Portfolio</span>
-                        <span class="badge">CAT NEST</span>
+                        <span class="platform-name">Bilibili</span>
+                        <span class="badge">DATA RECAP</span>
                     </div>
                     <p class="channel-desc">
-                        【廠長的賽博貓爬架 / 數位藝術】<br>
-                        Exhibitions, neural network archives, and digital media experiments.
+                        【賽博求生錄播 / 工廠檔案庫】<br>
+                        原汁原味的無讀檔受虐回放與中文社群基地。
                     </p>
                 </a>
+
+                <!-- 5. 裸露終端指令代碼 (無框，電腦版與手機版均固定排在 Shop 正下方) -->
+                <div class="sub-links-container card-sub">
+                    <a href="https://instagram.com/humanleathercouch" target="_blank" class="terminal-line-link">
+                        <span class="term-prefix pink-prefix">&gt;_</span>
+                        <span class="term-name">INSTAGRAM</span>
+                        <span class="term-desc">// 工廠動態快訊</span>
+                    </a>
+                    <a href="https://lonp.pages.dev" target="_blank" class="terminal-line-link">
+                        <span class="term-prefix blue-prefix">&gt;_</span>
+                        <span class="term-name">PORTFOLIO</span>
+                        <span class="term-desc">// 廠長的賽博貓爬架</span>
+                    </a>
+                </div>
             </div>
         </header>
 
@@ -898,7 +969,7 @@
                     </div>
                     <div class="bilingual-block">
                         <p class="lang-zh">
-                            在這裡，我們用最溫柔平靜的心情，做著蘭迪隨機滅團邊緣最冷酷的系統資源調配。<span class="highlight-blue">歡迎按下追蹤加入神經網路，成為輪班兼職員工。</span>
+                            在這裡，我們用最溫柔平靜的心情，做著蘭迪隨機滅團邊緣最冷酷的系統資源調配。<span class="highlight-blue">歡迎按下追蹤加入工廠，成為輪班兼職員工。</span>
                         </p>
                         <p class="lang-en">
                             We manage brutal simulation bottlenecks with utmost calm. Hit follow, plug into the network, and consider yourself clocked in for the night shift. W chat.
@@ -1023,7 +1094,7 @@
     <button id="backToTop" class="back-to-top" onclick="scrollToTop()" aria-label="Back to top">↑ TOP</button>
 
     <script>
-        // 嚴格將按鈕文案與純提示文字分離，所有「點擊上方」均已修正為「點擊下方」
+        // 完全參照最新設定與修正之文案 (所有「點擊上方」均已修正為「點擊下方」)
         const SUPPORT_QR_CODES = {
             jkopay: { 
                 type: "qr", 
@@ -1114,7 +1185,6 @@
                 qrDisplay.classList.remove('mode-qr');
             } else {
                 imgEl.style.display = 'block';
-                imgEl.src = data.img;
                 qrDisplay.classList.add('mode-qr');
                 qrDisplay.classList.remove('mode-link');
             }
