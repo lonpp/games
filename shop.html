@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CYBER SHOP // HUMAN LEATHER COUCH FACTORY</title>
+    <style>
+        /* =========================================
+           CYBERPUNK & NEON TRICOLOR RESET
+        ========================================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-color: #0b0710;
+            --surface-color: #150d1a;
+            --text-soft: #f4dce4;
+            --text-muted: #a68a96;
+            --cyber-pink: #ff2a7f;
+            --cyber-blue: #00f0ff;
+            --cyber-yellow: #ffcc00;
+            --border-thick: 2px solid var(--cyber-pink);
+            --border-thin: 1px solid rgba(255, 42, 127, 0.4);
+            --gray-color: rgba(255, 255, 255, 0.2);
+        }
+
+        html { scroll-behavior: smooth; width: 100%; overflow-x: hidden; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-soft);
+            font-family: 'JetBrains Mono', 'Courier New', 'PingFang TC', 'Microsoft JhengHei', monospace;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 8vh;
+            width: 100%;
+            overflow-x: hidden;
+            background-image: 
+                linear-gradient(rgba(255, 42, 127, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.04) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        a { color: var(--cyber-pink); text-decoration: none; cursor: crosshair; transition: all 0.2s;}
+        a:hover { color: var(--cyber-blue); text-shadow: 0 0 8px var(--cyber-blue); }
+
+        /* =========================================
+           TOP NAVIGATION BANNER
+        ========================================= */
+        .support-banner {
+            position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important;
+            width: 100% !important; z-index: 9999 !important; 
+            border-bottom: 2px solid var(--cyber-blue);
+            background: rgba(11, 7, 16, 0.95);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            padding: 0.95rem 1.8rem;
+            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.15);
+        }
+        .banner-inner {
+            max-width: 1100px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center; gap: 1.2rem;
+        }
+        .nav-return {
+            font-weight: 900; color: var(--cyber-blue); text-transform: uppercase;
+            letter-spacing: 1px; display: inline-flex; align-items: center; gap: 0.5rem;
+        }
+        .nav-brand { font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
+
+        /* 高亮賽博按鈕 */
+        .cyber-btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+            background-color: transparent; color: var(--cyber-pink);
+            border: 1px solid var(--cyber-pink); padding: 0.62rem 1.25rem;
+            font-weight: 900; font-family: inherit; font-size: 0.92rem;
+            cursor: pointer; text-transform: uppercase;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            transition: all 0.15s ease; position: relative;
+            box-shadow: inset 0 0 10px rgba(255, 42, 127, 0.1);
+        }
+        .cyber-btn:hover:not(:disabled) {
+            background-color: var(--cyber-pink); color: #000;
+            box-shadow: 0 0 20px var(--cyber-pink); border-color: transparent;
+        }
+        .cyber-btn:disabled {
+            opacity: 0.4; border-color: var(--text-muted); color: var(--text-muted);
+            box-shadow: none; cursor: not-allowed;
+        }
+
+        /* =========================================
+           MAIN CONTAINER & HEADER
+        ========================================= */
+        .container { max-width: 1100px; margin: 0 auto; padding: calc(60px + 2.5rem) 1.5rem 3rem 1.5rem; display: flex; flex-direction: column; gap: 3rem; }
+
+        header { 
+            border: var(--border-thick); padding: 2.5rem; background-color: var(--surface-color);
+            position: relative; box-shadow: 10px 10px 0px rgba(255, 42, 127, 0.2), -2px -2px 0px rgba(0, 240, 255, 0.2);
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+        }
+        .sys-tag { 
+            font-size: 0.85rem; font-weight: 900; background-color: var(--cyber-blue); color: #000; 
+            display: inline-block; padding: 0.2rem 0.6rem; margin-bottom: 1rem;
+            box-shadow: 0 0 10px var(--cyber-blue); letter-spacing: 0.5px;
+        }
+        h1 { font-size: 2.3rem; font-weight: 900; line-height: 1.2; color: #fff; text-shadow: 0 0 8px var(--cyber-blue); letter-spacing: -0.5px; margin-bottom: 1rem; }
+        
+        .shop-notice { font-size: 0.95rem; color: var(--text-soft); border-left: 3px solid var(--cyber-pink); padding-left: 1rem; line-height: 1.8; }
+        .lang-switch-wrap { font-size: 0.85rem; margin-top: 1rem; display: block; }
+        .lang-btn { color: var(--text-muted); cursor: pointer; transition: color 0.2s ease; font-weight: bold; }
+        .lang-btn:hover, .lang-btn.active { color: var(--cyber-pink); text-shadow: 0 0 8px rgba(255,42,127,0.5); }
+
+        /* =========================================
+           FILTERS & GRID
+        ========================================= */
+        .filter-bar { display: flex; gap: 1.5rem; border-bottom: 1px dashed var(--cyber-blue); padding-bottom: 1rem; flex-wrap: wrap; }
+        .filter-btn { 
+            background: none; border: none; color: var(--text-muted); font-family: inherit; 
+            font-size: 1.05rem; font-weight: 900; cursor: pointer; transition: all 0.2s ease; 
+            text-transform: uppercase; display: flex; flex-direction: column; align-items: flex-start;
+        }
+        .filter-btn:hover, .filter-btn.active { color: var(--cyber-blue); text-shadow: 0 0 8px var(--cyber-blue); }
+        .filter-zh { font-size: 0.75rem; font-weight: normal; opacity: 0.8; }
+
+        .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; margin-top: 1rem; }
+        .loading-text { font-size: 1rem; color: var(--cyber-pink); font-weight: bold; animation: pulse 1.5s infinite; grid-column: 1 / -1; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+        /* PRODUCT CARDS (繼承首頁的 channel-card 特效) */
+        .product-card {
+            border: var(--border-thin); padding: 1.2rem; background-color: #0d0610;
+            display: flex; flex-direction: column; justify-content: space-between; gap: 1rem;
+            transition: all 0.2s ease; position: relative; overflow: hidden;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+        }
+        .product-card::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.15), transparent); transition: 0.5s; z-index: 1; pointer-events: none;
+        }
+        .product-card:hover::before { left: 100%; }
+        .product-card:hover { border-color: var(--cyber-blue); box-shadow: 0 0 15px rgba(0, 240, 255, 0.25); transform: translateY(-3px); }
+
+        .product-img-wrap { position: relative; width: 100%; aspect-ratio: 4/3; background: #000; overflow: hidden; border: 1px solid rgba(0,240,255,0.2); cursor: zoom-in; }
+        .product-img-wrap img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.3s ease; }
+        .product-img-wrap:hover img { transform: scale(1.03); }
+
+        .product-meta { display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+        .product-id-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed rgba(255,42,127,0.3); padding-bottom: 0.3rem; }
+        .product-id { font-size: 0.8rem; font-weight: bold; color: var(--cyber-pink); letter-spacing: 1px; }
+        .meta-zoom-info { font-size: 0.8rem; color: var(--cyber-blue); cursor: zoom-in; display: inline-flex; align-items: center; gap: 0.35rem; }
+        .meta-zoom-info svg { width: 12px; height: 12px; stroke: currentColor; stroke-width: 1.5; fill: none; }
+        
+        .product-title { font-size: 1.15rem; font-weight: 900; color: #fff; line-height: 1.4; }
+        .product-title-en { font-size: 0.82rem; color: var(--text-muted); font-style: italic; display: block; font-weight: normal; }
+        .product-specs { font-size: 0.85rem; color: var(--text-soft); opacity: 0.8; margin-top: 0.5rem; }
+        
+        .product-footer { display: flex; justify-content: space-between; align-items: flex-end; padding-top: 0.5rem; }
+        .product-price { font-size: 1.2rem; font-weight: bold; color: var(--cyber-blue); }
+        .product-stock { font-size: 0.8rem; color: var(--text-muted); font-weight: bold; }
+
+        /* =========================================
+           TERMINAL POLICIES ACCORDION
+        ========================================= */
+        .policies-accordion { border: var(--border-thick); background-color: #08040a; padding: 1rem; margin-top: 2rem; position: relative; }
+        .policies-accordion::before { content: 'SYS.DOCS // SHOP_POLICIES.md'; position: absolute; top: -10px; left: 1rem; background: var(--bg-color); color: var(--cyber-pink); font-size: 0.8rem; font-weight: bold; padding: 0 0.5rem; }
+        
+        .policy-item { border-bottom: 1px dashed rgba(0, 240, 255, 0.3); }
+        .policy-item:last-child { border-bottom: none; }
+        .policy-summary {
+            list-style: none; cursor: pointer; padding: 1.2rem 0.5rem; display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.95rem; font-weight: bold; color: var(--cyber-blue); text-transform: uppercase;
+        }
+        .policy-summary::-webkit-details-marker { display: none; }
+        .policy-summary:hover { background: rgba(0, 240, 255, 0.05); }
+        .policy-content { padding: 0 0.5rem 1.5rem 0.5rem; font-size: 0.88rem; line-height: 1.8; color: var(--text-soft); }
+        .policy-content ul { list-style: square inside; color: var(--cyber-pink); margin-top: 0.5rem; }
+        .policy-content ul span { color: var(--text-soft); }
+
+        /* =========================================
+           MODALS (CHECKOUT & LIGHTBOX)
+        ========================================= */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(5, 2, 8, 0.95); backdrop-filter: blur(8px);
+            z-index: 20000; display: none; justify-content: center; align-items: center; padding: 1rem;
+        }
+        .modal-overlay.active { display: flex; }
+        
+        .modal-box {
+            background-color: var(--bg-color); color: var(--text-soft); border: 2px solid var(--cyber-blue);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.2); max-width: 540px; width: 100%; padding: 0;
+            display: flex; flex-direction: column;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+            max-height: 90vh; overflow-y: auto;
+        }
+        .modal-box::-webkit-scrollbar { width: 6px; }
+        .modal-box::-webkit-scrollbar-thumb { background: var(--cyber-pink); }
+        
+        .modal-header { 
+            background-color: rgba(0, 240, 255, 0.1); color: var(--cyber-blue); border-bottom: 1px solid var(--cyber-blue);
+            display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.4rem;
+        }
+        .modal-header h2 { font-size: 1rem; margin: 0; font-weight: 900; text-shadow: 0 0 5px var(--cyber-blue); }
+        .close-btn { background: transparent; color: var(--cyber-blue); border: none; font-size: 1.5rem; font-weight: 900; cursor: pointer; transition: 0.2s; }
+        .close-btn:hover { color: var(--cyber-pink); text-shadow: 0 0 10px var(--cyber-pink); transform: scale(1.1);}
+        
+        .modal-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+
+        /* TABS (Checkout) */
+        .pay-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+        .pay-tab {
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            padding: 0.6rem 0.3rem; min-height: 52px; background: rgba(255, 255, 255, 0.03);
+            color: var(--text-soft); border: 1px solid rgba(0, 240, 255, 0.4);
+            font-family: inherit; font-size: 0.82rem; font-weight: bold; cursor: pointer;
+            clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+            transition: all 0.15s ease; text-align: center; line-height: 1.3;
+        }
+        .pay-tab:hover { background: rgba(0, 240, 255, 0.1); border-color: var(--cyber-blue); box-shadow: 0 0 10px rgba(0, 240, 255, 0.3); color: #fff; }
+        .pay-tab.active { background: rgba(255, 42, 127, 0.25); color: #fff; border-color: var(--cyber-pink); box-shadow: 0 0 12px rgba(255, 42, 127, 0.4); }
+
+        .qr-display {
+            border: 1px dashed var(--cyber-blue); background-color: rgba(0, 240, 255, 0.03); 
+            padding: 1.5rem 1.4rem; text-align: center; display: flex; flex-direction: column; align-items: center; 
+        }
+        .qr-display img { width: 175px; height: 175px; object-fit: contain; background-color: #fff; border: 2px solid var(--cyber-pink); padding: 0.4rem; box-shadow: 0 0 15px rgba(255, 42, 127, 0.3); }
+        
+        .order-form { display: flex; flex-direction: column; gap: 1rem; border-top: 1px dashed rgba(0,240,255,0.3); padding-top: 1.2rem; }
+        .form-group { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.82rem; font-weight: bold; color: var(--cyber-blue); }
+        .form-group input {
+            background-color: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 42, 127, 0.4);
+            color: #fff; padding: 0.65rem; font-family: inherit; font-size: 0.88rem; transition: 0.2s;
+        }
+        .form-group input:focus { outline: none; border-color: var(--cyber-blue); box-shadow: 0 0 8px rgba(0, 240, 255, 0.4); background-color: rgba(255, 255, 255, 0.06); }
+
+        /* LIGHTBOX 專屬 */
+        .lightbox-top { width: 100%; max-width: 1100px; display: flex; justify-content: space-between; align-items: center; gap: 1rem; border-bottom: 1px solid var(--cyber-pink); padding-bottom: 0.8rem; z-index: 2; color: var(--cyber-blue); font-weight: bold; }
+        .lightbox-top-actions { display: flex; align-items: center; gap: 0.8rem; }
+        .lightbox-stage { flex: 1; width: 100%; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; padding: 1rem 0; user-select: none; }
+        .lightbox-stage img { max-width: 90vw; max-height: 72vh; object-fit: contain; border: 1px solid var(--cyber-blue); background: #000; cursor: zoom-in; transition: transform 0.2s ease-out; box-shadow: 0 0 20px rgba(0,240,255,0.2); }
+        .lightbox-stage.is-zoomed img { cursor: grab; }
+        .lightbox-stage.is-dragging img { cursor: grabbing; transition: none; }
+        .lightbox-bottom { width: 100%; max-width: 1100px; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; padding-top: 0.8rem; border-top: 1px solid var(--cyber-pink); z-index: 2; }
+        .lightbox-controls { display: flex; align-items: center; gap: 1.5rem; color: var(--cyber-blue); font-weight: bold; }
+        .lightbox-thumbs { display: flex; gap: 0.5rem; overflow-x: auto; max-width: 100%; padding-bottom: 0.5rem; }
+        .lb-thumb { width: 50px; height: 38px; object-fit: cover; border: 1px solid rgba(255,42,127,0.4); opacity: 0.4; cursor: pointer; transition: 0.2s; }
+        .lb-thumb.active, .lb-thumb:hover { opacity: 1; border-color: var(--cyber-blue); box-shadow: 0 0 8px var(--cyber-blue); }
+
+        /* BACK TO TOP */
+        .back-to-top {
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+            background: rgba(11, 7, 16, 0.75); backdrop-filter: blur(6px);
+            color: var(--cyber-blue); border: 1px solid var(--cyber-blue); padding: 0.5rem 0.9rem;
+            font-family: inherit; font-size: 0.85rem; font-weight: 900; letter-spacing: 1px;
+            cursor: pointer; opacity: 0; pointer-events: none;
+            clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+            transition: all 0.25s ease;
+        }
+        .back-to-top.visible { opacity: 0.85; pointer-events: auto; }
+        .back-to-top:hover { opacity: 1; background-color: var(--cyber-blue); color: #000; box-shadow: 0 0 18px var(--cyber-blue); transform: translateY(-2px); }
+
+        footer { border-top: var(--border-thin); padding-top: 2rem; text-align: center; font-size: 0.85rem; color: var(--text-muted); }
+
+        @media (max-width: 768px) {
+            .container { padding-top: calc(70px + 1.5rem); gap: 2rem; }
+            .support-banner { padding: 0.65rem 0.9rem !important; }
+            h1 { font-size: 1.7rem; }
+            .pay-tabs { grid-template-columns: repeat(2, 1fr); gap: 0.4rem; }
+            .pay-tab { font-size: 0.75rem; padding: 0.4rem 0.1rem; }
+            .lightbox-top { flex-direction: column; align-items: flex-start; }
+            .lightbox-top-actions { width: 100%; justify-content: space-between; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 頂部導航 -->
+    <div class="support-banner">
+        <div class="banner-inner">
+            <a href="index.html" class="nav-return">← RETURN // 返回基地</a>
+            <span class="nav-brand">HUMAN LEATHER COUCH FACTORY</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="sys-tag">SYS.STATUS: SHOP TERMINAL ACTIVE</div>
+            <h1>SHOP 商店</h1>
+            <div class="shop-notice">
+                <p>
+                    <span id="noticeTextZh">購買流程：確認剩餘數量後點擊購買按鈕 → 選擇支付方式完成付款 → 填寫收件資訊送出訂單<br>→ 系統將喚起 Email 自動帶入資料，請確認無誤後寄出。<br><br><span style="color:var(--cyber-blue);">台灣免運，海外寄送運費固定另加 NT$ 500 (約 US$ 15)。</span></span>
+                    <span id="noticeTextEn" style="display: none;">Order Process: Check stock & click ORDER → Pay → Submit shipping info<br>→ Email app opens with pre-filled details; verify and send.<br><br><span style="color:var(--cyber-blue);">Free shipping in Taiwan. Overseas flat rate NT$ 500 (approx. US$ 15).</span></span>
+                    
+                    <span class="lang-switch-wrap">[ LANG_SELECT: 
+                        <a href="javascript:void(0)" class="lang-btn active" data-lang="zh" onclick="setShopLang('zh')">中文</a> / 
+                        <a href="javascript:void(0)" class="lang-btn" data-lang="en" onclick="setShopLang('en')">EN</a>
+                    ]</span>
+                </p>
+            </div>
+        </header>
+
+        <!-- 分類過濾 -->
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterProducts('all', this)">ALL_INVENTORY <span class="filter-zh">// 全部商品</span></button>
+            <button class="filter-btn" onclick="filterProducts('print', this)">PRINTS <span class="filter-zh">// 實體版畫</span></button>
+            <button class="filter-btn" onclick="filterProducts('photo', this)">PHOTOGRAPHY <span class="filter-zh">// 攝影作品</span></button>
+        </div>
+
+        <!-- 網格商品區 -->
+        <div id="productGrid" class="shop-grid">
+            <p id="loadingText" class="loading-text">>_ INITIALIZING... // 正在同步資料庫庫存...</p>
+        </div>
+
+        <!-- 政策收合清單 -->
+        <div class="policies-accordion" id="shopPoliciesAccordion">
+            <details class="policy-item" name="shop-policies">
+                <summary class="policy-summary">
+                    <span>>_ 01. CUSTOMER SERVICE // 客服聯絡資訊</span>
+                    <span class="policy-summary-icon" style="color:var(--cyber-pink);">[+]</span>
+                </summary>
+                <div class="policy-content">
+                    <ul>
+                        <li><span><strong>客服信箱：</strong><a href="mailto:arts.lonp@gmail.com">arts.lonp@gmail.com</a></span></li>
+                        <li><span><strong>服務時間：</strong>週一至週五 10:00 – 18:00</span></li>
+                        <li><span><strong>回覆時效：</strong>1 至 2 個工作天內盡速回覆。</span></li>
+                    </ul>
+                </div>
+            </details>
+            <details class="policy-item" name="shop-policies">
+                <summary class="policy-summary">
+                    <span>>_ 02. SHIPPING POLICY // 出貨與物流</span>
+                    <span class="policy-summary-icon" style="color:var(--cyber-pink);">[+]</span>
+                </summary>
+                <div class="policy-content">
+                    <ul>
+                        <li><span><strong>現貨作業：</strong>3 至 5 個工作天內寄出；含框作品約 7 至 10 個工作天。</span></li>
+                        <li><span><strong>台灣本島：</strong>全館免運，寄出後約 2-3 天送達。</span></li>
+                        <li><span><strong>海外跨國：</strong>運費 NT$ 500，航空包裹約 7-14 天送達。</span></li>
+                    </ul>
+                </div>
+            </details>
+            <details class="policy-item" name="shop-policies">
+                <summary class="policy-summary">
+                    <span>>_ 03. REFUND & RIGHTS // 退換貨政策</span>
+                    <span class="policy-summary-icon" style="color:var(--cyber-pink);">[+]</span>
+                </summary>
+                <div class="policy-content">
+                    <ul>
+                        <li><span><strong>7日鑑賞：</strong>享到貨次日起 7 天猶豫期保障。</span></li>
+                        <li><span><strong>退貨條件：</strong>作品需全新無損並保留原裝包材。請來信申請。</span></li>
+                    </ul>
+                </div>
+            </details>
+        </div>
+
+        <footer>
+            <p>HUMAN LEATHER COUCH FACTORY - lonlon<br>
+            <span style="font-size: 0.75rem; letter-spacing: 1px; color: var(--cyber-pink);">TRANSMITTING FROM CYBER WASTELAND. &copy; 2026.</span></p>
+        </footer>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightboxModal" class="modal-overlay" onclick="if(event.target === this || event.target.classList.contains('lightbox-stage')) closeLightbox()">
+        <div class="lightbox-top">
+            <span id="lightboxCaption"></span>
+            <div class="lightbox-top-actions">
+                <button type="button" id="lbZoomBtn" class="cyber-btn" style="padding: 0.3rem 0.8rem; font-size:0.8rem;" onclick="toggleLightboxZoom()">[+] ZOOM</button>
+                <button type="button" class="cyber-btn" style="padding: 0.3rem 0.8rem; font-size:0.8rem;" onclick="closeLightbox()">✕ CLOSE</button>
+            </div>
+        </div>
+        <div id="lightboxStage" class="lightbox-stage">
+            <img id="lightboxImg" src="" alt="Preview" draggable="false">
+        </div>
+        <div class="lightbox-bottom">
+            <div id="lightboxThumbs" class="lightbox-thumbs"></div>
+            <div class="lightbox-controls">
+                <button type="button" id="lbPrevBtn" class="cyber-btn" style="padding: 0.2rem 0.6rem;" onclick="changeLightboxImg(-1)">← PREV</button>
+                <span id="lightboxCounter">1 / 1</span>
+                <button type="button" id="lbNextBtn" class="cyber-btn" style="padding: 0.2rem 0.6rem;" onclick="changeLightboxImg(1)">NEXT →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal-overlay" onclick="if(event.target === this) closeModal()">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2 id="modalTitle">ORDER_SYS // 結帳程序</h2>
+                <button type="button" class="close-btn" onclick="closeModal()">✕</button>
+            </div>
+            
+            <div class="modal-body">
+                <div id="modalItemInfo" style="font-size: 0.9rem; line-height:1.6; border-left:2px solid var(--cyber-pink); padding-left:1rem;"></div>
+
+                <!-- 支付選擇 -->
+                <div>
+                    <p id="step1Title" style="font-size: 0.85rem; font-weight:bold; color:var(--cyber-blue); margin-bottom:0.5rem;">STEP 1. 選擇支付方式 // SELECT PAYMENT:</p>
+                    <div class="pay-tabs">
+                        <button type="button" class="pay-tab active" onclick="switchQR('jkopay', this)">街口等<br>TWQR</button>
+                        <button type="button" class="pay-tab" onclick="switchQR('linepay', this)">LinePay</button>
+                        <button type="button" id="tabNewebpay" class="pay-tab" data-pay="newebpay" onclick="switchQR('newebpay', this)">信用卡 轉帳<br>ApplePay</button>
+                        <button type="button" class="pay-tab" onclick="switchQR('paypal', this)">PayPal<br>Ko-fi</button>
+                        <button type="button" id="tabAlipay" class="pay-tab" data-pay="alipay" onclick="switchQR('alipay', this)">Alipay</button>
+                    </div>
+                    <div class="qr-display" style="margin-top: 0.8rem;">
+                        <img id="qrImage" src="" alt="QR Code">
+                        <div id="linkWrap" style="display:none; padding: 1.5rem 0; width: 100%;">
+                            <a id="linkBtn" href="#" target="_blank" class="cyber-btn" style="width:100%;">[ 啟動安全支付 ↗ ]</a>
+                        </div>
+                        <span id="qrHint" style="font-size: 0.82rem; margin-top:1rem; display:block;"></span>
+                    </div>
+                </div>
+
+                <!-- 訂單表單 -->
+                <form class="order-form" onsubmit="submitOrder(event)">
+                    <p id="step2Title" style="font-size: 0.85rem; margin-bottom: 0.5rem; color:var(--cyber-pink);">STEP 2. 填寫收件資訊 // SHIPPING DATA:</p>
+                    <div class="form-group">
+                        <label id="labelBuyerName">姓名 / Name *</label>
+                        <input type="text" id="buyerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label id="labelBuyerContact">信箱與電話 / Email & Phone *</label>
+                        <input type="text" id="buyerContact" required>
+                    </div>
+                    <div class="form-group">
+                        <label id="labelBuyerAddress">收件地址 (海外請填英文) / Address *</label>
+                        <input type="text" id="buyerAddress" placeholder="含郵遞區號" required>
+                    </div>
+                    <div class="form-group">
+                        <label id="labelBuyerPaymentNote">對帳資訊 (付款方式+帳號末五碼) *</label>
+                        <input type="text" id="buyerPaymentNote" placeholder="例：藍新信用卡 / PayPal 暱稱" required>
+                    </div>
+                    <button type="submit" id="modalSubmitBtn" class="cyber-btn" style="width: 100%; margin-top: 1rem; padding:1rem;">
+                        [ 產生訂單信件並送出 / SUBMIT ]
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <button id="backToTop" class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑ TOP</button>
+
+    <script>
+        // 1. Google API 設定 (相容原 Cloudflare 邏輯，確保大陸可讀)
+        const PROXY_SHEET_URL = "/api/sheet";
+        const DIRECT_GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRDYEUjBDASJpi7A3o0vWfWd0oQVl-_2p4UvnnOiUpYjdNjqe1z7QCqCTUas9Jb9h8HUq0neCkObBu-/pub?gid=0&single=true&output=csv";
+
+        // 2. 收款設定
+        const QR_CODES = {
+            jkopay: { 
+                type: "qr", img: "images/qr-jkopay.jpg", 
+                hint_zh: "請使用支援 TWQR 之 APP 掃描上方條碼。<br><a href='http://www.jkos.com/index.html?j=S%2344234c39-bcaa-11f1-8ac0-c81f66f0c432%3AP%23' target='_blank' style='color:var(--cyber-blue); text-decoration:underline;'>手機端點擊喚起 APP ↗</a>", 
+                hint_en: "Scan with TWQR supported apps.<br><a href='http://www.jkos.com/index.html' target='_blank' style='color:var(--cyber-blue);'>Open App ↗</a>",
+                hint_de: "Scannen mit TWQR-App.<br><a href='http://www.jkos.com' target='_blank' style='color:var(--cyber-blue);'>App öffnen ↗</a>" 
+            },
+            linepay: { 
+                type: "qr", img: "images/qr-linepay.jpg", 
+                hint_zh: "請使用 LinePay 掃描。<br><a href='https://qrcodepay.line.me/qr/payment/VZOOBJ5y7WSsSkslC9BcR3B0xvW49AvRzmQ3bA%252BUGlhnls2hfP6lLE5grrpI5xTE' target='_blank' style='color:var(--cyber-blue); text-decoration:underline;'>手機端點擊喚起 APP ↗</a>",
+                hint_en: "Scan with LinePay.<br><a href='https://qrcodepay.line.me...' target='_blank' style='color:var(--cyber-blue);'>Open App ↗</a>",
+                hint_de: "Scannen mit LinePay.<br><a href='https://qrcodepay.line.me...' target='_blank' style='color:var(--cyber-blue);'>App öffnen ↗</a>" 
+            },
+            alipay: { 
+                type: "qr", img: "images/qr-alipay.jpg", 
+                hint_zh: "請掃描支付。記得加上海外運費！<br><a href='https://qr.alipay.com/tsx19374p5wcn9a7dp9dwe4' target='_blank' style='color:var(--cyber-blue); text-decoration:underline;'>手機端點擊喚起 APP ↗</a>", 
+                hint_en: "Scan with Alipay. Add overseas shipping!<br><a href='https://qr.alipay.com...' target='_blank' style='color:var(--cyber-blue);'>Open App ↗</a>",
+                hint_de: "Scannen mit Alipay. Inkl. Versand!<br><a href='https://qr.alipay.com...' target='_blank' style='color:var(--cyber-blue);'>App öffnen ↗</a>" 
+            },
+            newebpay: { 
+                type: "link", url: "請在這裡貼上你的藍新收款網址", 
+                btnText_zh: "前往藍新金流 ↗", btnText_en: "NewebPay Checkout ↗", btnText_de: "NewebPay Kasse ↗", 
+                hint_zh: "支援轉帳、信用卡與 Apple Pay。", hint_en: "Credit Card / Apple Pay.", hint_de: "Kreditkarte / Apple Pay." 
+            },
+            paypal: { 
+                type: "link", url: "https://ko-fi.com/lonsthx", 
+                btnText_zh: "前往 Ko-fi / PayPal ↗", btnText_en: "Ko-fi / PayPal Checkout ↗", btnText_de: "Ko-fi / PayPal ↗", 
+                hint_zh: "支援跨國信用卡與 PayPal，請加計海外運費。", hint_en: "Supports PayPal. Add shipping!", hint_de: "Unterstützt PayPal. Inkl. Versand!" 
+            }
+        };
+
+        const UI_TEXT = {
+            zh: {
+                loading: ">_ INITIALIZING... // 正在同步資料庫庫存...",
+                stockZero: "[ STOCK: 0 / 已售罄 ]", stockAvail: (n) => `[ STOCK: ${n} ]`,
+                soldOutBtn: "SOLD OUT // 售罄", orderBtn: "ORDER // 購買",
+                framedNote: "(含框)",
+                modalTitle: "ORDER_SYS // 結帳程序",
+                modalItem: (id, t, p, f) => `> ITEM: <strong>[${id}] ${t}</strong><br>> PRICE: <strong style="color:var(--cyber-blue);">${p}</strong> ${f ? '(含框)' : ''}<br><span style="color:var(--text-muted);">> 台灣免運 / 海外需自行加計 NT$ 500</span>`,
+                step1Title: "STEP 1. 選擇支付方式 // SELECT PAYMENT:",
+                tabNewebpay: "信用卡 轉帳<br>ApplePay", tabAlipay: "Alipay",
+                step2Title: "STEP 2. 填寫收件資訊 // SHIPPING DATA:",
+                labelName: "姓名 / Name *", labelContact: "信箱與電話 / Email & Phone *",
+                labelAddress: "收件地址 (海外請填英文) / Address *", labelPayNote: "對帳資訊 (付款方式+帳號末五碼) *",
+                placeholderPayNote: "例：藍新信用卡 / PayPal 暱稱", submitBtn: "[ 產生訂單信件並送出 / SUBMIT ]"
+            },
+            en: {
+                loading: ">_ INITIALIZING... // Syncing inventory...",
+                stockZero: "[ STOCK: 0 ]", stockAvail: (n) => `[ STOCK: ${n} ]`,
+                soldOutBtn: "SOLD OUT", orderBtn: "ORDER NOW",
+                framedNote: "(Framed)",
+                modalTitle: "ORDER_SYS // CHECKOUT",
+                modalItem: (id, t, p, f) => `> ITEM: <strong>[${id}] ${t}</strong><br>> PRICE: <strong style="color:var(--cyber-blue);">${p}</strong> ${f ? '(Framed)' : ''}<br><span style="color:var(--text-muted);">> Add flat NT$ 500 for overseas shipping</span>`,
+                step1Title: "STEP 1. SELECT PAYMENT METHOD:",
+                tabNewebpay: "CreditCard<br>ApplePay", tabAlipay: "Alipay",
+                step2Title: "STEP 2. SHIPPING DETAILS:",
+                labelName: "Name *", labelContact: "Email & Phone *",
+                labelAddress: "Shipping Address *", labelPayNote: "Payment Verification (Method + Last 5) *",
+                placeholderPayNote: "e.g., Credit Card / PayPal Name", submitBtn: "[ GENERATE & SUBMIT ]"
+            },
+            de: {
+                loading: ">_ INITIALIZING... // Lade Inventar...",
+                stockZero: "[ BESTAND: 0 ]", stockAvail: (n) => `[ BESTAND: ${n} ]`,
+                soldOutBtn: "AUSVERKAUFT", orderBtn: "BESTELLEN",
+                framedNote: "(Gerahmt)",
+                modalTitle: "ORDER_SYS // KASSE",
+                modalItem: (id, t, p, f) => `> ITEM: <strong>[${id}] ${t}</strong><br>> PREIS: <strong style="color:var(--cyber-blue);">${p}</strong> ${f ? '(Gerahmt)' : ''}<br><span style="color:var(--text-muted);">> Zzgl. NT$ 1.000 für internationalen Versand</span>`,
+                step1Title: "SCHRITT 1. ZAHLUNGSMETHODE:",
+                tabNewebpay: "Kreditkarte<br>ApplePay", tabAlipay: "Alipay",
+                step2Title: "SCHRITT 2. VERSANDDATEN:",
+                labelName: "Name *", labelContact: "E-Mail & Telefon *",
+                labelAddress: "Lieferadresse *", labelPayNote: "Zahlungsnachweis (Art + Letzte 5) *",
+                placeholderPayNote: "z.B. Kreditkarte / PayPal", submitBtn: "[ ABSENDEN ]"
+            }
+        };
+
+        const FALLBACK = [{ id: "ERR-404", category: "print", title: "連線異常", enTitle: "offline", specs: "SYS_ERR", price: "NT$ 0", stock: 0, images: [""], isFramed: false }];
+
+        let PRODUCTS = []; let currentProduct = null; let currentFilter = 'all'; let currentLang = 'zh'; let currentQRType = 'jkopay'; let sheetLoaded = false;
+        let lbProduct = null; let lbIndex = 0; let lbScale = 1; let lbPanX = 0; let lbPanY = 0; let isDragging = false; let startX = 0; let startY = 0;
+        const ZOOM_SVG = `<svg viewBox="0 0 16 16"><circle cx="6.5" cy="6.5" r="4.8"></circle><line x1="10.2" y1="10.2" x2="14.8" y2="14.8"></line></svg>`;
+
+        function setShopLang(lang) {
+            currentLang = lang; const t = UI_TEXT[lang];
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+            ['zh','en','de'].forEach(l => document.getElementById(`noticeText${l.charAt(0).toUpperCase()+l.slice(1)}`).style.display = l === lang ? 'inline' : 'none');
+            
+            const loading = document.getElementById('loadingText'); if (loading) loading.textContent = t.loading;
+            document.getElementById('modalTitle').textContent = t.modalTitle;
+            document.getElementById('step1Title').textContent = t.step1Title;
+            document.getElementById('tabNewebpay').innerHTML = t.tabNewebpay;
+            document.getElementById('tabAlipay').innerHTML = t.tabAlipay;
+            document.getElementById('step2Title').textContent = t.step2Title;
+            document.getElementById('labelBuyerName').textContent = t.labelName;
+            document.getElementById('labelBuyerContact').textContent = t.labelContact;
+            document.getElementById('labelBuyerAddress').textContent = t.labelAddress;
+            document.getElementById('labelBuyerPaymentNote').textContent = t.labelPayNote;
+            document.getElementById('buyerPaymentNote').placeholder = t.placeholderPayNote;
+            document.getElementById('modalSubmitBtn').textContent = t.submitBtn;
+
+            if (currentProduct) document.getElementById('modalItemInfo').innerHTML = t.modalItem(escapeHTML(currentProduct.id), escapeHTML(currentProduct.title), escapeHTML(currentProduct.price), currentProduct.isFramed);
+            switchQR(currentQRType, document.querySelector(`.pay-tab[data-pay="${currentQRType}"]`));
+            if (PRODUCTS.length > 0) renderProducts();
+        }
+
+        // 強烈建議大陸買家改為讀取相對路徑 (images/...)，避免 drive.google.com 被阻擋
+        function formatImageUrl(url) {
+            if (!url) return "";
+            const clean = String(url).trim();
+            if (clean.includes("drive.google.com")) {
+                const match = clean.match(/(?:\/d\/|id=)([a-zA-Z0-9_-]{15,})/);
+                return match && match[1] ? `https://drive.google.com/thumbnail?id=${match[1]}&sz=w2200` : clean;
+            }
+            if (clean.startsWith("http") || clean.startsWith("/") || clean.startsWith("images/")) return clean;
+            return `images/products/${clean}`;
+        }
+        function escapeHTML(str) { return String(str||"").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+        function getSVG(t) { return `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='450'><rect width='100%' height='100%' fill='%23150d1a'/><text x='50%' y='50%' fill='%23ff2a7f' font-family='monospace' font-size='16' text-anchor='middle'>${encodeURIComponent(t)}</text></svg>`; }
+
+        function parseCSV(text) {
+            const rows = []; let row = []; let cur = ''; let inQ = false;
+            for (let i = 0; i < text.length; i++) {
+                const c = text[i], n = text[i+1];
+                if (inQ) { if (c==='"' && n==='"') { cur+='"'; i++; } else if(c==='"') inQ=false; else cur+=c; }
+                else { if(c==='"') inQ=true; else if(c===',') { row.push(cur.trim()); cur=''; } else if(c==='\n' || (c==='\r'&&n==='\n')) { row.push(cur.trim()); rows.push(row); row=[]; cur=''; if(c==='\r')i++; } else if(c!=='\r') cur+=c; }
+            }
+            if(cur!=='' || row.length>0) { row.push(cur.trim()); rows.push(row); }
+            
+            const vRows = rows.filter(r => r.some(c => String(c).trim()!==''));
+            if(vRows.length===0) return [];
+            const heads = ['id', 'category', 'title', 'enTitle', 'specs', 'price', 'stock', 'showFlag', 'framedFlag', 'empty1', 'empty2', 'image'];
+            return (vRows[0][0].toLowerCase().includes('id') ? vRows.slice(1) : vRows)
+                .filter(r => (r[7]||'').trim()==='1')
+                .map((r, i) => {
+                    let imgs = [];
+                    r.forEach((v, idx) => { if(idx>=11 && v.trim()) v.split(/[\n,;]+/).forEach(p => { if(p.trim()) imgs.push(formatImageUrl(p.trim())); }); });
+                    return {
+                        _uid: i, id: (r[0]||'').trim(), category: (r[1]||'print').trim().toLowerCase(),
+                        title: (r[2]||'').trim(), enTitle: (r[3]||'').trim(), specs: (r[4]||'').trim(), price: (r[5]||'').trim(),
+                        stock: parseInt((r[6]||'0').replace(/[^\d-]/g,''))||0, isFramed: (r[8]||'').trim()==='1', images: imgs.length?imgs:['']
+                    };
+                });
+        }
+
+        async function initShop() {
+            try {
+                const res = await fetch(PROXY_SHEET_URL, { cache: "no-store" });
+                if (res.ok) { PRODUCTS = parseCSV(await res.text()); sheetLoaded = true; }
+            } catch (e) { console.warn("Proxy err", e); }
+            if (!sheetLoaded) {
+                try {
+                    const r2 = await fetch(DIRECT_GOOGLE_SHEET_URL, { cache: "no-store" });
+                    if (r2.ok) { PRODUCTS = parseCSV(await r2.text()); sheetLoaded = true; }
+                } catch (e) { console.warn("Direct err", e); }
+            }
+            if (!sheetLoaded) PRODUCTS = FALLBACK.map((p,i)=>({...p,_uid:i}));
+            renderProducts();
+        }
+
+        function renderProducts(filter = currentFilter) {
+            currentFilter = filter; const t = UI_TEXT[currentLang]; const grid = document.getElementById('productGrid'); grid.innerHTML = '';
+            PRODUCTS.filter(p => filter === 'all' || p.category === filter).forEach(item => {
+                const isOut = item.stock <= 0; const img = item.images[0] || getSVG(item.id);
+                
+                grid.innerHTML += `
+                    <div class="product-card">
+                        <div>
+                            <div class="product-img-wrap" onclick="openLightbox(${item._uid}, 0)">
+                                <img src="${img}" onerror="this.src='${getSVG(item.id)}'">
+                            </div>
+                            <div class="product-meta" style="margin-top:1rem;">
+                                <div class="product-id-row">
+                                    <span class="product-id">[ ${escapeHTML(item.id)} ]</span>
+                                    <span class="meta-zoom-info" onclick="openLightbox(${item._uid}, 0)">1 / ${item.images.length} ${ZOOM_SVG}</span>
+                                </div>
+                                <h2 class="product-title" style="margin-top:0.5rem;">${escapeHTML(item.title)}<span class="product-title-en">${escapeHTML(item.enTitle)}</span></h2>
+                                <p class="product-specs">${escapeHTML(item.specs)}</p>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="product-footer" style="margin-bottom:1rem;">
+                                <span class="product-price">${escapeHTML(item.price)} ${item.isFramed ? `<span style="font-size:0.75rem; color:var(--text-muted);">${t.framedNote}</span>` : ''}</span>
+                                <span class="product-stock">${isOut ? t.stockZero : t.stockAvail(item.stock)}</span>
+                            </div>
+                            <button class="cyber-btn" style="width:100%;" ${isOut?'disabled':''} onclick="openModal(${item._uid})">${isOut?t.soldOutBtn:t.orderBtn}</button>
+                        </div>
+                    </div>`;
+            });
+        }
+        function filterProducts(cat, btn) { document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); renderProducts(cat); }
+
+        // Modal & QR
+        function openModal(uid) {
+            currentProduct = PRODUCTS.find(p => p._uid === uid);
+            if (!currentProduct) return;
+            document.getElementById('modalItemInfo').innerHTML = UI_TEXT[currentLang].modalItem(escapeHTML(currentProduct.id), escapeHTML(currentProduct.title), escapeHTML(currentProduct.price), currentProduct.isFramed);
+            switchQR('jkopay', document.querySelector('#checkoutModal .pay-tab'));
+            document.getElementById('checkoutModal').classList.add('active');
+        }
+        function closeModal() { document.getElementById('checkoutModal').classList.remove('active'); }
+        function switchQR(type, btn) {
+            currentQRType = type;
+            document.querySelectorAll('#checkoutModal .pay-tab').forEach(e => e.classList.remove('active'));
+            if(btn) btn.classList.add('active');
+            const data = QR_CODES[type]; const lang = currentLang;
+            if(data.type==='link') {
+                document.getElementById('qrImage').style.display = 'none';
+                document.getElementById('linkWrap').style.display = 'block';
+                document.getElementById('linkBtn').href = data.url;
+                document.getElementById('linkBtn').innerHTML = data[`btnText_${lang}`];
+            } else {
+                document.getElementById('qrImage').style.display = 'block';
+                document.getElementById('linkWrap').style.display = 'none';
+                document.getElementById('qrImage').src = formatImageUrl(data.img);
+            }
+            document.getElementById('qrHint').innerHTML = data[`hint_${lang}`];
+        }
+        function submitOrder(e) {
+            e.preventDefault();
+            const n = document.getElementById('buyerName').value, c = document.getElementById('buyerContact').value,
+                  a = document.getElementById('buyerAddress').value, note = document.getElementById('buyerPaymentNote').value,
+                  title = currentProduct.title.replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+            
+            let sub = `[作品訂購] ${currentProduct.id} ${title} - ${n}`,
+                body = `您好，我已完成付款，訂購資訊如下：\n\n【訂購作品】[${currentProduct.id}] ${title}\n【應付金額】${currentProduct.price}\n【對帳資訊】${note}\n\n【姓名】${n}\n【聯絡】${c}\n【地址】${a}\n`;
+            if (currentLang === 'en') { sub = `[Order] ${currentProduct.id} - ${n}`; body = `Payment complete. Details:\n\n[Item] [${currentProduct.id}] ${title}\n[Price] ${currentProduct.price}\n[Verify] ${note}\n\n[Name] ${n}\n[Contact] ${c}\n[Address] ${a}\n`; }
+            else if (currentLang === 'de') { sub = `[Bestellung] ${currentProduct.id} - ${n}`; body = `Zahlung erfolgt. Daten:\n\n[Artikel] [${currentProduct.id}] ${title}\n[Preis] ${currentProduct.price}\n[Nachweis] ${note}\n\n[Name] ${n}\n[Kontakt] ${c}\n[Adresse] ${a}\n`; }
+            window.location.href = `mailto:arts.lonp@gmail.com?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`;
+            closeModal();
+        }
+
+        // Lightbox
+        function applyLB() {
+            document.getElementById('lightboxImg').style.transform = `translate(${lbPanX}px, ${lbPanY}px) scale(${lbScale})`;
+            document.getElementById('lightboxStage').classList.toggle('is-zoomed', lbScale>1);
+            document.getElementById('lbZoomBtn').textContent = lbScale>1 ? '[-] RESET' : '[+] ZOOM';
+        }
+        function resetLB() { lbScale=1; lbPanX=0; lbPanY=0; isDragging=false; applyLB(); }
+        function toggleLightboxZoom() { if(lbScale>1) resetLB(); else { lbScale=2.2; applyLB(); } }
+        function openLightbox(uid, i=0) { lbProduct = PRODUCTS.find(p=>p._uid===uid); if(!lbProduct) return; lbIndex=i; resetLB(); updateLB(); document.getElementById('lightboxModal').classList.add('active'); }
+        function closeLightbox() { resetLB(); document.getElementById('lightboxModal').classList.remove('active'); }
+        function changeLightboxImg(s) { if(!lbProduct) return; const t = lbProduct.images.length||1; if(t<=1) return; lbIndex=(lbIndex+s+t)%t; resetLB(); updateLB(); }
+        function updateLB() {
+            const imgs = lbProduct.images.length ? lbProduct.images : [''], t = imgs.length;
+            document.getElementById('lightboxImg').src = imgs[lbIndex] || getSVG(lbProduct.id);
+            document.getElementById('lightboxCaption').innerHTML = `>_ <strong>[${escapeHTML(lbProduct.id)}]</strong>`;
+            document.getElementById('lightboxCounter').textContent = `${lbIndex+1} / ${t}`;
+            const tc = document.getElementById('lightboxThumbs'); tc.innerHTML = '';
+            if(t>1) imgs.forEach((src, i) => { const img = document.createElement('img'); img.className='lb-thumb'+(i===lbIndex?' active':''); img.src=src||getSVG(i+1); img.onclick=()=>{lbIndex=i;resetLB();updateLB();}; tc.appendChild(img); });
+        }
+        // Pan logic
+        const st = document.getElementById('lightboxStage'), img = document.getElementById('lightboxImg');
+        img.addEventListener('mousedown', e => { e.preventDefault(); if(lbScale>1) { isDragging=true; startX=e.clientX-lbPanX; startY=e.clientY-lbPanY; st.classList.add('is-dragging'); }});
+        window.addEventListener('mousemove', e => { if(isDragging) { lbPanX=e.clientX-startX; lbPanY=e.clientY-startY; applyLB(); }});
+        window.addEventListener('mouseup', () => { isDragging=false; st.classList.remove('is-dragging'); });
+
+        // Init
+        document.querySelectorAll('.policy-item').forEach(i => i.addEventListener('toggle', () => {
+            const icon = i.querySelector('.policy-summary-icon'); if(icon) icon.textContent = i.open ? '[-]' : '[+]';
+            if(i.open) document.querySelectorAll('.policy-item').forEach(o => { if(o!==i && o.open) o.open=false; });
+        }));
+        window.addEventListener('scroll', () => { document.getElementById('backToTop').classList.toggle('visible', window.scrollY>300); });
+        initShop();
+    </script>
+</body>
+</html>
