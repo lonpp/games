@@ -285,7 +285,7 @@
             <h1>SHOP 商店</h1>
             <div class="shop-notice">
                 <p>
-                    <span id="noticeTextZh">購買流程：確認剩餘數量後點擊購買按鈕 → 選擇支付方式完成付款 → 填寫收件資訊送出訂單<br>→ 系統將喚起 Email 自動帶入資料，請確認無誤後寄出。<br><br><span style="color:var(--cyber-blue);">台灣免運，海外寄送運費固定另加 NT$ 500 (約 US$ 15)。</span></span>
+                    <span id="noticeTextZh">(所有台灣的支付方式2027/1/1才會開放!請選擇其他支付~)購買流程：確認剩餘數量後點擊購買按鈕 → 選擇支付方式完成付款 → 填寫收件資訊送出訂單<br>→ 系統將喚起 Email 自動帶入資料，請確認無誤後寄出。<br><br><span style="color:var(--cyber-blue);">台灣免運，海外寄送運費固定另加 NT$ 500 (約 US$ 15)。</span></span>
                     <span id="noticeTextEn" style="display: none;">Order Process: Check stock & click ORDER → Pay → Submit shipping info<br>→ Email app opens with pre-filled details; verify and send.<br><br><span style="color:var(--cyber-blue);">Free shipping in Taiwan. Overseas flat rate NT$ 500 (approx. US$ 15).</span></span>
                     
                     <span class="lang-switch-wrap">[ LANG_SELECT: 
@@ -394,8 +394,8 @@
                     <p id="step1Title" style="font-size: 0.85rem; font-weight:bold; color:var(--cyber-blue); margin-bottom:0.5rem;">STEP 1. 選擇支付方式 // SELECT PAYMENT:</p>
                     <div class="pay-tabs">
                         <button type="button" class="pay-tab active" onclick="switchQR('jkopay', this)">街口等<br>TWQR</button>
-                        <button type="button" class="pay-tab" onclick="switchQR('linepay', this)">LinePay</button>
-                        <button type="button" id="tabNewebpay" class="pay-tab" data-pay="newebpay" onclick="switchQR('newebpay', this)">信用卡 轉帳<br>ApplePay</button>
+                        <button type="button" class="pay-tab" onclick="switchQR('linepay', this)">Line Pay</button>
+                        <button type="button" id="tabNewebpay" class="pay-tab" data-pay="newebpay" onclick="switchQR('newebpay', this)">信用卡 轉帳<br>Apple Pay</button>
                         <button type="button" class="pay-tab" onclick="switchQR('paypal', this)">PayPal<br>Ko-fi</button>
                         <button type="button" id="tabAlipay" class="pay-tab" data-pay="alipay" onclick="switchQR('alipay', this)">Alipay</button>
                     </div>
@@ -444,17 +444,17 @@
 
         // 2. 收款設定
         const QR_CODES = {
-            jkopay: { 
+            jkopay: { //http://www.jkos.com/index.html?j=S%2344234c39-bcaa-11f1-8ac0-c81f66f0c432%3AP%23
                 type: "qr", img: "images/qr-jkopay.jpg", 
-                hint_zh: "請使用支援 TWQR 之 APP 掃描上方條碼。<br><a href='http://www.jkos.com/index.html?j=S%2344234c39-bcaa-11f1-8ac0-c81f66f0c432%3AP%23' target='_blank' style='color:var(--cyber-blue); text-decoration:underline;'>手機端點擊喚起 APP ↗</a>", 
+                hint_zh: "請使用支援 TWQR 之 APP 掃描上方條碼。<br><a href='' target='_blank' style='color:var(--cyber-blue); text-decoration:underline;'>手機端點擊喚起 APP ↗</a>", 
                 hint_en: "Scan with TWQR supported apps.<br><a href='http://www.jkos.com/index.html' target='_blank' style='color:var(--cyber-blue);'>Open App ↗</a>",
                 hint_de: "Scannen mit TWQR-App.<br><a href='http://www.jkos.com' target='_blank' style='color:var(--cyber-blue);'>App öffnen ↗</a>" 
             },
-            linepay: { 
+            linepay: { //https://qrcodepay.line.me/qr/payment/VZOOBJ5y7WSsSkslC9BcR3B0xvW49AvRzmQ3bA%252BUGlhnls2hfP6lLE5grrpI5xTE
                 type: "qr", img: "images/qr-linepay.jpg", 
-                hint_zh: "請使用 LinePay 掃描。<br><a href='https://qrcodepay.line.me/qr/payment/VZOOBJ5y7WSsSkslC9BcR3B0xvW49AvRzmQ3bA%252BUGlhnls2hfP6lLE5grrpI5xTE' target='_blank' style='color:var(--cyber-blue); text-decoration:underline;'>手機端點擊喚起 APP ↗</a>",
-                hint_en: "Scan with LinePay.<br><a href='https://qrcodepay.line.me...' target='_blank' style='color:var(--cyber-blue);'>Open App ↗</a>",
-                hint_de: "Scannen mit LinePay.<br><a href='https://qrcodepay.line.me...' target='_blank' style='color:var(--cyber-blue);'>App öffnen ↗</a>" 
+                hint_zh: "請使用 Line Pay 掃描。<br><a href='' target='_blank' style='color:var(--cyber-blue); text-decoration:underline;'>手機端點擊喚起 APP ↗</a>",
+                hint_en: "Scan with Line Pay.<br><a href='https://qrcodepay.line.me...' target='_blank' style='color:var(--cyber-blue);'>Open App ↗</a>",
+                hint_de: "Scannen mit Line Pay.<br><a href='https://qrcodepay.line.me...' target='_blank' style='color:var(--cyber-blue);'>App öffnen ↗</a>" 
             },
             alipay: { 
                 type: "qr", img: "images/qr-alipay.jpg", 
