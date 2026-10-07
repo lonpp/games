@@ -440,7 +440,7 @@
     <script>
         // 1. Google API 設定 (相容原 Cloudflare 邏輯，確保大陸可讀)
         const PROXY_SHEET_URL = "/api/sheet";
-        const DIRECT_GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1HM6RiBeDevgyZrUvrmwGWNy7N20JG11FmW7_yW-ankY/edit?usp=sharing";
+        const DIRECT_GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSmKIh1OjAavKT1-o7SR_mTcOiD4Yt7F7Sl6PfhWX1Dxy-A9qcpq9mLV4eH_hv0TwMv35dnEK1jSqtJ/pub?output=csv";
 
         // 2. 收款設定
         const QR_CODES = {
@@ -503,20 +503,7 @@
                 labelAddress: "Shipping Address *", labelPayNote: "Payment Verification (Method + Last 5) *",
                 placeholderPayNote: "e.g., Credit Card / PayPal Name", submitBtn: "[ GENERATE & SUBMIT ]"
             },
-            de: {
-                loading: ">_ INITIALIZING... // Lade Inventar...",
-                stockZero: "[ BESTAND: 0 ]", stockAvail: (n) => `[ BESTAND: ${n} ]`,
-                soldOutBtn: "AUSVERKAUFT", orderBtn: "BESTELLEN",
-                framedNote: "(Gerahmt)",
-                modalTitle: "ORDER_SYS // KASSE",
-                modalItem: (id, t, p, f) => `> ITEM: <strong>[${id}] ${t}</strong><br>> PREIS: <strong style="color:var(--cyber-blue);">${p}</strong> ${f ? '(Gerahmt)' : ''}<br><span style="color:var(--text-muted);">> Zzgl. NT$ 1.000 für internationalen Versand</span>`,
-                step1Title: "SCHRITT 1. ZAHLUNGSMETHODE:",
-                tabNewebpay: "Kreditkarte<br>ApplePay", tabAlipay: "Alipay",
-                step2Title: "SCHRITT 2. VERSANDDATEN:",
-                labelName: "Name *", labelContact: "E-Mail & Telefon *",
-                labelAddress: "Lieferadresse *", labelPayNote: "Zahlungsnachweis (Art + Letzte 5) *",
-                placeholderPayNote: "z.B. Kreditkarte / PayPal", submitBtn: "[ ABSENDEN ]"
-            }
+
         };
 
         const FALLBACK = [{ id: "ERR-404", category: "print", title: "連線異常", enTitle: "offline", specs: "SYS_ERR", price: "NT$ 0", stock: 0, images: [""], isFramed: false }];
@@ -528,7 +515,7 @@
         function setShopLang(lang) {
             currentLang = lang; const t = UI_TEXT[lang];
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
-            ['zh','en','de'].forEach(l => document.getElementById(`noticeText${l.charAt(0).toUpperCase()+l.slice(1)}`).style.display = l === lang ? 'inline' : 'none');
+            ['zh','en'].forEach(l => document.getElementById(`noticeText${l.charAt(0).toUpperCase()+l.slice(1)}`).style.display = l === lang ? 'inline' : 'none');
             
             const loading = document.getElementById('loadingText'); if (loading) loading.textContent = t.loading;
             document.getElementById('modalTitle').textContent = t.modalTitle;

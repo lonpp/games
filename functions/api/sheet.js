@@ -1,7 +1,7 @@
 // functions/api/sheet.js
 export async function onRequest(context) {
   // 你的 Google 試算表公開 CSV 網址
-  const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1HM6RiBeDevgyZrUvrmwGWNy7N20JG11FmW7_yW-ankY/edit?usp=sharing";
+  const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSmKIh1OjAavKT1-o7SR_mTcOiD4Yt7F7Sl6PfhWX1Dxy-A9qcpq9mLV4eH_hv0TwMv35dnEK1jSqtJ/pub?output=csv";
 
   try {
     // 透過 Cloudflare 節點向 Google 請求資料，並於節點快取 300 秒（5 分鐘）
