@@ -212,12 +212,48 @@
         
         .channel-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; margin-top: 0.3rem;}
 
-        /* 電腦版佈局：Shop 在第 1 欄，指令代碼精準排在 Shop 正下方 */
-        .card-twitch   { order: 1; grid-column: 1; }
-        .card-youtube  { order: 2; grid-column: 2; }
-        .card-shop     { order: 3; grid-column: 1; }
-        .card-bilibili { order: 4; grid-column: 2; }
-        .card-sub      { order: 5; grid-column: 1; }
+        /* 上方只留商店。遊戲進度、IG、Portfolio 在工廠介紹裡 */
+        .social-matrix { grid-template-columns: 1fr; }
+        .card-shop { order: 1; grid-column: 1; min-height: 0; }
+
+        .jump-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+            margin-top: 1.4rem;
+        }
+        .jump-nav a {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.4rem;
+            border: 1px solid var(--cyber-pink);
+            color: var(--cyber-pink);
+            padding: 0.42rem 0.85rem;
+            font-size: 0.78rem;
+            font-weight: 900;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+            background: rgba(255, 42, 127, 0.04);
+        }
+        .jump-nav a:hover {
+            background-color: var(--cyber-pink);
+            color: #000;
+            text-shadow: none;
+            box-shadow: 0 0 14px var(--cyber-pink);
+        }
+        .jump-kicker { color: var(--cyber-blue); }
+        .jump-nav a:hover .jump-kicker { color: #000; }
+
+        .watch-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0 1.5rem 0;
+        }
+        .watch-row .channel-card { min-height: 0; }
+
+        #live, #guide, #about, #donate { scroll-margin-top: 110px; }
 
         /* =========================================
            INSTAGRAM & PORTFOLIO (無框裸露終端指令)
@@ -344,11 +380,49 @@
         /* 終端機內：旋轉快樂水大展示框 (四角冷光青藍 HUD) */
         .water-showcase-container {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            margin: 2.2rem 0 1rem 0;
+            gap: 1.15rem;
+            margin: 2.2rem 0 0.4rem 0;
             width: 100%;
         }
+
+        /* 頁尾斗內：跟頂部同一組功能，外框改成快樂水展示框的青藍直角 */
+        .ration-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            width: 100%;
+            max-width: 420px;
+        }
+        .ration-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: rgba(0, 240, 255, 0.04);
+            color: var(--cyber-blue);
+            border: 1px solid rgba(0, 240, 255, 0.45);
+            padding: 0.72rem 0.7rem;
+            font-weight: 900;
+            font-family: inherit;
+            font-size: 0.9rem;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: inset 0 0 12px rgba(0, 240, 255, 0.08);
+        }
+        .ration-btn:hover {
+            background: var(--cyber-blue);
+            color: #000;
+            box-shadow: 0 0 16px rgba(0, 240, 255, 0.4);
+        }
+        .ration-btn:hover .btn-water-icon { filter: none; }
+
+        .factory-links { margin-top: 0.3rem; }
+        .game-card { min-height: 0; margin: 0.2rem 0 0.8rem 0; }
 
         .water-showcase-box {
             position: relative;
@@ -773,28 +847,24 @@
             }
             h1 { font-size: 1.7rem; }
 
-            /* 手機版單列排版與順序：Twitch -> YouTube -> Bilibili -> Shop -> 裸露終端指令 */
             .social-matrix {
                 grid-template-columns: 1fr;
                 gap: 1rem;
             }
-            .card-twitch   { order: 1; grid-column: 1; }
-            .card-youtube  { order: 2; grid-column: 1; }
-            .card-bilibili { order: 3; grid-column: 1; }
-            .card-shop     { order: 4; grid-column: 1; }
-            .card-sub      { order: 5; grid-column: 1; }
+            .card-shop { order: 1; grid-column: 1; }
 
-            /* 手機版 4 主卡片呼吸燈與交錯延遲 */
             .channel-card {
                 animation: card-pulse 3.6s infinite ease-in-out;
             }
-            .social-matrix .card-twitch   { animation-delay: 0s; }
-            .social-matrix .card-youtube  { animation-delay: 0.8s; }
-            .social-matrix .card-bilibili { animation-delay: 1.6s; }
-            .social-matrix .card-shop     { animation-delay: 2.4s; }
+            .ration-btn { font-size: 0.78rem; padding: 0.55rem 0.35rem; }
+
+            .jump-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem; }
+            .jump-nav a { justify-content: center; font-size: 0.72rem; padding: 0.4rem 0.4rem; }
+            .watch-row { grid-template-columns: 1fr; }
 
             /* 手機版終端指令自適應 */
             .sub-links-container {
+                flex-direction: column;
                 padding: 0.2rem 0.2rem;
                 gap: 0.45rem;
             }
@@ -848,6 +918,36 @@
                 font-size: 0.75rem;
             }
         }
+        /* =========================================
+           SHIFT SCHEDULE & EMPLOYEE HANDBOOK (輪班表 / 新人報到指南)
+        ========================================= */
+        .shift-wrap { overflow-x: auto; margin: 1rem 0 0.6rem 0; border: var(--border-thin); background-color: #0d0610; -webkit-overflow-scrolling: touch; }
+        .shift-table { width: 100%; min-width: 520px; border-collapse: collapse; font-size: 0.88rem; line-height: 1.5; }
+        .shift-table th, .shift-table td { padding: 0.6rem 0.85rem; text-align: left; border-bottom: 1px dashed rgba(255, 42, 127, 0.25); vertical-align: top; }
+        .shift-table tbody tr:last-child td { border-bottom: none; }
+        .shift-table th { color: var(--cyber-blue); font-size: 0.76rem; letter-spacing: 0.5px; background: rgba(0, 240, 255, 0.05); text-transform: uppercase; }
+        .shift-table .shift-en { display: block; color: var(--text-muted); font-size: 0.74rem; font-style: italic; }
+        .shift-table td.shift-local { color: var(--cyber-pink); font-weight: 900; }
+        .shift-table tbody tr.shift-off td:nth-child(2) { opacity: 0.45; text-decoration: line-through; }
+        .shift-off-tag { display: block; color: var(--cyber-yellow); font-size: 0.74rem; font-weight: 800; letter-spacing: 0.3px; text-shadow: 0 0 6px rgba(255, 204, 0, 0.4); }
+        .shift-next { display: block; white-space: nowrap; }
+        .th-en { display: block; color: var(--text-muted); font-size: 0.7rem; font-style: italic; font-weight: 700; letter-spacing: 0; text-transform: none; }
+        .shift-note { font-size: 0.8rem; color: var(--text-muted); }
+        .off-list { margin: 0.5rem 0 0 1.1rem; font-size: 0.88rem; }
+        .off-list li { margin-bottom: 0.35rem; }
+        .off-local { display: block; color: var(--text-muted); font-size: 0.78rem; font-style: italic; }
+
+        .cmd-list { display: flex; flex-direction: column; gap: 0.55rem; margin: 1rem 0 1.2rem 0; }
+        .cmd-row {
+            display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 0.9rem;
+            border-left: 3px solid var(--cyber-pink); background-color: #0d0610; padding: 0.5rem 0.9rem;
+        }
+        .cmd-code { color: var(--cyber-blue); font-weight: 900; text-shadow: 0 0 5px rgba(0, 240, 255, 0.4); white-space: nowrap; }
+        .cmd-desc { color: var(--text-soft); font-size: 0.9rem; }
+        .cmd-desc .shift-en { color: var(--text-muted); font-size: 0.78rem; font-style: italic; margin-left: 0.4rem; }
+        .cmd-rules { margin: 0.4rem 0 0 1.2rem; font-size: 0.88rem; }
+        .cmd-rules li { margin-bottom: 0.3rem; }
+        .window-content code { color: var(--cyber-blue); background: rgba(0, 240, 255, 0.08); padding: 0 5px; font-family: inherit; font-weight: 700; }
     </style>
 </head>
 <body>
@@ -882,34 +982,15 @@
                 白天是在神經網路裡撸代碼的數位藝術社畜；深夜是喝著快樂水™、伴隨兩隻主子呼嚕聲開發模擬遊戲的賽博黑心廠長。<br>
                 <span style="font-size: 0.85rem; opacity: 0.7;">Digital art wage-slave grinding code by day; cyber deadpan director sipping Happy Water™ [Synthetic Energy Drink] & developing indie sims by night.</span>
             </p>
+
+            <nav class="jump-nav" aria-label="目錄 Contents">
+                <a href="#live"><span class="jump-kicker">01</span>輪班表 LIVE</a>
+                <a href="#guide"><span class="jump-kicker">02</span>指令 GUIDE</a>
+                <a href="#about"><span class="jump-kicker">03</span>工廠 ABOUT</a>
+                <a href="#donate"><span class="jump-kicker">04</span>投餵 DONATE</a>
+            </nav>
             
-            <!-- 跨平台實況矩陣 (4 大主卡片 + 終端微型指令) -->
             <div class="social-matrix">
-                <!-- 1. Twitch -->
-                <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" class="channel-card card-twitch">
-                    <div class="channel-top">
-                        <span class="platform-name">Twitch</span>
-                        <span class="badge">CHILL LIVE</span>
-                    </div>
-                    <p class="channel-desc">
-                        深夜鍵盤白噪音<br>
-                        White noise, late-night mechanical clicks, cozy Happy Water™, and relentless cyber survival.
-                    </p>
-                </a>
-
-                <!-- 2. YouTube -->
-                <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" class="channel-card card-youtube">
-                    <div class="channel-top">
-                        <span class="platform-name">YouTube</span>
-                        <span class="badge">CLIPS VOD</span>
-                    </div>
-                    <p class="channel-desc">
-                        今天皮沙發工廠照常營業<br>
-                        Open as Usual at the Human Leather Couch Factory, Stream Highlights.
-                    </p>
-                </a>
-
-                <!-- 3. Shop 商店 -->
                 <a href="shop.html" class="channel-card card-shop" style="border-color: rgba(0, 240, 255, 0.4);">
                     <div class="channel-top">
                         <span class="platform-name">Shop 商店</span>
@@ -920,45 +1001,143 @@
                         Official merchandise, digital assets & couch factory supply.
                     </p>
                 </a>
-
-                <!-- 4. Bilibili -->
-                <a href="https://space.bilibili.com/452768274" target="_blank" class="channel-card card-bilibili">
-                    <div class="channel-top">
-                        <span class="platform-name">Bilibili</span>
-                        <span class="badge">DATA RECAP</span>
-                    </div>
-                    <p class="channel-desc">
-                        賽博求生錄播<br>
-                        原汁原味的無讀檔受虐回放與中文社群基地。
-                    </p>
-                </a>
-
-                <!-- 5. 裸露終端指令代碼 (無框，固定排在 Shop 正下方) -->
-                <div class="sub-links-container card-sub">
-                    <a href="https://instagram.com/humanleathercouch" target="_blank" class="terminal-line-link">
-                        <span class="term-prefix pink-prefix">&gt;_</span>
-                        <span class="term-name">INSTAGRAM</span>
-                        <span class="term-desc">// 工廠動態快訊</span>
-                    </a>
-                    <a href="https://lonp.pages.dev" target="_blank" class="terminal-line-link">
-                        <span class="term-prefix blue-prefix">&gt;_</span>
-                        <span class="term-name">PORTFOLIO</span>
-                        <span class="term-desc">// 廠長的賽博貓爬架</span>
-                    </a>
-                </div>
             </div>
         </header>
 
         <!-- 終端文字區塊 (反差萌雙語對照) -->
         <section class="terminal-window">
             <div class="window-header">
-                <span class="window-path">SHELL:~/factory/manifesto.md</span>
+                <span class="window-path">SHELL:~/factory/board.md</span>
                 <span class="window-mode">[CYBER_SURVIVAL]</span>
             </div>
             <div class="window-content">
                 
-                <div class="log-section">
-                    <h3>>_ 01. THE FACTORY // 皮沙發工廠</h3>
+                <div class="log-section" id="live">
+                    <h3>>_ 01. LIVE SCHEDULE // 直播輪班表</h3>
+                    <div class="bilingual-block">
+                        <p class="lang-zh">
+                            以下是<strong>直播開台時間</strong>，不是實體店的營業時間。固定<span class="highlight-blue">週五、週六、週日</span>，中間欄是<strong>台灣時間 (UTC+8)</strong>，最右欄會自動換成你的當地時間，夏令時間也算好了。
+                        </p>
+                        <p class="lang-en">
+                            These are <strong>livestream hours</strong>, not a physical store. The factory is live every <span class="highlight-blue">Fri / Sat / Sun</span>. The middle column is <strong>Taiwan time (UTC+8)</strong>; the last column is your local time, daylight saving included.
+                        </p>
+                    </div>
+
+                    <div class="shift-wrap">
+                        <table class="shift-table">
+                            <thead>
+                                <tr>
+                                    <th>班別<span class="th-en">Shift</span></th>
+                                    <th>台灣時間<span class="th-en">Taiwan (UTC+8)</span></th>
+                                    <th>你的當地時間<span class="th-en">Your time <span id="shiftLocalTz"></span></span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-dow="5" data-start="20:00" data-end="23:30">
+                                    <td>週五 夜班<span class="shift-en">Fri · Night shift</span></td>
+                                    <td>20:00 – 23:30</td>
+                                    <td class="shift-local">…</td>
+                                </tr>
+                                <tr data-dow="6" data-start="08:30" data-end="11:00">
+                                    <td>週六 早班<span class="shift-en">Sat · Morning shift</span></td>
+                                    <td>08:30 – 11:00</td>
+                                    <td class="shift-local">…</td>
+                                </tr>
+                                <tr data-dow="6" data-start="20:00" data-end="23:30">
+                                    <td>週六 夜班<span class="shift-en">Sat · Night shift</span></td>
+                                    <td>20:00 – 23:30</td>
+                                    <td class="shift-local">…</td>
+                                </tr>
+                                <tr data-dow="0" data-start="08:30" data-end="11:00">
+                                    <td>週日 早班<span class="shift-en">Sun · Morning shift</span></td>
+                                    <td>08:30 – 11:00</td>
+                                    <td class="shift-local">…</td>
+                                </tr>
+                                <tr data-dow="0" data-start="20:00" data-end="23:30">
+                                    <td>週日 夜班<span class="shift-en">Sun · Night shift</span></td>
+                                    <td>20:00 – 23:30</td>
+                                    <td class="shift-local">…</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="shift-note">
+                        * 最右欄是「下一次」開台的當地時間，星期同時標中文和英文。<br>
+                        * The last column is the <em>next</em> stream in your local time. Weekdays are shown in Chinese and English.
+                    </p>
+
+                    <div class="watch-row">
+                        <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer" class="channel-card">
+                            <div class="channel-top">
+                                <span class="platform-name">Twitch</span>
+                                <span class="badge">WATCH LIVE</span>
+                            </div>
+                            <p class="channel-desc">看直播、在聊天室下指令<br>Watch the stream and type commands in chat.</p>
+                        </a>
+                        <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer" class="channel-card">
+                            <div class="channel-top">
+                                <span class="platform-name">YouTube</span>
+                                <span class="badge">WATCH LIVE</span>
+                            </div>
+                            <p class="channel-desc">同步直播與精華<br>Simulcast and highlights.</p>
+                        </a>
+                    </div>
+
+                    <div id="daysOff" hidden>
+                        <div id="daysOffHas">
+                            <div class="bilingual-block">
+                                <p class="lang-zh"><span class="highlight-blue">請假不開台</span>　以下日期沒有直播，時間已換成你的當地時間。</p>
+                                <p class="lang-en">Days off — no stream on these dates. Times below are already in your local timezone.</p>
+                            </div>
+                            <ul class="off-list" id="daysOffList"></ul>
+                        </div>
+                        <p class="shift-note" id="daysOffEmpty" hidden>這個月沒有請假，照表開台。 // No days off — streaming as scheduled.</p>
+                    </div>
+                </div>
+
+                <div class="log-section" id="guide">
+                    <h3>>_ 02. NEW HIRE GUIDE // 新人報到指南</h3>
+                    <div class="bilingual-block">
+                        <p class="lang-zh">
+                            在 YouTube 或 Twitch 的聊天室輸入指令，就能在遊戲裡<span class="highlight-neon">加入殖民地、買東西、叫事件</span>。看直播會自動累積金幣，先從這幾個指令開始：
+                        </p>
+                        <p class="lang-en">
+                            Type commands in the YouTube or Twitch chat to <span class="highlight-neon">join the colony, buy items and trigger events</span> in-game. You earn coins just by watching. Start with these:
+                        </p>
+                    </div>
+
+                    <div class="cmd-list">
+                        <div class="cmd-row"><span class="cmd-code">!bal</span><span class="cmd-desc">查看你有多少金幣<span class="shift-en">Check your coins</span></span></div>
+                        <div class="cmd-row"><span class="cmd-code">!pawn</span><span class="cmd-desc">加入殖民地，變成遊戲裡的殖民者<span class="shift-en">Join the colony as a pawn</span></span></div>
+                        <div class="cmd-row"><span class="cmd-code">!pricecheck 物品名</span><span class="cmd-desc">查某樣東西多少錢<span class="shift-en">Check an item's price</span></span></div>
+                        <div class="cmd-row"><span class="cmd-code">!buy 物品名</span><span class="cmd-desc">買東西送進殖民地<span class="shift-en">Buy an item for the colony</span></span></div>
+                        <div class="cmd-row"><span class="cmd-code">!lookup event 關鍵字</span><span class="cmd-desc">查有哪些事件可以叫<span class="shift-en">Search the event list</span></span></div>
+                        <div class="cmd-row"><span class="cmd-code">!event 事件名</span><span class="cmd-desc">花金幣觸發事件<span class="shift-en">Trigger an event with coins</span></span></div>
+                    </div>
+
+                    <div class="bilingual-block">
+                        <p class="lang-zh">
+                            <span class="highlight-blue">買什麼好？</span>物品名用英文，例如：<br>
+                            <code>!buy steel</code>（鋼鐵 2 金幣）、<code>!buy beer</code>（啤酒 12 金幣）、<code>!buy cat</code>（貓 100 金幣）。<br>
+                            想知道別的東西多少錢，用 <code>!pricecheck 物品名</code> 查。
+                        </p>
+                        <p class="lang-en">
+                            <span class="highlight-blue">What can I buy?</span> Use the English item name, e.g. <code>!buy steel</code> (2 coins), <code>!buy beer</code> (12), <code>!buy cat</code> (100). Not sure of a price? Use <code>!pricecheck item</code>.
+                        </p>
+                    </div>
+
+                    <div class="cat-alert" style="margin-top: 0.5rem;">
+                        <span class="cat-alert-title">⚠ 使用須知 // HOUSE RULES</span>
+                        <ul class="cmd-rules">
+                            <li><span class="lang-zh">每 10 秒最多 4 個指令，洗頻會被暫時禁言。<span class="shift-en">Max 4 commands per 10 seconds; spamming gets a temporary timeout.</span></span></li>
+                            <li><span class="lang-zh">機器人只回應<strong>成功</strong>的指令，並會在開頭 @ 你的名字。<span class="shift-en">The bot only replies to successful commands, starting with your @name.</span></span></li>
+                            <li><span class="lang-zh">沒有回應通常是：指令冷卻中、沒有權限，或該指令未開放。<span class="shift-en">No reply usually means cooldown, no permission, or the command is disabled.</span></span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="log-section" id="about">
+                    <h3>>_ 03. THE FACTORY // 皮沙發工廠</h3>
                     <div class="bilingual-block">
                         <p class="lang-zh">
                             歡迎光臨皮沙發工廠。外頭是殘酷的賽博廢土與極限邊緣，但這裡有冰涼的快樂水™和 ASMR 級的鍵盤白噪音。隨便挑張沙發坐下吧——別問材質，這張<span class="highlight-neon">特級皮沙發</span>很軟，它生前也是個喜歡 Drop pod 突襲的超齡海盜，現在它只想給你最溫暖的擁抱。
@@ -978,21 +1157,43 @@
                             <a href="https://instagram.com/humanleathercouch" class="highlight-neon"  target="_blank" rel="noopener noreferrer">IG↗</a>
                         </p>
                     </div>
+
+                    <a href="game.html" class="channel-card game-card">
+                        <div class="channel-top">
+                            <span class="platform-name">遊戲開發</span>
+                            <span class="badge badge-blue">GAME DEV</span>
+                        </div>
+                        <p class="channel-desc">
+                            製作進度與開發紀錄<br>
+                            Build log, and where the game stands now.
+                        </p>
+                    </a>
+                    <div class="sub-links-container factory-links">
+                        <a href="https://instagram.com/humanleathercouch" target="_blank" rel="noopener noreferrer" class="terminal-line-link">
+                            <span class="term-prefix pink-prefix">&gt;_</span>
+                            <span class="term-name">INSTAGRAM</span>
+                            <span class="term-desc">// 工廠動態快訊</span>
+                        </a>
+                        <a href="https://lonp.pages.dev" target="_blank" rel="noopener noreferrer" class="terminal-line-link">
+                            <span class="term-prefix blue-prefix">&gt;_</span>
+                            <span class="term-name">PORTFOLIO</span>
+                            <span class="term-desc">// 廠長的賽博貓爬架</span>
+                        </a>
+                    </div>
+
+                    <div class="cat-alert">
+                        <span class="cat-alert-title">⚠ SYSTEM ALERT: FELINE INTERFERENCE // 遭遇物理級不可抗力</span>
+                        <span class="lang-zh" style="display: block; margin-bottom: 0.5rem;">
+                            當我正在冷靜排查 C# 代碼報錯，或是佈署殺戮走廊時，如果畫面突然暫停或滑鼠亂飄，那絕對是<strong>兩隻貓咪主子</strong>又踩在我的鍵盤上討肉泥了。請各位員工喝口快樂水™，等我繳完這筆「貓咪保護費」安撫完主子，即刻恢復系統運作。
+                        </span>
+                        <span class="lang-en">
+                            If I’m mid-sentence explaining a C# patch and the stream suddenly pauses—my two feline overlords just walked across my keyboard demanding treats. Take a sip of Happy Water™ while I pay the cat tax. Resuming simulation logic shortly.
+                        </span>
+                    </div>
                 </div>
 
-                <!-- 突發貓咪干擾事件 (完整保留警示黃) -->
-                <div class="cat-alert">
-                    <span class="cat-alert-title">⚠ SYSTEM ALERT: FELINE INTERFERENCE // 遭遇物理級不可抗力</span>
-                    <span class="lang-zh" style="display: block; margin-bottom: 0.5rem;">
-                        當我正在冷靜排查 C# 代碼報錯，或是佈署殺戮走廊時，如果畫面突然暫停或滑鼠亂飄，那絕對是<strong>兩隻貓咪主子</strong>又踩在我的鍵盤上討肉泥了。請各位員工喝口快樂水™，等我繳完這筆「貓咪保護費」安撫完主子，即刻恢復系統運作。
-                    </span>
-                    <span class="lang-en">
-                        If I’m mid-sentence explaining a C# patch and the stream suddenly pauses—my two feline overlords just walked across my keyboard demanding treats. Take a sip of Happy Water™ while I pay the cat tax. Resuming simulation logic shortly.
-                    </span>
-                </div>
-
-                <div class="log-section">
-                    <h3>>_ 02. DONATION HOOK // 賽博求生與快樂水™投餵</h3>
+                <div class="log-section" id="donate">
+                    <h3>>_ 04. DONATION HOOK // 賽博求生與快樂水™投餵</h3>
                     <div class="bilingual-block">
                         <p class="lang-zh">
                             隨著獨立維護 C# 補丁的工作量日益龐大，加上新遊戲開發所需的龐大精力與成本（經常深夜在神經網路裡撸代碼到頭禿），開啟投餵計畫是希望在這漫長的「賽博求生與獨立模擬遊戲製作」之旅中，能得到大家的一點點支持。
@@ -1015,6 +1216,24 @@
                             <div class="hud-corner hud-bl"></div>
                             <div class="hud-corner hud-br"></div>
                             <img src="images/happy-water-lg.gif" alt="旋轉快樂水展示" class="water-img-lg" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'280\' height=\'280\' viewBox=\'0 0 280 280\'><rect width=\'280\' height=\'280\' fill=\'%230b0710\' stroke=\'%2300f0ff\' stroke-width=\'2\' stroke-dasharray=\'8 4\'/><text x=\'50%25\' y=\'44%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'72\'>🥤</text><text x=\'50%25\' y=\'70%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%2300f0ff\' font-family=\'monospace\' font-size=\'13\' font-weight=\'bold\' letter-spacing=\'1\'>// ROTATING HAPPY WATER //</text><text x=\'50%25\' y=\'82%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%23ff2a7f\' font-family=\'monospace\' font-size=\'11\'>CYBER RATIONS DISPLAY SLOT</text></svg>'">
+                        </div>
+                        <div class="ration-row">
+                            <button type="button" class="ration-btn" onclick="openDonate('tw')">
+                                <span class="hud-corner hud-tl"></span>
+                                <span class="hud-corner hud-tr"></span>
+                                <span class="hud-corner hud-bl"></span>
+                                <span class="hud-corner hud-br"></span>
+                                <img src="images/happy-water-lg.gif" alt="" class="btn-water-icon" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\'><text x=\'50%25\' y=\'55%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'16\'>🥤</text></svg>'">
+                                台灣斗內
+                            </button>
+                            <button type="button" class="ration-btn" onclick="openDonate('us')">
+                                <span class="hud-corner hud-tl"></span>
+                                <span class="hud-corner hud-tr"></span>
+                                <span class="hud-corner hud-bl"></span>
+                                <span class="hud-corner hud-br"></span>
+                                <img src="images/happy-water-lg.gif" alt="" class="btn-water-icon" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\'><text x=\'50%25\' y=\'55%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'16\'>🥤</text></svg>'">
+                                DONATE
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1265,6 +1484,172 @@ ${message}
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-    </script>
+    
+        /* =========================================
+           輪班表：台灣時間 (UTC+8) → 訪客當地時間。
+           星期固定中英並列，不跟瀏覽器語言走。
+           請假資料來自 /api/schedule（Cloudflare 代抓 Google 試算表）。
+        ========================================= */
+        (function () {
+            var TW_OFFSET = 8 * 3600 * 1000, DAY = 86400000;
+            var SHIFT_META = {
+                morning: { start: '08:30', end: '11:00', zh: '早班', en: 'Morning' },
+                night:   { start: '20:00', end: '23:30', zh: '夜班', en: 'Night' }
+            };
+            var zhDay = new Intl.DateTimeFormat('zh-Hant', { weekday: 'short', timeZone: 'Asia/Taipei' });
+            var enDay = new Intl.DateTimeFormat('en-US', { weekday: 'short', timeZone: 'Asia/Taipei' });
+            var zhDayLocal = new Intl.DateTimeFormat('zh-Hant', { weekday: 'short' });
+            var enDayLocal = new Intl.DateTimeFormat('en-US', { weekday: 'short' });
+
+            function pad(n) { return (n < 10 ? '0' : '') + n; }
+            function hm(ms) { var p = String(ms).split(':'); return (parseInt(p[0], 10) * 60 + parseInt(p[1], 10)) * 60000; }
+            function clock(d) { return pad(d.getHours()) + ':' + pad(d.getMinutes()); }
+            function ymdUTC(ms) {
+                var d = new Date(ms);
+                return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate());
+            }
+            function esc(s) {
+                return String(s == null ? '' : s).replace(/[&<>"]/g, function (ch) {
+                    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch];
+                });
+            }
+            function dayBoth(d, local) {
+                var z = local ? zhDayLocal : zhDay;
+                var e = local ? enDayLocal : enDay;
+                return z.format(d) + ' ' + e.format(d);
+            }
+            function rangeLabel(startMs, endMs) {
+                var s = new Date(startMs), e = new Date(endMs);
+                var endTxt = clock(e);
+                if (s.toDateString() !== e.toDateString()) endTxt = dayBoth(e, true) + ' ' + endTxt;
+                return dayBoth(s, true) + ' ' + clock(s) + ' – ' + endTxt;
+            }
+            function shiftOf(startAttr) { return startAttr === '08:30' ? 'morning' : 'night'; }
+
+            function renderTable(offMap) {
+                var rows = document.querySelectorAll('.shift-table tbody tr[data-dow]');
+                if (!rows.length) return;
+                var now = Date.now();
+                var nowTW = new Date(now + TW_OFFSET);
+                var todayTW = Date.UTC(nowTW.getUTCFullYear(), nowTW.getUTCMonth(), nowTW.getUTCDate());
+                var tzEl = document.getElementById('shiftLocalTz');
+                if (tzEl) {
+                    var tz = '';
+                    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+                    tzEl.textContent = tz ? '(' + tz.replace(/_/g, ' ') + ')' : '';
+                }
+                rows.forEach(function (row) {
+                    var dow = parseInt(row.getAttribute('data-dow'), 10);
+                    var cell = row.querySelector('.shift-local');
+                    if (!cell) return;
+                    var key = shiftOf(row.getAttribute('data-start'));
+                    for (var i = 0; i < 8; i++) {
+                        var dayStart = todayTW + i * DAY;
+                        if (new Date(dayStart).getUTCDay() !== dow) continue;
+                        var start = dayStart + hm(row.getAttribute('data-start')) - TW_OFFSET;
+                        var end = dayStart + hm(row.getAttribute('data-end')) - TW_OFFSET;
+                        if (end <= now) continue;
+                        var date = ymdUTC(dayStart);
+                        var hit = offMap && (offMap[date + '|all'] || offMap[date + '|' + key]);
+                        cell.innerHTML = '<span class="shift-next">' + esc(rangeLabel(start, end)) + '</span>';
+                        row.classList.toggle('shift-off', !!hit);
+                        var old = row.cells[0].querySelector('.shift-off-tag');
+                        if (old) old.remove();
+                        if (hit) {
+                            var tag = document.createElement('span');
+                            tag.className = 'shift-off-tag';
+                            tag.textContent = hit === true ? '請假不開台 DAY OFF' : ('請假不開台 DAY OFF · ' + hit);
+                            row.cells[0].appendChild(tag);
+                        }
+                        return;
+                    }
+                    cell.textContent = '—';
+                });
+            }
+
+            function renderDaysOff(list) {
+                var box = document.getElementById('daysOff');
+                var has = document.getElementById('daysOffHas');
+                var empty = document.getElementById('daysOffEmpty');
+                var ul = document.getElementById('daysOffList');
+                if (!box || !ul) return;
+                box.hidden = false;
+                if (!list.length) {
+                    has.hidden = true;
+                    empty.hidden = false;
+                    ul.innerHTML = '';
+                    return;
+                }
+                has.hidden = false;
+                empty.hidden = true;
+                ul.innerHTML = list.map(function (item) {
+                    var local = item.parts.map(function (p) { return esc(p.local); }).join('<br>');
+                    var note = item.note ? ' · ' + esc(item.note) : '';
+                    return '<li>' + esc(item.twLabel) + note +
+                        '<span class="off-local">你的時間 Your time：' + local + '</span></li>';
+                }).join('');
+            }
+
+            function expandOffs(raw) {
+                var now = Date.now();
+                var nowTW = new Date(now + TW_OFFSET);
+                var today = ymdUTC(Date.UTC(nowTW.getUTCFullYear(), nowTW.getUTCMonth(), nowTW.getUTCDate()));
+                var horizon = new Date(Date.UTC(nowTW.getUTCFullYear(), nowTW.getUTCMonth() + 2, 1) - DAY);
+                var horizonKey = ymdUTC(horizon.getTime());
+                var items = [];
+                (raw || []).forEach(function (row) {
+                    if (!row || !row.date || row.date < today || row.date > horizonKey) return;
+                    var keys = row.shift === 'all' ? ['morning', 'night'] : [row.shift];
+                    if (keys[0] !== 'morning' && keys[0] !== 'night') return;
+                    var p = row.date.split('-');
+                    var dayStart = Date.UTC(+p[0], +p[1] - 1, +p[2]);
+                    var parts = [];
+                    keys.forEach(function (k) {
+                        var meta = SHIFT_META[k];
+                        var start = dayStart + hm(meta.start) - TW_OFFSET;
+                        var end = dayStart + hm(meta.end) - TW_OFFSET;
+                        if (end <= now) return;
+                        parts.push({
+                            local: (keys.length > 1 ? meta.zh + ' ' + meta.en + ' ' : '') + rangeLabel(start, end),
+                            start: start
+                        });
+                    });
+                    if (!parts.length) return;
+                    var noon = new Date(dayStart + 12 * 3600000 - TW_OFFSET);
+                    items.push({
+                        start: parts[0].start,
+                        note: row.note || '',
+                        twLabel: row.date.slice(5).replace('-', '/') + ' ' + dayBoth(noon, false) + ' · ' +
+                            (row.shift === 'all' ? '全天 All day' : (SHIFT_META[row.shift].zh + ' ' + SHIFT_META[row.shift].en)),
+                        parts: parts
+                    });
+                });
+                items.sort(function (a, b) { return a.start - b.start; });
+                return items;
+            }
+
+            function offMapFrom(raw) {
+                var map = {};
+                (raw || []).forEach(function (row) {
+                    if (!row || !row.date) return;
+                    var note = row.note || true;
+                    if (row.shift === 'all') { map[row.date + '|all'] = note; }
+                    else if (row.shift === 'morning' || row.shift === 'night') map[row.date + '|' + row.shift] = note;
+                });
+                return map;
+            }
+
+            try { renderTable(null); } catch (err) {}
+
+            fetch('/api/schedule', { cache: 'no-store' })
+                .then(function (res) { return res.ok ? res.json() : null; })
+                .then(function (data) {
+                    if (!data || !data.configured || !Array.isArray(data.daysOff)) return;
+                    renderTable(offMapFrom(data.daysOff));
+                    renderDaysOff(expandOffs(data.daysOff));
+                })
+                .catch(function () {});
+        })();
+</script>
 </body>
 </html>
