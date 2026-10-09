@@ -212,10 +212,84 @@
         
         .channel-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; margin-top: 0.3rem;}
 
-        /* 電腦版：商店 | 遊戲開發。手機改成上下排 */
+        /* 電腦版：商店 | 遊戲開發。雙框切角，跟下面的直播卡片分開 */
         .social-matrix { grid-template-columns: 1fr 1fr; }
-        .card-shop { order: 1; grid-column: 1; min-height: 0; }
-        .card-game { order: 2; grid-column: 2; min-height: 0; margin: 0; }
+        .gate-card {
+            --gate: var(--cyber-blue);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            min-height: 132px;
+            padding: 1.2rem 1.25rem 1.15rem 1.35rem;
+            background:
+                linear-gradient(var(--gate), var(--gate)) top right / 16px 2px no-repeat,
+                linear-gradient(var(--gate), var(--gate)) top right / 2px 16px no-repeat,
+                linear-gradient(var(--gate), var(--gate)) bottom left / 16px 2px no-repeat,
+                linear-gradient(var(--gate), var(--gate)) bottom left / 2px 16px no-repeat,
+                rgba(0, 240, 255, 0.045);
+            text-decoration: none;
+            color: var(--text-soft);
+            border: none;
+            box-shadow: inset 3px 0 0 var(--gate);
+            transition: background-color 0.15s ease, color 0.15s ease;
+        }
+        .gate-card::before,
+        .gate-card::after {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            pointer-events: none;
+            border-color: var(--gate);
+            border-style: solid;
+        }
+        .gate-card::before { top: 0; left: 0; border-width: 2px 0 0 2px; }
+        .gate-card::after { right: 0; bottom: 0; border-width: 0 2px 2px 0; }
+        .gate-card:hover {
+            color: #fff;
+            text-shadow: none;
+            background-color: rgba(0, 240, 255, 0.1);
+        }
+        .card-game.gate-card {
+            --gate: var(--cyber-pink);
+            background:
+                linear-gradient(var(--gate), var(--gate)) top right / 16px 2px no-repeat,
+                linear-gradient(var(--gate), var(--gate)) top right / 2px 16px no-repeat,
+                linear-gradient(var(--gate), var(--gate)) bottom left / 16px 2px no-repeat,
+                linear-gradient(var(--gate), var(--gate)) bottom left / 2px 16px no-repeat,
+                rgba(255, 42, 127, 0.05);
+            box-shadow: inset 3px 0 0 var(--gate);
+        }
+        .card-game.gate-card:hover { background-color: rgba(255, 42, 127, 0.12); }
+        .gate-top { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; }
+        .gate-prefix {
+            font-weight: 900;
+            font-size: 0.82rem;
+            letter-spacing: 0.4px;
+            color: var(--cyber-blue);
+            text-shadow: 0 0 6px rgba(0, 240, 255, 0.55);
+        }
+        .card-game .gate-prefix { color: var(--cyber-pink); text-shadow: 0 0 6px rgba(255, 42, 127, 0.55); }
+        .gate-badge {
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            color: var(--cyber-blue);
+            border-bottom: 1px solid rgba(0, 240, 255, 0.55);
+            padding-bottom: 0.05rem;
+        }
+        .card-game .gate-badge { color: var(--cyber-pink); border-bottom-color: rgba(255, 42, 127, 0.6); }
+        .gate-title {
+            font-weight: 900;
+            font-size: 1.2rem;
+            letter-spacing: 0.4px;
+            color: #fff;
+            text-shadow: 0 0 8px rgba(0, 240, 255, 0.35);
+        }
+        .card-game .gate-title { text-shadow: 0 0 8px rgba(255, 42, 127, 0.4); }
+        .card-shop { order: 1; grid-column: 1; }
+        .card-game { order: 2; grid-column: 2; }
 
         .jump-nav {
             display: flex;
@@ -530,6 +604,12 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 0.6rem;
         }
+        /* 2027/1/1 恢復藍新後，把 #usPayTabs 改回 3 欄 */
+        #usPayTabs { grid-template-columns: 1fr 1fr; }
+        .pay-tab[hidden],
+        .pay-tabs[hidden] { display: none !important; }
+        .pay-pause { display: flex; flex-direction: column; gap: 0.45rem; margin-bottom: 0.9rem; }
+        .pay-pause .lang-en { margin: 0; }
         .pay-tab {
             display: flex;
             flex-direction: column;
@@ -781,20 +861,20 @@
         /* =========================================
            RWD 響應式配置
         ========================================= */
-        /* 手機版卡片呼吸燈特效 */
+        /* 手機版呼吸燈：上面先亮，再依序吹到下面的卡片 */
         @keyframes card-pulse {
-            0% { 
+            0%, 100% {
                 box-shadow: inset 0 0 6px rgba(255, 42, 127, 0.15), 0 0 6px rgba(255, 42, 127, 0.2);
                 border-color: rgba(255, 42, 127, 0.4);
             }
-            50% { 
+            50% {
                 box-shadow: inset 0 0 14px rgba(0, 240, 255, 0.3), 0 0 15px rgba(0, 240, 255, 0.35);
                 border-color: var(--cyber-blue);
             }
-            100% { 
-                box-shadow: inset 0 0 6px rgba(255, 42, 127, 0.15), 0 0 6px rgba(255, 42, 127, 0.2);
-                border-color: rgba(255, 42, 127, 0.4);
-            }
+        }
+        @keyframes gate-pulse {
+            0%, 100% { box-shadow: inset 3px 0 0 var(--gate), 0 0 5px rgba(255, 42, 127, 0.15); }
+            50% { box-shadow: inset 3px 0 0 var(--gate), inset 0 0 16px rgba(0, 240, 255, 0.28), 0 0 16px rgba(0, 240, 255, 0.4); }
         }
 
         @media (max-width: 768px) {
@@ -855,9 +935,18 @@
             .card-shop { order: 1; grid-column: 1; }
             .card-game { order: 2; grid-column: 1; }
 
-            .channel-card {
-                animation: card-pulse 3.6s infinite ease-in-out;
+            .card-shop,
+            .card-game,
+            .watch-row .channel-card {
+                animation-duration: 3.6s;
+                animation-timing-function: ease-in-out;
+                animation-iteration-count: infinite;
             }
+            .card-shop { animation-name: gate-pulse; animation-delay: 0s; }
+            .card-game { animation-name: gate-pulse; animation-delay: 0.8s; }
+            .watch-row .channel-card { animation-name: card-pulse; transition: transform 0.15s ease, border-color 0.15s ease; }
+            .watch-row .channel-card:nth-child(1) { animation-delay: 1.6s; }
+            .watch-row .channel-card:nth-child(2) { animation-delay: 2.4s; }
             .ration-btn { font-size: 0.78rem; padding: 0.55rem 0.35rem; }
             .shift-board { grid-template-columns: 1fr; }
             .shift-clock { font-size: 1.25rem; }
@@ -1020,21 +1109,23 @@
             </nav>
             
             <div class="social-matrix">
-                <a href="shop.html" class="channel-card card-shop" style="border-color: rgba(0, 240, 255, 0.4);">
-                    <div class="channel-top">
-                        <span class="platform-name">Shop 商店</span>
-                        <span class="badge badge-blue">OFFICIAL MERCH</span>
+                <a href="shop.html" class="gate-card card-shop">
+                    <div class="gate-top">
+                        <span class="gate-prefix">&gt;_ SHOP</span>
+                        <span class="gate-badge">OFFICIAL MERCH</span>
                     </div>
+                    <span class="gate-title">商店</span>
                     <p class="channel-desc">
                         皮沙發工廠周邊<br>
                         Official merchandise, digital assets & couch factory supply.
                     </p>
                 </a>
-                <a href="game.html" class="channel-card card-game">
-                    <div class="channel-top">
-                        <span class="platform-name">遊戲開發</span>
-                        <span class="badge badge-blue">GAME DEV</span>
+                <a href="game.html" class="gate-card card-game">
+                    <div class="gate-top">
+                        <span class="gate-prefix">&gt;_ GAME</span>
+                        <span class="gate-badge">GAME DEV</span>
                     </div>
+                    <span class="gate-title">遊戲開發</span>
                     <p class="channel-desc">
                         製作進度與開發紀錄<br>
                         Build log, and where the game stands now.
@@ -1218,6 +1309,12 @@
                             <br><br>
                             Every drop of Happy Water™ you feed me directly converts into the raw caffeine concentration needed for late-night debugging. <span class="highlight-neon">It’s the ultimate drive turning this simulation game from a paper prototype into reality!</span> And hey, if you drop a bite of Cat Kibble on the side, you not only feed this balding, overworked cyber-kitten, but also sponsor my two feline overlords. I’ll probably start purring and fix all the system bugs on the spot~
                         </p>
+                        <p class="lang-zh">
+                            今年台灣國內的街口、Line Pay、藍新（轉帳、信用卡）先暫停，<span class="highlight-blue">2027/1/1</span> 重新開放。可以先關注 <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YouTube</a> 或 <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">Twitch</a>，或用 <a href="https://ko-fi.com/lonsthx" target="_blank" rel="noopener noreferrer">Ko-fi</a>（PayPal、信用卡）贊助。支付寶持續開放。
+                        </p>
+                        <p class="lang-en">
+                            Follow on <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YouTube</a> or <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">Twitch</a>, or sponsor with <a href="https://ko-fi.com/lonsthx" target="_blank" rel="noopener noreferrer">Ko-fi</a> (PayPal and credit card). Alipay is open as well.
+                        </p>
                     </div>
 
                     <!-- 旋轉快樂水 (大尺寸展示框：修復比例不失真 + 慢速 5.5s 半透明藍色光圈呼吸燈) -->
@@ -1269,22 +1366,35 @@
             </div>
 
             <div class="modal-body">
+                <!--
+                    2027/1/1 恢復台灣國內支付時：
+                    1. 刪掉 .pay-pause 這段說明
+                    2. #twPayTabs 拿掉 hidden
+                    3. 藍新 Credit Card 按鈕拿掉 hidden
+                    4. #usPayTabs 改回 3 欄（搜尋「恢復藍新」）
+                    5. openDonate('tw') 改回只顯示 #twPayTabs，並 switchSupportQR('jkopay')
+                    不要刪下面的街口、Line Pay、藍新程式。
+                -->
+                <div class="pay-pause" id="payPauseNote">
+                    <p class="lang-zh">今年台灣國內的街口、Line Pay、藍新（轉帳、信用卡）先暫停，<span class="highlight-blue">2027/1/1</span> 重新開放。可以先關注 <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YouTube</a> 或 <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">Twitch</a>，或用 Ko-fi（PayPal、信用卡）贊助。支付寶持續開放。</p>
+                    <p class="lang-en">Follow on <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YouTube</a> or <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">Twitch</a>, or sponsor with Ko-fi (PayPal and credit card). Alipay is open as well.</p>
+                </div>
                 <!-- STEP 1 支付選項 -->
                 <div>
                     <p style="font-size: 0.88rem; font-weight: bold; margin-bottom: 0.8rem; color: var(--cyber-blue);">STEP 1. 選擇支付方式 // SELECT PAYMENT PROTOCOL:</p>
                     
-                    <!-- 台灣本地選項 (獨立顯示，已刪除綠界科技) -->
-                    <div class="pay-tabs" id="twPayTabs">
+                    <!-- 台灣本地選項。2026 暫停，2027/1/1 拿掉 hidden。 -->
+                    <div class="pay-tabs" id="twPayTabs" hidden>
                         <button type="button" class="pay-tab active" onclick="switchSupportQR('jkopay', this)">街口等<br>TWQR</button>
                         <button type="button" class="pay-tab" onclick="switchSupportQR('linepay', this)">Line Pay</button>
                         <button type="button" class="pay-tab" onclick="switchSupportQR('newebpay', this)">信用卡 轉帳<br>Apple Pay</button>
                     </div>
 
-                    <!-- 海外選項 (獨立顯示) -->
+                    <!-- 海外選項。藍新按鈕先隱藏，Ko-fi 與支付寶維持開放。 -->
                     <div class="pay-tabs" id="usPayTabs" style="display: none;">
                         <button type="button" class="pay-tab" onclick="switchSupportQR('paypal', this)">PayPal<br>Ko-fi</button>
-                        <button type="button" class="pay-tab active" onclick="switchSupportQR('newebpay_os', this)">Credit Card<br>Apple Pay</button>
-                        
+                        <!-- 2027/1/1 恢復：拿掉 hidden -->
+                        <button type="button" class="pay-tab" hidden onclick="switchSupportQR('newebpay_os', this)">Credit Card<br>Apple Pay</button>
                         <button type="button" class="pay-tab" onclick="switchSupportQR('alipay', this)">Alipay</button>
                     </div>
 
@@ -1334,7 +1444,7 @@
             jkopay: { 
                 type: "qr", 
                 img: "images/qr-jkopay.jpg", 
-                hint: "(所有台灣的支付方式2027/1/1才會開放!請選擇其他支付~)請使用 街口、全支付、悠遊付、台灣Pay、台新Pay、玉山Wallet 等支援 TWQR 之 APP 掃描上方條碼，<span class='desktop-br-hint'><br></span>金額不限，每一份支持都是推動我持續創作的動力。",
+                hint: "請使用 街口、全支付、悠遊付、台灣Pay、台新Pay、玉山Wallet 等支援 TWQR 之 APP 掃描上方條碼，<span class='desktop-br-hint'><br></span>金額不限，每一份支持都是推動我持續創作的動力。",
                 url: "",
                 btnText: "手機端請點擊這裡喚起 APP 跳轉 ↗"
                 //http://www.jkos.com/index.html?j=S%2344234c39-bcaa-11f1-8ac0-c81f66f0c432%3AP%23
@@ -1342,7 +1452,7 @@
             linepay: { 
                 type: "qr", 
                 img: "images/qr-linepay.jpg", 
-                hint: "(所有台灣的支付方式2027/1/1才會開放!請選擇其他支付~)請使用 Line Pay 掃描上方條碼，金額不限，每一份支持都是推動我持續創作的動力。",
+                hint: "請使用 Line Pay 掃描上方條碼，金額不限，每一份支持都是推動我持續創作的動力。",
                 url: "",
                 btnText: "手機端請點擊這裡喚起 APP 跳轉 ↗"
                 //https://qrcodepay.line.me/qr/payment/VZOOBJ5y7WSsSkslC9BcR3B0xvW49AvRzmQ3bA%252BUGlhnls2hfP6lLE5grrpI5xTE
@@ -1358,13 +1468,13 @@
                 type: "link", 
                 url: "請在這裡貼上你的藍新收款網址", 
                 btnText: "前往藍新安全支付頁面 ↗", 
-                hint: "(所有台灣的支付方式2027/1/1才會開放!請選擇其他支付~)點擊下方按鈕前往藍新金流安全支付頁面，支援轉帳、信用卡與 Apple Pay，金額不限，每一份支持都是推動我持續創作的動力。" 
+                hint: "點擊下方按鈕前往藍新金流安全支付頁面，支援轉帳、信用卡與 Apple Pay，金額不限，每一份支持都是推動我持續創作的動力。" 
             },
             newebpay_os: { 
                 type: "link", 
                 url: "請在這裡貼上你的藍新收款網址", 
                 btnText: "Go to NewebPay Secure Checkout ↗", 
-                hint: "(所有台灣的支付方式2027/1/1才會開放!請選擇其他支付~)點擊下方按鈕前往藍新金流安全支付頁面，支援轉帳、跨國信用卡與 Apple Pay，金額不限，每一份支持都是推動我持續創作的動力。<br><br>Click the button below to pay securely via NewebPay, supporting international Credit Cards and Apple Pay. Enter any amount you wish—every little bit helps!" 
+                hint: "點擊下方按鈕前往藍新金流安全支付頁面，支援轉帳、跨國信用卡與 Apple Pay，金額不限，每一份支持都是推動我持續創作的動力。<br><br>Click the button below to pay securely via NewebPay, supporting international Credit Cards and Apple Pay. Enter any amount you wish—every little bit helps!" 
             },
             paypal: { 
                 type: "link", 
@@ -1407,26 +1517,21 @@
             tryNext();
         }
 
-        // 獨立分開：按台灣進去只顯示台灣，按海外進去只顯示海外
+        // 2026–2027/1/1：台灣國內支付暫停，兩個按鈕都打開 Ko-fi 與支付寶。
+        // 恢復時把 tw 分支改回：twTabs 顯示、usTabs 隱藏、switchSupportQR('jkopay', twTabs.querySelector('.pay-tab'))
         function openDonate(regionKey) {
             const modal = document.getElementById('donateModal');
             const title = document.getElementById('modalHeaderTitle');
             const twTabs = document.getElementById('twPayTabs');
             const usTabs = document.getElementById('usPayTabs');
 
-            if (regionKey === 'tw') {
-                title.textContent = '🥤 TAIWAN HAPPY WATER™ SUPPLY // 台灣投餵快樂水™';
-                twTabs.style.display = 'grid';
-                usTabs.style.display = 'none';
-                const firstBtn = twTabs.querySelector('.pay-tab');
-                switchSupportQR('jkopay', firstBtn);
-            } else {
-                title.textContent = '🥤 OVERSEAS HAPPY WATER™ SUPPLY // 海外投餵快樂水™';
-                twTabs.style.display = 'none';
-                usTabs.style.display = 'grid';
-                const firstBtn = usTabs.querySelector('.pay-tab');
-                switchSupportQR('paypal', firstBtn);
-            }
+            twTabs.style.display = 'none';
+            usTabs.style.display = 'grid';
+            const paypalBtn = usTabs.querySelector('.pay-tab:not([hidden])');
+            switchSupportQR('paypal', paypalBtn);
+            title.textContent = regionKey === 'tw'
+                ? '🥤 TAIWAN HAPPY WATER™ SUPPLY // 台灣投餵快樂水™'
+                : '🥤 OVERSEAS HAPPY WATER™ SUPPLY // 海外投餵快樂水™';
 
             modal.classList.add('active');
         }
