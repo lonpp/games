@@ -212,9 +212,10 @@
         
         .channel-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; margin-top: 0.3rem;}
 
-        /* 上方只留商店。遊戲進度、IG、Portfolio 在工廠介紹裡 */
-        .social-matrix { grid-template-columns: 1fr; }
+        /* 電腦版：商店 | 遊戲開發。手機改成上下排 */
+        .social-matrix { grid-template-columns: 1fr 1fr; }
         .card-shop { order: 1; grid-column: 1; min-height: 0; }
+        .card-game { order: 2; grid-column: 2; min-height: 0; margin: 0; }
 
         .jump-nav {
             display: flex;
@@ -852,11 +853,15 @@
                 gap: 1rem;
             }
             .card-shop { order: 1; grid-column: 1; }
+            .card-game { order: 2; grid-column: 1; }
 
             .channel-card {
                 animation: card-pulse 3.6s infinite ease-in-out;
             }
             .ration-btn { font-size: 0.78rem; padding: 0.55rem 0.35rem; }
+            .shift-board { grid-template-columns: 1fr; }
+            .shift-clock { font-size: 1.25rem; }
+            .tz-btn { font-size: 0.78rem; padding: 0.45rem 0.3rem; }
 
             .jump-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem; }
             .jump-nav a { justify-content: center; font-size: 0.72rem; padding: 0.4rem 0.4rem; }
@@ -933,6 +938,30 @@
         .shift-next { display: block; white-space: nowrap; }
         .th-en { display: block; color: var(--text-muted); font-size: 0.7rem; font-style: italic; font-weight: 700; letter-spacing: 0; text-transform: none; }
         .shift-note { font-size: 0.8rem; color: var(--text-muted); }
+        .tz-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin: 0.2rem 0 0.9rem; }
+        .tz-btn {
+            background: transparent;
+            color: var(--cyber-pink);
+            border: 1px solid var(--cyber-pink);
+            font-family: inherit;
+            font-weight: 900;
+            font-size: 0.92rem;
+            letter-spacing: 0.4px;
+            padding: 0.55rem 0.4rem;
+            cursor: pointer;
+        }
+        .tz-btn .th-en { color: var(--cyber-blue); }
+        .tz-btn.active { background: var(--cyber-pink); color: #000; box-shadow: 0 0 14px rgba(255, 42, 127, 0.35); }
+        .tz-btn.active .th-en { color: #000; }
+        .shift-next-line { color: var(--text-soft); font-weight: 800; margin: 0 0 0.8rem; }
+        .shift-next-line .shift-en { color: var(--text-muted); font-weight: 700; font-style: italic; margin-left: 0.35rem; }
+        .shift-board { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+        .shift-block { border: 1px solid rgba(255, 42, 127, 0.4); background: #0d0610; padding: 0.95rem 1rem 0.85rem; }
+        .shift-head { display: flex; justify-content: space-between; align-items: baseline; gap: 0.6rem; }
+        .shift-days { font-weight: 900; font-size: 1.15rem; letter-spacing: 1px; }
+        .shift-kind { color: var(--cyber-blue); font-weight: 900; text-shadow: 0 0 6px rgba(0, 240, 255, 0.35); }
+        .shift-en-line { color: var(--text-muted); font-size: 0.8rem; font-style: italic; margin-top: 0.1rem; }
+        .shift-clock { color: var(--cyber-pink); font-weight: 900; font-size: 1.45rem; letter-spacing: 0.5px; margin-top: 0.35rem; }
         .off-list { margin: 0.5rem 0 0 1.1rem; font-size: 0.88rem; }
         .off-list li { margin-bottom: 0.35rem; }
         .off-local { display: block; color: var(--text-muted); font-size: 0.78rem; font-style: italic; }
@@ -1001,6 +1030,16 @@
                         Official merchandise, digital assets & couch factory supply.
                     </p>
                 </a>
+                <a href="game.html" class="channel-card card-game">
+                    <div class="channel-top">
+                        <span class="platform-name">遊戲開發</span>
+                        <span class="badge badge-blue">GAME DEV</span>
+                    </div>
+                    <p class="channel-desc">
+                        製作進度與開發紀錄<br>
+                        Build log, and where the game stands now.
+                    </p>
+                </a>
             </div>
         </header>
 
@@ -1016,54 +1055,22 @@
                     <h3>>_ 01. LIVE SCHEDULE // 直播輪班表</h3>
                     <div class="bilingual-block">
                         <p class="lang-zh">
-                            以下是<strong>直播開台時間</strong>，不是實體店的營業時間。固定<span class="highlight-blue">週五、週六、週日</span>，中間欄是<strong>台灣時間 (UTC+8)</strong>，最右欄會自動換成你的當地時間，夏令時間也算好了。
+                            以下是<strong>直播開台時間</strong>，不是實體店的營業時間。用下面兩個按鈕切換<strong>台灣時間</strong>和<strong>你的當地時間</strong>。早班、午班、晚班會跟著你正在看的時鐘改，夏令時間也算在裡面。
                         </p>
                         <p class="lang-en">
-                            These are <strong>livestream hours</strong>, not a physical store. The factory is live every <span class="highlight-blue">Fri / Sat / Sun</span>. The middle column is <strong>Taiwan time (UTC+8)</strong>; the last column is your local time, daylight saving included.
+                            These are <strong>livestream hours</strong>, not a shop's opening hours. Switch between <strong>Taiwan time</strong> and <strong>your local time</strong>. Morning, afternoon and evening follow the clock you are looking at, daylight saving included.
                         </p>
                     </div>
 
-                    <div class="shift-wrap">
-                        <table class="shift-table">
-                            <thead>
-                                <tr>
-                                    <th>班別<span class="th-en">Shift</span></th>
-                                    <th>台灣時間<span class="th-en">Taiwan (UTC+8)</span></th>
-                                    <th>你的當地時間<span class="th-en">Your time <span id="shiftLocalTz"></span></span></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr data-dow="5" data-start="20:00" data-end="23:30">
-                                    <td>週五 夜班<span class="shift-en">Fri · Night shift</span></td>
-                                    <td>20:00 – 23:30</td>
-                                    <td class="shift-local">…</td>
-                                </tr>
-                                <tr data-dow="6" data-start="08:30" data-end="11:00">
-                                    <td>週六 早班<span class="shift-en">Sat · Morning shift</span></td>
-                                    <td>08:30 – 11:00</td>
-                                    <td class="shift-local">…</td>
-                                </tr>
-                                <tr data-dow="6" data-start="20:00" data-end="23:30">
-                                    <td>週六 夜班<span class="shift-en">Sat · Night shift</span></td>
-                                    <td>20:00 – 23:30</td>
-                                    <td class="shift-local">…</td>
-                                </tr>
-                                <tr data-dow="0" data-start="08:30" data-end="11:00">
-                                    <td>週日 早班<span class="shift-en">Sun · Morning shift</span></td>
-                                    <td>08:30 – 11:00</td>
-                                    <td class="shift-local">…</td>
-                                </tr>
-                                <tr data-dow="0" data-start="20:00" data-end="23:30">
-                                    <td>週日 夜班<span class="shift-en">Sun · Night shift</span></td>
-                                    <td>20:00 – 23:30</td>
-                                    <td class="shift-local">…</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="tz-toggle" role="group" aria-label="時間顯示 Time display">
+                        <button type="button" class="tz-btn" id="tzTaiwan">台灣時間<span class="th-en">Taiwan (UTC+8)</span></button>
+                        <button type="button" class="tz-btn" id="tzLocal">你的當地時間<span class="th-en" id="shiftLocalTz">Your time</span></button>
                     </div>
+                    <p class="shift-next-line" id="shiftNext"></p>
+                    <div class="shift-board" id="shiftBoard"></div>
                     <p class="shift-note">
-                        * 最右欄是「下一次」開台的當地時間，星期同時標中文和英文。<br>
-                        * The last column is the <em>next</em> stream in your local time. Weekdays are shown in Chinese and English.
+                        * 開台的星期和鐘點如果有改，會更新在這一頁。請假日列在下方。<br>
+                        * Weekdays and hours update on this page. Days off are listed below.
                     </p>
 
                     <div class="watch-row">
@@ -1086,8 +1093,8 @@
                     <div id="daysOff" hidden>
                         <div id="daysOffHas">
                             <div class="bilingual-block">
-                                <p class="lang-zh"><span class="highlight-blue">請假不開台</span>　以下日期沒有直播，時間已換成你的當地時間。</p>
-                                <p class="lang-en">Days off — no stream on these dates. Times below are already in your local timezone.</p>
+                                <p class="lang-zh"><span class="highlight-blue">請假不開台</span>　下面的時間跟你上面選的時鐘一樣。</p>
+                                <p class="lang-en">Days off — no stream. Times below use the clock you selected.</p>
                             </div>
                             <ul class="off-list" id="daysOffList"></ul>
                         </div>
@@ -1158,17 +1165,22 @@
                         </p>
                     </div>
 
-                    <a href="game.html" class="channel-card game-card">
-                        <div class="channel-top">
-                            <span class="platform-name">遊戲開發</span>
-                            <span class="badge badge-blue">GAME DEV</span>
-                        </div>
-                        <p class="channel-desc">
-                            製作進度與開發紀錄<br>
-                            Build log, and where the game stands now.
-                        </p>
-                    </a>
                     <div class="sub-links-container factory-links">
+                        <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer" class="terminal-line-link">
+                            <span class="term-prefix pink-prefix">&gt;_</span>
+                            <span class="term-name">TWITCH</span>
+                            <span class="term-desc">// 看直播下指令</span>
+                        </a>
+                        <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer" class="terminal-line-link">
+                            <span class="term-prefix blue-prefix">&gt;_</span>
+                            <span class="term-name">YOUTUBE</span>
+                            <span class="term-desc">// 同步直播與精華</span>
+                        </a>
+                        <a href="https://space.bilibili.com/452768274" target="_blank" rel="noopener noreferrer" class="terminal-line-link">
+                            <span class="term-prefix pink-prefix">&gt;_</span>
+                            <span class="term-name">BILIBILI</span>
+                            <span class="term-desc">// 賽博求生錄播</span>
+                        </a>
                         <a href="https://instagram.com/humanleathercouch" target="_blank" rel="noopener noreferrer" class="terminal-line-link">
                             <span class="term-prefix pink-prefix">&gt;_</span>
                             <span class="term-name">INSTAGRAM</span>
@@ -1486,167 +1498,270 @@ ${message}
         }
     
         /* =========================================
-           輪班表：台灣時間 (UTC+8) → 訪客當地時間。
-           星期固定中英並列，不跟瀏覽器語言走。
-           請假資料來自 /api/schedule（Cloudflare 代抓 Google 試算表）。
+           輪班表。台灣時間 / 當地時間可切換。
+           早班、午班、晚班、深夜跟著目前看的時鐘。
+           開台時段和請假都來自 /api/schedule。
         ========================================= */
         (function () {
             var TW_OFFSET = 8 * 3600 * 1000, DAY = 86400000;
-            var SHIFT_META = {
-                morning: { start: '08:30', end: '11:00', zh: '早班', en: 'Morning' },
-                night:   { start: '20:00', end: '23:30', zh: '夜班', en: 'Night' }
+            var ZH = ["日", "一", "二", "三", "四", "五", "六"];
+            var EN = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+            var BANDS = {
+                morning: { zh: "早班", en: "Morning" },
+                afternoon: { zh: "午班", en: "Afternoon" },
+                evening: { zh: "晚班", en: "Evening" },
+                late: { zh: "深夜", en: "Late night" }
             };
-            var zhDay = new Intl.DateTimeFormat('zh-Hant', { weekday: 'short', timeZone: 'Asia/Taipei' });
-            var enDay = new Intl.DateTimeFormat('en-US', { weekday: 'short', timeZone: 'Asia/Taipei' });
-            var zhDayLocal = new Intl.DateTimeFormat('zh-Hant', { weekday: 'short' });
-            var enDayLocal = new Intl.DateTimeFormat('en-US', { weekday: 'short' });
+            var DEFAULT_SLOTS = [
+                { days: [5, 6, 0], start: "20:00", end: "23:30" },
+                { days: [6, 0], start: "08:30", end: "11:00" }
+            ];
+            var slots = DEFAULT_SLOTS.slice();
+            var offs = [];
+            var configured = false;
+            var mode = "local";
 
-            function pad(n) { return (n < 10 ? '0' : '') + n; }
-            function hm(ms) { var p = String(ms).split(':'); return (parseInt(p[0], 10) * 60 + parseInt(p[1], 10)) * 60000; }
-            function clock(d) { return pad(d.getHours()) + ':' + pad(d.getMinutes()); }
+            function pad(n) { return (n < 10 ? "0" : "") + n; }
+            function hm(text) {
+                var p = String(text).split(":");
+                return (parseInt(p[0], 10) * 60 + parseInt(p[1], 10)) * 60000;
+            }
+            function clock(d) { return pad(d.getHours()) + ":" + pad(d.getMinutes()); }
             function ymdUTC(ms) {
                 var d = new Date(ms);
-                return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate());
+                return d.getUTCFullYear() + "-" + pad(d.getUTCMonth() + 1) + "-" + pad(d.getUTCDate());
             }
             function esc(s) {
-                return String(s == null ? '' : s).replace(/[&<>"]/g, function (ch) {
-                    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch];
+                return String(s == null ? "" : s).replace(/[&<>"]/g, function (ch) {
+                    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch];
                 });
             }
-            function dayBoth(d, local) {
-                var z = local ? zhDayLocal : zhDay;
-                var e = local ? enDayLocal : enDay;
-                return z.format(d) + ' ' + e.format(d);
+            function bandOfHour(h) {
+                if (h >= 5 && h < 12) return "morning";
+                if (h >= 12 && h < 18) return "afternoon";
+                if (h >= 18) return "evening";
+                return "late";
             }
-            function rangeLabel(startMs, endMs) {
-                var s = new Date(startMs), e = new Date(endMs);
-                var endTxt = clock(e);
-                if (s.toDateString() !== e.toDateString()) endTxt = dayBoth(e, true) + ' ' + endTxt;
-                return dayBoth(s, true) + ' ' + clock(s) + ' – ' + endTxt;
+            function taipei(ms) {
+                var x = new Date(ms + TW_OFFSET);
+                return {
+                    dow: x.getUTCDay(),
+                    hour: x.getUTCHours(),
+                    clock: pad(x.getUTCHours()) + ":" + pad(x.getUTCMinutes()),
+                    date: ymdUTC(x.getTime())
+                };
             }
-            function shiftOf(startAttr) { return startAttr === '08:30' ? 'morning' : 'night'; }
-
-            function renderTable(offMap) {
-                var rows = document.querySelectorAll('.shift-table tbody tr[data-dow]');
-                if (!rows.length) return;
+            function todayTW() {
+                var nowTW = new Date(Date.now() + TW_OFFSET);
+                return Date.UTC(nowTW.getUTCFullYear(), nowTW.getUTCMonth(), nowTW.getUTCDate());
+            }
+            function horizonKey() {
+                var nowTW = new Date(Date.now() + TW_OFFSET);
+                return ymdUTC(Date.UTC(nowTW.getUTCFullYear(), nowTW.getUTCMonth() + 2, 1) - DAY);
+            }
+            function at(dayStart, start, end) {
+                var s = dayStart + hm(start) - TW_OFFSET;
+                var e = dayStart + hm(end) - TW_OFFSET;
+                if (e <= s) e += DAY;
+                return { start: s, end: e, twDate: ymdUTC(dayStart) };
+            }
+            function upcoming(dow, start, end) {
                 var now = Date.now();
-                var nowTW = new Date(now + TW_OFFSET);
-                var todayTW = Date.UTC(nowTW.getUTCFullYear(), nowTW.getUTCMonth(), nowTW.getUTCDate());
-                var tzEl = document.getElementById('shiftLocalTz');
-                if (tzEl) {
-                    var tz = '';
-                    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
-                    tzEl.textContent = tz ? '(' + tz.replace(/_/g, ' ') + ')' : '';
+                var today = todayTW();
+                for (var i = 0; i < 8; i++) {
+                    var dayStart = today + i * DAY;
+                    if (new Date(dayStart).getUTCDay() !== dow) continue;
+                    var occ = at(dayStart, start, end);
+                    if (occ.end <= now) continue;
+                    return occ;
                 }
-                rows.forEach(function (row) {
-                    var dow = parseInt(row.getAttribute('data-dow'), 10);
-                    var cell = row.querySelector('.shift-local');
-                    if (!cell) return;
-                    var key = shiftOf(row.getAttribute('data-start'));
-                    for (var i = 0; i < 8; i++) {
-                        var dayStart = todayTW + i * DAY;
-                        if (new Date(dayStart).getUTCDay() !== dow) continue;
-                        var start = dayStart + hm(row.getAttribute('data-start')) - TW_OFFSET;
-                        var end = dayStart + hm(row.getAttribute('data-end')) - TW_OFFSET;
-                        if (end <= now) continue;
-                        var date = ymdUTC(dayStart);
-                        var hit = offMap && (offMap[date + '|all'] || offMap[date + '|' + key]);
-                        cell.innerHTML = '<span class="shift-next">' + esc(rangeLabel(start, end)) + '</span>';
-                        row.classList.toggle('shift-off', !!hit);
-                        var old = row.cells[0].querySelector('.shift-off-tag');
-                        if (old) old.remove();
-                        if (hit) {
-                            var tag = document.createElement('span');
-                            tag.className = 'shift-off-tag';
-                            tag.textContent = hit === true ? '請假不開台 DAY OFF' : ('請假不開台 DAY OFF · ' + hit);
-                            row.cells[0].appendChild(tag);
-                        }
-                        return;
-                    }
-                    cell.textContent = '—';
-                });
+                return null;
+            }
+            function onDate(dateStr, start, end) {
+                var p = dateStr.split("-");
+                return at(Date.UTC(+p[0], +p[1] - 1, +p[2]), start, end);
+            }
+            function viewOf(occ, which) {
+                if (which === "tw") {
+                    var s = taipei(occ.start), e = taipei(occ.end);
+                    return { dow: s.dow, startClock: s.clock, endClock: e.clock, crosses: s.date !== e.date, band: bandOfHour(s.hour), date: s.date };
+                }
+                var sL = new Date(occ.start), eL = new Date(occ.end);
+                return {
+                    dow: sL.getDay(),
+                    startClock: clock(sL),
+                    endClock: clock(eL),
+                    crosses: sL.toDateString() !== eL.toDateString(),
+                    band: bandOfHour(sL.getHours()),
+                    date: sL.getFullYear() + "-" + pad(sL.getMonth() + 1) + "-" + pad(sL.getDate())
+                };
+            }
+            function slotBand(slot) { return bandOfHour(parseInt(slot.start.split(":")[0], 10)); }
+            function offHits(slot, off) {
+                if (!off || !off.shift) return false;
+                if (off.shift === "all") return true;
+                var key = off.shift === "night" ? "evening" : off.shift;
+                return key === slotBand(slot);
+            }
+            function dayBits(days) {
+                return {
+                    zh: days.map(function (d) { return ZH[d]; }).join(""),
+                    en: days.map(function (d) { return EN[d]; }).join(" ")
+                };
+            }
+            function clockLine(v) {
+                var end = v.crosses ? ("次日 " + v.endClock) : v.endClock;
+                var endEn = v.crosses ? ("next day " + v.endClock) : v.endClock;
+                return { zh: v.startClock + " – " + end, en: v.startClock + " – " + endEn };
             }
 
-            function renderDaysOff(list) {
-                var box = document.getElementById('daysOff');
-                var has = document.getElementById('daysOffHas');
-                var empty = document.getElementById('daysOffEmpty');
-                var ul = document.getElementById('daysOffList');
+            function render() {
+                var twBtn = document.getElementById("tzTaiwan");
+                var localBtn = document.getElementById("tzLocal");
+                if (twBtn) twBtn.classList.toggle("active", mode === "tw");
+                if (localBtn) localBtn.classList.toggle("active", mode === "local");
+                var tzEl = document.getElementById("shiftLocalTz");
+                if (tzEl) {
+                    var tz = "";
+                    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) {}
+                    tzEl.textContent = tz ? "Your time (" + tz.replace(/_/g, " ") + ")" : "Your time";
+                }
+
+                var today = ymdUTC(todayTW());
+                var horizon = horizonKey();
+                var liveOffs = offs.filter(function (o) { return o.date >= today && o.date <= horizon; });
+                var board = document.getElementById("shiftBoard");
+                var nextEl = document.getElementById("shiftNext");
+                if (!board) return;
+
+                var soonest = null;
+                for (var n = 0; n < 21 && !soonest; n++) {
+                    var dayStart = todayTW() + n * DAY;
+                    var date = ymdUTC(dayStart);
+                    slots.forEach(function (slot) {
+                        if (new Date(dayStart).getUTCDay() !== undefined && slot.days.indexOf(new Date(dayStart).getUTCDay()) < 0) return;
+                        var occ = at(dayStart, slot.start, slot.end);
+                        if (occ.end <= Date.now()) return;
+                        if (liveOffs.some(function (o) { return o.date === date && offHits(slot, o); })) return;
+                        if (!soonest || occ.start < soonest.occ.start) soonest = { occ: occ, slot: slot };
+                    });
+                }
+                if (nextEl) {
+                    if (!soonest) nextEl.innerHTML = "";
+                    else {
+                        var nv = viewOf(soonest.occ, mode);
+                        var nb = BANDS[nv.band];
+                        var nc = clockLine(nv);
+                        nextEl.innerHTML = "下一班 <span class=\"shift-en\">Next</span> · " +
+                            ZH[nv.dow] + " " + EN[nv.dow] + " · " + nb.zh + " " + nb.en + " · " + nc.zh;
+                    }
+                }
+
+                board.innerHTML = slots.map(function (slot) {
+                    var items = [];
+                    slot.days.forEach(function (dow) {
+                        var occ = upcoming(dow, slot.start, slot.end);
+                        if (!occ) return;
+                        var v = viewOf(occ, mode);
+                        items.push(v);
+                    });
+                    var groups = [];
+                    items.forEach(function (v) {
+                        var key = v.startClock + "|" + v.endClock + "|" + v.band + "|" + (v.crosses ? 1 : 0);
+                        var g = null;
+                        for (var i = 0; i < groups.length; i++) if (groups[i].key === key) g = groups[i];
+                        if (!g) { g = { key: key, v: v, days: [] }; groups.push(g); }
+                        g.days.push(v.dow);
+                    });
+                    var offLabels = [];
+                    liveOffs.forEach(function (o) {
+                        if (!offHits(slot, o)) return;
+                        var dow = new Date(Date.UTC(+o.date.slice(0, 4), +o.date.slice(5, 7) - 1, +o.date.slice(8, 10))).getUTCDay();
+                        if (slot.days.indexOf(dow) < 0) return;
+                        var v = viewOf(onDate(o.date, slot.start, slot.end), mode);
+                        var label = v.date.slice(5).replace("-", "/") + " " + ZH[v.dow];
+                        if (offLabels.indexOf(label) < 0) offLabels.push(label);
+                    });
+                    return groups.map(function (g) {
+                        var bits = dayBits(g.days);
+                        var band = BANDS[g.v.band];
+                        var clocks = clockLine(g.v);
+                        var tag = offLabels.length ? '<span class="shift-off-tag">請假 DAY OFF · ' + esc(offLabels.join("、")) + "</span>" : "";
+                        var enClock = clocks.zh === clocks.en ? "" : '<div class="shift-en-line">' + esc(clocks.en) + "</div>";
+                        return '<article class="shift-block">' +
+                            '<div class="shift-head"><span class="shift-days">' + esc(bits.zh) + '</span><span class="shift-kind">' + band.zh + "</span></div>" +
+                            '<div class="shift-en-line">' + esc(bits.en) + " · " + band.en + "</div>" +
+                            '<div class="shift-clock">' + esc(clocks.zh) + "</div>" +
+                            enClock +
+                            tag + "</article>";
+                    }).join("");
+                }).join("");
+
+                var box = document.getElementById("daysOff");
+                var has = document.getElementById("daysOffHas");
+                var empty = document.getElementById("daysOffEmpty");
+                var ul = document.getElementById("daysOffList");
                 if (!box || !ul) return;
+                if (!configured) { box.hidden = true; return; }
                 box.hidden = false;
-                if (!list.length) {
+                var items = [];
+                liveOffs.forEach(function (o) {
+                    var matched = slots.filter(function (slot) { return offHits(slot, o); });
+                    if (!matched.length) return;
+                    matched.forEach(function (slot) {
+                        var occ = onDate(o.date, slot.start, slot.end);
+                        if (occ.end <= Date.now()) return;
+                        var v = viewOf(occ, mode);
+                        var band = BANDS[v.band];
+                        var clocks = clockLine(v);
+                        items.push({
+                            start: occ.start,
+                            html: esc(v.date.slice(5).replace("-", "/")) + " " + ZH[v.dow] + " " + EN[v.dow] +
+                                " · " + band.zh + " " + band.en + " · " + esc(clocks.zh) +
+                                (o.note ? " · " + esc(o.note) : "")
+                        });
+                    });
+                });
+                items.sort(function (a, b) { return a.start - b.start; });
+                if (!items.length) {
                     has.hidden = true;
                     empty.hidden = false;
-                    ul.innerHTML = '';
+                    ul.innerHTML = "";
                     return;
                 }
                 has.hidden = false;
                 empty.hidden = true;
-                ul.innerHTML = list.map(function (item) {
-                    var local = item.parts.map(function (p) { return esc(p.local); }).join('<br>');
-                    var note = item.note ? ' · ' + esc(item.note) : '';
-                    return '<li>' + esc(item.twLabel) + note +
-                        '<span class="off-local">你的時間 Your time：' + local + '</span></li>';
-                }).join('');
+                ul.innerHTML = items.map(function (item) { return "<li>" + item.html + "</li>"; }).join("");
             }
 
-            function expandOffs(raw) {
-                var now = Date.now();
-                var nowTW = new Date(now + TW_OFFSET);
-                var today = ymdUTC(Date.UTC(nowTW.getUTCFullYear(), nowTW.getUTCMonth(), nowTW.getUTCDate()));
-                var horizon = new Date(Date.UTC(nowTW.getUTCFullYear(), nowTW.getUTCMonth() + 2, 1) - DAY);
-                var horizonKey = ymdUTC(horizon.getTime());
-                var items = [];
-                (raw || []).forEach(function (row) {
-                    if (!row || !row.date || row.date < today || row.date > horizonKey) return;
-                    var keys = row.shift === 'all' ? ['morning', 'night'] : [row.shift];
-                    if (keys[0] !== 'morning' && keys[0] !== 'night') return;
-                    var p = row.date.split('-');
-                    var dayStart = Date.UTC(+p[0], +p[1] - 1, +p[2]);
-                    var parts = [];
-                    keys.forEach(function (k) {
-                        var meta = SHIFT_META[k];
-                        var start = dayStart + hm(meta.start) - TW_OFFSET;
-                        var end = dayStart + hm(meta.end) - TW_OFFSET;
-                        if (end <= now) return;
-                        parts.push({
-                            local: (keys.length > 1 ? meta.zh + ' ' + meta.en + ' ' : '') + rangeLabel(start, end),
-                            start: start
-                        });
-                    });
-                    if (!parts.length) return;
-                    var noon = new Date(dayStart + 12 * 3600000 - TW_OFFSET);
-                    items.push({
-                        start: parts[0].start,
-                        note: row.note || '',
-                        twLabel: row.date.slice(5).replace('-', '/') + ' ' + dayBoth(noon, false) + ' · ' +
-                            (row.shift === 'all' ? '全天 All day' : (SHIFT_META[row.shift].zh + ' ' + SHIFT_META[row.shift].en)),
-                        parts: parts
-                    });
-                });
-                items.sort(function (a, b) { return a.start - b.start; });
-                return items;
+            function setMode(next) {
+                mode = next;
+                try { sessionStorage.setItem("couch-tz", next); } catch (e) {}
+                render();
             }
 
-            function offMapFrom(raw) {
-                var map = {};
-                (raw || []).forEach(function (row) {
-                    if (!row || !row.date) return;
-                    var note = row.note || true;
-                    if (row.shift === 'all') { map[row.date + '|all'] = note; }
-                    else if (row.shift === 'morning' || row.shift === 'night') map[row.date + '|' + row.shift] = note;
-                });
-                return map;
+            var saved = "";
+            try { saved = sessionStorage.getItem("couch-tz") || ""; } catch (e) {}
+            if (saved === "tw" || saved === "local") mode = saved;
+            else {
+                var tzName = "";
+                try { tzName = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e2) {}
+                mode = (tzName === "Asia/Taipei") ? "tw" : "local";
             }
+            var twBtn = document.getElementById("tzTaiwan");
+            var localBtn = document.getElementById("tzLocal");
+            if (twBtn) twBtn.addEventListener("click", function () { setMode("tw"); });
+            if (localBtn) localBtn.addEventListener("click", function () { setMode("local"); });
+            render();
 
-            try { renderTable(null); } catch (err) {}
-
-            fetch('/api/schedule', { cache: 'no-store' })
+            fetch("/api/schedule", { cache: "no-store" })
                 .then(function (res) { return res.ok ? res.json() : null; })
                 .then(function (data) {
-                    if (!data || !data.configured || !Array.isArray(data.daysOff)) return;
-                    renderTable(offMapFrom(data.daysOff));
-                    renderDaysOff(expandOffs(data.daysOff));
+                    if (!data || !data.configured) return;
+                    configured = true;
+                    if (Array.isArray(data.slots) && data.slots.length) slots = data.slots;
+                    if (Array.isArray(data.daysOff)) offs = data.daysOff;
+                    render();
                 })
                 .catch(function () {});
         })();
