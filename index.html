@@ -968,6 +968,10 @@
             .term-desc {
                 font-size: 0.7rem;
             }
+            .cmd-row {
+                grid-template-columns: minmax(0, 1fr) auto;
+            }
+            .cmd-desc { grid-column: 1 / -1; }
 
             .window-content { padding: 1.2rem; }
 
@@ -1055,14 +1059,38 @@
         .off-list li { margin-bottom: 0.35rem; }
         .off-local { display: block; color: var(--text-muted); font-size: 0.78rem; font-style: italic; }
 
-        .cmd-list { display: flex; flex-direction: column; gap: 0.55rem; margin: 1rem 0 1.2rem 0; }
-        .cmd-row {
-            display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 0.9rem;
-            border-left: 3px solid var(--cyber-pink); background-color: #0d0610; padding: 0.5rem 0.9rem;
+        .cmd-list {
+            display: flex; flex-direction: column; gap: 0;
+            margin: 1rem 0 1.2rem 0;
+            border-left: 3px solid var(--cyber-pink);
+            background-color: #0d0610;
         }
+        .cmd-row {
+            display: grid;
+            grid-template-columns: max-content minmax(0, 1fr) auto;
+            align-items: baseline;
+            gap: 0.35rem 0.9rem;
+            padding: 0.55rem 0.9rem;
+            border-bottom: 1px dashed rgba(255, 42, 127, 0.22);
+        }
+        .cmd-row:last-child { border-bottom: none; }
         .cmd-code { color: var(--cyber-blue); font-weight: 900; text-shadow: 0 0 5px rgba(0, 240, 255, 0.4); white-space: nowrap; }
-        .cmd-desc { color: var(--text-soft); font-size: 0.9rem; }
+        .cmd-desc { color: var(--text-soft); font-size: 0.9rem; min-width: 0; }
         .cmd-desc .shift-en { color: var(--text-muted); font-size: 0.78rem; font-style: italic; margin-left: 0.4rem; }
+        .cmd-price { color: var(--cyber-pink); font-weight: 900; font-size: 0.82rem; white-space: nowrap; }
+        .cmd-more { margin: 0 0 1.2rem 0; }
+        .cmd-more summary {
+            cursor: pointer;
+            color: var(--cyber-blue);
+            font-weight: 900;
+            letter-spacing: 0.3px;
+            padding: 0.45rem 0;
+            list-style: none;
+        }
+        .cmd-more summary::-webkit-details-marker { display: none; }
+        .cmd-more summary::before { content: ">_ "; color: var(--cyber-pink); }
+        .cmd-more[open] summary { margin-bottom: 0.4rem; }
+        .cmd-more .cmd-list { margin-top: 0.4rem; }
         .cmd-rules { margin: 0.4rem 0 0 1.2rem; font-size: 0.88rem; }
         .cmd-rules li { margin-bottom: 0.3rem; }
         .window-content code { color: var(--cyber-blue); background: rgba(0, 240, 255, 0.08); padding: 0 5px; font-family: inherit; font-weight: 700; }
@@ -1205,24 +1233,42 @@
                     </div>
 
                     <div class="cmd-list">
-                        <div class="cmd-row"><span class="cmd-code">!bal</span><span class="cmd-desc">查看你有多少金幣<span class="shift-en">Check your coins</span></span></div>
-                        <div class="cmd-row"><span class="cmd-code">!pawn</span><span class="cmd-desc">加入殖民地，變成遊戲裡的殖民者<span class="shift-en">Join the colony as a pawn</span></span></div>
-                        <div class="cmd-row"><span class="cmd-code">!pricecheck 物品名</span><span class="cmd-desc">查某樣東西多少錢<span class="shift-en">Check an item's price</span></span></div>
-                        <div class="cmd-row"><span class="cmd-code">!buy 物品名</span><span class="cmd-desc">買東西送進殖民地<span class="shift-en">Buy an item for the colony</span></span></div>
-                        <div class="cmd-row"><span class="cmd-code">!lookup event 關鍵字</span><span class="cmd-desc">查有哪些事件可以叫<span class="shift-en">Search the event list</span></span></div>
-                        <div class="cmd-row"><span class="cmd-code">!event 事件名</span><span class="cmd-desc">花金幣觸發事件<span class="shift-en">Trigger an event with coins</span></span></div>
+                        <div class="cmd-row"><span class="cmd-code">!bal</span><span class="cmd-desc">查看你有多少金幣<span class="shift-en">Check your coins</span></span><span class="cmd-price">免費 Free</span></div>
+                        <div class="cmd-row"><span class="cmd-code">!pawn</span><span class="cmd-desc">加入殖民地<span class="shift-en">Join the colony</span></span><span class="cmd-price">見回覆 Quoted</span></div>
+                        <div class="cmd-row"><span class="cmd-code">!buy 英文名</span><span class="cmd-desc">買東西。steel 2、beer 12、cat 100<span class="shift-en">Buy. steel 2, beer 12, cat 100</span></span><span class="cmd-price">依物品</span></div>
+                        <div class="cmd-row"><span class="cmd-code">!pricecheck 英文名</span><span class="cmd-desc">查一樣東西多少錢<span class="shift-en">Check one price</span></span><span class="cmd-price">免費 Free</span></div>
+                        <div class="cmd-row"><span class="cmd-code">!lookup event 英文名</span><span class="cmd-desc">查可以叫的事件和價錢<span class="shift-en">Search events and prices</span></span><span class="cmd-price">免費 Free</span></div>
+                        <div class="cmd-row"><span class="cmd-code">!event 英文名</span><span class="cmd-desc">花金幣觸發事件<span class="shift-en">Trigger an event</span></span><span class="cmd-price">依事件</span></div>
                     </div>
 
-                    <div class="bilingual-block">
-                        <p class="lang-zh">
-                            <span class="highlight-blue">買什麼好？</span>物品名用英文，例如：<br>
-                            <code>!buy steel</code>（鋼鐵 2 金幣）、<code>!buy beer</code>（啤酒 12 金幣）、<code>!buy cat</code>（貓 100 金幣）。<br>
-                            想知道別的東西多少錢，用 <code>!pricecheck 物品名</code> 查。
-                        </p>
-                        <p class="lang-en">
-                            <span class="highlight-blue">What can I buy?</span> Use the English item name, e.g. <code>!buy steel</code> (2 coins), <code>!buy beer</code> (12), <code>!buy cat</code> (100). Not sure of a price? Use <code>!pricecheck item</code>.
-                        </p>
-                    </div>
+                    <details class="cmd-more">
+                        <summary>更多指令和價錢 More commands and prices</summary>
+                        <div class="bilingual-block">
+                            <p class="lang-zh">
+                                聊天室搜尋目前認英文名。只有中文時，先查 <a href="https://rimworld.huijiwiki.com/wiki/%E4%B8%AD%E8%8B%B1%E9%A1%B5%E9%9D%A2%E5%AF%B9%E7%85%A7%E8%A1%A8" target="_blank" rel="noopener noreferrer">灰機中英頁面對照</a>，再用英文名查。
+                            </p>
+                            <p class="lang-en">
+                                Chat search currently takes the English name. With only a Chinese name, use the <a href="https://rimworld.huijiwiki.com/wiki/%E4%B8%AD%E8%8B%B1%E9%A1%B5%E9%9D%A2%E5%AF%B9%E7%85%A7%E8%A1%A8" target="_blank" rel="noopener noreferrer">CN/EN wiki index</a> first.
+                            </p>
+                        </div>
+                        <div class="cmd-list">
+                            <div class="cmd-row"><span class="cmd-code">!lookup item 英文名</span><span class="cmd-desc">查可以買的東西和價錢<span class="shift-en">Search buyable items and prices</span></span><span class="cmd-price">免費 Free</span></div>
+                            <div class="cmd-row"><span class="cmd-code">!purchaselist</span><span class="cmd-desc">列出目前可買的東西<span class="shift-en">List what is for sale</span></span><span class="cmd-price">免費 Free</span></div>
+                            <div class="cmd-row"><span class="cmd-code">!healpawn</span><span class="cmd-desc">治療自己、指定的人，或所有人<span class="shift-en">Heal yourself, someone, or everyone</span></span><span class="cmd-price">依傷口</span></div>
+                            <div class="cmd-row"><span class="cmd-code">!revivepawn</span><span class="cmd-desc">復活小人<span class="shift-en">Revive a pawn</span></span><span class="cmd-price">依對象</span></div>
+                            <div class="cmd-row"><span class="cmd-code">!rescueme</span><span class="cmd-desc">訂閱者。被丟下 400，被俘 800。死掉用 !revivepawn<span class="shift-en">Subscribers. Left behind 400, captured 800</span></span><span class="cmd-price">400 / 800</span></div>
+                            <div class="cmd-row"><span class="cmd-code">!nuzzle</span><span class="cmd-desc">撒嬌親近<span class="shift-en">Nuzzle</span></span><span class="cmd-price">8</span></div>
+                            <div class="cmd-row"><span class="cmd-code">!chitchat</span><span class="cmd-desc">閒聊<span class="shift-en">Chat</span></span><span class="cmd-price">10</span></div>
+                            <div class="cmd-row"><span class="cmd-code">!animalchat</span><span class="cmd-desc">跟動物說話<span class="shift-en">Chat with an animal</span></span><span class="cmd-price">10</span></div>
+                            <div class="cmd-row"><span class="cmd-code">!deeptalk</span><span class="cmd-desc">深談<span class="shift-en">Deep talk</span></span><span class="cmd-price">15</span></div>
+                            <div class="cmd-row"><span class="cmd-code">!flirt</span><span class="cmd-desc">調情<span class="shift-en">Flirt</span></span><span class="cmd-price">20</span></div>
+                            <div class="cmd-row"><span class="cmd-code">!buildrapport</span><span class="cmd-desc">累積好感<span class="shift-en">Build rapport</span></span><span class="cmd-price">25</span></div>
+                            <div class="cmd-row"><span class="cmd-code">!reassure</span><span class="cmd-desc">安撫<span class="shift-en">Reassure</span></span><span class="cmd-price">12</span></div>
+                            <div class="cmd-row"><span class="cmd-code">!convert</span><span class="cmd-desc">改文化。還要 15 點業力<span class="shift-en">Convert. Needs 15 karma</span></span><span class="cmd-price">30</span></div>
+                            <div class="cmd-row"><span class="cmd-code">!marry</span><span class="cmd-desc">求婚。還要 10 點業力<span class="shift-en">Propose. Needs 10 karma</span></span><span class="cmd-price">50</span></div>
+                            <div class="cmd-row"><span class="cmd-code">!surgery</span><span class="cmd-desc">手術。終止 300、節育 400、結紮復通 500、放環 250、輸血 200、換體型 800、變性 1000。抽取血原質退 100<span class="shift-en">Surgery. Terminate 300, sterilize 400, reversal 500, IUD 250, transfusion 200, body 800, gender 1000. Hemogen refunds 100</span></span><span class="cmd-price">250–1000</span></div>
+                        </div>
+                    </details>
 
                     <div class="cat-alert" style="margin-top: 0.5rem;">
                         <span class="cat-alert-title">⚠ 使用須知 // HOUSE RULES</span>
