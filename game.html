@@ -2,128 +2,192 @@
 <html lang="zh-Hant-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0b0710">
+    <meta name="description" content="冷冷不冷的皮沙發工廠：獨立模擬遊戲的製作進度與開發紀錄。">
     <title>GAME DEV // 遊戲製作 · HUMAN LEATHER COUCH FACTORY</title>
+    <script src="assets/zh.js"></script>
+    <link rel="stylesheet" href="assets/site.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --bg-color: #0b0710;
-            --surface-color: #150d1a;
-            --text-soft: #f4dce4;
-            --text-muted: #a68a96;
-            --cyber-pink: #ff2a7f;
-            --cyber-blue: #00f0ff;
-            --border-thick: 2px solid var(--cyber-pink);
-            --border-thin: 1px solid rgba(255, 42, 127, 0.4);
+        /* ---------- 製作階段 ---------- */
+        .stages {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 0;
+            margin: 1.6rem 0 0.4rem;
+            counter-reset: stage;
         }
-        html { scroll-behavior: smooth; }
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-soft);
-            font-family: 'JetBrains Mono', 'Courier New', 'PingFang TC', 'Microsoft JhengHei', monospace;
-            line-height: 1.7;
-            min-height: 100vh;
-            background-image:
-                linear-gradient(rgba(255, 42, 127, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 240, 255, 0.04) 1px, transparent 1px);
-            background-size: 30px 30px;
+        .stage {
+            position: relative;
+            padding: 0.9rem 0.9rem 0.85rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--surface-deep);
+            color: var(--muted);
         }
-        a { color: var(--cyber-pink); text-decoration: none; }
-        a:hover { color: var(--cyber-blue); }
-
-        .topbar {
-            position: sticky; top: 0; z-index: 10;
-            display: flex; justify-content: space-between; align-items: center; gap: 1rem;
-            padding: 0.85rem 1.4rem;
-            background: rgba(11, 7, 16, 0.94);
-            border-bottom: 2px solid var(--cyber-pink);
-            backdrop-filter: blur(8px);
+        .stage + .stage { border-left: none; }
+        .stage::before {
+            counter-increment: stage;
+            content: '0' counter(stage);
+            display: block;
+            font-family: var(--font-mono); font-size: 0.7rem; font-weight: 800; letter-spacing: 1px;
+            margin-bottom: 0.25rem;
         }
-        .topbar a {
-            color: var(--cyber-blue);
-            font-weight: 900;
-            letter-spacing: 0.4px;
-            font-size: 0.85rem;
-        }
-        .topbar a:hover { color: #fff; }
-        .brand { color: var(--cyber-pink); font-weight: 900; letter-spacing: 0.6px; font-size: 0.82rem; }
-
-        .container { max-width: 860px; margin: 0 auto; padding: 2.2rem 1.4rem 4rem; }
-
-        .terminal-window { border: var(--border-thick); background: #08040a; position: relative; }
-        .terminal-window::after {
-            content: ''; position: absolute; bottom: -5px; right: -5px; width: 100%; height: 100%;
-            border: 1px solid var(--cyber-blue); z-index: -1;
-        }
-        .window-header {
-            display: flex; justify-content: space-between; gap: 0.6rem;
-            padding: 0.6rem 1.2rem;
+        .stage b { display: block; font-size: 0.98rem; font-weight: 800; color: var(--text); }
+        .stage small { display: block; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.8px; margin-top: 0.1rem; }
+        .stage .state { display: inline-block; margin-top: 0.55rem; font-family: var(--font-mono); font-size: 0.64rem; font-weight: 800; letter-spacing: 0.8px; padding: 0.05rem 0.45rem; border: 1px solid currentColor; }
+        .stage.done { color: var(--blue); }
+        .stage.now {
+            color: var(--pink);
             background: rgba(255, 42, 127, 0.1);
-            border-bottom: var(--border-thin);
-            color: var(--cyber-blue);
-            font-weight: 900;
-            font-size: 0.85rem;
+            border-color: var(--pink);
+            box-shadow: inset 0 0 18px rgba(255, 42, 127, 0.18), 0 0 18px rgba(255, 42, 127, 0.25);
+            z-index: 1;
         }
-        .window-content { padding: 2rem 1.6rem 2.2rem; }
-        h1 {
-            font-size: 1.7rem; line-height: 1.25; margin-bottom: 0.35rem;
-            color: #fff;
-            text-shadow: 0 0 8px var(--cyber-pink), 2px 2px 0 var(--cyber-blue);
+        .stage.now b { color: var(--text-strong); }
+        .stage.now .state { background: var(--pink); color: #000; border-color: var(--pink); animation: now-pulse 2.4s ease-in-out infinite; }
+        @keyframes now-pulse { 50% { box-shadow: 0 0 12px var(--pink); } }
+        .stage-bar { position: relative; height: 3px; margin-top: -1px; background: rgba(255, 255, 255, 0.06); overflow: hidden; }
+        .stage-bar i { position: absolute; inset: 0 auto 0 0; background: linear-gradient(90deg, var(--blue), var(--pink)); box-shadow: 0 0 10px var(--pink); }
+
+        /* ---------- 開發紀錄 ---------- */
+        .log { position: relative; display: flex; flex-direction: column; gap: 1rem; padding-left: 1.4rem; }
+        .log::before { content: ''; position: absolute; left: 0.3rem; top: 0.4rem; bottom: 0.4rem; width: 1px; background: linear-gradient(var(--pink), rgba(0, 240, 255, 0.3)); }
+        .log-row { position: relative; padding: 0.85rem 1rem; background: var(--surface-deep); border: 1px solid var(--line-pink); }
+        .log-row::before {
+            content: ''; position: absolute; left: calc(-1.4rem + 0.3rem - 4px); top: 1.15rem;
+            width: 9px; height: 9px; background: var(--pink); box-shadow: 0 0 10px var(--pink);
         }
-        .sys-tag {
-            display: inline-block; margin-bottom: 0.9rem;
-            background: var(--cyber-pink); color: #000;
-            font-size: 0.78rem; font-weight: 900;
-            padding: 0.15rem 0.5rem; letter-spacing: 0.4px;
+        .log-date { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 800; color: var(--blue); letter-spacing: 0.5px; }
+        .log-tag { margin-left: 0.5rem; font-family: var(--font-mono); font-size: 0.66rem; font-weight: 800; color: var(--pink); border: 1px solid var(--line-pink); padding: 0 0.4rem; }
+        .log-row p { margin-top: 0.35rem; }
+        .log-empty { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); padding-left: 1.4rem; }
+
+        /* ---------- 跟進進度 ---------- */
+        .follow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.8rem; }
+        .follow a {
+            display: flex; flex-direction: column; gap: 0.25rem;
+            padding: 1rem 1.1rem;
+            background: var(--surface-deep);
+            border: 1px solid var(--line-pink);
+            color: var(--text);
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
         }
-        .lang-zh { color: var(--text-soft); margin-bottom: 0.45rem; }
-        .lang-en { color: var(--text-muted); font-size: 0.88rem; font-style: italic; margin-bottom: 1.6rem; }
-        h2 {
-            color: var(--cyber-blue);
-            font-size: 1rem;
-            border-bottom: 1px dashed rgba(0, 240, 255, 0.3);
-            padding-bottom: 0.35rem;
-            margin: 0.4rem 0 1rem;
+        .follow a:hover { color: var(--text); text-shadow: none; border-color: var(--blue); box-shadow: 0 0 18px rgba(0, 240, 255, 0.22); transform: translateY(-3px); }
+        .follow b { font-family: var(--font-mono); font-size: 1rem; letter-spacing: 1px; color: var(--text-strong); }
+        .follow b i { font-style: normal; color: var(--blue); margin-left: 0.3rem; }
+        .follow span { font-size: 0.84rem; color: var(--muted); }
+        html[data-region="cn"] .follow .f-bili { order: -1; }
+        .support-cta {
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;
+            margin-top: 1.4rem; padding: 1rem 1.2rem;
+            border: 1px dashed rgba(255, 179, 71, 0.5);
+            background: rgba(255, 179, 71, 0.04);
         }
-        .log { display: flex; flex-direction: column; gap: 0.7rem; }
-        .log-row {
-            border-left: 3px solid var(--cyber-pink);
-            background: #0d0610;
-            padding: 0.7rem 0.95rem;
+        .support-cta p { font-size: 0.9rem; }
+        .support-cta p b { color: var(--amber); }
+
+        @media (max-width: 768px) {
+            .stages { grid-template-columns: 1fr 1fr; }
+            .stage + .stage { border-left: 1px solid rgba(255, 255, 255, 0.08); }
+            .stage:nth-child(n+3) { border-top: none; }
+            .follow { grid-template-columns: 1fr; }
+            .support-cta .cyber-btn { width: 100%; }
         }
-        .log-date { color: var(--cyber-blue); font-weight: 900; font-size: 0.82rem; }
-        .log-en { display: block; color: var(--text-muted); font-size: 0.82rem; font-style: italic; margin-top: 0.15rem; }
-        .back-bottom { display: inline-block; margin-top: 1.6rem; font-weight: 900; letter-spacing: 0.4px; }
     </style>
 </head>
 <body>
-    <div class="topbar">
-        <a href="index.html">← 回工廠 BACK</a>
-        <span class="brand">HUMAN LEATHER COUCH FACTORY</span>
-    </div>
-    <div class="container">
+    <header class="site-bar">
+        <div class="site-bar-inner">
+            <a class="site-back" href="index.html">← <b>皮沙發工廠</b><span class="mono"> FACTORY</span></a>
+            <nav class="site-nav" aria-label="頁面 Pages">
+                <a href="shop.html">商店<span class="en"> SHOP</span></a>
+                <a href="game.html" aria-current="page">遊戲開發<span class="en"> GAME</span></a>
+            </nav>
+            <div class="lang-switch" role="group" aria-label="Language" data-no-zh>
+                <button type="button" data-set-lang="hant" title="繁體中文・台灣">繁</button>
+                <button type="button" data-set-lang="hans" title="简体中文・中国大陆">简</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="page">
         <section class="terminal-window">
             <div class="window-header">
-                <span>SHELL:~/factory/game.md</span>
-                <span>[BUILD_LOG]</span>
+                <span class="window-path"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>SHELL:~/factory/game.md</span>
+                <span class="window-mode">[BUILD_LOG]</span>
             </div>
             <div class="window-content">
                 <div class="sys-tag">STATUS: PAPER PROTOTYPE</div>
-                <h1>遊戲製作<br>GAME DEV</h1>
-                <p class="lang-zh">這一頁只記錄那款模擬遊戲的製作進度。它還在從紙上原型走向可玩的版本，有新的進度會直接寫在下面。</p>
-                <p class="lang-en">This page is the build log for the simulation. It is still on the way from a paper prototype to something you can play. New progress gets written here.</p>
+                <h1 class="page-title">遊戲開發<small>GAME DEV // INDIE SIMULATION</small></h1>
+                <p class="lang-zh" style="margin-top: 1.1rem; max-width: 40em;">這一頁只記錄那款模擬遊戲的製作進度。它還在從紙上原型走向可玩的版本，有新的進度會直接寫在下面。</p>
+                <p class="lang-en long" style="margin-top: 0.3rem; max-width: 46em;">This page is the build log for the simulation. It is still on the way from a paper prototype to something you can play. New progress gets written here.</p>
 
-                <h2>>_ PROGRESS // 進度</h2>
-                <div class="log">
-                    <div class="log-row">
-                        <span class="log-date">2026-10 · 頁面建立</span>
-                        <span>目前階段：紙上原型。可玩版本還沒有。</span>
-                        <span class="log-en">Page opened. Current stage: paper prototype. Nothing playable yet.</span>
-                    </div>
+                <!-- 製作階段：進到下一階段時，把 class="stage now" 移到下一格，前面的改成 "stage done"，並調整 stage-bar 的寬度 -->
+                <div class="stages" aria-label="製作階段 Stages">
+                    <div class="stage now"><b>紙上原型</b><small>PAPER</small><span class="state">NOW 進行中</span></div>
+                    <div class="stage"><b>可玩原型</b><small>PLAYABLE</small><span class="state">NEXT</span></div>
+                    <div class="stage"><b>測試</b><small>TESTING</small><span class="state">—</span></div>
+                    <div class="stage"><b>正式版</b><small>RELEASE</small><span class="state">—</span></div>
                 </div>
-                <a class="back-bottom" href="index.html">← 回皮沙發工廠</a>
+                <div class="stage-bar" aria-hidden="true"><i style="width: 12%;"></i></div>
             </div>
         </section>
-    </div>
+
+        <section class="terminal-window">
+            <div class="window-header">
+                <span class="window-path"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>SHELL:~/factory/devlog.md</span>
+                <span class="window-mode">[APPEND_ONLY]</span>
+            </div>
+            <div class="window-content">
+                <h2 class="section-title"><span class="sec-no">01</span><span class="sec-zh">開發紀錄</span><span class="sec-en">DEVLOG</span></h2>
+                <!-- 新紀錄加在最上面：複製一整個 log-row 改日期和內容 -->
+                <div class="log">
+                    <article class="log-row">
+                        <span class="log-date">2026-10</span><span class="log-tag">PAGE OPEN</span>
+                        <p class="lang-zh">頁面建立。目前階段：紙上原型，可玩版本還沒有。</p>
+                        <p class="lang-en">Page opened. Current stage: paper prototype. Nothing playable yet.</p>
+                    </article>
+                </div>
+                <p class="log-empty" style="margin-top: 1rem;">&gt;_ 更多紀錄撰寫中 // more entries soon_</p>
+            </div>
+        </section>
+
+        <section class="terminal-window">
+            <div class="window-header">
+                <span class="window-path"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>SHELL:~/factory/follow.md</span>
+                <span class="window-mode">[SUBSCRIBE]</span>
+            </div>
+            <div class="window-content">
+                <h2 class="section-title"><span class="sec-no">02</span><span class="sec-zh">跟上進度</span><span class="sec-en">FOLLOW THE BUILD</span></h2>
+                <div class="follow">
+                    <a class="f-bili" href="https://space.bilibili.com/452768274" target="_blank" rel="noopener noreferrer"><b>BILIBILI<i>↗</i></b><span>錄播與中文社群</span></a>
+                    <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer"><b>YOUTUBE<i>↗</i></b><span>直播與精華</span></a>
+                    <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer"><b>TWITCH<i>↗</i></b><span>看直播、邊看邊下指令</span></a>
+                </div>
+                <div class="support-cta">
+                    <p>每一口<b>快樂水™</b>都會變成深夜除錯的咖啡因。想讓它早點從紙上走出來？</p>
+                    <a class="cyber-btn" href="index.html#donate">🥤 投餵支持開發 →</a>
+                </div>
+            </div>
+        </section>
+
+        <footer class="site-footer">
+            <p>冷冷不冷的皮沙發工廠 // HUMAN LEATHER COUCH FACTORY - lonlon<span class="sig">TRANSMITTING FROM CYBER WASTELAND. &copy; 2026.</span></p>
+            <nav aria-label="站內連結 Site links">
+                <a href="index.html">HOME</a>
+                <a href="index.html#guide">COMMANDS</a>
+                <a href="shop.html">SHOP</a>
+                <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3817038607" target="_blank" rel="noopener noreferrer">OMNISTREAM↗</a>
+            </nav>
+        </footer>
+    </main>
+
+    <button type="button" class="back-to-top" id="backToTop" aria-label="回到頂部 Back to top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"><b>↑</b>TOP</button>
+    <script>
+        (function () {
+            var btn = document.getElementById('backToTop');
+            window.addEventListener('scroll', function () { btn.classList.toggle('visible', window.scrollY > 300); }, { passive: true });
+        })();
+    </script>
 </body>
 </html>

@@ -2,301 +2,244 @@
 <html lang="zh-Hant-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CYBER SHOP // HUMAN LEATHER COUCH FACTORY</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0b0710">
+    <meta name="description" content="冷冷不冷的皮沙發工廠商店：實體版畫與攝影作品。">
+    <title>SHOP // 商店 · HUMAN LEATHER COUCH FACTORY</title>
+    <script src="assets/zh.js"></script>
+    <link rel="stylesheet" href="assets/site.css">
     <style>
-        /* =========================================
-           CYBERPUNK & NEON TRICOLOR RESET
-        ========================================= */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --bg-color: #0b0710;
-            --surface-color: #150d1a;
-            --text-soft: #f4dce4;
-            --text-muted: #a68a96;
-            --cyber-pink: #ff2a7f;
-            --cyber-blue: #00f0ff;
-            --cyber-yellow: #ffcc00;
-            --border-thick: 2px solid var(--cyber-pink);
-            --border-thin: 1px solid rgba(255, 42, 127, 0.4);
-            --gray-color: rgba(255, 255, 255, 0.2);
+        /* ---------- 商店抬頭 ---------- */
+        .shop-hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 1.8rem; align-items: start; }
+        .shop-lang { display: inline-flex; margin-top: 1rem; border: 1px solid var(--line-pink); font-family: var(--font-mono); }
+        .shop-lang button { min-height: 38px; min-width: 52px; background: none; border: none; color: var(--muted); font-family: inherit; font-size: 0.76rem; font-weight: 800; padding: 0.3rem 0.8rem; cursor: pointer; }
+        .shop-lang button.active { background: var(--pink); color: #000; }
+        .order-steps { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; counter-reset: step; }
+        .order-steps li {
+            position: relative;
+            display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.7rem; align-items: start;
+            padding: 0.6rem 0.8rem;
+            background: var(--surface-deep);
+            border: 1px solid rgba(0, 240, 255, 0.18);
+            font-size: 0.88rem; line-height: 1.6;
         }
-
-        html { scroll-behavior: smooth; width: 100%; overflow-x: hidden; }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-soft);
-            font-family: 'JetBrains Mono', 'Courier New', 'PingFang TC', 'Microsoft JhengHei', monospace;
-            line-height: 1.7;
-            -webkit-font-smoothing: antialiased;
-            padding-bottom: 8vh;
-            width: 100%;
-            overflow-x: hidden;
-            background-image: 
-                linear-gradient(rgba(255, 42, 127, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 240, 255, 0.04) 1px, transparent 1px);
-            background-size: 30px 30px;
+        .order-steps li::before {
+            counter-increment: step; content: '0' counter(step);
+            font-family: var(--font-mono); font-size: 0.72rem; font-weight: 800;
+            color: #000; background: var(--blue); padding: 0.05rem 0.4rem; margin-top: 0.15rem;
         }
+        .ship-note { margin-top: 0.8rem; font-size: 0.85rem; color: var(--blue); }
+        .pay-note { margin-top: 0.6rem; font-size: 0.82rem; color: var(--amber); border-left: 2px solid var(--amber); padding-left: 0.7rem; }
 
-        a { color: var(--cyber-pink); text-decoration: none; cursor: crosshair; transition: all 0.2s;}
-        a:hover { color: var(--cyber-blue); text-shadow: 0 0 8px var(--cyber-blue); }
+        /* ---------- 分類 ---------- */
+        .filter-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .filter-btn {
+            display: inline-flex; align-items: baseline; gap: 0.4rem;
+            min-height: 40px;
+            padding: 0.45rem 0.95rem;
+            background: rgba(0, 240, 255, 0.04);
+            border: 1px solid var(--line-blue);
+            color: var(--muted);
+            font-family: var(--font-mono); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.5px;
+            cursor: pointer;
+            clip-path: var(--cut);
+            transition: background-color 0.15s, color 0.15s;
+        }
+        .filter-btn:hover { color: var(--text-strong); border-color: var(--blue); }
+        .filter-btn.active { background: var(--blue); color: #000; border-color: var(--blue); box-shadow: 0 0 14px rgba(0, 240, 255, 0.35); }
+        .filter-zh { font-family: var(--font-body); font-size: 0.76rem; font-weight: 700; opacity: 0.85; }
 
-        /* =========================================
-           TOP NAVIGATION BANNER
-        ========================================= */
-        .support-banner {
-            position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important;
-            width: 100% !important; z-index: 9999 !important; 
-            border-bottom: 2px solid var(--cyber-blue);
-            background: rgba(11, 7, 16, 0.95);
-            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-            padding: 0.95rem 1.8rem;
-            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.15);
-        }
-        .banner-inner {
-            max-width: 1100px; margin: 0 auto;
-            display: flex; justify-content: space-between; align-items: center; gap: 1.2rem;
-        }
-        .nav-return {
-            font-weight: 900; color: var(--cyber-blue); text-transform: uppercase;
-            letter-spacing: 1px; display: inline-flex; align-items: center; gap: 0.5rem;
-        }
-        .nav-brand { font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
-
-        /* 高亮賽博按鈕 */
-        .cyber-btn {
-            display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
-            background-color: transparent; color: var(--cyber-pink);
-            border: 1px solid var(--cyber-pink); padding: 0.62rem 1.25rem;
-            font-weight: 900; font-family: inherit; font-size: 0.92rem;
-            cursor: pointer; text-transform: uppercase;
-            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-            transition: all 0.15s ease; position: relative;
-            box-shadow: inset 0 0 10px rgba(255, 42, 127, 0.1);
-        }
-        .cyber-btn:hover:not(:disabled) {
-            background-color: var(--cyber-pink); color: #000;
-            box-shadow: 0 0 20px var(--cyber-pink); border-color: transparent;
-        }
-        .cyber-btn:disabled {
-            opacity: 0.4; border-color: var(--text-muted); color: var(--text-muted);
-            box-shadow: none; cursor: not-allowed;
-        }
-
-        /* =========================================
-           MAIN CONTAINER & HEADER
-        ========================================= */
-        .container { max-width: 1100px; margin: 0 auto; padding: calc(60px + 2.5rem) 1.5rem 3rem 1.5rem; display: flex; flex-direction: column; gap: 3rem; }
-
-        header { 
-            border: var(--border-thick); padding: 2.5rem; background-color: var(--surface-color);
-            position: relative; box-shadow: 10px 10px 0px rgba(255, 42, 127, 0.2), -2px -2px 0px rgba(0, 240, 255, 0.2);
-            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
-        }
-        .sys-tag { 
-            font-size: 0.85rem; font-weight: 900; background-color: var(--cyber-blue); color: #000; 
-            display: inline-block; padding: 0.2rem 0.6rem; margin-bottom: 1rem;
-            box-shadow: 0 0 10px var(--cyber-blue); letter-spacing: 0.5px;
-        }
-        h1 { font-size: 2.3rem; font-weight: 900; line-height: 1.2; color: #fff; text-shadow: 0 0 8px var(--cyber-blue); letter-spacing: -0.5px; margin-bottom: 1rem; }
-        
-        .shop-notice { font-size: 0.95rem; color: var(--text-soft); border-left: 3px solid var(--cyber-pink); padding-left: 1rem; line-height: 1.8; }
-        .lang-switch-wrap { font-size: 0.85rem; margin-top: 1rem; display: block; }
-        .lang-btn { color: var(--text-muted); cursor: pointer; transition: color 0.2s ease; font-weight: bold; }
-        .lang-btn:hover, .lang-btn.active { color: var(--cyber-pink); text-shadow: 0 0 8px rgba(255,42,127,0.5); }
-
-        /* =========================================
-           FILTERS & GRID
-        ========================================= */
-        .filter-bar { display: flex; gap: 1.5rem; border-bottom: 1px dashed var(--cyber-blue); padding-bottom: 1rem; flex-wrap: wrap; }
-        .filter-btn { 
-            background: none; border: none; color: var(--text-muted); font-family: inherit; 
-            font-size: 1.05rem; font-weight: 900; cursor: pointer; transition: all 0.2s ease; 
-            text-transform: uppercase; display: flex; flex-direction: column; align-items: flex-start;
-        }
-        .filter-btn:hover, .filter-btn.active { color: var(--cyber-blue); text-shadow: 0 0 8px var(--cyber-blue); }
-        .filter-zh { font-size: 0.75rem; font-weight: normal; opacity: 0.8; }
-
-        .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; margin-top: 1rem; }
-        .loading-text { font-size: 1rem; color: var(--cyber-pink); font-weight: bold; animation: pulse 1.5s infinite; grid-column: 1 / -1; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-
-        /* PRODUCT CARDS (繼承首頁的 channel-card 特效) */
+        /* ---------- 商品 ---------- */
+        .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.4rem; }
+        .loading-text { grid-column: 1 / -1; font-family: var(--font-mono); font-size: 0.9rem; color: var(--pink); animation: pulse 1.5s infinite; }
+        @keyframes pulse { 50% { opacity: 0.4; } }
         .product-card {
-            border: var(--border-thin); padding: 1.2rem; background-color: #0d0610;
+            position: relative;
             display: flex; flex-direction: column; justify-content: space-between; gap: 1rem;
-            transition: all 0.2s ease; position: relative; overflow: hidden;
-            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+            padding: 1rem;
+            background: rgba(13, 6, 16, 0.92);
+            border: 1px solid var(--line-pink);
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
         }
-        .product-card::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.15), transparent); transition: 0.5s; z-index: 1; pointer-events: none;
+        .product-card:hover { border-color: var(--blue); box-shadow: 0 0 18px rgba(0, 240, 255, 0.22); transform: translateY(-3px); }
+        .product-img-wrap { position: relative; width: 100%; aspect-ratio: 4 / 3; background: #000; overflow: hidden; border: 1px solid rgba(0, 240, 255, 0.2); cursor: zoom-in; }
+        .product-img-wrap img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.35s ease; }
+        .product-img-wrap:hover img { transform: scale(1.04); }
+        .product-img-wrap::after {
+            content: '⤢'; position: absolute; right: 0.5rem; bottom: 0.4rem;
+            font-family: var(--font-mono); font-size: 0.9rem; color: var(--blue);
+            background: rgba(11, 7, 16, 0.75); padding: 0 0.35rem;
         }
-        .product-card:hover::before { left: 100%; }
-        .product-card:hover { border-color: var(--cyber-blue); box-shadow: 0 0 15px rgba(0, 240, 255, 0.25); transform: translateY(-3px); }
-
-        .product-img-wrap { position: relative; width: 100%; aspect-ratio: 4/3; background: #000; overflow: hidden; border: 1px solid rgba(0,240,255,0.2); cursor: zoom-in; }
-        .product-img-wrap img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.3s ease; }
-        .product-img-wrap:hover img { transform: scale(1.03); }
-
-        .product-meta { display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
-        .product-id-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed rgba(255,42,127,0.3); padding-bottom: 0.3rem; }
-        .product-id { font-size: 0.8rem; font-weight: bold; color: var(--cyber-pink); letter-spacing: 1px; }
-        .meta-zoom-info { font-size: 0.8rem; color: var(--cyber-blue); cursor: zoom-in; display: inline-flex; align-items: center; gap: 0.35rem; }
+        .product-meta { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.9rem; }
+        .product-id-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed rgba(255, 42, 127, 0.3); padding-bottom: 0.3rem; }
+        .product-id { font-family: var(--font-mono); font-size: 0.74rem; font-weight: 800; color: var(--pink); letter-spacing: 1px; }
+        .meta-zoom-info { font-family: var(--font-mono); font-size: 0.74rem; color: var(--blue); cursor: zoom-in; display: inline-flex; align-items: center; gap: 0.35rem; }
         .meta-zoom-info svg { width: 12px; height: 12px; stroke: currentColor; stroke-width: 1.5; fill: none; }
-        
-        .product-title { font-size: 1.15rem; font-weight: 900; color: #fff; line-height: 1.4; }
-        .product-title-en { font-size: 0.82rem; color: var(--text-muted); font-style: italic; display: block; font-weight: normal; }
-        .product-specs { font-size: 0.85rem; color: var(--text-soft); opacity: 0.8; margin-top: 0.5rem; }
-        
-        .product-footer { display: flex; justify-content: space-between; align-items: flex-end; padding-top: 0.5rem; }
-        .product-price { font-size: 1.2rem; font-weight: bold; color: var(--cyber-blue); }
-        .product-stock { font-size: 0.8rem; color: var(--text-muted); font-weight: bold; }
+        .product-title { font-size: 1.1rem; font-weight: 900; color: var(--text-strong); line-height: 1.4; }
+        .product-title-en { display: block; font-family: var(--font-mono); font-size: 0.74rem; font-weight: 700; color: var(--muted); letter-spacing: 0.5px; margin-top: 0.15rem; }
+        .product-specs { font-size: 0.84rem; color: var(--muted); }
+        .product-footer { display: flex; justify-content: space-between; align-items: flex-end; gap: 0.6rem; }
+        .product-price { font-family: var(--font-mono); font-size: 1.2rem; font-weight: 800; color: var(--blue); text-shadow: 0 0 10px rgba(0, 240, 255, 0.35); }
+        .product-stock { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 800; color: var(--muted); }
+        .product-card .cyber-btn { width: 100%; }
 
-        /* =========================================
-           TERMINAL POLICIES ACCORDION
-        ========================================= */
-        .policies-accordion { border: var(--border-thick); background-color: #08040a; padding: 1rem; margin-top: 2rem; position: relative; }
-        .policies-accordion::before { content: 'SYS.DOCS // SHOP_POLICIES.md'; position: absolute; top: -10px; left: 1rem; background: var(--bg-color); color: var(--cyber-pink); font-size: 0.8rem; font-weight: bold; padding: 0 0.5rem; }
-        
-        .policy-item { border-bottom: 1px dashed rgba(0, 240, 255, 0.3); }
+        /* ---------- 政策 ---------- */
+        .policies-accordion { display: flex; flex-direction: column; }
+        .policy-item { border-bottom: 1px dashed rgba(0, 240, 255, 0.25); }
         .policy-item:last-child { border-bottom: none; }
         .policy-summary {
-            list-style: none; cursor: pointer; padding: 1.2rem 0.5rem; display: flex; justify-content: space-between; align-items: center;
-            font-size: 0.95rem; font-weight: bold; color: var(--cyber-blue); text-transform: uppercase;
+            list-style: none; cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+            padding: 1rem 0.3rem;
+            font-family: var(--font-mono); font-size: 0.86rem; font-weight: 800; color: var(--blue);
         }
         .policy-summary::-webkit-details-marker { display: none; }
-        .policy-summary:hover { background: rgba(0, 240, 255, 0.05); }
-        .policy-content { padding: 0 0.5rem 1.5rem 0.5rem; font-size: 0.88rem; line-height: 1.8; color: var(--text-soft); }
-        .policy-content ul { list-style: square inside; color: var(--cyber-pink); margin-top: 0.5rem; }
-        .policy-content ul span { color: var(--text-soft); }
+        .policy-summary:hover { background: rgba(0, 240, 255, 0.04); }
+        .policy-summary-icon { color: var(--pink); }
+        .policy-content { padding: 0 0.3rem 1.2rem; font-size: 0.9rem; }
+        .policy-content ul { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+        .policy-content li::before { content: '▸ '; color: var(--pink); }
+        .policy-content strong { color: var(--text-strong); }
 
-        /* =========================================
-           MODALS (CHECKOUT & LIGHTBOX)
-        ========================================= */
+        /* ---------- 彈窗 ---------- */
         .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(5, 2, 8, 0.95); backdrop-filter: blur(8px);
-            z-index: 20000; display: none; justify-content: center; align-items: center; padding: 1rem;
+            position: fixed; inset: 0;
+            background: rgba(5, 2, 8, 0.92);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            z-index: 20000;
+            display: none; justify-content: center; align-items: center;
+            padding: 1rem;
         }
         .modal-overlay.active { display: flex; }
-        
         .modal-box {
-            background-color: var(--bg-color); color: var(--text-soft); border: 2px solid var(--cyber-blue);
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.2); max-width: 540px; width: 100%; padding: 0;
+            width: 100%; max-width: 540px; max-height: min(92vh, 960px);
+            overflow-y: auto; overscroll-behavior: contain;
             display: flex; flex-direction: column;
+            background: var(--bg);
+            border: 1px solid var(--blue);
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.18);
             clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
-            max-height: 90vh; overflow-y: auto;
         }
-        .modal-box::-webkit-scrollbar { width: 6px; }
-        .modal-box::-webkit-scrollbar-thumb { background: var(--cyber-pink); }
-        
-        .modal-header { 
-            background-color: rgba(0, 240, 255, 0.1); color: var(--cyber-blue); border-bottom: 1px solid var(--cyber-blue);
-            display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.4rem;
+        .modal-header {
+            position: sticky; top: 0; z-index: 2;
+            display: flex; justify-content: space-between; align-items: center; gap: 0.75rem;
+            padding: 0.85rem 1rem 0.85rem 1.4rem;
+            background: rgba(11, 7, 16, 0.96);
+            border-bottom: 1px solid var(--line-blue);
         }
-        .modal-header h2 { font-size: 1rem; margin: 0; font-weight: 900; text-shadow: 0 0 5px var(--cyber-blue); }
-        .close-btn { background: transparent; color: var(--cyber-blue); border: none; font-size: 1.5rem; font-weight: 900; cursor: pointer; transition: 0.2s; }
-        .close-btn:hover { color: var(--cyber-pink); text-shadow: 0 0 10px var(--cyber-pink); transform: scale(1.1);}
-        
-        .modal-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
-
-        /* TABS (Checkout) */
-        .pay-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+        .modal-header h2 { font-family: var(--font-mono); font-size: 0.92rem; font-weight: 800; color: var(--blue); }
+        .close-btn { width: 40px; height: 40px; background: none; border: 1px solid var(--line-blue); color: var(--blue); font-size: 1.1rem; font-weight: 900; cursor: pointer; }
+        .close-btn:hover { color: var(--pink); border-color: var(--pink); }
+        .modal-body { padding: 1.4rem; display: flex; flex-direction: column; gap: 1.4rem; }
+        .modal-item { font-size: 0.9rem; line-height: 1.7; border-left: 2px solid var(--pink); padding-left: 1rem; font-family: var(--font-mono); }
+        .step-title { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 800; color: var(--blue); margin-bottom: 0.6rem; }
+        .step-title.pink { color: var(--pink); margin-bottom: 0; }
+        .pay-tabs { display: grid; grid-template-columns: repeat(auto-fit, minmax(84px, 1fr)); gap: 0.5rem; }
+        .pay-tab[hidden] { display: none !important; }
         .pay-tab {
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            padding: 0.6rem 0.3rem; min-height: 52px; background: rgba(255, 255, 255, 0.03);
-            color: var(--text-soft); border: 1px solid rgba(0, 240, 255, 0.4);
-            font-family: inherit; font-size: 0.82rem; font-weight: bold; cursor: pointer;
+            min-height: 52px; padding: 0.5rem 0.3rem;
+            background: rgba(255, 255, 255, 0.03); color: var(--text);
+            border: 1px solid rgba(0, 240, 255, 0.4);
+            font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; line-height: 1.3; text-align: center;
+            cursor: pointer;
             clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
-            transition: all 0.15s ease; text-align: center; line-height: 1.3;
         }
-        .pay-tab:hover { background: rgba(0, 240, 255, 0.1); border-color: var(--cyber-blue); box-shadow: 0 0 10px rgba(0, 240, 255, 0.3); color: #fff; }
-        .pay-tab.active { background: rgba(255, 42, 127, 0.25); color: #fff; border-color: var(--cyber-pink); box-shadow: 0 0 12px rgba(255, 42, 127, 0.4); }
-
-        .qr-display {
-            border: 1px dashed var(--cyber-blue); background-color: rgba(0, 240, 255, 0.03); 
-            padding: 1.5rem 1.4rem; text-align: center; display: flex; flex-direction: column; align-items: center; 
-        }
-        .qr-display img { width: 175px; height: 175px; object-fit: contain; background-color: #fff; border: 2px solid var(--cyber-pink); padding: 0.4rem; box-shadow: 0 0 15px rgba(255, 42, 127, 0.3); }
-        
-        .order-form { display: flex; flex-direction: column; gap: 1rem; border-top: 1px dashed rgba(0,240,255,0.3); padding-top: 1.2rem; }
-        .form-group { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.82rem; font-weight: bold; color: var(--cyber-blue); }
+        .pay-tab:hover { background: rgba(0, 240, 255, 0.1); border-color: var(--blue); }
+        .pay-tab.active { background: rgba(255, 42, 127, 0.25); color: #fff; border-color: var(--pink); box-shadow: 0 0 12px rgba(255, 42, 127, 0.4); }
+        .qr-display { margin-top: 0.8rem; padding: 1.4rem 1.2rem; border: 1px dashed var(--blue); background: rgba(0, 240, 255, 0.03); text-align: center; display: flex; flex-direction: column; align-items: center; }
+        .qr-display img { width: 175px; height: 175px; object-fit: contain; background: #fff; border: 2px solid var(--pink); padding: 0.4rem; box-shadow: 0 0 15px rgba(255, 42, 127, 0.3); }
+        #qrHint { font-size: 0.84rem; margin-top: 1rem; display: block; }
+        .order-form { display: flex; flex-direction: column; gap: 1rem; border-top: 1px dashed rgba(0, 240, 255, 0.3); padding-top: 1.2rem; }
+        .form-group { display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.82rem; font-weight: 700; color: var(--text); }
         .form-group input {
-            background-color: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 42, 127, 0.4);
-            color: #fff; padding: 0.65rem; font-family: inherit; font-size: 0.88rem; transition: 0.2s;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 42, 127, 0.4);
+            color: #fff; padding: 0.7rem 0.75rem;
+            font-family: var(--font-body); font-size: 16px;
         }
-        .form-group input:focus { outline: none; border-color: var(--cyber-blue); box-shadow: 0 0 8px rgba(0, 240, 255, 0.4); background-color: rgba(255, 255, 255, 0.06); }
+        .form-group input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 8px rgba(0, 240, 255, 0.4); }
 
-        /* LIGHTBOX 專屬 */
-        .lightbox-top { width: 100%; max-width: 1100px; display: flex; justify-content: space-between; align-items: center; gap: 1rem; border-bottom: 1px solid var(--cyber-pink); padding-bottom: 0.8rem; z-index: 2; color: var(--cyber-blue); font-weight: bold; }
-        .lightbox-top-actions { display: flex; align-items: center; gap: 0.8rem; }
-        .lightbox-stage { flex: 1; width: 100%; display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden; padding: 1rem 0; user-select: none; }
-        .lightbox-stage img { max-width: 90vw; max-height: 72vh; object-fit: contain; border: 1px solid var(--cyber-blue); background: #000; cursor: zoom-in; transition: transform 0.2s ease-out; box-shadow: 0 0 20px rgba(0,240,255,0.2); }
+        /* ---------- 看大圖 ---------- */
+        #lightboxModal { flex-direction: column; justify-content: space-between; padding: max(0.8rem, env(safe-area-inset-top)) 1rem max(0.8rem, env(safe-area-inset-bottom)); }
+        .lightbox-top { width: 100%; max-width: 1100px; display: flex; justify-content: space-between; align-items: center; gap: 1rem; border-bottom: 1px solid var(--line-pink); padding-bottom: 0.7rem; color: var(--blue); font-family: var(--font-mono); font-weight: 700; }
+        .lightbox-top-actions { display: flex; gap: 0.6rem; }
+        .lightbox-top-actions .cyber-btn { min-height: 38px; padding: 0.3rem 0.8rem; font-size: 0.78rem; }
+        .lightbox-stage { flex: 1; width: 100%; display: flex; justify-content: center; align-items: center; overflow: hidden; padding: 1rem 0; user-select: none; touch-action: none; }
+        .lightbox-stage img { max-width: 92vw; max-height: 70vh; object-fit: contain; border: 1px solid var(--blue); background: #000; cursor: zoom-in; transition: transform 0.2s ease-out; box-shadow: 0 0 20px rgba(0, 240, 255, 0.2); }
         .lightbox-stage.is-zoomed img { cursor: grab; }
         .lightbox-stage.is-dragging img { cursor: grabbing; transition: none; }
-        .lightbox-bottom { width: 100%; max-width: 1100px; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; padding-top: 0.8rem; border-top: 1px solid var(--cyber-pink); z-index: 2; }
-        .lightbox-controls { display: flex; align-items: center; gap: 1.5rem; color: var(--cyber-blue); font-weight: bold; }
-        .lightbox-thumbs { display: flex; gap: 0.5rem; overflow-x: auto; max-width: 100%; padding-bottom: 0.5rem; }
-        .lb-thumb { width: 50px; height: 38px; object-fit: cover; border: 1px solid rgba(255,42,127,0.4); opacity: 0.4; cursor: pointer; transition: 0.2s; }
-        .lb-thumb.active, .lb-thumb:hover { opacity: 1; border-color: var(--cyber-blue); box-shadow: 0 0 8px var(--cyber-blue); }
+        .lightbox-bottom { width: 100%; max-width: 1100px; display: flex; flex-direction: column; align-items: center; gap: 0.7rem; padding-top: 0.7rem; border-top: 1px solid var(--line-pink); }
+        .lightbox-controls { display: flex; align-items: center; gap: 1.2rem; color: var(--blue); font-family: var(--font-mono); font-weight: 700; }
+        .lightbox-controls .cyber-btn { min-height: 40px; padding: 0.3rem 0.8rem; font-size: 0.78rem; }
+        .lightbox-thumbs { display: flex; gap: 0.5rem; overflow-x: auto; max-width: 100%; padding-bottom: 0.3rem; }
+        .lb-thumb { width: 54px; height: 40px; object-fit: cover; border: 1px solid rgba(255, 42, 127, 0.4); opacity: 0.45; cursor: pointer; flex-shrink: 0; }
+        .lb-thumb.active, .lb-thumb:hover { opacity: 1; border-color: var(--blue); box-shadow: 0 0 8px var(--blue); }
+        .lb-hint { font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted); }
 
-        /* BACK TO TOP */
-        .back-to-top {
-            position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
-            background: rgba(11, 7, 16, 0.75); backdrop-filter: blur(6px);
-            color: var(--cyber-blue); border: 1px solid var(--cyber-blue); padding: 0.5rem 0.9rem;
-            font-family: inherit; font-size: 0.85rem; font-weight: 900; letter-spacing: 1px;
-            cursor: pointer; opacity: 0; pointer-events: none;
-            clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
-            transition: all 0.25s ease;
-        }
-        .back-to-top.visible { opacity: 0.85; pointer-events: auto; }
-        .back-to-top:hover { opacity: 1; background-color: var(--cyber-blue); color: #000; box-shadow: 0 0 18px var(--cyber-blue); transform: translateY(-2px); }
-
-        footer { border-top: var(--border-thin); padding-top: 2rem; text-align: center; font-size: 0.85rem; color: var(--text-muted); }
-
+        @media (max-width: 820px) { .shop-hero { grid-template-columns: 1fr; } }
         @media (max-width: 768px) {
-            .container { padding-top: calc(70px + 1.5rem); gap: 2rem; }
-            .support-banner { padding: 0.65rem 0.9rem !important; }
-            h1 { font-size: 1.7rem; }
-            .pay-tabs { grid-template-columns: repeat(2, 1fr); gap: 0.4rem; }
-            .pay-tab { font-size: 0.75rem; padding: 0.4rem 0.1rem; }
-            .lightbox-top { flex-direction: column; align-items: flex-start; }
-            .lightbox-top-actions { width: 100%; justify-content: space-between; }
+            .shop-grid { grid-template-columns: 1fr; gap: 1.1rem; }
+            .filter-bar { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
+            .filter-bar::-webkit-scrollbar { display: none; }
+            .filter-btn { flex-shrink: 0; }
+            .modal-overlay { padding: 0.6rem; }
+            .modal-body { padding: 1.1rem; }
+            .lightbox-top { flex-wrap: wrap; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 頂部導航 -->
-    <div class="support-banner">
-        <div class="banner-inner">
-            <a href="index.html" class="nav-return">← RETURN // 返回基地</a>
-            <span class="nav-brand">HUMAN LEATHER COUCH FACTORY</span>
-        </div>
-    </div>
-
-    <div class="container">
-        <header>
-            <div class="sys-tag">SYS.STATUS: SHOP TERMINAL ACTIVE</div>
-            <h1>SHOP 商店</h1>
-            <div class="shop-notice">
-                <p>
-                    <span id="noticeTextZh">(所有台灣的支付方式2027/1/1才會開放!請選擇其他支付~)購買流程：確認剩餘數量後點擊購買按鈕 → 選擇支付方式完成付款 → 填寫收件資訊送出訂單<br>→ 系統將喚起 Email 自動帶入資料，請確認無誤後寄出。<br><br><span style="color:var(--cyber-blue);">台灣免運，海外寄送運費固定另加 NT$ 500 (約 US$ 15)。</span></span>
-                    <span id="noticeTextEn" style="display: none;">Order Process: Check stock & click ORDER → Pay → Submit shipping info<br>→ Email app opens with pre-filled details; verify and send.<br><br><span style="color:var(--cyber-blue);">Free shipping in Taiwan. Overseas flat rate NT$ 500 (approx. US$ 15).</span></span>
-                    
-                    <span class="lang-switch-wrap">[ LANG_SELECT: 
-                        <a href="javascript:void(0)" class="lang-btn active" data-lang="zh" onclick="setShopLang('zh')">中文</a> / 
-                        <a href="javascript:void(0)" class="lang-btn" data-lang="en" onclick="setShopLang('en')">EN</a>
-                    ]</span>
-                </p>
+    <header class="site-bar">
+        <div class="site-bar-inner">
+            <a class="site-back" href="index.html">← <b>皮沙發工廠</b><span class="mono"> FACTORY</span></a>
+            <nav class="site-nav" aria-label="頁面 Pages">
+                <a href="shop.html" aria-current="page">商店<span class="en"> SHOP</span></a>
+                <a href="game.html">遊戲開發<span class="en"> GAME</span></a>
+            </nav>
+            <div class="lang-switch" role="group" aria-label="Language" data-no-zh>
+                <button type="button" data-set-lang="hant" title="繁體中文・台灣">繁</button>
+                <button type="button" data-set-lang="hans" title="简体中文・中国大陆">简</button>
             </div>
-        </header>
+        </div>
+    </header>
+
+    <main class="page">
+        <section class="terminal-window">
+            <div class="window-header">
+                <span class="window-path"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>SHELL:~/factory/shop.db</span>
+                <span class="window-mode">[SHOP_TERMINAL]</span>
+            </div>
+            <div class="window-content shop-hero">
+                <div>
+                    <div class="sys-tag">SYS.STATUS: SHOP TERMINAL ACTIVE</div>
+                    <h1 class="page-title">商店<small>SHOP // PRINTS &amp; PHOTOGRAPHY</small></h1>
+                    <p class="lang-zh" style="margin-top: 1rem;">實體版畫與攝影作品，數量很少，賣完就沒了。</p>
+                    <div class="shop-lang" role="group" aria-label="商店語言 Shop language" data-no-zh>
+                        <button type="button" class="lang-btn active" data-lang="zh" onclick="setShopLang('zh')">中文</button>
+                        <button type="button" class="lang-btn" data-lang="en" onclick="setShopLang('en')">EN</button>
+                    </div>
+                </div>
+                <div>
+                    <ol class="order-steps" id="noticeTextZh">
+                        <li><span>確認剩餘數量，按「購買」。</span></li>
+                        <li><span>選支付方式完成付款。</span></li>
+                        <li><span>填收件資訊送出，會開啟 Email 並自動帶入資料，確認後寄出。</span></li>
+                    </ol>
+                    <ol class="order-steps" id="noticeTextEn" style="display: none;">
+                        <li><span>Check stock and press ORDER.</span></li>
+                        <li><span>Pay with any method below.</span></li>
+                        <li><span>Submit shipping info. Your email app opens with the details filled in; check and send.</span></li>
+                    </ol>
+                    <p class="ship-note"><span class="zh-only">台灣免運，海外運費固定加 NT$ 500（約 US$ 15）。</span><span class="en-only" style="display: none;">Free shipping in Taiwan. Overseas flat rate NT$ 500 (about US$ 15).</span></p>
+                    <p class="pay-note only-tw" id="shopPayNote">台灣的街口、LINE Pay、藍新 2027/1/1 開放，在那之前請用 PayPal（Ko-fi）或支付寶。</p>
+                </div>
+            </div>
+        </section>
 
         <!-- 分類過濾 -->
+        <section aria-label="商品 Products" style="display: flex; flex-direction: column; gap: 1.2rem;">
         <div class="filter-bar">
             <button class="filter-btn active" onclick="filterProducts('all', this)">ALL_INVENTORY <span class="filter-zh">// 全部商品</span></button>
             <button class="filter-btn" onclick="filterProducts('print', this)">PRINTS <span class="filter-zh">// 實體版畫</span></button>
@@ -308,12 +251,20 @@
             <p id="loadingText" class="loading-text">>_ INITIALIZING... // 正在同步資料庫庫存...</p>
         </div>
 
+        </section>
+
         <!-- 政策收合清單 -->
+        <section class="terminal-window">
+            <div class="window-header">
+                <span class="window-path"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>SYS.DOCS:~/shop_policies.md</span>
+                <span class="window-mode">[READ_ME]</span>
+            </div>
+            <div class="window-content" style="padding-top: 0.6rem; padding-bottom: 0.8rem;">
         <div class="policies-accordion" id="shopPoliciesAccordion">
             <details class="policy-item" name="shop-policies">
                 <summary class="policy-summary">
                     <span>>_ 01. CUSTOMER SERVICE // 客服聯絡資訊</span>
-                    <span class="policy-summary-icon" style="color:var(--cyber-pink);">[+]</span>
+                    <span class="policy-summary-icon">[+]</span>
                 </summary>
                 <div class="policy-content">
                     <ul>
@@ -326,7 +277,7 @@
             <details class="policy-item" name="shop-policies">
                 <summary class="policy-summary">
                     <span>>_ 02. SHIPPING POLICY // 出貨與物流</span>
-                    <span class="policy-summary-icon" style="color:var(--cyber-pink);">[+]</span>
+                    <span class="policy-summary-icon">[+]</span>
                 </summary>
                 <div class="policy-content">
                     <ul>
@@ -339,7 +290,7 @@
             <details class="policy-item" name="shop-policies">
                 <summary class="policy-summary">
                     <span>>_ 03. REFUND & RIGHTS // 退換貨政策</span>
-                    <span class="policy-summary-icon" style="color:var(--cyber-pink);">[+]</span>
+                    <span class="policy-summary-icon">[+]</span>
                 </summary>
                 <div class="policy-content">
                     <ul>
@@ -349,20 +300,26 @@
                 </div>
             </details>
         </div>
+            </div>
+        </section>
 
-        <footer>
-            <p>HUMAN LEATHER COUCH FACTORY - lonlon<br>
-            <span style="font-size: 0.75rem; letter-spacing: 1px; color: var(--cyber-pink);">TRANSMITTING FROM CYBER WASTELAND. &copy; 2026.</span></p>
+        <footer class="site-footer">
+            <p>冷冷不冷的皮沙發工廠 // HUMAN LEATHER COUCH FACTORY - lonlon<span class="sig">TRANSMITTING FROM CYBER WASTELAND. &copy; 2026.</span></p>
+            <nav aria-label="站內連結 Site links">
+                <a href="index.html">HOME</a>
+                <a href="game.html">GAME DEV</a>
+                <a href="mailto:arts.lonp@gmail.com">CONTACT</a>
+            </nav>
         </footer>
-    </div>
+    </main>
 
     <!-- Lightbox Modal -->
     <div id="lightboxModal" class="modal-overlay" onclick="if(event.target === this || event.target.classList.contains('lightbox-stage')) closeLightbox()">
         <div class="lightbox-top">
             <span id="lightboxCaption"></span>
             <div class="lightbox-top-actions">
-                <button type="button" id="lbZoomBtn" class="cyber-btn" style="padding: 0.3rem 0.8rem; font-size:0.8rem;" onclick="toggleLightboxZoom()">[+] ZOOM</button>
-                <button type="button" class="cyber-btn" style="padding: 0.3rem 0.8rem; font-size:0.8rem;" onclick="closeLightbox()">✕ CLOSE</button>
+                <button type="button" id="lbZoomBtn" class="cyber-btn blue" onclick="toggleLightboxZoom()">[+] ZOOM</button>
+                <button type="button" class="cyber-btn" onclick="closeLightbox()">✕ CLOSE</button>
             </div>
         </div>
         <div id="lightboxStage" class="lightbox-stage">
@@ -371,46 +328,48 @@
         <div class="lightbox-bottom">
             <div id="lightboxThumbs" class="lightbox-thumbs"></div>
             <div class="lightbox-controls">
-                <button type="button" id="lbPrevBtn" class="cyber-btn" style="padding: 0.2rem 0.6rem;" onclick="changeLightboxImg(-1)">← PREV</button>
+                <button type="button" id="lbPrevBtn" class="cyber-btn blue" onclick="changeLightboxImg(-1)">← PREV</button>
                 <span id="lightboxCounter">1 / 1</span>
-                <button type="button" id="lbNextBtn" class="cyber-btn" style="padding: 0.2rem 0.6rem;" onclick="changeLightboxImg(1)">NEXT →</button>
+                <button type="button" id="lbNextBtn" class="cyber-btn blue" onclick="changeLightboxImg(1)">NEXT →</button>
             </div>
+            <span class="lb-hint">左右滑動換圖・雙擊放大 // swipe · double-tap to zoom</span>
         </div>
     </div>
 
     <!-- Checkout Modal -->
     <div id="checkoutModal" class="modal-overlay" onclick="if(event.target === this) closeModal()">
-        <div class="modal-box">
+        <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
             <div class="modal-header">
                 <h2 id="modalTitle">ORDER_SYS // 結帳程序</h2>
-                <button type="button" class="close-btn" onclick="closeModal()">✕</button>
+                <button type="button" class="close-btn" onclick="closeModal()" aria-label="關閉 Close">✕</button>
             </div>
             
             <div class="modal-body">
-                <div id="modalItemInfo" style="font-size: 0.9rem; line-height:1.6; border-left:2px solid var(--cyber-pink); padding-left:1rem;"></div>
+                <div id="modalItemInfo" class="modal-item"></div>
 
                 <!-- 支付選擇 -->
                 <div>
-                    <p id="step1Title" style="font-size: 0.85rem; font-weight:bold; color:var(--cyber-blue); margin-bottom:0.5rem;">STEP 1. 選擇支付方式 // SELECT PAYMENT:</p>
-                    <div class="pay-tabs">
-                        <button type="button" class="pay-tab active" onclick="switchQR('jkopay', this)">街口等<br>TWQR</button>
-                        <button type="button" class="pay-tab" onclick="switchQR('linepay', this)">Line Pay</button>
-                        <button type="button" id="tabNewebpay" class="pay-tab" data-pay="newebpay" onclick="switchQR('newebpay', this)">信用卡 轉帳<br>Apple Pay</button>
-                        <button type="button" class="pay-tab" onclick="switchQR('paypal', this)">PayPal<br>Ko-fi</button>
-                        <button type="button" id="tabAlipay" class="pay-tab" data-pay="alipay" onclick="switchQR('alipay', this)">Alipay</button>
+                    <p id="step1Title" class="step-title">STEP 1. 選擇支付方式 // SELECT PAYMENT:</p>
+                    <!-- 依「繁／简」排序；台灣的街口、LINE Pay、藍新 2027/1/1 自動開放（藍新要先貼上 https 收款網址） -->
+                    <div class="pay-tabs" id="payTabs">
+                        <button type="button" class="pay-tab" data-pay="jkopay" hidden>街口等<br>TWQR</button>
+                        <button type="button" class="pay-tab" data-pay="linepay" hidden>LINE Pay</button>
+                        <button type="button" id="tabNewebpay" class="pay-tab" data-pay="newebpay" hidden>信用卡 轉帳<br>Apple Pay</button>
+                        <button type="button" class="pay-tab" data-pay="paypal" hidden>PayPal<br>Ko-fi</button>
+                        <button type="button" id="tabAlipay" class="pay-tab" data-pay="alipay" hidden>支付寶<br>Alipay</button>
                     </div>
-                    <div class="qr-display" style="margin-top: 0.8rem;">
+                    <div class="qr-display">
                         <img id="qrImage" src="" alt="QR Code">
                         <div id="linkWrap" style="display:none; padding: 1.5rem 0; width: 100%;">
-                            <a id="linkBtn" href="#" target="_blank" class="cyber-btn" style="width:100%;">[ 啟動安全支付 ↗ ]</a>
+                            <a id="linkBtn" href="#" target="_blank" rel="noopener noreferrer" class="cyber-btn" style="width:100%;">[ 啟動安全支付 ↗ ]</a>
                         </div>
-                        <span id="qrHint" style="font-size: 0.82rem; margin-top:1rem; display:block;"></span>
+                        <span id="qrHint"></span>
                     </div>
                 </div>
 
                 <!-- 訂單表單 -->
                 <form class="order-form" onsubmit="submitOrder(event)">
-                    <p id="step2Title" style="font-size: 0.85rem; margin-bottom: 0.5rem; color:var(--cyber-pink);">STEP 2. 填寫收件資訊 // SHIPPING DATA:</p>
+                    <p id="step2Title" class="step-title pink">STEP 2. 填寫收件資訊 // SHIPPING DATA:</p>
                     <div class="form-group">
                         <label id="labelBuyerName">姓名 / Name *</label>
                         <input type="text" id="buyerName" required>
@@ -427,7 +386,7 @@
                         <label id="labelBuyerPaymentNote">對帳資訊 (付款方式+帳號末五碼) *</label>
                         <input type="text" id="buyerPaymentNote" placeholder="例：藍新信用卡 / PayPal 暱稱" required>
                     </div>
-                    <button type="submit" id="modalSubmitBtn" class="cyber-btn" style="width: 100%; margin-top: 1rem; padding:1rem;">
+                    <button type="submit" id="modalSubmitBtn" class="cyber-btn" style="width: 100%; margin-top: 0.6rem;">
                         [ 產生訂單信件並送出 / SUBMIT ]
                     </button>
                 </form>
@@ -435,7 +394,7 @@
         </div>
     </div>
 
-    <button id="backToTop" class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑ TOP</button>
+    <button type="button" id="backToTop" class="back-to-top" aria-label="回到頂部 Back to top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><b>↑</b>TOP</button>
 
     <script>
         // 1. Google API 設定 (相容原 Cloudflare 邏輯，確保大陸可讀)
@@ -446,21 +405,21 @@
         const QR_CODES = {
             jkopay: { //http://www.jkos.com/index.html?j=S%2344234c39-bcaa-11f1-8ac0-c81f66f0c432%3AP%23
                 type: "qr", img: "images/qr-jkopay.jpg", 
-                hint_zh: "請使用支援 TWQR 之 APP 掃描上方條碼。<br><a href='' target='_blank' style='color:var(--cyber-blue); text-decoration:underline;'>手機端點擊喚起 APP ↗</a>", 
-                hint_en: "Scan with TWQR supported apps.<br><a href='http://www.jkos.com/index.html' target='_blank' style='color:var(--cyber-blue);'>Open App ↗</a>",
-                hint_de: "Scannen mit TWQR-App.<br><a href='http://www.jkos.com' target='_blank' style='color:var(--cyber-blue);'>App öffnen ↗</a>" 
+                hint_zh: "請使用支援 TWQR 之 APP 掃描上方條碼。", 
+                hint_en: "Scan with TWQR supported apps.<br><a href='http://www.jkos.com/index.html' target='_blank' style='color:var(--blue);'>Open App ↗</a>",
+                hint_de: "Scannen mit TWQR-App.<br><a href='http://www.jkos.com' target='_blank' style='color:var(--blue);'>App öffnen ↗</a>" 
             },
             linepay: { //https://qrcodepay.line.me/qr/payment/VZOOBJ5y7WSsSkslC9BcR3B0xvW49AvRzmQ3bA%252BUGlhnls2hfP6lLE5grrpI5xTE
                 type: "qr", img: "images/qr-linepay.jpg", 
-                hint_zh: "請使用 Line Pay 掃描。<br><a href='' target='_blank' style='color:var(--cyber-blue); text-decoration:underline;'>手機端點擊喚起 APP ↗</a>",
-                hint_en: "Scan with Line Pay.<br><a href='https://qrcodepay.line.me...' target='_blank' style='color:var(--cyber-blue);'>Open App ↗</a>",
-                hint_de: "Scannen mit Line Pay.<br><a href='https://qrcodepay.line.me...' target='_blank' style='color:var(--cyber-blue);'>App öffnen ↗</a>" 
+                hint_zh: "請使用 LINE Pay 掃描上方條碼。",
+                hint_en: "Scan with Line Pay.<br><a href='https://qrcodepay.line.me...' target='_blank' style='color:var(--blue);'>Open App ↗</a>",
+                hint_de: "Scannen mit Line Pay.<br><a href='https://qrcodepay.line.me...' target='_blank' style='color:var(--blue);'>App öffnen ↗</a>" 
             },
             alipay: { 
                 type: "qr", img: "images/qr-alipay.jpg", 
-                hint_zh: "請掃描支付。記得加上海外運費！<br><a href='https://qr.alipay.com/tsx19374p5wcn9a7dp9dwe4' target='_blank' style='color:var(--cyber-blue); text-decoration:underline;'>手機端點擊喚起 APP ↗</a>", 
-                hint_en: "Scan with Alipay. Add overseas shipping!<br><a href='https://qr.alipay.com...' target='_blank' style='color:var(--cyber-blue);'>Open App ↗</a>",
-                hint_de: "Scannen mit Alipay. Inkl. Versand!<br><a href='https://qr.alipay.com...' target='_blank' style='color:var(--cyber-blue);'>App öffnen ↗</a>" 
+                hint_zh: "請掃描支付。記得加上海外運費！<br><a href='https://qr.alipay.com/tsx19374p5wcn9a7dp9dwe4' target='_blank' style='color:var(--blue); text-decoration:underline;'>手機端點擊喚起 APP ↗</a>", 
+                hint_en: "Scan with Alipay. Add overseas shipping!<br><a href='https://qr.alipay.com...' target='_blank' style='color:var(--blue);'>Open App ↗</a>",
+                hint_de: "Scannen mit Alipay. Inkl. Versand!<br><a href='https://qr.alipay.com...' target='_blank' style='color:var(--blue);'>App öffnen ↗</a>" 
             },
             newebpay: { 
                 type: "link", url: "請在這裡貼上你的藍新收款網址", 
@@ -474,6 +433,32 @@
             }
         };
 
+
+        // 支付方式：依「繁／简」排序；台灣國內支付 2027/1/1（台灣時間）自動開放
+        const TW_LOCAL_OPEN = Date.parse('2027-01-01T00:00:00+08:00');
+        const TW_LOCAL = ['jkopay', 'linepay', 'newebpay'];
+        const PAY_ORDER = { tw: ['jkopay', 'linepay', 'newebpay', 'paypal', 'alipay'], cn: ['alipay', 'paypal'] };
+        const PAY_REGION = document.documentElement.getAttribute('data-region') === 'cn' ? 'cn' : 'tw';
+        function payAvailable(key) {
+            const d = QR_CODES[key];
+            if (!d) return false;
+            if (TW_LOCAL.indexOf(key) >= 0 && Date.now() < TW_LOCAL_OPEN) return false;
+            if (d.type === 'link' && !/^https?:\/\//.test(d.url)) return false;
+            return true;
+        }
+        function visiblePayKeys() { return PAY_ORDER[PAY_REGION].filter(payAvailable); }
+        (function setupPayTabs() {
+            const keys = visiblePayKeys();
+            document.querySelectorAll('#payTabs [data-pay]').forEach(function (btn) {
+                const key = btn.getAttribute('data-pay');
+                const at = keys.indexOf(key);
+                btn.hidden = at < 0;
+                btn.style.order = at;
+                btn.addEventListener('click', function () { switchQR(key, btn); });
+            });
+            if (PAY_REGION !== 'tw' || Date.now() >= TW_LOCAL_OPEN) { const n = document.getElementById('shopPayNote'); if (n) n.hidden = true; }
+        })();
+
         const UI_TEXT = {
             zh: {
                 loading: ">_ INITIALIZING... // 正在同步資料庫庫存...",
@@ -481,9 +466,9 @@
                 soldOutBtn: "SOLD OUT // 售罄", orderBtn: "ORDER // 購買",
                 framedNote: "(含框)",
                 modalTitle: "ORDER_SYS // 結帳程序",
-                modalItem: (id, t, p, f) => `> ITEM: <strong>[${id}] ${t}</strong><br>> PRICE: <strong style="color:var(--cyber-blue);">${p}</strong> ${f ? '(含框)' : ''}<br><span style="color:var(--text-muted);">> 台灣免運 / 海外需自行加計 NT$ 500</span>`,
+                modalItem: (id, t, p, f) => `> ITEM: <strong>[${id}] ${t}</strong><br>> PRICE: <strong style="color:var(--blue);">${p}</strong> ${f ? '(含框)' : ''}<br><span style="color:var(--muted);">> 台灣免運 / 海外需自行加計 NT$ 500</span>`,
                 step1Title: "STEP 1. 選擇支付方式 // SELECT PAYMENT:",
-                tabNewebpay: "信用卡 轉帳<br>ApplePay", tabAlipay: "Alipay",
+                tabNewebpay: "信用卡 轉帳<br>Apple Pay", tabAlipay: "支付寶<br>Alipay",
                 step2Title: "STEP 2. 填寫收件資訊 // SHIPPING DATA:",
                 labelName: "姓名 / Name *", labelContact: "信箱與電話 / Email & Phone *",
                 labelAddress: "收件地址 (海外請填英文) / Address *", labelPayNote: "對帳資訊 (付款方式+帳號末五碼) *",
@@ -495,9 +480,9 @@
                 soldOutBtn: "SOLD OUT", orderBtn: "ORDER NOW",
                 framedNote: "(Framed)",
                 modalTitle: "ORDER_SYS // CHECKOUT",
-                modalItem: (id, t, p, f) => `> ITEM: <strong>[${id}] ${t}</strong><br>> PRICE: <strong style="color:var(--cyber-blue);">${p}</strong> ${f ? '(Framed)' : ''}<br><span style="color:var(--text-muted);">> Add flat NT$ 500 for overseas shipping</span>`,
+                modalItem: (id, t, p, f) => `> ITEM: <strong>[${id}] ${t}</strong><br>> PRICE: <strong style="color:var(--blue);">${p}</strong> ${f ? '(Framed)' : ''}<br><span style="color:var(--muted);">> Add flat NT$ 500 for overseas shipping</span>`,
                 step1Title: "STEP 1. SELECT PAYMENT METHOD:",
-                tabNewebpay: "CreditCard<br>ApplePay", tabAlipay: "Alipay",
+                tabNewebpay: "Credit Card<br>Apple Pay", tabAlipay: "Alipay",
                 step2Title: "STEP 2. SHIPPING DETAILS:",
                 labelName: "Name *", labelContact: "Email & Phone *",
                 labelAddress: "Shipping Address *", labelPayNote: "Payment Verification (Method + Last 5) *",
@@ -508,14 +493,16 @@
 
         const FALLBACK = [{ id: "ERR-404", category: "print", title: "連線異常", enTitle: "offline", specs: "SYS_ERR", price: "NT$ 0", stock: 0, images: [""], isFramed: false }];
 
-        let PRODUCTS = []; let currentProduct = null; let currentFilter = 'all'; let currentLang = 'zh'; let currentQRType = 'jkopay'; let sheetLoaded = false;
+        let PRODUCTS = []; let currentProduct = null; let currentFilter = 'all'; let currentLang = 'zh'; let currentQRType = 'paypal'; let sheetLoaded = false;
         let lbProduct = null; let lbIndex = 0; let lbScale = 1; let lbPanX = 0; let lbPanY = 0; let isDragging = false; let startX = 0; let startY = 0;
         const ZOOM_SVG = `<svg viewBox="0 0 16 16"><circle cx="6.5" cy="6.5" r="4.8"></circle><line x1="10.2" y1="10.2" x2="14.8" y2="14.8"></line></svg>`;
 
         function setShopLang(lang) {
             currentLang = lang; const t = UI_TEXT[lang];
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
-            ['zh','en'].forEach(l => document.getElementById(`noticeText${l.charAt(0).toUpperCase()+l.slice(1)}`).style.display = l === lang ? 'inline' : 'none');
+            ['zh','en'].forEach(l => document.getElementById(`noticeText${l.charAt(0).toUpperCase()+l.slice(1)}`).style.display = l === lang ? '' : 'none');
+            document.querySelectorAll('.zh-only').forEach(el => el.style.display = lang === 'zh' ? '' : 'none');
+            document.querySelectorAll('.en-only').forEach(el => el.style.display = lang === 'en' ? '' : 'none');
             
             const loading = document.getElementById('loadingText'); if (loading) loading.textContent = t.loading;
             document.getElementById('modalTitle').textContent = t.modalTitle;
@@ -531,7 +518,7 @@
             document.getElementById('modalSubmitBtn').textContent = t.submitBtn;
 
             if (currentProduct) document.getElementById('modalItemInfo').innerHTML = t.modalItem(escapeHTML(currentProduct.id), escapeHTML(currentProduct.title), escapeHTML(currentProduct.price), currentProduct.isFramed);
-            switchQR(currentQRType, document.querySelector(`.pay-tab[data-pay="${currentQRType}"]`));
+            switchQR(currentQRType, document.querySelector(`#payTabs [data-pay="${currentQRType}"]`));
             if (PRODUCTS.length > 0) renderProducts();
         }
 
@@ -611,7 +598,7 @@
                         </div>
                         <div>
                             <div class="product-footer" style="margin-bottom:1rem;">
-                                <span class="product-price">${escapeHTML(item.price)} ${item.isFramed ? `<span style="font-size:0.75rem; color:var(--text-muted);">${t.framedNote}</span>` : ''}</span>
+                                <span class="product-price">${escapeHTML(item.price)} ${item.isFramed ? `<span style="font-size:0.75rem; color:var(--muted);">${t.framedNote}</span>` : ''}</span>
                                 <span class="product-stock">${isOut ? t.stockZero : t.stockAvail(item.stock)}</span>
                             </div>
                             <button class="cyber-btn" style="width:100%;" ${isOut?'disabled':''} onclick="openModal(${item._uid})">${isOut?t.soldOutBtn:t.orderBtn}</button>
@@ -626,10 +613,12 @@
             currentProduct = PRODUCTS.find(p => p._uid === uid);
             if (!currentProduct) return;
             document.getElementById('modalItemInfo').innerHTML = UI_TEXT[currentLang].modalItem(escapeHTML(currentProduct.id), escapeHTML(currentProduct.title), escapeHTML(currentProduct.price), currentProduct.isFramed);
-            switchQR('jkopay', document.querySelector('#checkoutModal .pay-tab'));
+            const first = visiblePayKeys()[0];
+            switchQR(first, document.querySelector(`#payTabs [data-pay="${first}"]`));
             document.getElementById('checkoutModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
-        function closeModal() { document.getElementById('checkoutModal').classList.remove('active'); }
+        function closeModal() { document.getElementById('checkoutModal').classList.remove('active'); document.body.style.overflow = ''; }
         function switchQR(type, btn) {
             currentQRType = type;
             document.querySelectorAll('#checkoutModal .pay-tab').forEach(e => e.classList.remove('active'));
@@ -657,6 +646,7 @@
                 body = `您好，我已完成付款，訂購資訊如下：\n\n【訂購作品】[${currentProduct.id}] ${title}\n【應付金額】${currentProduct.price}\n【對帳資訊】${note}\n\n【姓名】${n}\n【聯絡】${c}\n【地址】${a}\n`;
             if (currentLang === 'en') { sub = `[Order] ${currentProduct.id} - ${n}`; body = `Payment complete. Details:\n\n[Item] [${currentProduct.id}] ${title}\n[Price] ${currentProduct.price}\n[Verify] ${note}\n\n[Name] ${n}\n[Contact] ${c}\n[Address] ${a}\n`; }
             else if (currentLang === 'de') { sub = `[Bestellung] ${currentProduct.id} - ${n}`; body = `Zahlung erfolgt. Daten:\n\n[Artikel] [${currentProduct.id}] ${title}\n[Preis] ${currentProduct.price}\n[Nachweis] ${note}\n\n[Name] ${n}\n[Kontakt] ${c}\n[Adresse] ${a}\n`; }
+            if (currentLang === 'zh' && window.zhConvert) { sub = window.zhConvert(sub); body = window.zhConvert(body); }
             window.location.href = `mailto:arts.lonp@gmail.com?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`;
             closeModal();
         }
@@ -669,8 +659,8 @@
         }
         function resetLB() { lbScale=1; lbPanX=0; lbPanY=0; isDragging=false; applyLB(); }
         function toggleLightboxZoom() { if(lbScale>1) resetLB(); else { lbScale=2.2; applyLB(); } }
-        function openLightbox(uid, i=0) { lbProduct = PRODUCTS.find(p=>p._uid===uid); if(!lbProduct) return; lbIndex=i; resetLB(); updateLB(); document.getElementById('lightboxModal').classList.add('active'); }
-        function closeLightbox() { resetLB(); document.getElementById('lightboxModal').classList.remove('active'); }
+        function openLightbox(uid, i=0) { lbProduct = PRODUCTS.find(p=>p._uid===uid); if(!lbProduct) return; lbIndex=i; resetLB(); updateLB(); document.getElementById('lightboxModal').classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeLightbox() { resetLB(); document.getElementById('lightboxModal').classList.remove('active'); document.body.style.overflow = ''; }
         function changeLightboxImg(s) { if(!lbProduct) return; const t = lbProduct.images.length||1; if(t<=1) return; lbIndex=(lbIndex+s+t)%t; resetLB(); updateLB(); }
         function updateLB() {
             const imgs = lbProduct.images.length ? lbProduct.images : [''], t = imgs.length;
@@ -680,18 +670,43 @@
             const tc = document.getElementById('lightboxThumbs'); tc.innerHTML = '';
             if(t>1) imgs.forEach((src, i) => { const img = document.createElement('img'); img.className='lb-thumb'+(i===lbIndex?' active':''); img.src=src||getSVG(i+1); img.onclick=()=>{lbIndex=i;resetLB();updateLB();}; tc.appendChild(img); });
         }
-        // Pan logic
+        // 拖曳與手勢：pointer 事件，滑鼠、手指都能用
         const st = document.getElementById('lightboxStage'), img = document.getElementById('lightboxImg');
-        img.addEventListener('mousedown', e => { e.preventDefault(); if(lbScale>1) { isDragging=true; startX=e.clientX-lbPanX; startY=e.clientY-lbPanY; st.classList.add('is-dragging'); }});
-        window.addEventListener('mousemove', e => { if(isDragging) { lbPanX=e.clientX-startX; lbPanY=e.clientY-startY; applyLB(); }});
-        window.addEventListener('mouseup', () => { isDragging=false; st.classList.remove('is-dragging'); });
+        let swipeX = null, lastTap = 0;
+        st.addEventListener('pointerdown', e => {
+            if (e.target !== img) return;
+            e.preventDefault();
+            const now = Date.now();
+            if (now - lastTap < 300) { toggleLightboxZoom(); lastTap = 0; return; }
+            lastTap = now;
+            if (lbScale > 1) { isDragging = true; startX = e.clientX - lbPanX; startY = e.clientY - lbPanY; st.classList.add('is-dragging'); img.setPointerCapture(e.pointerId); }
+            else swipeX = e.clientX;
+        });
+        st.addEventListener('pointermove', e => { if (isDragging) { lbPanX = e.clientX - startX; lbPanY = e.clientY - startY; applyLB(); } });
+        function endPointer(e) {
+            if (isDragging) { isDragging = false; st.classList.remove('is-dragging'); }
+            if (swipeX !== null && e.clientX !== undefined) {
+                const dx = e.clientX - swipeX;
+                if (Math.abs(dx) > 50) changeLightboxImg(dx < 0 ? 1 : -1);
+            }
+            swipeX = null;
+        }
+        st.addEventListener('pointerup', endPointer);
+        st.addEventListener('pointercancel', endPointer);
+        document.addEventListener('keydown', e => {
+            if (document.getElementById('lightboxModal').classList.contains('active')) {
+                if (e.key === 'Escape') closeLightbox();
+                else if (e.key === 'ArrowRight') changeLightboxImg(1);
+                else if (e.key === 'ArrowLeft') changeLightboxImg(-1);
+            } else if (e.key === 'Escape' && document.getElementById('checkoutModal').classList.contains('active')) closeModal();
+        });
 
         // Init
         document.querySelectorAll('.policy-item').forEach(i => i.addEventListener('toggle', () => {
             const icon = i.querySelector('.policy-summary-icon'); if(icon) icon.textContent = i.open ? '[-]' : '[+]';
             if(i.open) document.querySelectorAll('.policy-item').forEach(o => { if(o!==i && o.open) o.open=false; });
         }));
-        window.addEventListener('scroll', () => { document.getElementById('backToTop').classList.toggle('visible', window.scrollY>300); });
+        window.addEventListener('scroll', () => { document.getElementById('backToTop').classList.toggle('visible', window.scrollY>300); }, { passive: true });
         initShop();
     </script>
 </body>
