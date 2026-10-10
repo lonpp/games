@@ -1,0 +1,2515 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#1a1317">
+    <meta name="description" content="冷冷不冷的皮沙發工廠 HUMAN LEATHER COUCH FACTORY — 直播輪班表、聊天室指令、遊戲開發與快樂水™投餵。">
+    <title>HUMAN LEATHER COUCH FACTORY</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=JetBrains+Mono:ital,wght@0,400;0,700;0,800;1,400&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script>
+        document.documentElement.classList.add('js');
+        // 快樂水 GIF 讀不到時的備援圖示
+        function waterFallback(img, big) {
+            img.onerror = null;
+            img.src = big
+                ? "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='280' height='280' viewBox='0 0 280 280'><rect width='280' height='280' fill='%230b0710' stroke='%2300f0ff' stroke-width='2' stroke-dasharray='8 4'/><text x='50%25' y='44%25' dominant-baseline='middle' text-anchor='middle' font-size='72'>🥤</text><text x='50%25' y='70%25' dominant-baseline='middle' text-anchor='middle' fill='%2300f0ff' font-family='monospace' font-size='13' font-weight='bold' letter-spacing='1'>// ROTATING HAPPY WATER //</text><text x='50%25' y='82%25' dominant-baseline='middle' text-anchor='middle' fill='%23ff2a7f' font-family='monospace' font-size='11'>CYBER RATIONS DISPLAY SLOT</text></svg>"
+                : "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-size='16'>🥤</text></svg>";
+        }
+    </script>
+    <style>
+        /* =========================================
+           夜班休息室 × 套印終端 // NIGHT-SHIFT LOUNGE × RISO TERMINAL
+           - 皮沙發：暖色皮革底、縫線虛線框
+           - 版畫套印：顆粒紙紋、粉 / 青兩色錯版
+           - 深夜 CRT：琥珀檯燈光、圓角螢幕、淡掃描線
+           - 兩隻主子：睡在視窗上的像素貓
+        ========================================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #1a1317;           /* 深夜皮沙發 */
+            --surface: #241a20;
+            --surface-2: #2d2128;
+            --surface-deep: #160f13;
+            --bezel: #3a2a32;
+            --text: #f3e6d8;         /* 奶油紙白 */
+            --text-strong: #fff6ec;
+            --muted: #b8a497;
+            --pink: #ff6fae;         /* 螢光粉套印 */
+            --pink-deep: #c2447e;
+            --teal: #62d3d6;         /* 青色套印 */
+            --teal-deep: #2f9a9e;
+            --amber: #ffbe5c;        /* 檯燈 */
+            --amber-deep: #c98a2c;
+            --green: #a6e88a;
+            --paper: #f1e3c8;        /* 便利貼 */
+            --ink: #3a2a24;
+            --stitch: rgba(243, 230, 216, 0.22);
+            --line: rgba(243, 230, 216, 0.12);
+            --misreg: -1px 0 0 rgba(255, 111, 174, 0.75), 1.5px 1px 0 rgba(98, 211, 214, 0.55);
+            --font-mono: 'JetBrains Mono', ui-monospace, Consolas, 'Microsoft JhengHei', monospace;
+            --font-pixel: 'VT323', 'JetBrains Mono', monospace;
+            --font-body: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', system-ui, sans-serif;
+            --topbar-h: 68px;
+            --r-sm: 8px;
+            --r-md: 12px;
+            --r-lg: 18px;
+            /* 兼容 new1 的變數名 */
+            --blue: var(--teal);
+            --yellow: var(--amber);
+            --line-pink: rgba(255, 111, 174, 0.3);
+            --line-blue: rgba(98, 211, 214, 0.3);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: calc(var(--topbar-h) + 20px);
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(ellipse 70% 55% at 12% -5%, rgba(255, 190, 92, 0.16), transparent 70%),
+                radial-gradient(ellipse 55% 45% at 100% 30%, rgba(255, 111, 174, 0.08), transparent 70%),
+                radial-gradient(ellipse 60% 40% at 0% 100%, rgba(98, 211, 214, 0.06), transparent 70%),
+                radial-gradient(rgba(243, 230, 216, 0.05) 1px, transparent 1.2px);
+            background-size: auto, auto, auto, 18px 18px;
+            background-attachment: fixed, fixed, fixed, scroll;
+        }
+        /* 版畫紙紋顆粒 */
+        body::after {
+            content: '';
+            position: fixed; inset: 0;
+            pointer-events: none;
+            z-index: 30000;
+            opacity: 0.07;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 0.92 0 0 0 0 0.85 0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+        }
+
+        ::selection { background: var(--amber); color: var(--ink); }
+
+        a { color: var(--pink); text-decoration: none; transition: color 0.2s; }
+        a:hover { color: var(--teal); }
+
+        :focus-visible { outline: 2px dashed var(--amber); outline-offset: 3px; border-radius: 4px; }
+
+        .mono { font-family: var(--font-mono); }
+        .sr-only {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+        }
+        .skip-link {
+            position: fixed; left: 1rem; top: -100px; z-index: 40000;
+            background: var(--amber); color: var(--ink); padding: 0.5rem 1rem;
+            font-family: var(--font-mono); font-weight: 800; border-radius: var(--r-sm);
+        }
+        .skip-link:focus { top: 1rem; color: var(--ink); }
+
+        /* 共用：鍵帽按鈕（呼應 ASMR 鍵盤） */
+        .cyber-btn, .ration-btn, .status-actions a, .tz-btn, .pay-tab, #actionBtn, .back-to-top {
+            --key: var(--pink);
+            --key-edge: var(--pink-deep);
+            --key-ink: #2a0f1c;
+        }
+
+        /* =========================================
+           TOP BAR
+        ========================================= */
+        .support-banner {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 9999;
+            height: var(--topbar-h);
+            padding-top: env(safe-area-inset-top);
+            background: rgba(26, 19, 23, 0.86);
+            backdrop-filter: blur(12px) saturate(130%);
+            -webkit-backdrop-filter: blur(12px) saturate(130%);
+            border-bottom: 1px dashed var(--stitch);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+            transform: translateZ(0);
+        }
+        .banner-inner {
+            max-width: 1120px;
+            height: 100%;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+        .banner-title {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .banner-title > span:first-child {
+            font-weight: 900;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            color: var(--text-strong);
+            text-shadow: var(--misreg);
+        }
+        .banner-warning-sign { color: var(--amber); margin-left: 4px; text-shadow: none; }
+        .banner-title-en { font-family: var(--font-mono); font-size: 0.66rem; color: var(--muted); letter-spacing: 0.5px; margin-top: 3px; font-weight: 700; }
+
+        .top-nav { display: flex; gap: 0.2rem; margin-left: auto; font-family: var(--font-mono); }
+        .top-nav a {
+            position: relative;
+            padding: 0.35rem 0.75rem;
+            color: var(--muted);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            border-radius: 999px;
+            transition: color 0.2s, background-color 0.2s;
+        }
+        .top-nav a .nav-no { color: var(--amber); margin-right: 0.35rem; }
+        .top-nav a:hover { color: var(--text-strong); background: rgba(243, 230, 216, 0.06); }
+        .top-nav a.is-active { color: var(--ink); background: var(--amber); }
+        .top-nav a.is-active .nav-no { color: var(--ink); opacity: 0.6; }
+
+        .link-group { display: flex; gap: 0.6rem; flex-shrink: 0; }
+
+        .cyber-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.45rem;
+            min-height: 40px;
+            padding: 0.4rem 0.95rem;
+            background: var(--key);
+            color: var(--key-ink);
+            border: none;
+            border-radius: var(--r-sm);
+            box-shadow: 0 4px 0 var(--key-edge), 0 6px 14px rgba(0, 0, 0, 0.35);
+            font-family: var(--font-mono);
+            font-weight: 800;
+            font-size: 0.84rem;
+            letter-spacing: 0.4px;
+            cursor: pointer;
+            white-space: nowrap;
+            transform: translateY(-2px);
+            transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.15s;
+        }
+        .cyber-btn:hover { filter: brightness(1.08); color: var(--key-ink); }
+        .cyber-btn:active { transform: translateY(2px); box-shadow: 0 0 0 var(--key-edge), 0 2px 6px rgba(0, 0, 0, 0.3); }
+        .link-group .cyber-btn + .cyber-btn { --key: var(--teal); --key-edge: var(--teal-deep); --key-ink: #0d2526; }
+        .btn-water-icon { height: 22px; width: auto; object-fit: contain; flex-shrink: 0; }
+
+        .scroll-progress {
+            position: absolute;
+            left: 0; bottom: -1px;
+            height: 3px;
+            width: 100%;
+            transform-origin: left;
+            transform: scaleX(0);
+            background: repeating-linear-gradient(90deg, var(--amber) 0 10px, transparent 10px 14px);
+        }
+
+        /* =========================================
+           LAYOUT
+        ========================================= */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: calc(var(--topbar-h) + 2.75rem) 1.5rem 4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        /* 縫線：皮沙發的車縫虛線 */
+        .stitched { position: relative; }
+        .stitched::after,
+        header.hero::after,
+        .gate-card::after,
+        .channel-card::after,
+        .shift-block::after,
+        .terminal-line-link::after,
+        .status-panel::after {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            border: 1.5px dashed var(--stitch);
+            border-radius: calc(var(--r-md) - 4px);
+            pointer-events: none;
+        }
+
+        /* =========================================
+           HERO
+        ========================================= */
+        header.hero {
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+            gap: 2rem;
+            padding: 2.6rem 2.5rem 2.5rem;
+            background:
+                radial-gradient(rgba(255, 111, 174, 0.22) 1.2px, transparent 1.6px) right -20px top -20px / 12px 12px no-repeat,
+                linear-gradient(160deg, #2b1f26 0%, var(--surface) 55%);
+            border-radius: var(--r-lg);
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 24px 50px -20px rgba(0, 0, 0, 0.6);
+        }
+        header.hero::after { inset: 8px; border-radius: calc(var(--r-lg) - 6px); }
+        /* 右上角半調網點（套印質感） */
+        header.hero::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 220px; height: 160px;
+            border-top-right-radius: var(--r-lg);
+            background: radial-gradient(rgba(255, 111, 174, 0.28) 1.3px, transparent 1.7px) 0 0 / 11px 11px;
+            -webkit-mask-image: radial-gradient(ellipse at top right, #000 10%, transparent 70%);
+            mask-image: radial-gradient(ellipse at top right, #000 10%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* 標籤機貼紙 */
+        .sys-tag {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: #fff;
+            background: #2a2a2e;
+            padding: 0.25rem 0.75rem;
+            margin-bottom: 1.3rem;
+            border-radius: 3px;
+            transform: rotate(-1.2deg);
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
+        }
+        .sys-tag::before { content: '◉ '; color: var(--amber); }
+
+        h1 {
+            font-weight: 900;
+            font-size: clamp(1.8rem, 4.3vw, 2.7rem);
+            line-height: 1.25;
+            color: var(--text-strong);
+            letter-spacing: 1px;
+            text-shadow: -2px 0 0 rgba(255, 111, 174, 0.8), 2px 2px 0 rgba(98, 211, 214, 0.6);
+            margin-bottom: 0.4rem;
+        }
+        .h1-en {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: clamp(0.82rem, 1.7vw, 1rem);
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--teal);
+            text-shadow: none;
+            margin-top: 0.7rem;
+        }
+        .h1-en .h1-handle { color: var(--amber); }
+
+        .tagline {
+            margin-top: 1.3rem;
+            font-size: 1rem;
+            color: var(--text);
+            padding-left: 1rem;
+            border-left: 3px solid var(--amber);
+            line-height: 1.9;
+            max-width: 38em;
+        }
+        .tagline .lang-en { display: block; margin-top: 0.45rem; }
+
+        .jump-nav { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.7rem; }
+        .jump-nav a {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.45rem;
+            padding: 0.4rem 0.95rem;
+            border-radius: 999px;
+            border: 1.5px solid rgba(243, 230, 216, 0.2);
+            background: rgba(243, 230, 216, 0.04);
+            color: var(--text);
+            font-family: var(--font-mono);
+            font-size: 0.76rem;
+            font-weight: 700;
+            transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+        }
+        .jump-nav a:hover { background: var(--amber); border-color: var(--amber); color: var(--ink); }
+        .jump-kicker { color: var(--amber); }
+        .jump-nav a:hover .jump-kicker { color: var(--ink); opacity: 0.6; }
+
+        /* 值班燈面板 */
+        .status-panel {
+            position: relative;
+            align-self: start;
+            display: flex;
+            flex-direction: column;
+            gap: 0.95rem;
+            padding: 1.4rem 1.35rem 1.35rem;
+            background:
+                radial-gradient(ellipse 90% 70% at 50% 0%, rgba(255, 190, 92, 0.14), transparent 70%),
+                var(--surface-deep);
+            border-radius: var(--r-md);
+            box-shadow: inset 0 0 0 1px rgba(243, 230, 216, 0.08), inset 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+        .status-panel::after { border-color: rgba(243, 230, 216, 0.12); }
+        .hud-corner {
+            position: absolute;
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #6b5560, #2a1e24);
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .hud-tl { top: 12px; left: 12px; } .hud-tr { top: 12px; right: 12px; }
+        .hud-bl { bottom: 12px; left: 12px; } .hud-br { bottom: 12px; right: 12px; }
+        .status-panel .hud-corner { display: none; }
+
+        .status-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--muted);
+        }
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.12rem 0.6rem;
+            border-radius: 999px;
+            background: rgba(243, 230, 216, 0.07);
+            color: var(--muted);
+        }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+        .status-panel.is-idle .status-pill { color: var(--amber); }
+        .status-panel.is-idle .status-dot { box-shadow: 0 0 8px var(--amber); animation: lamp 3.4s ease-in-out infinite; }
+        .status-panel.is-live .status-pill { color: #12230c; background: var(--green); }
+        .status-panel.is-live .status-dot { background: #12230c; animation: lamp 1.2s ease-in-out infinite; }
+        @keyframes lamp { 50% { opacity: 0.35; } }
+
+        .status-main {
+            font-family: var(--font-pixel);
+            font-weight: 400;
+            font-size: 3rem;
+            line-height: 1;
+            color: var(--amber);
+            letter-spacing: 2px;
+            font-variant-numeric: tabular-nums;
+            text-shadow: 0 0 14px rgba(255, 190, 92, 0.45);
+            margin-top: 0.2rem;
+        }
+        .status-panel.is-live .status-main { color: var(--green); text-shadow: 0 0 14px rgba(166, 232, 138, 0.45); }
+        .status-sub { font-size: 0.86rem; color: var(--text); line-height: 1.6; }
+        .status-sub .lang-en { display: block; font-size: 0.78rem; }
+        .status-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: 0.2rem; }
+        .status-actions a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+            border-radius: var(--r-sm);
+            font-family: var(--font-mono);
+            font-weight: 800;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+            background: var(--surface-2);
+            color: var(--text);
+            box-shadow: 0 3px 0 #120c0f, inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            transform: translateY(-1px);
+            transition: transform 0.08s, box-shadow 0.08s, background-color 0.15s, color 0.15s;
+        }
+        .status-actions a:hover { background: var(--teal); color: #0d2526; }
+        .status-actions a:active { transform: translateY(2px); box-shadow: 0 0 0 #120c0f; }
+        .status-panel.is-live .status-actions a:first-child { background: var(--green); color: #12230c; }
+
+        /* =========================================
+           GATES
+        ========================================= */
+        .social-matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+        .gate-card {
+            --gate: var(--teal);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            min-height: 150px;
+            padding: 1.45rem 1.6rem 1.35rem;
+            background:
+                linear-gradient(160deg, color-mix(in srgb, var(--gate) 12%, transparent), transparent 60%),
+                var(--surface);
+            color: var(--text);
+            border-radius: var(--r-md);
+            box-shadow: 0 16px 30px -18px rgba(0, 0, 0, 0.7);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .gate-card::after { border-color: color-mix(in srgb, var(--gate) 40%, transparent); }
+        .gate-card:hover {
+            color: var(--text);
+            transform: translateY(-4px) rotate(-0.4deg);
+            box-shadow: 0 22px 36px -18px color-mix(in srgb, var(--gate) 45%, transparent);
+        }
+        .card-game.gate-card { --gate: var(--pink); }
+        .card-game.gate-card:hover { transform: translateY(-4px) rotate(0.4deg); }
+        .gate-top { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; }
+        .gate-prefix { font-family: var(--font-mono); font-weight: 800; font-size: 0.78rem; letter-spacing: 0.5px; color: var(--gate); }
+        .gate-badge {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            color: var(--surface-deep);
+            background: var(--gate);
+            padding: 0.05rem 0.5rem;
+            border-radius: 999px;
+        }
+        .gate-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: 900;
+            font-size: 1.4rem;
+            letter-spacing: 1.5px;
+            color: var(--text-strong);
+            text-shadow: var(--misreg);
+            margin-top: 0.2rem;
+        }
+        .gate-arrow {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            color: var(--surface-deep);
+            background: var(--gate);
+            text-shadow: none;
+            transition: transform 0.2s ease;
+        }
+        .gate-card:hover .gate-arrow { transform: translateX(4px); }
+        .channel-desc { font-size: 0.86rem; color: var(--muted); line-height: 1.7; }
+        .channel-desc .lang-en { display: block; font-size: 0.8rem; }
+
+        /* =========================================
+           CRT 視窗（每段一台螢幕）
+        ========================================= */
+        .terminal-window {
+            position: relative;
+            background: var(--surface);
+            border-radius: var(--r-lg);
+            padding: 10px;
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.05),
+                0 0 0 1px rgba(0, 0, 0, 0.4),
+                0 30px 60px -30px rgba(0, 0, 0, 0.8);
+        }
+        /* 錯版的第二色框 */
+        .terminal-window::after {
+            content: '';
+            position: absolute;
+            top: 7px; left: 7px; right: -7px; bottom: -7px;
+            border: 1.5px dashed rgba(98, 211, 214, 0.32);
+            border-radius: var(--r-lg);
+            z-index: -1;
+            pointer-events: none;
+        }
+        .window-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.35rem 0.6rem 0.65rem;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: var(--muted);
+        }
+        .window-dots { display: inline-flex; gap: 6px; margin-right: 0.7rem; vertical-align: middle; }
+        .window-dots i { width: 10px; height: 10px; border-radius: 50%; display: block; background: var(--pink); }
+        .window-dots i:nth-child(2) { background: var(--amber); }
+        .window-dots i:nth-child(3) { background: var(--teal); }
+        .window-path { display: flex; align-items: center; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .window-mode { white-space: nowrap; flex-shrink: 0; color: var(--amber); }
+
+        .window-content {
+            position: relative;
+            padding: 2.3rem 2.3rem 2.5rem;
+            background:
+                radial-gradient(ellipse 120% 90% at 50% 0%, rgba(255, 190, 92, 0.05), transparent 60%),
+                var(--surface-deep);
+            border-radius: calc(var(--r-lg) - 6px);
+            box-shadow: inset 0 0 0 1px rgba(243, 230, 216, 0.06), inset 0 0 50px rgba(0, 0, 0, 0.55);
+            overflow: hidden;
+        }
+        /* 極淡掃描線，只在螢幕裡 */
+        .window-content::before {
+            content: '';
+            position: absolute; inset: 0;
+            pointer-events: none;
+            background: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 3px);
+        }
+
+        .section-title {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            column-gap: 0.85rem;
+            row-gap: 0.25rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1.5px dashed var(--stitch);
+        }
+        .sec-no {
+            display: inline-flex; align-items: center; justify-content: center;
+            min-width: 2.3rem; height: 2.3rem;
+            border-radius: 50%;
+            font-family: var(--font-pixel);
+            font-weight: 400;
+            font-size: 1.45rem;
+            color: var(--ink);
+            background: var(--amber);
+            box-shadow: 2px 2px 0 var(--pink);
+        }
+        .sec-zh { font-size: 1.5rem; font-weight: 900; color: var(--text-strong); letter-spacing: 1.5px; text-shadow: var(--misreg); }
+        .sec-en { font-family: var(--font-mono); font-size: 0.76rem; font-weight: 800; letter-spacing: 1.5px; color: var(--teal); }
+
+        .bilingual-block { display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 1.5rem; max-width: 46em; }
+        .lang-zh { color: var(--text); }
+        .lang-en { color: var(--muted); font-size: 0.9rem; line-height: 1.75; }
+        strong { color: var(--text-strong); font-weight: 700; }
+
+        /* 螢光筆 */
+        .highlight-neon {
+            color: var(--text-strong);
+            font-weight: 700;
+            padding: 0 0.15em;
+            background: linear-gradient(transparent 55%, rgba(255, 111, 174, 0.45) 55%, rgba(255, 111, 174, 0.45) 92%, transparent 92%);
+            -webkit-box-decoration-break: clone;
+            box-decoration-break: clone;
+        }
+        a.highlight-neon { color: var(--pink); }
+        a.highlight-neon:hover { color: var(--text-strong); background: var(--pink); border-radius: 4px; }
+        .highlight-blue { color: var(--amber); font-weight: 700; }
+
+        /* 便利貼（警告 / 須知） */
+        .cat-alert {
+            position: relative;
+            margin: 2rem 0 0;
+            padding: 1.35rem 1.4rem 1.2rem;
+            background:
+                linear-gradient(180deg, rgba(0, 0, 0, 0.04), transparent 30%),
+                var(--paper);
+            color: var(--ink);
+            border-radius: 3px 3px 14px 3px;
+            font-size: 0.92rem;
+            transform: rotate(-0.5deg);
+            box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.6);
+            max-width: 46em;
+        }
+        .cat-alert::before {
+            content: '';
+            position: absolute;
+            top: -11px; left: 50%;
+            width: 96px; height: 22px;
+            transform: translateX(-50%) rotate(2deg);
+            background: rgba(255, 111, 174, 0.55);
+            -webkit-mask-image: linear-gradient(90deg, transparent 0 3px, #000 3px calc(100% - 3px), transparent calc(100% - 3px));
+            mask-image: linear-gradient(90deg, transparent 0 3px, #000 3px calc(100% - 3px), transparent calc(100% - 3px));
+        }
+        .cat-alert + .cat-alert, .sub-links-container + .cat-alert { transform: rotate(0.6deg); }
+        .cat-alert .lang-zh, .cat-alert strong { color: var(--ink); }
+        .cat-alert .lang-en, .cat-alert .shift-en { color: #6e5a4c; }
+        .cat-alert-title {
+            display: block;
+            font-family: var(--font-mono);
+            font-weight: 800;
+            font-size: 0.8rem;
+            letter-spacing: 0.6px;
+            color: #b2421f;
+            margin-bottom: 0.55rem;
+        }
+
+        /* =========================================
+           01 LIVE
+        ========================================= */
+        .tz-toggle {
+            display: inline-grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            padding: 4px;
+            margin: 0.2rem 0 1.1rem;
+            border-radius: var(--r-md);
+            background: var(--surface);
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
+            min-width: min(100%, 460px);
+        }
+        .tz-btn {
+            background: transparent;
+            color: var(--muted);
+            border: none;
+            border-radius: var(--r-sm);
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 0.92rem;
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            line-height: 1.35;
+            transition: background-color 0.15s, color 0.15s, box-shadow 0.15s;
+        }
+        .tz-btn:hover { color: var(--text-strong); }
+        .tz-btn.active { background: var(--amber); color: var(--ink); box-shadow: 0 2px 0 var(--amber-deep); }
+        .tz-btn .th-en { color: inherit; opacity: 0.7; }
+        .th-en { display: block; font-family: var(--font-mono); color: var(--muted); font-size: 0.66rem; font-weight: 700; letter-spacing: 0; }
+
+        .shift-next-line {
+            display: inline-flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.35rem 0.6rem;
+            color: var(--text);
+            font-weight: 700;
+            margin: 0 0 1rem;
+            padding: 0.45rem 0.9rem;
+            border-radius: 999px;
+            background: rgba(255, 190, 92, 0.1);
+            font-size: 0.9rem;
+        }
+        .shift-next-line:empty { display: none; }
+        .shift-en { color: var(--muted); font-weight: 400; font-size: 0.8rem; margin-left: 0.35rem; }
+        .shift-next-line .shift-en { margin-left: 0; }
+
+        .shift-board { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .shift-block {
+            position: relative;
+            border-radius: var(--r-md);
+            background: var(--surface);
+            padding: 1.15rem 1.3rem 1.1rem;
+            transition: transform 0.2s;
+        }
+        .shift-block:hover { transform: translateY(-2px); }
+        .shift-head { display: flex; justify-content: space-between; align-items: baseline; gap: 0.6rem; }
+        .shift-days { font-weight: 900; font-size: 1.15rem; letter-spacing: 3px; color: var(--text-strong); }
+        .shift-kind { font-family: var(--font-mono); font-size: 0.74rem; font-weight: 800; color: var(--surface-deep); background: var(--teal); padding: 0.02rem 0.55rem; border-radius: 999px; }
+        .shift-en-line { color: var(--muted); font-family: var(--font-mono); font-size: 0.72rem; margin-top: 0.1rem; }
+        .shift-clock {
+            font-family: var(--font-pixel);
+            color: var(--pink);
+            font-size: 2.1rem;
+            line-height: 1.1;
+            letter-spacing: 1px;
+            margin-top: 0.4rem;
+            text-shadow: 1.5px 1.5px 0 rgba(98, 211, 214, 0.35);
+        }
+        .shift-off-tag {
+            display: inline-block;
+            margin-top: 0.45rem;
+            color: var(--ink);
+            background: var(--amber);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 0 0.5rem;
+            border-radius: 4px;
+        }
+        .shift-note { font-size: 0.8rem; color: var(--muted); margin-top: 1rem; line-height: 1.75; }
+        .off-list { margin: 0.5rem 0 0 1.1rem; font-size: 0.9rem; }
+        .off-list li { margin-bottom: 0.35rem; }
+        .off-list li::marker { color: var(--amber); }
+
+        .watch-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.6rem 0 0.5rem; }
+        .channel-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            padding: 1.15rem 1.3rem;
+            background: var(--surface);
+            border-radius: var(--r-md);
+            color: var(--text);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .channel-card:hover { color: var(--text); background: var(--surface-2); transform: translateY(-3px); }
+        .channel-top { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
+        .platform-name { font-family: var(--font-mono); font-weight: 800; font-size: 1.05rem; letter-spacing: 1px; text-transform: uppercase; color: var(--text-strong); }
+        .badge { font-family: var(--font-mono); font-size: 0.62rem; padding: 0.05rem 0.55rem; font-weight: 800; letter-spacing: 0.5px; border-radius: 999px; background: var(--pink); color: #2a0f1c; }
+        .ext { font-family: var(--font-mono); color: var(--teal); margin-left: 0.3rem; }
+
+        /* =========================================
+           02 COMMANDS（指令 = 鍵帽）
+        ========================================= */
+        .cmd-tools { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; margin: 0.2rem 0 0.9rem; }
+        .cmd-search { position: relative; flex: 1 1 260px; max-width: 420px; }
+        .cmd-search::before {
+            content: '>_';
+            position: absolute; left: 0.85rem; top: 50%;
+            transform: translateY(-50%);
+            font-family: var(--font-mono);
+            font-weight: 800;
+            font-size: 0.8rem;
+            color: var(--amber);
+            pointer-events: none;
+        }
+        .cmd-search input {
+            width: 100%;
+            min-height: 44px;
+            padding: 0.55rem 0.9rem 0.55rem 2.4rem;
+            background: var(--surface);
+            border: 1.5px solid transparent;
+            border-radius: 999px;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.45);
+            color: var(--text);
+            font-family: var(--font-body);
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+        .cmd-search input::placeholder { color: var(--muted); opacity: 0.8; }
+        .cmd-search input:focus { outline: none; border-color: var(--amber); }
+        .cmd-hint { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
+        .cmd-hint b { color: var(--amber); }
+
+        .cmd-list {
+            display: flex;
+            flex-direction: column;
+            margin: 0.4rem 0 1.2rem;
+            border-radius: var(--r-md);
+            background: var(--surface);
+            overflow: hidden;
+        }
+        .cmd-row {
+            display: grid;
+            grid-template-columns: max-content minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 0.4rem 1rem;
+            padding: 0.7rem 1rem;
+            border-bottom: 1px dashed var(--line);
+            transition: background-color 0.15s;
+        }
+        .cmd-row:hover { background: rgba(255, 190, 92, 0.05); }
+        .cmd-row:last-child { border-bottom: none; }
+        .cmd-row[hidden] { display: none; }
+        .cmd-code {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            justify-self: start;
+            padding: 0.2rem 0.6rem;
+            background: #3a2c34;
+            color: var(--text-strong);
+            border: none;
+            border-radius: 6px;
+            box-shadow: 0 3px 0 #120c0f, inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            font-family: var(--font-mono);
+            font-size: 0.86rem;
+            font-weight: 800;
+            cursor: copy;
+            white-space: nowrap;
+            transform: translateY(-1px);
+            transition: transform 0.08s, box-shadow 0.08s, background-color 0.15s, color 0.15s;
+        }
+        .cmd-code::after { content: '⧉'; font-size: 0.78rem; color: var(--amber); opacity: 0.7; }
+        .cmd-code:hover { background: #4a3842; }
+        .cmd-code:active { transform: translateY(2px); box-shadow: 0 0 0 #120c0f; }
+        .cmd-code.copied { background: var(--green); color: #12230c; }
+        .cmd-code.copied::after { content: '✓'; color: #12230c; opacity: 1; }
+        .cmd-desc { color: var(--text); font-size: 0.9rem; min-width: 0; }
+        .cmd-desc .shift-en { font-size: 0.78rem; margin-left: 0.45rem; }
+        .cmd-price { font-family: var(--font-mono); color: var(--amber); font-weight: 800; font-size: 0.78rem; white-space: nowrap; text-align: right; }
+
+        .cmd-more { margin: 0 0 1.2rem; }
+        .cmd-more summary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            cursor: pointer;
+            color: var(--text);
+            font-weight: 700;
+            padding: 0.45rem 1rem;
+            border-radius: 999px;
+            border: 1.5px dashed var(--stitch);
+            list-style: none;
+            transition: background-color 0.15s, border-color 0.15s;
+            user-select: none;
+        }
+        .cmd-more summary:hover { background: rgba(255, 190, 92, 0.08); border-color: var(--amber); }
+        .cmd-more summary::-webkit-details-marker { display: none; }
+        .cmd-more summary::before { content: '+'; font-family: var(--font-mono); font-weight: 800; color: var(--amber); width: 1ch; }
+        .cmd-more[open] summary::before { content: '−'; }
+        .cmd-count { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
+        .cmd-empty {
+            display: none;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--muted);
+            padding: 0.9rem 1.1rem;
+            border: 1.5px dashed var(--stitch);
+            border-radius: var(--r-md);
+            margin-bottom: 1.2rem;
+        }
+        .cmd-empty.show { display: block; }
+        .cmd-rules { margin: 0.2rem 0 0 1.1rem; font-size: 0.9rem; }
+        .cmd-rules li { margin-bottom: 0.45rem; }
+        .cmd-rules li::marker { color: #b2421f; }
+        .cmd-rules .shift-en { display: block; margin-left: 0; }
+
+        /* =========================================
+           03 ABOUT
+        ========================================= */
+        .sub-links-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.75rem; margin-top: 0.4rem; }
+        .terminal-line-link {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 0.1rem;
+            padding: 0.85rem 1.05rem;
+            background: var(--surface);
+            border-radius: var(--r-md);
+            color: var(--text);
+            transition: transform 0.15s, background-color 0.15s;
+        }
+        .terminal-line-link::after { inset: 5px; }
+        .terminal-line-link:hover { color: var(--text); background: var(--surface-2); transform: translateY(-2px) rotate(-0.5deg); }
+        .term-line { display: flex; align-items: center; gap: 0.5rem; }
+        .term-prefix { font-family: var(--font-mono); font-weight: 800; font-size: 0.8rem; }
+        .pink-prefix { color: var(--pink); }
+        .blue-prefix { color: var(--teal); }
+        .term-name { font-family: var(--font-mono); font-weight: 800; letter-spacing: 1px; color: var(--text-strong); font-size: 0.88rem; }
+        .term-desc { font-size: 0.78rem; color: var(--muted); }
+
+        .ios-hint {
+            display: flex;
+            gap: 0.6rem;
+            align-items: flex-start;
+            font-size: 0.82rem;
+            color: var(--muted);
+            border: 1.5px dashed var(--stitch);
+            border-radius: var(--r-md);
+            padding: 0.75rem 1rem;
+            margin: 0.4rem 0 1.4rem;
+            max-width: 46em;
+        }
+        .ios-hint::before { content: 'i'; flex-shrink: 0; width: 1.4em; height: 1.4em; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--teal); color: var(--surface-deep); font-family: var(--font-mono); font-weight: 800; font-size: 0.75rem; margin-top: 0.15rem; }
+        .ios-hint .lang-en { display: block; font-size: 0.78rem; }
+
+        /* =========================================
+           04 DONATE
+        ========================================= */
+        .donate-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 2.25rem; align-items: start; }
+        .donate-copy .bilingual-block { margin-bottom: 1.2rem; }
+        .donate-copy .lang-en[style] { border-left-color: rgba(255, 190, 92, 0.5) !important; }
+        .pause-notice {
+            border-radius: var(--r-md);
+            background: rgba(98, 211, 214, 0.07);
+            padding: 1rem 1.15rem;
+            display: flex; flex-direction: column; gap: 0.45rem;
+            font-size: 0.92rem;
+        }
+        .pause-notice .lang-en { font-size: 0.84rem; }
+        .pause-notice-title { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 800; letter-spacing: 1px; color: var(--teal); }
+
+        .water-showcase-container {
+            position: sticky;
+            top: calc(var(--topbar-h) + 1.5rem);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+            width: 100%;
+        }
+        /* 檯燈下的快樂水 */
+        .water-showcase-box {
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+            aspect-ratio: 1 / 1;
+            border-radius: var(--r-lg);
+            background:
+                radial-gradient(ellipse 55% 12% at 50% 86%, rgba(0, 0, 0, 0.55), transparent 70%),
+                radial-gradient(ellipse 70% 75% at 50% 25%, rgba(255, 190, 92, 0.28), transparent 70%),
+                var(--surface);
+            box-shadow: inset 0 0 0 1px rgba(243, 230, 216, 0.08), 0 24px 40px -20px rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem 1rem;
+            overflow: hidden;
+            transform: translate3d(0, 0, 0);
+        }
+        .water-showcase-box .hud-corner { width: 8px; height: 8px; }
+        .water-caption {
+            position: absolute;
+            left: 0; right: 0; bottom: 0.7rem;
+            text-align: center;
+            font-family: var(--font-pixel);
+            font-size: 1rem;
+            letter-spacing: 2px;
+            color: rgba(255, 190, 92, 0.75);
+        }
+        @keyframes can-float {
+            0%, 100% { transform: translate3d(0, 0, 0); filter: drop-shadow(0 0 10px rgba(255, 190, 92, 0.25)); }
+            50% { transform: translate3d(0, -6px, 0); filter: drop-shadow(0 0 18px rgba(255, 190, 92, 0.45)); }
+        }
+        /* 保持原比例，加上 3D 硬體解碼通道以防 iOS WebKit 凍結動圖 */
+        .water-img-lg {
+            width: auto;
+            max-width: 80%;
+            height: auto;
+            max-height: 215px;
+            object-fit: contain;
+            display: block;
+            image-rendering: pixelated;
+            backface-visibility: hidden;
+            animation: can-float 5.5s infinite ease-in-out;
+        }
+        .ration-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; width: 100%; max-width: 300px; }
+        .ration-btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.45rem;
+            min-height: 48px;
+            padding: 0.55rem 0.6rem;
+            background: var(--key);
+            color: var(--key-ink);
+            border: none;
+            border-radius: var(--r-sm);
+            box-shadow: 0 4px 0 var(--key-edge), 0 8px 16px rgba(0, 0, 0, 0.35);
+            font-weight: 800;
+            font-family: var(--font-mono);
+            font-size: 0.86rem;
+            letter-spacing: 0.4px;
+            cursor: pointer;
+            transform: translateY(-2px);
+            transition: transform 0.08s, box-shadow 0.08s, filter 0.15s;
+        }
+        .ration-btn + .ration-btn { --key: var(--teal); --key-edge: var(--teal-deep); --key-ink: #0d2526; }
+        .ration-btn:hover { filter: brightness(1.08); }
+        .ration-btn:active { transform: translateY(2px); box-shadow: 0 0 0 var(--key-edge); }
+        .ration-btn .hud-corner { display: none; }
+
+        /* =========================================
+           睡在視窗上的像素貓
+        ========================================= */
+        .window-cat {
+            position: absolute;
+            top: -46px;
+            right: 46px;
+            width: 96px;
+            height: 53px;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .window-cat.left { right: auto; left: 54px; }
+        .window-cat svg { width: 100%; height: 100%; display: block; overflow: visible; transform-origin: 50% 100%; animation: breathe 3.8s ease-in-out infinite; }
+        .window-cat.left svg { animation-delay: -1.7s; }
+        @keyframes breathe { 50% { transform: scale(1.03, 1.06); } }
+        .window-cat .zzz {
+            position: absolute;
+            top: -14px; left: 0;
+            font-family: var(--font-pixel);
+            font-size: 1.05rem;
+            color: var(--amber);
+            opacity: 0;
+            animation: zzz 3.8s ease-out infinite;
+        }
+        .window-cat .zzz:nth-child(2) { animation-delay: 1.3s; left: -12px; }
+        .window-cat.left .zzz { left: auto; right: -6px; }
+        .window-cat.left .zzz:nth-child(2) { right: -14px; }
+        @keyframes zzz {
+            0% { opacity: 0; transform: translate(0, 6px) scale(0.8); }
+            30% { opacity: 0.9; }
+            100% { opacity: 0; transform: translate(-8px, -14px) scale(1.1); }
+        }
+        .window-cat.left .zzz { animation-name: zzz-r; }
+        @keyframes zzz-r {
+            0% { opacity: 0; transform: translate(0, 6px) scale(0.8); }
+            30% { opacity: 0.9; }
+            100% { opacity: 0; transform: translate(8px, -14px) scale(1.1); }
+        }
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+        footer {
+            border-top: 1.5px dashed var(--stitch);
+            padding-top: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 1rem 2rem;
+            font-size: 0.84rem;
+            color: var(--muted);
+        }
+        .footer-brand { font-weight: 700; color: var(--text); }
+        .footer-sig { display: block; font-family: var(--font-pixel); font-size: 1rem; letter-spacing: 1px; color: var(--amber); margin-top: 0.3rem; }
+        .footer-links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; }
+        .footer-links a { color: var(--muted); }
+        .footer-links a:hover { color: var(--amber); }
+
+        /* =========================================
+           MODAL
+        ========================================= */
+        .modal-overlay {
+            position: fixed; inset: 0;
+            background-color: rgba(12, 8, 10, 0.78);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 20000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, visibility 0s linear 0.2s;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; transition: opacity 0.2s ease; }
+        .modal-box {
+            position: relative;
+            background-color: var(--surface);
+            color: var(--text);
+            border-radius: var(--r-lg);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            max-width: 540px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            max-height: min(92vh, 960px);
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            transform: translateY(16px) scale(0.98);
+            transition: transform 0.28s cubic-bezier(.2, .9, .3, 1.2);
+        }
+        .modal-overlay.active .modal-box { transform: none; }
+        .modal-box::-webkit-scrollbar { width: 6px; }
+        .modal-box::-webkit-scrollbar-track { background: transparent; }
+        .modal-box::-webkit-scrollbar-thumb { background: var(--bezel); border-radius: 3px; }
+
+        .modal-header {
+            position: sticky; top: 0; z-index: 10;
+            background: rgba(36, 26, 32, 0.96);
+            border-bottom: 1.5px dashed var(--stitch);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.9rem 1rem 0.9rem 1.4rem;
+        }
+        .modal-header h2 { font-size: 0.95rem; font-weight: 900; color: var(--text-strong); line-height: 1.45; }
+        .close-btn {
+            flex-shrink: 0;
+            width: 40px; height: 40px;
+            display: inline-flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+            background: var(--surface-2);
+            color: var(--text);
+            border: none;
+            box-shadow: 0 3px 0 #120c0f;
+            font-size: 1rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: background-color 0.15s, color 0.15s, transform 0.08s, box-shadow 0.08s;
+        }
+        .close-btn:hover { background: var(--pink); color: #2a0f1c; }
+        .close-btn:active { transform: translateY(2px); box-shadow: none; }
+
+        .modal-body { padding: 1.4rem; display: flex; flex-direction: column; gap: 1.4rem; }
+        .step-label { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 0.8rem; color: var(--amber); }
+        .step-label.pink { color: var(--pink); margin-bottom: 0; }
+
+        .pay-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+        /* 2027/1/1 恢復藍新後，把 #usPayTabs 改回 3 欄 */
+        #usPayTabs { grid-template-columns: 1fr 1fr; }
+        .pay-tab[hidden], .pay-tabs[hidden] { display: none !important; }
+        .pay-pause { display: flex; flex-direction: column; gap: 0.45rem; font-size: 0.9rem; padding: 0.85rem 1rem; border-radius: var(--r-md); background: rgba(98, 211, 214, 0.07); }
+        .pay-pause .lang-en { margin: 0; font-size: 0.82rem; }
+        .pay-tab {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0.6rem 0.3rem;
+            min-height: 54px;
+            background: var(--surface-2);
+            color: var(--text);
+            border: none;
+            border-radius: var(--r-sm);
+            box-shadow: 0 3px 0 #120c0f, inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            line-height: 1.3;
+            transition: background-color 0.15s, color 0.15s, transform 0.08s, box-shadow 0.08s;
+        }
+        .pay-tab:hover { background: #3a2c34; }
+        .pay-tab.active {
+            background: var(--pink) !important;
+            color: #2a0f1c !important;
+            box-shadow: 0 3px 0 var(--pink-deep);
+        }
+
+        @keyframes modal-bg-aura { 0%, 100% { opacity: 0.32; } 50% { opacity: 0.45; } }
+
+        /* QR 碼與支付跳轉容器 (固定統一高度) */
+        .qr-display {
+            position: relative;
+            border: 1.5px dashed var(--stitch);
+            border-radius: var(--r-md);
+            padding: 1.5rem 1.4rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            height: 500px;
+            width: 100%;
+            margin-top: 1rem;
+            background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(255, 190, 92, 0.1), transparent 70%);
+        }
+        .qr-display::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: url('images/happy-water-lg.gif') no-repeat center / contain;
+            pointer-events: none;
+            z-index: 0;
+            animation: modal-bg-aura 5.5s infinite ease-in-out;
+        }
+        .qr-display img#supportQrImage {
+            position: absolute;
+            top: 2.5rem; left: 50%;
+            transform: translateX(-50%);
+            width: 175px; height: 175px;
+            object-fit: contain;
+            background-color: #ffffff;
+            border-radius: var(--r-sm);
+            padding: 0.45rem;
+            box-shadow: 0 0 0 4px var(--paper), 0 10px 24px rgba(0, 0, 0, 0.5);
+            z-index: 2;
+        }
+        #supportQrHint {
+            font-size: 0.88rem;
+            color: var(--text);
+            line-height: 1.75;
+            width: 100%;
+            z-index: 1;
+            text-shadow: 0 1px 8px rgba(0, 0, 0, 0.95);
+        }
+        .qr-display.mode-qr #supportQrHint,
+        .qr-display.mode-link #supportQrHint {
+            position: absolute;
+            bottom: calc(2.5rem + 48px);
+            left: 1.4rem; right: 1.4rem;
+            width: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0.5rem 0;
+        }
+        .qr-display.mode-qr #supportQrHint { top: calc(2.5rem + 175px); }
+        .qr-display.mode-link #supportQrHint { top: 2.5rem; }
+
+        #actionBtn {
+            position: absolute;
+            bottom: 2.5rem; left: 50%;
+            transform: translate(-50%, -2px);
+            width: calc(100% - 2.8rem);
+            max-width: 320px;
+            height: 46px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            font-family: var(--font-mono);
+            font-size: 0.84rem;
+            font-weight: 800;
+            border-radius: var(--r-sm);
+            background: var(--key);
+            color: var(--key-ink);
+            box-shadow: 0 4px 0 var(--key-edge), 0 8px 16px rgba(0, 0, 0, 0.35);
+            transition: transform 0.08s, box-shadow 0.08s, filter 0.15s;
+            z-index: 5;
+        }
+        #actionBtn:hover { filter: brightness(1.08); color: var(--key-ink); }
+        #actionBtn:active { transform: translate(-50%, 2px); box-shadow: 0 0 0 var(--key-edge); }
+
+        .support-form { display: flex; flex-direction: column; gap: 1rem; border-top: 1.5px dashed var(--stitch); padding-top: 1.2rem; }
+        .form-group { display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.84rem; font-weight: 700; color: var(--text); }
+        .form-group input, .form-group textarea {
+            background: var(--surface-deep);
+            border: 1.5px solid transparent;
+            border-radius: var(--r-sm);
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.45);
+            color: var(--text);
+            padding: 0.7rem 0.8rem;
+            font-family: var(--font-body);
+            font-size: 16px; /* 避免 iOS 聚焦時自動放大 */
+            resize: vertical;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--amber); }
+        .form-submit { width: 100%; min-height: 48px; margin-top: 0.4rem; }
+
+        /* =========================================
+           FLOATING UI
+        ========================================= */
+        .back-to-top {
+            position: fixed;
+            right: max(1.25rem, env(safe-area-inset-right));
+            bottom: max(1.25rem, env(safe-area-inset-bottom));
+            z-index: 999;
+            width: 48px; height: 48px;
+            display: inline-flex; align-items: center; justify-content: center;
+            flex-direction: column;
+            border-radius: 50%;
+            background: var(--surface-2);
+            color: var(--amber);
+            border: none;
+            box-shadow: 0 4px 0 #120c0f, 0 8px 18px rgba(0, 0, 0, 0.45);
+            font-family: var(--font-mono);
+            font-size: 0.56rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            line-height: 1.1;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(10px);
+            pointer-events: none;
+            transition: opacity 0.25s ease, transform 0.25s ease, background-color 0.15s, color 0.15s;
+        }
+        .back-to-top b { font-size: 1rem; }
+        .back-to-top.visible { opacity: 1; transform: none; pointer-events: auto; }
+        .back-to-top:hover { background: var(--amber); color: var(--ink); }
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: max(1.5rem, env(safe-area-inset-bottom));
+            z-index: 25000;
+            transform: translate(-50%, 20px) rotate(-1deg);
+            opacity: 0;
+            pointer-events: none;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            font-weight: 800;
+            padding: 0.6rem 1.1rem;
+            border-radius: 4px;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
+            transition: opacity 0.2s, transform 0.2s;
+            white-space: nowrap;
+        }
+        .toast.show { opacity: 1; transform: translate(-50%, 0) rotate(-1deg); }
+
+        /* 捲動淡入（無 JS 時直接顯示） */
+        .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .js .reveal.in { opacity: 1; transform: none; }
+
+        /* =========================================
+           RWD
+        ========================================= */
+        @media (max-width: 960px) {
+            .top-nav { display: none; }
+            .link-group { margin-left: auto; }
+        }
+        @media (max-width: 820px) {
+            header.hero { grid-template-columns: 1fr; gap: 1.6rem; padding: 2.2rem 1.6rem 1.8rem; }
+            .donate-grid { grid-template-columns: 1fr; gap: 1.8rem; }
+            .water-showcase-container { position: static; }
+        }
+        @media (max-width: 768px) {
+            :root { --topbar-h: 58px; }
+            .banner-inner { padding: 0 0.9rem; gap: 0.6rem; }
+            .banner-title > span:first-child { font-size: 0.88rem; }
+            .banner-title-en { display: none; }
+            .link-group { gap: 0.45rem; }
+            .cyber-btn { min-height: 36px; padding: 0.3rem 0.6rem; font-size: 0.74rem; gap: 0.3rem; letter-spacing: 0; }
+            .btn-water-icon { height: 18px; }
+
+            .container { padding: calc(var(--topbar-h) + 1.5rem) 1rem 3rem; gap: 2.6rem; }
+            header.hero { padding: 1.9rem 1.25rem 1.6rem; }
+            .tagline { font-size: 0.94rem; }
+            .status-main { font-size: 2.6rem; }
+
+            .jump-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+            .jump-nav a { justify-content: center; font-size: 0.72rem; padding: 0.5rem 0.4rem; }
+
+            .social-matrix { grid-template-columns: 1fr; gap: 1rem; }
+            .gate-card { min-height: 0; }
+
+            .terminal-window { padding: 7px; border-radius: 14px; }
+            .window-header { padding: 0.3rem 0.5rem 0.55rem; font-size: 0.66rem; }
+            .window-content { padding: 1.5rem 1.1rem 1.7rem; border-radius: 10px; }
+            .sec-zh { font-size: 1.28rem; }
+            .window-cat { right: 22px; width: 72px; height: 40px; top: -34px; }
+            .window-cat.left { left: 28px; }
+
+            .tz-toggle { display: grid; width: 100%; }
+            .tz-btn { font-size: 0.84rem; padding: 0.5rem 0.3rem; }
+            .shift-board { grid-template-columns: 1fr; }
+            .shift-clock { font-size: 1.9rem; }
+            .watch-row { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+            .channel-card { padding: 1rem 1rem; }
+            .channel-top { flex-direction: column; align-items: flex-start; gap: 0.35rem; }
+
+            .cmd-row { grid-template-columns: minmax(0, 1fr) auto; padding: 0.7rem 0.8rem; }
+            .cmd-desc { grid-column: 1 / -1; }
+            .cmd-hint { display: none; }
+            .cat-alert { transform: none !important; }
+
+            .sub-links-container { grid-template-columns: 1fr 1fr; }
+
+            .ration-btn { font-size: 0.78rem; }
+            .pay-tab { font-size: 0.76rem; padding: 0.4rem 0.1rem; }
+            .modal-overlay { padding: 0.6rem; align-items: flex-end; }
+            .modal-box { max-height: 94vh; }
+            .modal-body { padding: 1.1rem; }
+
+            .back-to-top { width: 44px; height: 44px; }
+        }
+        @media (max-width: 380px) {
+            .banner-warning-sign { display: none; }
+            .cyber-btn .btn-water-icon { display: none; }
+            .watch-row { grid-template-columns: 1fr; }
+            .sub-links-container { grid-template-columns: 1fr; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+            .js .reveal { opacity: 1; transform: none; }
+            .window-cat .zzz { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <a class="skip-link" href="#main">跳到內容 Skip to content</a>
+
+    <!-- 頂部固定列：投餵按鈕 + 段落導覽 + 閱讀進度 -->
+    <div class="support-banner">
+        <div class="banner-inner">
+            <div class="banner-title">
+                <span>投餵快樂水™ 貓飯<span class="banner-warning-sign" aria-hidden="true">⚠</span></span>
+                <span class="banner-title-en">CYBER RATIONS // Happy Water™ &amp; Feline Fuel</span>
+            </div>
+
+            <nav class="top-nav" aria-label="段落 Sections">
+                <a href="#live"><span class="nav-no">01</span>LIVE</a>
+                <a href="#guide"><span class="nav-no">02</span>GUIDE</a>
+                <a href="#about"><span class="nav-no">03</span>ABOUT</a>
+                <a href="#donate"><span class="nav-no">04</span>DONATE</a>
+            </nav>
+
+            <div class="link-group">
+                <button type="button" class="cyber-btn" onclick="openDonate('tw', this)">
+                    <img src="images/happy-water-lg.gif" alt="" class="btn-water-icon" onerror="waterFallback(this)">
+                    台灣斗內
+                </button>
+                <button type="button" class="cyber-btn" onclick="openDonate('us', this)">
+                    <img src="images/happy-water-lg.gif" alt="" class="btn-water-icon" onerror="waterFallback(this)">
+                    DONATE
+                </button>
+            </div>
+        </div>
+        <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+    </div>
+
+    <main class="container" id="main">
+        <!-- HERO：簡介 + 即時直播狀態 -->
+        <header class="hero">
+            <div class="hero-copy">
+                <!--SYS.STATUS: NEON GRID // IOS.SET:PLAYALLANIMATION  EXTREME SURVIVAL ACTIVE -->
+                <div class="sys-tag">SYS.STATUS: NEON GRID // EXTREME SURVIVAL ACTIVE</div>
+                <h1>冷冷不冷的皮沙發工廠<span class="h1-en">HUMAN LEATHER COUCH FACTORY <span class="h1-handle">- lonlon</span></span></h1>
+                <p class="tagline">
+                    白天是在神經網路裡撸代碼的數位藝術社畜；深夜是喝著快樂水™、伴隨兩隻主子呼嚕聲開發模擬遊戲的賽博黑心廠長。
+                    <span class="lang-en">Digital art wage-slave grinding code by day; cyber deadpan director sipping Happy Water™ [Synthetic Energy Drink] &amp; developing indie sims by night.</span>
+                </p>
+
+                <nav class="jump-nav" aria-label="目錄 Contents">
+                    <a href="#live"><span class="jump-kicker">01</span>輪班表 LIVE</a>
+                    <a href="#guide"><span class="jump-kicker">02</span>指令 GUIDE</a>
+                    <a href="#about"><span class="jump-kicker">03</span>工廠 ABOUT</a>
+                    <a href="#donate"><span class="jump-kicker">04</span>投餵 DONATE</a>
+                </nav>
+            </div>
+
+            <aside class="status-panel is-idle" id="heroStatus" aria-live="polite">
+                <span class="hud-corner hud-tl"></span>
+                <span class="hud-corner hud-tr"></span>
+                <span class="hud-corner hud-bl"></span>
+                <span class="hud-corner hud-br"></span>
+                <div class="status-label">
+                    <span>值班燈 // DUTY LAMP</span>
+                    <span class="status-pill"><span class="status-dot"></span><span id="heroStatusPill">OFF DUTY</span></span>
+                </div>
+                <div>
+                    <div class="status-sub" id="heroStatusKicker">下一班倒數 <span class="lang-en" style="display:inline">Next shift in</span></div>
+                    <div class="status-main" id="heroStatusMain">--:--:--</div>
+                </div>
+                <div class="status-sub" id="heroStatusSub">讀取輪班表中… <span class="lang-en">Loading schedule…</span></div>
+                <div class="status-actions">
+                    <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">TWITCH ↗</a>
+                    <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YOUTUBE ↗</a>
+                </div>
+            </aside>
+        </header>
+
+        <div class="social-matrix reveal">
+            <a href="shop.html" class="gate-card card-shop">
+                <div class="gate-top">
+                    <span class="gate-prefix">&gt;_ SHOP</span>
+                    <span class="gate-badge">OFFICIAL MERCH</span>
+                </div>
+                <span class="gate-title">商店 <span class="gate-arrow" aria-hidden="true">→</span></span>
+                <p class="channel-desc">
+                    皮沙發工廠周邊
+                    <span class="lang-en">Official merchandise, digital assets &amp; couch factory supply.</span>
+                </p>
+            </a>
+            <a href="game.html" class="gate-card card-game">
+                <div class="gate-top">
+                    <span class="gate-prefix">&gt;_ GAME</span>
+                    <span class="gate-badge">GAME DEV</span>
+                </div>
+                <span class="gate-title">遊戲開發 <span class="gate-arrow" aria-hidden="true">→</span></span>
+                <p class="channel-desc">
+                    製作進度與開發紀錄
+                    <span class="lang-en">Build log, and where the game stands now.</span>
+                </p>
+            </a>
+        </div>
+
+        <!-- 01 直播輪班表 -->
+        <section class="terminal-window reveal" id="live" aria-labelledby="live-title">
+            <div class="window-cat" data-cat="1" aria-hidden="true"><span class="zzz">z</span><span class="zzz">Z</span></div>
+            <div class="window-header">
+                <span class="window-path"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>SHELL:~/factory/live.md</span>
+                <span class="window-mode">[CYBER_SURVIVAL]</span>
+            </div>
+            <div class="window-content">
+                <h2 class="section-title" id="live-title"><span class="sec-no">01</span><span class="sec-zh">直播輪班表</span><span class="sec-en">LIVE SCHEDULE</span></h2>
+                <div class="bilingual-block">
+                    <p class="lang-zh">
+                        以下是<strong>直播開台時間</strong>，不是實體店的營業時間。用下面兩個按鈕切換<strong>台灣時間</strong>和<strong>你的當地時間</strong>。早班、午班、晚班會跟著你正在看的時鐘改，夏令時間也算在裡面。
+                    </p>
+                    <p class="lang-en">
+                        These are <strong>livestream hours</strong>, not a shop's opening hours. Switch between <strong>Taiwan time</strong> and <strong>your local time</strong>. Morning, afternoon and evening follow the clock you are looking at, daylight saving included.
+                    </p>
+                </div>
+
+                <div class="tz-toggle" role="group" aria-label="時間顯示 Time display">
+                    <button type="button" class="tz-btn" id="tzTaiwan">台灣時間<span class="th-en">Taiwan (UTC+8)</span></button>
+                    <button type="button" class="tz-btn" id="tzLocal">你的當地時間<span class="th-en" id="shiftLocalTz">Your time</span></button>
+                </div>
+                <div><p class="shift-next-line" id="shiftNext"></p></div>
+                <div class="shift-board" id="shiftBoard"></div>
+                <p class="shift-note">
+                    * 開台的星期和鐘點如果有改，會更新在這一頁。請假日列在下方。<br>
+                    * Weekdays and hours update on this page. Days off are listed below.
+                </p>
+
+                <div class="watch-row">
+                    <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer" class="channel-card">
+                        <div class="channel-top">
+                            <span class="platform-name">Twitch<span class="ext">↗</span></span>
+                            <span class="badge">WATCH LIVE</span>
+                        </div>
+                        <p class="channel-desc">看直播、在聊天室下指令<span class="lang-en">Watch the stream and type commands in chat.</span></p>
+                    </a>
+                    <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer" class="channel-card">
+                        <div class="channel-top">
+                            <span class="platform-name">YouTube<span class="ext">↗</span></span>
+                            <span class="badge">WATCH LIVE</span>
+                        </div>
+                        <p class="channel-desc">同步直播與精華<span class="lang-en">Simulcast and highlights.</span></p>
+                    </a>
+                </div>
+
+                <div id="daysOff" hidden>
+                    <div id="daysOffHas">
+                        <div class="bilingual-block" style="margin: 1.2rem 0 0.4rem;">
+                            <p class="lang-zh"><span class="highlight-blue">請假不開台</span>　下面的時間跟你上面選的時鐘一樣。</p>
+                            <p class="lang-en">Days off — no stream. Times below use the clock you selected.</p>
+                        </div>
+                        <ul class="off-list" id="daysOffList"></ul>
+                    </div>
+                    <p class="shift-note" id="daysOffEmpty" hidden>這個月沒有請假，照表開台。 // No days off — streaming as scheduled.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02 新人報到指南 -->
+        <section class="terminal-window reveal" id="guide" aria-labelledby="guide-title">
+            <div class="window-header">
+                <span class="window-path"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>SHELL:~/factory/new-hire.md</span>
+                <span class="window-mode">[CHAT_COMMANDS]</span>
+            </div>
+            <div class="window-content">
+                <h2 class="section-title" id="guide-title"><span class="sec-no">02</span><span class="sec-zh">新人報到指南</span><span class="sec-en">NEW HIRE GUIDE</span></h2>
+                <div class="bilingual-block">
+                    <p class="lang-zh">
+                        在 YouTube 或 Twitch 的聊天室輸入指令，就能在遊戲裡<span class="highlight-neon">加入殖民地、買東西、叫事件</span>。看直播會自動累積金幣。物品和事件的名字，中英文都可以，簡體繁體都行。先從這幾個指令開始：
+                    </p>
+                    <p class="lang-en">
+                        Type commands in the YouTube or Twitch chat to <span class="highlight-neon">join the colony, buy items and trigger events</span> in-game. You earn coins just by watching. Item and event names work in English, Simplified, and Traditional Chinese. Start with these:
+                    </p>
+                </div>
+
+                <div class="cmd-tools">
+                    <label class="cmd-search">
+                        <span class="sr-only">搜尋指令 Search commands</span>
+                        <input type="search" id="cmdSearch" placeholder="搜尋指令或說明，例如 heal、求婚、buy" autocomplete="off">
+                    </label>
+                    <span class="cmd-hint">點指令即可<b>複製</b> // click a command to <b>copy</b></span>
+                </div>
+
+                <div class="cmd-list" data-cmd-list>
+                    <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!bal">!bal</button><span class="cmd-desc">查看你有多少金幣<span class="shift-en">Check your coins</span></span><span class="cmd-price">免費 Free</span></div>
+                    <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!pawn">!pawn</button><span class="cmd-desc">加入殖民地<span class="shift-en">Join the colony</span></span><span class="cmd-price">見回覆 Quoted</span></div>
+                    <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!buy ">!buy 中英文名</button><span class="cmd-desc">買東西。steel 2、beer 12、cat 100<span class="shift-en">Buy. steel 2, beer 12, cat 100</span></span><span class="cmd-price">依物品</span></div>
+                    <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!pricecheck ">!pricecheck 中英文名</button><span class="cmd-desc">查一樣東西多少錢<span class="shift-en">Check one price</span></span><span class="cmd-price">免費 Free</span></div>
+                    <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!lookup event ">!lookup event 中英文名</button><span class="cmd-desc">查可以叫的事件和價錢<span class="shift-en">Search events and prices</span></span><span class="cmd-price">免費 Free</span></div>
+                    <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!event ">!event 中英文名</button><span class="cmd-desc">花金幣觸發事件<span class="shift-en">Trigger an event</span></span><span class="cmd-price">依事件</span></div>
+                </div>
+
+                <details class="cmd-more" id="cmdMore">
+                    <summary>更多指令和價錢 More commands and prices <span class="cmd-count">[15]</span></summary>
+                    <div class="cmd-list" data-cmd-list>
+                        <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!lookup item ">!lookup item 中英文名</button><span class="cmd-desc">查可以買的東西和價錢<span class="shift-en">Search buyable items and prices</span></span><span class="cmd-price">免費 Free</span></div>
+                        <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!purchaselist">!purchaselist</button><span class="cmd-desc">列出目前可買的東西<span class="shift-en">List what is for sale</span></span><span class="cmd-price">免費 Free</span></div>
+                        <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!healpawn">!healpawn</button><span class="cmd-desc">治療自己、指定的人，或所有人<span class="shift-en">Heal yourself, someone, or everyone</span></span><span class="cmd-price">依傷口</span></div>
+                        <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!revivepawn">!revivepawn</button><span class="cmd-desc">復活小人<span class="shift-en">Revive a pawn</span></span><span class="cmd-price">依對象</span></div>
+                        <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!rescueme">!rescueme</button><span class="cmd-desc">訂閱者。被丟下 400，被俘 800。死掉用 !revivepawn<span class="shift-en">Subscribers. Left behind 400, captured 800</span></span><span class="cmd-price">400 / 800</span></div>
+                        <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!nuzzle">!nuzzle</button><span class="cmd-desc">撒嬌親近<span class="shift-en">Nuzzle</span></span><span class="cmd-price">8</span></div>
+                        <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!chitchat">!chitchat</button><span class="cmd-desc">閒聊<span class="shift-en">Chat</span></span><span class="cmd-price">10</span></div>
+                        <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!animalchat">!animalchat</button><span class="cmd-desc">跟動物說話<span class="shift-en">Chat with an animal</span></span><span class="cmd-price">10</span></div>
+                        <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!deeptalk">!deeptalk</button><span class="cmd-desc">深談<span class="shift-en">Deep talk</span></span><span class="cmd-price">15</span></div>
+                        <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!flirt">!flirt</button><span class="cmd-desc">調情<span class="shift-en">Flirt</span></span><span class="cmd-price">20</span></div>
+                        <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!buildrapport">!buildrapport</button><span class="cmd-desc">累積好感<span class="shift-en">Build rapport</span></span><span class="cmd-price">25</span></div>
+                        <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!reassure">!reassure</button><span class="cmd-desc">安撫<span class="shift-en">Reassure</span></span><span class="cmd-price">12</span></div>
+                        <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!convert">!convert</button><span class="cmd-desc">改文化。還要 15 點業力<span class="shift-en">Convert. Needs 15 karma</span></span><span class="cmd-price">30</span></div>
+                        <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!marry">!marry</button><span class="cmd-desc">求婚。還要 10 點業力<span class="shift-en">Propose. Needs 10 karma</span></span><span class="cmd-price">50</span></div>
+                        <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!surgery">!surgery</button><span class="cmd-desc">手術。終止 300、節育 400、結紮復通 500、放環 250、輸血 200、換體型 800、變性 1000。抽取血原質退 100<span class="shift-en">Surgery. Terminate 300, sterilize 400, reversal 500, IUD 250, transfusion 200, body 800, gender 1000. Hemogen refunds 100</span></span><span class="cmd-price">250–1000</span></div>
+                    </div>
+                </details>
+                <p class="cmd-empty" id="cmdEmpty">&gt;_ 找不到符合的指令 // No matching command. 試試英文或中文關鍵字。</p>
+
+                <div class="cat-alert">
+                    <span class="cat-alert-title">⚠ 使用須知 // HOUSE RULES</span>
+                    <ul class="cmd-rules">
+                        <li><span class="lang-zh">每 10 秒最多 4 個指令，洗頻會被暫時禁言。<span class="shift-en">Max 4 commands per 10 seconds; spamming gets a temporary timeout.</span></span></li>
+                        <li><span class="lang-zh">機器人只回應<strong>成功</strong>的指令，並會在開頭 @ 你的名字。<span class="shift-en">The bot only replies to successful commands, starting with your @name.</span></span></li>
+                        <li><span class="lang-zh">沒有回應通常是：指令冷卻中、沒有權限，或該指令未開放。<span class="shift-en">No reply usually means cooldown, no permission, or the command is disabled.</span></span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03 皮沙發工廠 -->
+        <section class="terminal-window reveal" id="about" aria-labelledby="about-title">
+            <div class="window-cat left" data-cat="2" aria-hidden="true"><span class="zzz">z</span><span class="zzz">Z</span></div>
+            <div class="window-header">
+                <span class="window-path"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>SHELL:~/factory/about.md</span>
+                <span class="window-mode">[LORE]</span>
+            </div>
+            <div class="window-content">
+                <h2 class="section-title" id="about-title"><span class="sec-no">03</span><span class="sec-zh">皮沙發工廠</span><span class="sec-en">THE FACTORY</span></h2>
+                <div class="bilingual-block">
+                    <p class="lang-zh">
+                        歡迎光臨皮沙發工廠。外頭是殘酷的賽博廢土與極限邊緣，但這裡有冰涼的快樂水™和 ASMR 級的鍵盤白噪音。隨便挑張沙發坐下吧——別問材質，這張<span class="highlight-neon">特級皮沙發</span>很軟，它生前也是個喜歡 Drop pod 突襲的超齡海盜，現在它只想給你最溫暖的擁抱。
+                    </p>
+                    <p class="lang-en">
+                        Welcome to the factory. Outside is a ruthless cyber wasteland, but inside we’ve got Ice-cold Happy Water™ and chill white noise. Grab a seat on the tailored <span class="highlight-neon">Human Leather Couch</span>. Relax. Don’t ask about the upholstery—he was a based raider in life, now he just wants to keep you cozy.
+                    </p>
+                </div>
+                <div class="bilingual-block">
+                    <p class="lang-zh">
+                        在這裡，我們用最溫柔平靜的心情，做著蘭迪隨機滅團邊緣最冷酷的系統資源調配。<span class="highlight-blue">歡迎加入工廠，成為輪班兼職員工，點個追蹤不迷路。</span>
+                    </p>
+                    <p class="lang-en">
+                        We manage brutal simulation bottlenecks with utmost calm. <span class="highlight-neon">Hit follow, plug into the factory, and consider yourself clocked in for the night shift. W chat.</span>
+                        <a href="https://youtube.com/@HumanLeatherCouchInc?sub_confirmation=1" class="highlight-neon" target="_blank" rel="noopener noreferrer">YOUTUBE↗</a>
+                        <a href="https://instagram.com/humanleathercouch" class="highlight-neon" target="_blank" rel="noopener noreferrer">IG↗</a>
+                    </p>
+                </div>
+
+                <p class="ios-hint" id="iosHint">
+                    <span>如果你用 iPhone 看到這裡，記得確認瀏覽器設置有打開播放所有動畫，就在底部網址左邊的三條線那裡設定。
+                    <span class="lang-en">If you're reading this on an iPhone, make sure your browser is set to play all animations. You can find that setting by tapping the three-line menu icon to the left of the address bar at the bottom.</span></span>
+                </p>
+
+                <div class="sub-links-container">
+                    <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer" class="terminal-line-link">
+                        <span class="term-line"><span class="term-prefix pink-prefix">&gt;_</span><span class="term-name">TWITCH</span></span>
+                        <span class="term-desc">// 看直播下指令</span>
+                    </a>
+                    <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer" class="terminal-line-link">
+                        <span class="term-line"><span class="term-prefix blue-prefix">&gt;_</span><span class="term-name">YOUTUBE</span></span>
+                        <span class="term-desc">// 同步直播與精華</span>
+                    </a>
+                    <a href="https://space.bilibili.com/452768274" target="_blank" rel="noopener noreferrer" class="terminal-line-link">
+                        <span class="term-line"><span class="term-prefix pink-prefix">&gt;_</span><span class="term-name">BILIBILI</span></span>
+                        <span class="term-desc">// 賽博求生錄播</span>
+                    </a>
+                    <a href="https://instagram.com/humanleathercouch" target="_blank" rel="noopener noreferrer" class="terminal-line-link">
+                        <span class="term-line"><span class="term-prefix pink-prefix">&gt;_</span><span class="term-name">INSTAGRAM</span></span>
+                        <span class="term-desc">// 工廠動態快訊</span>
+                    </a>
+                    <a href="https://lonp.pages.dev" target="_blank" rel="noopener noreferrer" class="terminal-line-link">
+                        <span class="term-line"><span class="term-prefix blue-prefix">&gt;_</span><span class="term-name">PORTFOLIO</span></span>
+                        <span class="term-desc">// 廠長的賽博貓爬架</span>
+                    </a>
+                </div>
+
+                <div class="cat-alert">
+                    <span class="cat-alert-title">⚠ SYSTEM ALERT: FELINE INTERFERENCE // 遭遇物理級不可抗力</span>
+                    <span class="lang-zh" style="display: block; margin-bottom: 0.5rem;">
+                        當我正在冷靜排查 C# 代碼報錯，或是佈署殺戮走廊時，如果畫面突然暫停或滑鼠亂飄，那絕對是<strong>兩隻貓咪主子</strong>又踩在我的鍵盤上討肉泥了。請各位員工喝口快樂水™，等我繳完這筆「貓咪保護費」安撫完主子，即刻恢復系統運作。
+                    </span>
+                    <span class="lang-en">
+                        If I’m mid-sentence explaining a C# patch and the stream suddenly pauses—my two feline overlords just walked across my keyboard demanding treats. Take a sip of Happy Water™ while I pay the cat tax. Resuming simulation logic shortly.
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 04 投餵 -->
+        <section class="terminal-window reveal" id="donate" aria-labelledby="donate-title">
+            <div class="window-header">
+                <span class="window-path"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>SHELL:~/factory/donation-hook.md</span>
+                <span class="window-mode">[RATIONS]</span>
+            </div>
+            <div class="window-content">
+                <h2 class="section-title" id="donate-title"><span class="sec-no">04</span><span class="sec-zh">賽博求生與快樂水™投餵</span><span class="sec-en">DONATION HOOK</span></h2>
+                <div class="donate-grid">
+                    <div class="donate-copy">
+                        <div class="bilingual-block">
+                            <p class="lang-zh">
+                                隨著獨立維護 C# 補丁的工作量日益龐大，加上新遊戲開發所需的龐大精力與成本（經常深夜在神經網路裡撸代碼到頭禿），開啟投餵計畫是希望在這漫長的「賽博求生與獨立模擬遊戲製作」之旅中，能得到大家的一點點支持。
+                            </p>
+                            <p class="lang-zh">
+                                你們投餵的每一口快樂水™，都將直接化為廠長維持深夜除錯的血肉咖啡因濃度，更是<span class="highlight-neon">支持我將這款模擬遊戲從最初的紙上原型變成現實的最大動力！</span>
+                                當然，要是能順便投餵一口貓飯，不但餵飽了這隻深夜加班的禿頭小貓，還順便包養了身邊的兩隻小貓咪，大概能一邊呼嚕嚕一邊當場把系統 Bug 全給修了吧～
+                            </p>
+                        </div>
+                        <div class="bilingual-block">
+                            <p class="lang-en" style="border-left: 2px solid rgba(255,42,127,0.5); padding-left: 1rem;">
+                                As the workload of maintaining solo C# patches grows, compounded by the massive sanity and cost required to develop my new indie game (often grinding code late into the neon-lit night until I go bald), this feeding protocol is initiated to seek a tiny bit of support on this long journey of "Cyber-Survival &amp; Indie Simulation Developing".
+                                <br><br>
+                                Every drop of Happy Water™ you feed me directly converts into the raw caffeine concentration needed for late-night debugging. <span class="highlight-neon">It’s the ultimate drive turning this simulation game from a paper prototype into reality!</span> And hey, if you drop a bite of Cat Kibble on the side, you not only feed this balding, overworked cyber-kitten, but also sponsor my two feline overlords. I’ll probably start purring and fix all the system bugs on the spot~
+                            </p>
+                        </div>
+                        <div class="pause-notice">
+                            <span class="pause-notice-title">// PAYMENT STATUS 支付狀態</span>
+                            <p class="lang-zh">
+                                今年台灣國內的街口、Line Pay、藍新（轉帳、信用卡）先暫停，<span class="highlight-blue">2027/1/1</span> 重新開放。可以先關注 <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YouTube</a> 或 <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">Twitch</a>，或用 <a href="https://ko-fi.com/lonsthx" target="_blank" rel="noopener noreferrer">Ko-fi</a>（PayPal、信用卡）贊助。支付寶持續開放。
+                            </p>
+                            <p class="lang-en">
+                                Follow on <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YouTube</a> or <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">Twitch</a>, or sponsor with <a href="https://ko-fi.com/lonsthx" target="_blank" rel="noopener noreferrer">Ko-fi</a> (PayPal and credit card). Alipay is open as well.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 旋轉快樂水 (大尺寸展示框：修復比例不失真 + 慢速 5.5s 半透明藍色光圈呼吸燈) -->
+                    <div class="water-showcase-container">
+                        <div class="water-showcase-box">
+                            <div class="hud-corner hud-tl"></div>
+                            <div class="hud-corner hud-tr"></div>
+                            <div class="hud-corner hud-bl"></div>
+                            <div class="hud-corner hud-br"></div>
+                            <img src="images/happy-water-lg.gif" alt="旋轉快樂水展示" class="water-img-lg" onerror="waterFallback(this, true)">
+                            <span class="water-caption" aria-hidden="true">// HAPPY WATER™ UNIT 01 //</span>
+                        </div>
+                        <div class="ration-row">
+                            <button type="button" class="ration-btn" onclick="openDonate('tw', this)">
+                                <span class="hud-corner hud-tl"></span>
+                                <span class="hud-corner hud-tr"></span>
+                                <span class="hud-corner hud-bl"></span>
+                                <span class="hud-corner hud-br"></span>
+                                <img src="images/happy-water-lg.gif" alt="" class="btn-water-icon" onerror="waterFallback(this)">
+                                台灣斗內
+                            </button>
+                            <button type="button" class="ration-btn" onclick="openDonate('us', this)">
+                                <span class="hud-corner hud-tl"></span>
+                                <span class="hud-corner hud-tr"></span>
+                                <span class="hud-corner hud-bl"></span>
+                                <span class="hud-corner hud-br"></span>
+                                <img src="images/happy-water-lg.gif" alt="" class="btn-water-icon" onerror="waterFallback(this)">
+                                DONATE
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>
+                <span class="footer-brand">冷冷不冷的皮沙發工廠 // HUMAN LEATHER COUCH FACTORY - lonlon</span>
+                <span class="footer-sig">TRANSMITTING FROM CYBER WASTELAND. ALL SYSTEMS NOMINAL. &copy; 2026.</span>
+            </p>
+            <nav class="footer-links" aria-label="站內連結 Site links">
+                <a href="shop.html">SHOP</a>
+                <a href="game.html">GAME DEV</a>
+                <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">TWITCH↗</a>
+                <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YOUTUBE↗</a>
+                <a href="https://instagram.com/humanleathercouch" target="_blank" rel="noopener noreferrer">IG↗</a>
+            </nav>
+        </footer>
+    </main>
+
+    <!-- 投餵彈窗 (完全分開、各自獨立) -->
+    <div id="donateModal" class="modal-overlay" onclick="if(event.target === this) closeModal()" aria-hidden="true">
+        <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalHeaderTitle">
+            <div class="modal-header">
+                <h2 id="modalHeaderTitle">🥤 TW HAPPY WATER™ SUPPLY // 台灣投餵快樂水™與貓飯</h2>
+                <button type="button" class="close-btn" onclick="closeModal()" aria-label="關閉 Close">✕</button>
+            </div>
+
+            <div class="modal-body">
+                <!--
+                    2027/1/1 恢復台灣國內支付時：
+                    1. 刪掉 .pay-pause 這段說明
+                    2. #twPayTabs 拿掉 hidden
+                    3. 藍新 Credit Card 按鈕拿掉 hidden
+                    4. #usPayTabs 改回 3 欄（搜尋「恢復藍新」）
+                    5. openDonate('tw') 改回只顯示 #twPayTabs，並 switchSupportQR('jkopay')
+                    不要刪下面的街口、Line Pay、藍新程式。
+                -->
+                <div class="pay-pause" id="payPauseNote">
+                    <p class="lang-zh">今年台灣國內的街口、Line Pay、藍新（轉帳、信用卡）先暫停，<span class="highlight-blue">2027/1/1</span> 重新開放。可以先關注 <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YouTube</a> 或 <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">Twitch</a>，或用 Ko-fi（PayPal、信用卡）贊助。支付寶持續開放。</p>
+                    <p class="lang-en">Follow on <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YouTube</a> or <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">Twitch</a>, or sponsor with Ko-fi (PayPal and credit card). Alipay is open as well.</p>
+                </div>
+                <!-- STEP 1 支付選項 -->
+                <div>
+                    <p class="step-label">STEP 1. 選擇支付方式 // SELECT PAYMENT PROTOCOL:</p>
+
+                    <!-- 台灣本地選項。2026 暫停，2027/1/1 拿掉 hidden。 -->
+                    <div class="pay-tabs" id="twPayTabs" hidden>
+                        <button type="button" class="pay-tab active" onclick="switchSupportQR('jkopay', this)">街口等<br>TWQR</button>
+                        <button type="button" class="pay-tab" onclick="switchSupportQR('linepay', this)">Line Pay</button>
+                        <button type="button" class="pay-tab" onclick="switchSupportQR('newebpay', this)">信用卡 轉帳<br>Apple Pay</button>
+                    </div>
+
+                    <!-- 海外選項。藍新按鈕先隱藏，Ko-fi 與支付寶維持開放。 -->
+                    <div class="pay-tabs" id="usPayTabs" style="display: none;">
+                        <button type="button" class="pay-tab" onclick="switchSupportQR('paypal', this)">PayPal<br>Ko-fi</button>
+                        <!-- 2027/1/1 恢復：拿掉 hidden -->
+                        <button type="button" class="pay-tab" hidden onclick="switchSupportQR('newebpay_os', this)">Credit Card<br>Apple Pay</button>
+                        <button type="button" class="pay-tab" onclick="switchSupportQR('alipay', this)">Alipay</button>
+                    </div>
+
+                    <div class="qr-display mode-qr">
+                        <img id="supportQrImage" alt="QR Code">
+                        <div id="supportQrHint"></div>
+                        <!-- 統一共用單一跳轉按鈕：位置絕對固定，尺寸等高等寬 -->
+                        <a id="actionBtn" href="#" target="_blank" rel="noopener noreferrer"></a>
+                    </div>
+                </div>
+
+                <!-- STEP 2 留言表單 -->
+                <form class="support-form" onsubmit="submitSupportMessage(event)">
+                    <p class="step-label pink">STEP 2. 留下你的資訊與想說的話（選填）：</p>
+
+                    <div class="form-group">
+                        <label for="supporterName">你的名字或暱稱 / Name (Optional)</label>
+                        <input type="text" id="supporterName" placeholder="匿名支持者" autocomplete="nickname">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="supporterEmail">聯絡信箱 / Email (Optional)</label>
+                        <input type="email" id="supporterEmail" placeholder="若希望收到回覆可填寫" autocomplete="email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="supporterMessage">想和我說的話 / Message (Optional)</label>
+                        <textarea id="supporterMessage" rows="3" placeholder="無論是關於版畫創作、RimWorld 模組或實況的感想都歡迎留言..."></textarea>
+                    </div>
+
+                    <button type="submit" class="cyber-btn form-submit">
+                        [ 寄出留言信件 / SEND MESSAGE ]
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 回到頂部按鈕 -->
+    <button type="button" id="backToTop" class="back-to-top" onclick="scrollToTop()" aria-label="回到頂部 Back to top"><b>↑</b>TOP</button>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+        const SUPPORT_QR_CODES = {
+            jkopay: {
+                type: "qr",
+                img: "images/qr-jkopay.jpg",
+                hint: "請使用 街口、全支付、悠遊付、台灣Pay、台新Pay、玉山Wallet 等支援 TWQR 之 APP 掃描上方條碼，<span class='desktop-br-hint'><br></span>金額不限，每一份支持都是推動我持續創作的動力。",
+                url: "",
+                btnText: "手機端請點擊這裡喚起 APP 跳轉 ↗"
+                //http://www.jkos.com/index.html?j=S%2344234c39-bcaa-11f1-8ac0-c81f66f0c432%3AP%23
+            },
+            linepay: {
+                type: "qr",
+                img: "images/qr-linepay.jpg",
+                hint: "請使用 Line Pay 掃描上方條碼，金額不限，每一份支持都是推動我持續創作的動力。",
+                url: "",
+                btnText: "手機端請點擊這裡喚起 APP 跳轉 ↗"
+                //https://qrcodepay.line.me/qr/payment/VZOOBJ5y7WSsSkslC9BcR3B0xvW49AvRzmQ3bA%252BUGlhnls2hfP6lLE5grrpI5xTE
+            },
+            alipay: {
+                type: "qr",
+                img: "images/qr-alipay.jpg",
+                hint: "請掃描上方條碼，金額不限，每一份支持都是推動我持續創作的動力。<br><br>Please scan the QR code above with Alipay to complete your payment. Enter any amount you wish—every little bit helps!",
+                url: "https://qr.alipay.com/tsx19374p5wcn9a7dp9dwe4",
+                btnText: "手機端請點擊這裡喚起 APP 跳轉 ↗"
+            },
+            newebpay: {
+                type: "link",
+                url: "請在這裡貼上你的藍新收款網址",
+                btnText: "前往藍新安全支付頁面 ↗",
+                hint: "點擊下方按鈕前往藍新金流安全支付頁面，支援轉帳、信用卡與 Apple Pay，金額不限，每一份支持都是推動我持續創作的動力。"
+            },
+            newebpay_os: {
+                type: "link",
+                url: "請在這裡貼上你的藍新收款網址",
+                btnText: "Go to NewebPay Secure Checkout ↗",
+                hint: "點擊下方按鈕前往藍新金流安全支付頁面，支援轉帳、跨國信用卡與 Apple Pay，金額不限，每一份支持都是推動我持續創作的動力。<br><br>Click the button below to pay securely via NewebPay, supporting international Credit Cards and Apple Pay. Enter any amount you wish—every little bit helps!"
+            },
+            paypal: {
+                type: "link",
+                url: "https://ko-fi.com/lonsthx",
+                btnText: "Go to Ko-fi / PayPal Checkout ↗",
+                hint: "點擊下方按鈕前往 Ko-fi 頁面，支援 PayPal 與跨國信用卡，金額不限，每一份支持都是推動我持續創作的動力。<br><br>Click the button below to go to the Ko-fi page, supporting PayPal and international Credit Cards. Enter any amount you wish—every little bit helps!"
+            }
+        };
+
+        let currentPayMethod = 'TWQR 街口等';
+        let lastFocused = null;
+
+        // 智慧型多副檔名與多路徑自動探測載入器
+        function loadQrWithFallback(imgEl, basePath) {
+            const rawPath = basePath.replace(/\.(jpg|jpeg|png|webp)$/i, '');
+            const extMatch = basePath.match(/\.(jpg|jpeg|png|webp)$/i);
+            const originalExt = extMatch ? extMatch[0].toLowerCase() : '.jpg';
+
+            const candidates = [
+                basePath,
+                originalExt === '.jpg' ? rawPath + '.png' : rawPath + '.jpg',
+                rawPath + '.jpeg',
+                rawPath + '.webp',
+                basePath.replace(/^images\//, ''),
+                basePath.replace(/^images\//, '').replace(/\.(jpg|jpeg|png|webp)$/i, '.png'),
+                basePath.replace(/^images\//, 'images/images')
+            ];
+
+            let idx = 0;
+            function tryNext() {
+                if (idx < candidates.length) {
+                    const nextSrc = candidates[idx++];
+                    imgEl.onerror = tryNext;
+                    imgEl.src = nextSrc;
+                } else {
+                    imgEl.onerror = null;
+                    imgEl.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180"><rect width="100%" height="100%" fill="%23fff"/><text x="50%" y="45%" fill="%23d91153" font-family="monospace" font-size="13" font-weight="bold" text-anchor="middle">找不到 QR CODE</text><text x="50%" y="62%" fill="%23666" font-family="monospace" font-size="11" text-anchor="middle">請確認圖檔已放入 images</text></svg>';
+                }
+            }
+            tryNext();
+        }
+
+        // 2026–2027/1/1：台灣國內支付暫停，兩個按鈕都打開 Ko-fi 與支付寶。
+        // 恢復時把 tw 分支改回：twTabs 顯示、usTabs 隱藏、switchSupportQR('jkopay', twTabs.querySelector('.pay-tab'))
+        function openDonate(regionKey, trigger) {
+            const modal = document.getElementById('donateModal');
+            const title = document.getElementById('modalHeaderTitle');
+            const twTabs = document.getElementById('twPayTabs');
+            const usTabs = document.getElementById('usPayTabs');
+
+            twTabs.style.display = 'none';
+            usTabs.style.display = 'grid';
+            const paypalBtn = usTabs.querySelector('.pay-tab:not([hidden])');
+            switchSupportQR('paypal', paypalBtn);
+            title.textContent = regionKey === 'tw'
+                ? '🥤 TAIWAN HAPPY WATER™ SUPPLY // 台灣投餵快樂水™'
+                : '🥤 OVERSEAS HAPPY WATER™ SUPPLY // 海外投餵快樂水™';
+
+            lastFocused = trigger || document.activeElement;
+            modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            modal.querySelector('.modal-box').scrollTop = 0;
+            setTimeout(function () { modal.querySelector('.close-btn').focus(); }, 50);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('donateModal');
+            if (!modal.classList.contains('active')) return;
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            if (lastFocused && lastFocused.focus) lastFocused.focus();
+        }
+
+        // Esc 關閉、Tab 鎖在彈窗內
+        document.addEventListener('keydown', function (e) {
+            const modal = document.getElementById('donateModal');
+            if (!modal.classList.contains('active')) return;
+            if (e.key === 'Escape') { closeModal(); return; }
+            if (e.key !== 'Tab') return;
+            const focusables = Array.prototype.filter.call(
+                modal.querySelectorAll('button, a[href], input, textarea'),
+                function (el) { return !el.hidden && el.offsetParent !== null; }
+            );
+            if (!focusables.length) return;
+            const first = focusables[0], last = focusables[focusables.length - 1];
+            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        });
+
+        // 統一切換邏輯：確保 QR Code、說明文字與底部按鈕絕對定位統一不跳動
+        function switchSupportQR(type, btn) {
+            document.querySelectorAll('#donateModal .pay-tab').forEach(el => {
+                el.classList.remove('active');
+                el.setAttribute('aria-pressed', 'false');
+            });
+            if (btn) { btn.classList.add('active'); btn.setAttribute('aria-pressed', 'true'); }
+
+            currentPayMethod = btn ? btn.innerText.replace(/\n/g, ' ') : type;
+
+            const data = SUPPORT_QR_CODES[type];
+            const imgEl = document.getElementById('supportQrImage');
+            const actionBtn = document.getElementById('actionBtn');
+            const qrDisplay = document.querySelector('.qr-display');
+
+            if (data.type === 'link') {
+                imgEl.style.display = 'none';
+                qrDisplay.classList.add('mode-link');
+                qrDisplay.classList.remove('mode-qr');
+            } else {
+                imgEl.style.display = 'block';
+                loadQrWithFallback(imgEl, data.img);
+                qrDisplay.classList.add('mode-qr');
+                qrDisplay.classList.remove('mode-link');
+            }
+
+            document.getElementById('supportQrHint').innerHTML = data.hint;
+            actionBtn.href = data.url;
+            actionBtn.innerHTML = data.btnText;
+        }
+
+        function submitSupportMessage(e) {
+            e.preventDefault();
+            const name = document.getElementById('supporterName').value.trim() || '匿名支持者';
+            const email = document.getElementById('supporterEmail').value.trim() || '未提供';
+            const message = document.getElementById('supporterMessage').value.trim() || '（無額外留言，純贊助支持 🥤）';
+
+            const subject = encodeURIComponent(`[贊助與留言] 來自 ${name} 的支持`);
+            const body = encodeURIComponent(
+`冷冷你好，我已透過「${currentPayMethod}」完成贊助！
+
+【支持者暱稱】${name}
+【聯絡信箱】${email}
+【想對你說的話】
+${message}
+`
+            );
+
+            window.location.href = `mailto:arts.lonp@gmail.com?subject=${subject}&body=${body}`;
+            closeModal();
+        }
+
+        /* =========================================
+           介面互動：回到頂部、閱讀進度、段落高亮、淡入、提示
+        ========================================= */
+        const backToTopBtn = document.getElementById('backToTop');
+        const progressEl = document.getElementById('scrollProgress');
+        let scrollTicking = false;
+        function onScroll() {
+            const y = window.scrollY;
+            backToTopBtn.classList.toggle('visible', y > 400);
+            const max = document.documentElement.scrollHeight - window.innerHeight;
+            progressEl.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, y / max) : 0) + ')';
+            scrollTicking = false;
+        }
+        window.addEventListener('scroll', function () {
+            if (!scrollTicking) { scrollTicking = true; requestAnimationFrame(onScroll); }
+        }, { passive: true });
+        onScroll();
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        (function () {
+            const links = document.querySelectorAll('.top-nav a');
+            const sections = ['live', 'guide', 'about', 'donate'].map(function (id) { return document.getElementById(id); });
+            if ('IntersectionObserver' in window) {
+                const spy = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (!entry.isIntersecting) return;
+                        links.forEach(function (a) {
+                            const on = a.getAttribute('href') === '#' + entry.target.id;
+                            a.classList.toggle('is-active', on);
+                            if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+                        });
+                    });
+                }, { rootMargin: '-35% 0px -60% 0px' });
+                sections.forEach(function (s) { if (s) spy.observe(s); });
+
+                const reveal = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) { entry.target.classList.add('in'); reveal.unobserve(entry.target); }
+                    });
+                }, { rootMargin: '0px 0px -8% 0px' });
+                document.querySelectorAll('.reveal').forEach(function (el) { reveal.observe(el); });
+            } else {
+                document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+            }
+
+            // 只有 iPhone / iPad 才顯示播放動畫提示
+            const ua = navigator.userAgent || '';
+            const isIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+            const iosHint = document.getElementById('iosHint');
+            if (iosHint && !isIOS) iosHint.hidden = true;
+        })();
+
+        const toastEl = document.getElementById('toast');
+        let toastTimer = null;
+        function showToast(text) {
+            toastEl.textContent = text;
+            toastEl.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(function () { toastEl.classList.remove('show'); }, 1800);
+        }
+
+        /* 指令：點一下複製、關鍵字篩選 */
+        (function () {
+            function copyText(text) {
+                if (navigator.clipboard && window.isSecureContext) {
+                    return navigator.clipboard.writeText(text).catch(function () { return legacyCopy(text); });
+                }
+                return legacyCopy(text);
+            }
+            function legacyCopy(text) {
+                return new Promise(function (resolve, reject) {
+                    const ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.setAttribute('readonly', '');
+                    ta.style.position = 'fixed';
+                    ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    try { document.execCommand('copy') ? resolve() : reject(); } catch (err) { reject(err); }
+                    document.body.removeChild(ta);
+                });
+            }
+            document.querySelectorAll('.cmd-code').forEach(function (btn) {
+                btn.title = '複製 Copy';
+                btn.addEventListener('click', function () {
+                    const text = btn.getAttribute('data-copy') || btn.textContent;
+                    copyText(text).then(function () {
+                        btn.classList.add('copied');
+                        setTimeout(function () { btn.classList.remove('copied'); }, 1200);
+                        showToast('已複製 COPIED  ' + text.trim());
+                    }).catch(function () { showToast('複製失敗，請手動輸入 // Copy failed'); });
+                });
+            });
+
+            const search = document.getElementById('cmdSearch');
+            const more = document.getElementById('cmdMore');
+            const empty = document.getElementById('cmdEmpty');
+            const rows = document.querySelectorAll('.cmd-row');
+            let moreWasOpen = more.open;
+            search.addEventListener('input', function () {
+                const q = search.value.trim().toLowerCase();
+                let shown = 0;
+                rows.forEach(function (row) {
+                    const hit = !q || row.textContent.toLowerCase().indexOf(q) >= 0;
+                    row.hidden = !hit;
+                    if (hit) shown++;
+                });
+                document.querySelectorAll('[data-cmd-list]').forEach(function (list) {
+                    const any = list.querySelector('.cmd-row:not([hidden])');
+                    list.style.display = any ? '' : 'none';
+                });
+                if (q) {
+                    if (!search.dataset.active) { moreWasOpen = more.open; search.dataset.active = '1'; }
+                    more.open = true;
+                    more.style.display = more.querySelector('.cmd-row:not([hidden])') ? '' : 'none';
+                } else {
+                    delete search.dataset.active;
+                    more.open = moreWasOpen;
+                    more.style.display = '';
+                }
+                empty.classList.toggle('show', shown === 0);
+            });
+            search.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') { search.value = ''; search.dispatchEvent(new Event('input')); }
+            });
+        })();
+
+
+        /* 兩隻主子：像素貓（顏色可在 CAT_COLORS 改成真實毛色） */
+        (function () {
+            var MAP = [
+                "..a....a..........",
+                "..ap..pa..........",
+                ".aaaaaaaa.........",
+                ".aeeaaeea.aaaaa...",
+                ".aaaapaaaaaaaaaa..",
+                "aaaaaaaaaaaaaaaaa.",
+                "aaaaaaaaaaaaaaaaaa",
+                "addaaaaaaaaaaaaaaa",
+                ".ttttttttttttttdd.",
+                "..dddddddddddddd.."
+            ];
+            var CAT_COLORS = {
+                1: { a: "#6a5d66", d: "#564b53", t: "#433a40", e: "#f3e6d8", p: "#ff8fb8" },
+                2: { a: "#e8a96c", d: "#cf8b52", t: "#b9733e", e: "#3a2a24", p: "#ff8fb8" }
+            };
+            document.querySelectorAll(".window-cat").forEach(function (el) {
+                var pal = CAT_COLORS[el.getAttribute("data-cat")] || CAT_COLORS[1];
+                var flip = el.classList.contains("left");
+                var rects = "";
+                MAP.forEach(function (row, y) {
+                    for (var x = 0; x < row.length; x++) {
+                        var ch = row[x];
+                        if (ch === ".") continue;
+                        rects += '<rect x="' + x + '" y="' + y + '" width="1.02" height="1.02" fill="' + pal[ch] + '"/>';
+                    }
+                });
+                el.insertAdjacentHTML("beforeend",
+                    '<svg viewBox="0 0 18 10" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg">' +
+                    '<g' + (flip ? ' transform="translate(18 0) scale(-1 1)"' : '') + '>' + rects + '</g></svg>');
+            });
+        })();
+
+        /* =========================================
+           輪班表。台灣時間 / 當地時間可切換。
+           早班、午班、晚班、深夜跟著目前看的時鐘。
+           開台時段和請假都來自 /api/schedule。
+           另外把「下一班 / 直播中」推到首頁上方的狀態面板。
+        ========================================= */
+        (function () {
+            var TW_OFFSET = 8 * 3600 * 1000, DAY = 86400000;
+            var ZH = ["日", "一", "二", "三", "四", "五", "六"];
+            var EN = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+            var BANDS = {
+                morning: { zh: "早班", en: "Morning" },
+                afternoon: { zh: "午班", en: "Afternoon" },
+                evening: { zh: "晚班", en: "Evening" },
+                late: { zh: "深夜", en: "Late night" }
+            };
+            var DEFAULT_SLOTS = [
+                { days: [5, 6, 0], start: "20:00", end: "23:30" },
+                { days: [6, 0], start: "08:30", end: "11:00" }
+            ];
+            var slots = DEFAULT_SLOTS.slice();
+            var offs = [];
+            var configured = false;
+            var mode = "local";
+            var nextShift = null;
+
+            function pad(n) { return (n < 10 ? "0" : "") + n; }
+            function hm(text) {
+                var p = String(text).split(":");
+                return (parseInt(p[0], 10) * 60 + parseInt(p[1], 10)) * 60000;
+            }
+            function clock(d) { return pad(d.getHours()) + ":" + pad(d.getMinutes()); }
+            function ymdUTC(ms) {
+                var d = new Date(ms);
+                return d.getUTCFullYear() + "-" + pad(d.getUTCMonth() + 1) + "-" + pad(d.getUTCDate());
+            }
+            function esc(s) {
+                return String(s == null ? "" : s).replace(/[&<>"]/g, function (ch) {
+                    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch];
+                });
+            }
+            function bandOfHour(h) {
+                if (h >= 5 && h < 12) return "morning";
+                if (h >= 12 && h < 18) return "afternoon";
+                if (h >= 18) return "evening";
+                return "late";
+            }
+            function taipei(ms) {
+                var x = new Date(ms + TW_OFFSET);
+                return {
+                    dow: x.getUTCDay(),
+                    hour: x.getUTCHours(),
+                    clock: pad(x.getUTCHours()) + ":" + pad(x.getUTCMinutes()),
+                    date: ymdUTC(x.getTime())
+                };
+            }
+            function todayTW() {
+                var nowTW = new Date(Date.now() + TW_OFFSET);
+                return Date.UTC(nowTW.getUTCFullYear(), nowTW.getUTCMonth(), nowTW.getUTCDate());
+            }
+            function horizonKey() {
+                var nowTW = new Date(Date.now() + TW_OFFSET);
+                return ymdUTC(Date.UTC(nowTW.getUTCFullYear(), nowTW.getUTCMonth() + 2, 1) - DAY);
+            }
+            function at(dayStart, start, end) {
+                var s = dayStart + hm(start) - TW_OFFSET;
+                var e = dayStart + hm(end) - TW_OFFSET;
+                if (e <= s) e += DAY;
+                return { start: s, end: e, twDate: ymdUTC(dayStart) };
+            }
+            function upcoming(dow, start, end) {
+                var now = Date.now();
+                var today = todayTW();
+                for (var i = 0; i < 8; i++) {
+                    var dayStart = today + i * DAY;
+                    if (new Date(dayStart).getUTCDay() !== dow) continue;
+                    var occ = at(dayStart, start, end);
+                    if (occ.end <= now) continue;
+                    return occ;
+                }
+                return null;
+            }
+            function onDate(dateStr, start, end) {
+                var p = dateStr.split("-");
+                return at(Date.UTC(+p[0], +p[1] - 1, +p[2]), start, end);
+            }
+            function viewOf(occ, which) {
+                if (which === "tw") {
+                    var s = taipei(occ.start), e = taipei(occ.end);
+                    return { dow: s.dow, startClock: s.clock, endClock: e.clock, crosses: s.date !== e.date, band: bandOfHour(s.hour), date: s.date };
+                }
+                var sL = new Date(occ.start), eL = new Date(occ.end);
+                return {
+                    dow: sL.getDay(),
+                    startClock: clock(sL),
+                    endClock: clock(eL),
+                    crosses: sL.toDateString() !== eL.toDateString(),
+                    band: bandOfHour(sL.getHours()),
+                    date: sL.getFullYear() + "-" + pad(sL.getMonth() + 1) + "-" + pad(sL.getDate())
+                };
+            }
+            function slotBand(slot) { return bandOfHour(parseInt(slot.start.split(":")[0], 10)); }
+            function offHits(slot, off) {
+                if (!off || !off.shift) return false;
+                if (off.shift === "all") return true;
+                var key = off.shift === "night" ? "evening" : off.shift;
+                return key === slotBand(slot);
+            }
+            function dayBits(days) {
+                return {
+                    zh: days.map(function (d) { return ZH[d]; }).join(""),
+                    en: days.map(function (d) { return EN[d]; }).join(" ")
+                };
+            }
+            function clockLine(v) {
+                var end = v.crosses ? ("次日 " + v.endClock) : v.endClock;
+                var endEn = v.crosses ? ("next day " + v.endClock) : v.endClock;
+                return { zh: v.startClock + " – " + end, en: v.startClock + " – " + endEn };
+            }
+
+            function render() {
+                var twBtn = document.getElementById("tzTaiwan");
+                var localBtn = document.getElementById("tzLocal");
+                if (twBtn) { twBtn.classList.toggle("active", mode === "tw"); twBtn.setAttribute("aria-pressed", mode === "tw"); }
+                if (localBtn) { localBtn.classList.toggle("active", mode === "local"); localBtn.setAttribute("aria-pressed", mode === "local"); }
+                var tzEl = document.getElementById("shiftLocalTz");
+                if (tzEl) {
+                    var tz = "";
+                    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) {}
+                    tzEl.textContent = tz ? "Your time (" + tz.replace(/_/g, " ") + ")" : "Your time";
+                }
+
+                var today = ymdUTC(todayTW());
+                var horizon = horizonKey();
+                var liveOffs = offs.filter(function (o) { return o.date >= today && o.date <= horizon; });
+                var board = document.getElementById("shiftBoard");
+                var nextEl = document.getElementById("shiftNext");
+                if (!board) return;
+
+                var soonest = null;
+                for (var n = 0; n < 21 && !soonest; n++) {
+                    var dayStart = todayTW() + n * DAY;
+                    var date = ymdUTC(dayStart);
+                    slots.forEach(function (slot) {
+                        if (slot.days.indexOf(new Date(dayStart).getUTCDay()) < 0) return;
+                        var occ = at(dayStart, slot.start, slot.end);
+                        if (occ.end <= Date.now()) return;
+                        if (liveOffs.some(function (o) { return o.date === date && offHits(slot, o); })) return;
+                        if (!soonest || occ.start < soonest.occ.start) soonest = { occ: occ, slot: slot };
+                    });
+                }
+                nextShift = soonest;
+                if (nextEl) {
+                    if (!soonest) nextEl.innerHTML = "";
+                    else {
+                        var nv = viewOf(soonest.occ, mode);
+                        var nb = BANDS[nv.band];
+                        var nc = clockLine(nv);
+                        nextEl.innerHTML = "<span class=\"highlight-blue\">下一班</span><span class=\"shift-en\">Next</span> · " +
+                            ZH[nv.dow] + " " + EN[nv.dow] + " · " + nb.zh + " " + nb.en + " · " + nc.zh;
+                    }
+                }
+
+                board.innerHTML = slots.map(function (slot) {
+                    var items = [];
+                    slot.days.forEach(function (dow) {
+                        var occ = upcoming(dow, slot.start, slot.end);
+                        if (!occ) return;
+                        items.push(viewOf(occ, mode));
+                    });
+                    var groups = [];
+                    items.forEach(function (v) {
+                        var key = v.startClock + "|" + v.endClock + "|" + v.band + "|" + (v.crosses ? 1 : 0);
+                        var g = null;
+                        for (var i = 0; i < groups.length; i++) if (groups[i].key === key) g = groups[i];
+                        if (!g) { g = { key: key, v: v, days: [] }; groups.push(g); }
+                        g.days.push(v.dow);
+                    });
+                    var offLabels = [];
+                    liveOffs.forEach(function (o) {
+                        if (!offHits(slot, o)) return;
+                        var dow = new Date(Date.UTC(+o.date.slice(0, 4), +o.date.slice(5, 7) - 1, +o.date.slice(8, 10))).getUTCDay();
+                        if (slot.days.indexOf(dow) < 0) return;
+                        var v = viewOf(onDate(o.date, slot.start, slot.end), mode);
+                        var label = v.date.slice(5).replace("-", "/") + " " + ZH[v.dow];
+                        if (offLabels.indexOf(label) < 0) offLabels.push(label);
+                    });
+                    return groups.map(function (g) {
+                        var bits = dayBits(g.days);
+                        var band = BANDS[g.v.band];
+                        var clocks = clockLine(g.v);
+                        var tag = offLabels.length ? '<span class="shift-off-tag">請假 DAY OFF · ' + esc(offLabels.join("、")) + "</span>" : "";
+                        var enClock = clocks.zh === clocks.en ? "" : '<div class="shift-en-line">' + esc(clocks.en) + "</div>";
+                        return '<article class="shift-block">' +
+                            '<div class="shift-head"><span class="shift-days">' + esc(bits.zh) + '</span><span class="shift-kind">' + band.zh + " " + band.en + "</span></div>" +
+                            '<div class="shift-en-line">' + esc(bits.en) + "</div>" +
+                            '<div class="shift-clock">' + esc(clocks.zh) + "</div>" +
+                            enClock +
+                            tag + "</article>";
+                    }).join("");
+                }).join("");
+
+                renderHero();
+
+                var box = document.getElementById("daysOff");
+                var has = document.getElementById("daysOffHas");
+                var empty = document.getElementById("daysOffEmpty");
+                var ul = document.getElementById("daysOffList");
+                if (!box || !ul) return;
+                if (!configured) { box.hidden = true; return; }
+                box.hidden = false;
+                var offItems = [];
+                liveOffs.forEach(function (o) {
+                    var matched = slots.filter(function (slot) { return offHits(slot, o); });
+                    if (!matched.length) return;
+                    matched.forEach(function (slot) {
+                        var occ = onDate(o.date, slot.start, slot.end);
+                        if (occ.end <= Date.now()) return;
+                        var v = viewOf(occ, mode);
+                        var band = BANDS[v.band];
+                        var clocks = clockLine(v);
+                        offItems.push({
+                            start: occ.start,
+                            html: esc(v.date.slice(5).replace("-", "/")) + " " + ZH[v.dow] + " " + EN[v.dow] +
+                                " · " + band.zh + " " + band.en + " · " + esc(clocks.zh) +
+                                (o.note ? " · " + esc(o.note) : "")
+                        });
+                    });
+                });
+                offItems.sort(function (a, b) { return a.start - b.start; });
+                if (!offItems.length) {
+                    has.hidden = true;
+                    empty.hidden = false;
+                    ul.innerHTML = "";
+                    return;
+                }
+                has.hidden = false;
+                empty.hidden = true;
+                ul.innerHTML = offItems.map(function (item) { return "<li>" + item.html + "</li>"; }).join("");
+            }
+
+            // 首頁狀態面板：直播中 / 下一班倒數
+            function renderHero() {
+                var panel = document.getElementById("heroStatus");
+                if (!panel) return;
+                var pill = document.getElementById("heroStatusPill");
+                var kicker = document.getElementById("heroStatusKicker");
+                var main = document.getElementById("heroStatusMain");
+                var sub = document.getElementById("heroStatusSub");
+                var now = Date.now();
+                if (nextShift && nextShift.occ.end <= now) { render(); return; }
+                if (!nextShift) {
+                    panel.className = "status-panel is-idle";
+                    pill.textContent = "OFF DUTY 下班中";
+                    kicker.innerHTML = "下一班 <span class=\"lang-en\" style=\"display:inline\">Next shift</span>";
+                    main.textContent = "TBA";
+                    sub.innerHTML = "看下方輪班表 <span class=\"lang-en\">See the schedule below</span>";
+                    return;
+                }
+                var occ = nextShift.occ;
+                var v = viewOf(occ, mode);
+                var band = BANDS[v.band];
+                var c = clockLine(v);
+                var live = occ.start <= now;
+                panel.className = "status-panel " + (live ? "is-live" : "is-idle");
+                pill.textContent = live ? "ON AIR 開台中" : "OFF DUTY 下班中";
+                var ms = live ? occ.end - now : occ.start - now;
+                var s = Math.max(0, Math.floor(ms / 1000));
+                var d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), sec = s % 60;
+                main.textContent = (d ? d + "d " : "") + pad(h) + ":" + pad(m) + ":" + pad(sec);
+                kicker.innerHTML = live
+                    ? "直播中・剩餘 <span class=\"lang-en\" style=\"display:inline\">Live now · ends in</span>"
+                    : "下一班倒數 <span class=\"lang-en\" style=\"display:inline\">Next shift in</span>";
+                sub.innerHTML = ZH[v.dow] + "　" + band.zh + "　" + esc(c.zh) +
+                    " <span class=\"lang-en\">" + EN[v.dow] + " · " + band.en + " · " + (mode === "tw" ? "Taiwan time" : "your time") + "</span>";
+            }
+
+            function setMode(next) {
+                mode = next;
+                try { sessionStorage.setItem("couch-tz", next); } catch (e) {}
+                render();
+            }
+
+            var saved = "";
+            try { saved = sessionStorage.getItem("couch-tz") || ""; } catch (e) {}
+            if (saved === "tw" || saved === "local") mode = saved;
+            else {
+                var tzName = "";
+                try { tzName = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e2) {}
+                mode = (tzName === "Asia/Taipei") ? "tw" : "local";
+            }
+            var twBtn = document.getElementById("tzTaiwan");
+            var localBtn = document.getElementById("tzLocal");
+            if (twBtn) twBtn.addEventListener("click", function () { setMode("tw"); });
+            if (localBtn) localBtn.addEventListener("click", function () { setMode("local"); });
+            render();
+            setInterval(renderHero, 1000);
+
+            fetch("/api/schedule", { cache: "no-store" })
+                .then(function (res) { return res.ok ? res.json() : null; })
+                .then(function (data) {
+                    if (!data || !data.configured) return;
+                    configured = true;
+                    if (Array.isArray(data.slots) && data.slots.length) slots = data.slots;
+                    if (Array.isArray(data.daysOff)) offs = data.daysOff;
+                    render();
+                })
+                .catch(function () {});
+        })();
+    </script>
+</body>
+</html>

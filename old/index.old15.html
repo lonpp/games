@@ -6,7 +6,9 @@
     <meta name="theme-color" content="#0b0710">
     <meta name="description" content="冷冷不冷的皮沙發工廠 HUMAN LEATHER COUCH FACTORY — 直播輪班表、OmniStream 聊天室指令與完整價目表、遊戲開發與快樂水™投餵。">
     <title>HUMAN LEATHER COUCH FACTORY</title>
-    <script src="assets/zh.js?v=20261011c"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;0,800;1,400&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
     <script>
         document.documentElement.classList.add('js');
         // 開機畫面：每個分頁只播一次；系統要求減少動態時不播
@@ -1042,7 +1044,7 @@
         .footer-brand { font-weight: 700; color: var(--text); }
         .footer-sig { display: block; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 1px; color: var(--pink); margin-top: 0.3rem; }
         .footer-links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; }
-        .footer-links a { color: var(--muted); display: inline-flex; align-items: center; min-height: 40px; }
+        .footer-links a { color: var(--muted); }
         .footer-links a:hover { color: var(--blue); }
 
         /* =========================================
@@ -1777,418 +1779,6 @@
             .watch-row { grid-template-columns: 1fr 1fr; }
             .watch-row .channel-card:nth-child(3) { grid-column: 1 / -1; }
         }
-
-        /* overflow-x: hidden 會讓 position: sticky 失效，改用 clip（一樣不會橫向捲動） */
-        html, body { overflow-x: clip; }
-
-        /* ---------- 指令中心：常用指令 × 練習機 ---------- */
-        .cmd-hub {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
-            gap: 0 1.6rem;
-            align-items: start;
-        }
-        .hub-hint { font-size: 0.82rem; color: var(--muted); margin: -0.4rem 0 0.75rem; }
-        .hub-hint b { color: var(--blue); }
-        .quick-list { margin-top: 0; }
-        .quick-list .cmd-row { grid-template-columns: minmax(0, 1fr) auto; row-gap: 0.25rem; }
-        .quick-list .cmd-actions { grid-column: 1; grid-row: 1; }
-        .quick-list .cmd-price { grid-column: 2; grid-row: 1; }
-        .quick-list .cmd-desc { grid-column: 1 / -1; grid-row: 2; font-size: 0.86rem; }
-        .cmd-actions { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; }
-        .run-cmd {
-            font-family: var(--font-mono);
-            font-size: 0.68rem;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            color: var(--pink);
-            background: transparent;
-            border: 1px solid var(--line-pink);
-            padding: 0.18rem 0.5rem;
-            cursor: pointer;
-            transition: background-color 0.15s, color 0.15s, border-color 0.15s;
-        }
-        .run-cmd:hover { background: var(--pink); color: #000; border-color: var(--pink); }
-        .hub-shell .shell-log { height: 318px; }
-        .hub-shell .shell-chips { margin-top: 0.7rem; }
-
-        /* ---------- 收合價目表 VAULT ---------- */
-        .vault {
-            position: relative;
-            margin: 2.2rem 0 0.4rem;
-            border: 1px solid var(--line-pink);
-            background:
-                linear-gradient(180deg, rgba(255, 42, 127, 0.06), transparent 120px),
-                #09040c;
-            box-shadow: inset 0 0 40px rgba(255, 42, 127, 0.04);
-        }
-        .vault::before {
-            content: '';
-            position: absolute; left: -1px; right: -1px; top: -1px;
-            height: 4px;
-            background: repeating-linear-gradient(-45deg, var(--pink) 0 8px, transparent 8px 16px);
-            opacity: 0.6;
-            z-index: 7;
-            pointer-events: none;
-        }
-        .vault::after {
-            content: '';
-            position: absolute; right: -6px; bottom: -6px;
-            width: 40%; height: 40%;
-            border-right: 1px solid var(--blue);
-            border-bottom: 1px solid var(--blue);
-            pointer-events: none;
-            opacity: 0.6;
-        }
-        .vault-bar {
-            position: relative;
-            z-index: 6;
-            background: rgba(9, 4, 12, 0.94);
-            transition: box-shadow 0.25s;
-        }
-        .vault[data-open="true"] .vault-bar {
-            position: sticky;
-            top: var(--topbar-h);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--line-pink);
-            box-shadow: 0 12px 26px rgba(0, 0, 0, 0.5);
-        }
-        .vault-toggle {
-            width: 100%;
-            display: grid;
-            grid-template-columns: auto minmax(0, 1fr) auto;
-            align-items: center;
-            gap: 0.4rem 1rem;
-            padding: 1.15rem 1.25rem 0.9rem;
-            background: none;
-            border: none;
-            color: inherit;
-            font: inherit;
-            text-align: left;
-            cursor: pointer;
-        }
-        .vault-toggle:hover .vault-icon { background: var(--pink); color: #000; box-shadow: 0 0 18px rgba(255, 42, 127, 0.6); }
-        .vault-toggle:hover .vault-icon small { color: #000; }
-        .vault-icon {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            width: 58px; height: 58px;
-            border: 1px solid var(--pink);
-            color: var(--pink);
-            background: rgba(255, 42, 127, 0.06);
-            box-shadow: inset 0 0 14px rgba(255, 42, 127, 0.2);
-            clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
-            transition: background-color 0.15s, color 0.15s, box-shadow 0.15s;
-        }
-        .vault-icon b { font-family: var(--font-mono); font-size: 1.35rem; font-weight: 800; line-height: 1; }
-        .vault-icon small { font-family: var(--font-mono); font-size: 0.52rem; font-weight: 800; letter-spacing: 1px; color: var(--blue); margin-top: 3px; }
-        .vault-title { display: flex; flex-direction: column; min-width: 0; line-height: 1.35; }
-        .vault-title b { font-size: 1.12rem; font-weight: 900; color: var(--text-strong); letter-spacing: 1px; }
-        .vault-prompt { font-family: var(--font-mono); font-size: 0.7rem; color: var(--pink); }
-        .vault-en { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 800; letter-spacing: 1.2px; color: var(--blue); }
-        .vault-meta { display: inline-flex; align-items: center; gap: 0.7rem; }
-        .vault-state {
-            font-family: var(--font-mono);
-            font-size: 0.72rem;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            color: var(--amber);
-            border: 1px solid rgba(255, 179, 71, 0.45);
-            padding: 0.2rem 0.55rem;
-            white-space: nowrap;
-            min-width: 11.5em;
-            text-align: center;
-        }
-        .vault[data-open="true"] .vault-state { color: var(--green); border-color: rgba(61, 255, 154, 0.5); text-shadow: 0 0 6px rgba(61, 255, 154, 0.5); }
-        .vault-chev {
-            display: inline-flex; align-items: center; justify-content: center;
-            width: 34px; height: 34px;
-            border: 1px solid var(--line-blue);
-            color: var(--blue);
-            font-size: 0.8rem;
-            transition: transform 0.35s ease, background-color 0.15s;
-        }
-        .vault[data-open="true"] .vault-chev { transform: rotate(180deg); }
-        .vault-toggle:hover .vault-chev { background: rgba(0, 240, 255, 0.12); }
-        .vault-tools {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 0.6rem 0.9rem;
-            padding: 0 1.25rem 0.95rem;
-        }
-        .vault-tools .cmd-search { flex: 1 1 230px; max-width: 340px; }
-        .vault-tools .price-chips { margin: 0; }
-        .price-chips button .n { margin-left: 0.35rem; opacity: 0.6; font-size: 0.68rem; }
-        .vault-teaser {
-            display: flex;
-            gap: 0.6rem;
-            padding: 0 1.25rem 1rem;
-            font-family: var(--font-mono);
-            font-size: 0.72rem;
-            color: var(--muted);
-            white-space: nowrap;
-            overflow: hidden;
-            -webkit-mask-image: linear-gradient(90deg, #000 80%, transparent);
-            mask-image: linear-gradient(90deg, #000 80%, transparent);
-        }
-        .vault-teaser span { color: var(--amber); font-weight: 800; }
-        .vault[data-open="true"] .vault-teaser { display: none; }
-
-        .vault-body {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr);
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-        .vault[data-open="true"] .vault-body { grid-template-rows: 1fr; }
-        .vault-inner { min-height: 0; overflow: hidden; }
-        .vault[data-open="false"] .vault-inner { visibility: hidden; transition: visibility 0s linear 0.55s; }
-        .vault-pad { padding: 1.2rem 1.25rem 0.6rem; }
-        .vault-note { margin: 0 0 1.1rem; }
-        .vault[data-open="true"] .vault-pad .cmd-row {
-            animation: row-in 0.42s ease both;
-            animation-delay: calc(var(--i, 0) * 16ms);
-        }
-        @keyframes row-in { from { opacity: 0; transform: translateX(-10px); } }
-        .vault-foot { display: flex; justify-content: center; padding: 0.4rem 0 1rem; }
-        .vault-close {
-            font-family: var(--font-mono);
-            font-size: 0.76rem;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            color: var(--blue);
-            background: rgba(0, 240, 255, 0.05);
-            border: 1px solid var(--line-blue);
-            padding: 0.5rem 1.1rem;
-            cursor: pointer;
-            clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
-        }
-        .vault-close:hover { background: var(--blue); color: #000; }
-
-        @media (max-width: 900px) {
-            .cmd-hub { grid-template-columns: minmax(0, 1fr); }
-            .hub-shell { margin-top: 0.6rem; }
-        }
-        @media (max-width: 768px) {
-            .vault-toggle { grid-template-columns: auto minmax(0, 1fr) auto; padding: 1rem 0.9rem 0.75rem; gap: 0.3rem 0.75rem; }
-            .vault-icon { width: 48px; height: 48px; }
-            .vault-icon b { font-size: 1.1rem; }
-            .vault-title b { font-size: 0.98rem; }
-            .vault-prompt { display: none; }
-            .vault-en { font-size: 0.6rem; letter-spacing: 0.6px; }
-            .vault-state { display: none; }
-            .vault-tools { padding: 0 0.9rem 0.8rem; gap: 0.55rem; }
-            .vault-tools .cmd-search { flex-basis: 100%; max-width: none; }
-            .vault-tools .price-chips { flex-wrap: nowrap; overflow-x: auto; width: 100%; padding-bottom: 2px; scrollbar-width: none; }
-            .vault-tools .price-chips::-webkit-scrollbar { display: none; }
-            .vault-tools .price-chips button { flex-shrink: 0; }
-            .vault-teaser { padding: 0 0.9rem 0.9rem; }
-            .vault-pad { padding: 1rem 0.75rem 0.4rem; }
-            .hub-shell .shell-log { height: 250px; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-            .vault-body { transition: none; }
-            .vault[data-open="true"] .vault-pad .cmd-row { animation: none; }
-        }
-
-        /* ---------- 指令中心整區收合 ---------- */
-        .hub-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.8rem 1rem; }
-        .hub-head .section-title { flex: 1 1 auto; min-width: 0; }
-        .hub-toggle {
-            flex-shrink: 0;
-            min-height: 40px;
-            display: inline-flex; align-items: center; gap: 0.6rem;
-            margin-top: 0.15rem;
-            padding: 0;
-            background: none; border: none; cursor: pointer;
-            font: inherit; color: inherit;
-        }
-        .hub-state {
-            font-family: var(--font-mono); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.5px;
-            color: var(--amber);
-            border: 1px solid rgba(255, 179, 71, 0.45);
-            padding: 0.25rem 0.6rem;
-            white-space: nowrap;
-        }
-        .hub-toggle:hover .hub-state { background: rgba(255, 179, 71, 0.1); }
-        .hub-toggle:hover .vault-chev { background: rgba(0, 240, 255, 0.12); }
-        #guide[data-hub="open"] .hub-state { color: var(--green); border-color: rgba(61, 255, 154, 0.5); }
-        #guide[data-hub="open"] .hub-toggle .vault-chev { transform: rotate(180deg); }
-        #guide .section-title { margin-bottom: 1.2rem; }
-
-        .hub-summary { display: flex; flex-direction: column; gap: 0.9rem; }
-        #guide[data-hub="open"] .hub-summary { display: none; }
-        .hub-line { font-size: 0.95rem; color: var(--text); }
-        .hub-line .lang-en { display: block; font-size: 0.82rem; margin-top: 0.2rem; }
-        .hub-dock {
-            position: relative;
-            display: grid;
-            grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(0, 1fr));
-            gap: 0.6rem;
-            padding: 0.75rem;
-            border: 1px solid var(--line-pink);
-            background:
-                linear-gradient(90deg, rgba(255, 42, 127, 0.07), rgba(0, 240, 255, 0.04)),
-                #09040c;
-        }
-        .hub-dock::before {
-            content: '';
-            position: absolute; left: -1px; top: -1px; bottom: -1px;
-            width: 3px;
-            background: var(--pink);
-            box-shadow: 0 0 10px var(--pink);
-        }
-        .hub-search { max-width: none; }
-        .dock-btn {
-            display: flex; align-items: center; justify-content: center; gap: 0.45rem;
-            min-height: 44px;
-            padding: 0.4rem 0.7rem;
-            font-family: var(--font-mono); font-size: 0.82rem; font-weight: 800;
-            color: var(--blue);
-            background: rgba(0, 240, 255, 0.05);
-            border: 1px solid var(--line-blue);
-            cursor: pointer;
-            white-space: nowrap;
-            clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px);
-            transition: background-color 0.15s, color 0.15s, box-shadow 0.15s;
-        }
-        .dock-btn b { font-size: 0.8rem; }
-        .dock-btn small { font-size: 0.6rem; letter-spacing: 0.8px; opacity: 0.65; }
-        .dock-btn:hover { background: var(--blue); color: #000; box-shadow: 0 0 14px rgba(0, 240, 255, 0.4); }
-        .dock-btn.primary { color: var(--pink); border-color: var(--pink); background: rgba(255, 42, 127, 0.08); animation: pulse-border 3.2s ease-in-out infinite; }
-        .dock-btn.primary:hover { background: var(--pink); color: #000; box-shadow: 0 0 16px var(--pink); }
-
-        .hub-body {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr);
-            grid-template-rows: 0fr;
-            transition: grid-template-rows 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-        #guide[data-hub="open"] .hub-body { grid-template-rows: 1fr; }
-        #guide.hub-instant .hub-body { transition: none; }
-        .hub-inner { min-height: 0; overflow: hidden; }
-        #guide[data-hub="closed"] .hub-inner { visibility: hidden; transition: visibility 0s linear 0.55s; }
-        #guide.hub-instant[data-hub="closed"] .hub-inner { transition: none; }
-        #guide[data-settled="true"] .hub-inner { overflow: visible; }
-        #guide[data-hub="open"] .hub-inner > :first-child { animation: hub-in 0.5s ease both; }
-        @keyframes hub-in { from { opacity: 0; transform: translateY(-6px); } }
-
-        @media (max-width: 768px) {
-            .hub-head { flex-direction: column; gap: 0; }
-            .hub-toggle { margin: -0.4rem 0 1rem; }
-            .hub-dock { grid-template-columns: 1fr 1fr; padding: 0.65rem; }
-            .hub-search { grid-column: 1 / -1; }
-            .dock-btn.primary { grid-column: 1 / -1; }
-            .dock-btn small { display: none; }
-        }
-
-        /* ---------- 繁／简・台灣／大陆 ---------- */
-        html[data-region="cn"] .only-tw, html[data-region="tw"] .only-cn { display: none !important; }
-        html[data-lang="hans"] { --font-body: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif; }
-        html.zh-pending body { visibility: hidden; animation: zh-failsafe 0s linear 1.5s forwards; }
-        @keyframes zh-failsafe { to { visibility: visible; } }
-        .lang-switch {
-            display: inline-flex;
-            align-self: center;
-            border: 1px solid var(--line-blue);
-            font-family: var(--font-mono);
-        }
-        .lang-switch button {
-            min-width: 34px; min-height: 34px;
-            background: none; border: none;
-            color: var(--muted);
-            font-family: 'PingFang SC', 'Microsoft YaHei', 'Microsoft JhengHei', sans-serif;
-            font-size: 0.85rem; font-weight: 700;
-            cursor: pointer;
-            transition: background-color 0.15s, color 0.15s;
-        }
-        .lang-switch button:hover { color: var(--text-strong); }
-        .lang-switch button[aria-pressed="true"] { background: var(--blue); color: #000; }
-        html[data-region="cn"] .status-actions { grid-template-columns: 1fr; }
-        .status-actions .alt-links { font-size: 0.74rem; color: var(--muted); text-align: center; }
-        .status-actions .alt-links a { display: inline; min-height: 0; padding: 0; border: none; background: none; color: var(--blue); font-size: inherit; }
-        .status-actions .alt-links a:hover { background: none; color: var(--text-strong); box-shadow: none; }
-        html[data-region="cn"] .watch-row .card-bili,
-        html[data-region="cn"] .sub-links-container .term-bili { order: -1; }
-        html[data-region="cn"] .watch-row .channel-card:not(.card-bili) { opacity: 0.7; }
-        html[data-region="cn"] .watch-row .channel-card:not(.card-bili):hover { opacity: 1; }
-        #payTabs { grid-template-columns: repeat(auto-fit, minmax(84px, 1fr)); }
-
-        /* 建議金額 */
-        .tier-block { margin-top: 1rem; }
-        .tier-label { font-family: var(--font-mono); font-size: 0.76rem; font-weight: 800; color: var(--amber); margin-bottom: 0.5rem; }
-        .tier-label span { color: var(--muted); font-weight: 700; margin-left: 0.4rem; }
-        .tier-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; }
-        .tier {
-            display: flex; flex-direction: column; align-items: center; gap: 0.1rem;
-            padding: 0.6rem 0.3rem 0.55rem;
-            background: rgba(255, 179, 71, 0.04);
-            border: 1px solid rgba(255, 179, 71, 0.35);
-            color: var(--text);
-            font-family: inherit;
-            cursor: pointer;
-            clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
-            transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
-        }
-        .tier:hover { border-color: var(--amber); background: rgba(255, 179, 71, 0.1); }
-        .tier.active { border-color: var(--amber); background: rgba(255, 179, 71, 0.18); box-shadow: 0 0 14px rgba(255, 179, 71, 0.35); }
-        .tier-icon { font-size: 1.1rem; line-height: 1.2; }
-        .tier b { font-size: 0.8rem; font-weight: 700; }
-        .tier small { font-family: var(--font-mono); font-size: 0.6rem; color: var(--muted); }
-        .tier-amt { font-family: var(--font-mono); font-size: 0.95rem; font-weight: 800; color: var(--amber); text-shadow: 0 0 8px rgba(255, 179, 71, 0.4); }
-        @media (max-width: 768px) {
-            .cyber-btn .btn-en { display: none; }
-            .lang-switch button { min-width: 36px; min-height: 38px; font-size: 0.82rem; }
-            .tier small { display: none; }
-        }
-
-        /* ---------- Steam 模組連結 ---------- */
-        .steam-strip {
-            display: grid;
-            grid-template-columns: auto minmax(0, 1fr) auto;
-            align-items: center;
-            gap: 0.9rem 1.1rem;
-            margin: 0 0 1.2rem;
-            padding: 0.8rem 1rem;
-            color: var(--text);
-            background: linear-gradient(90deg, rgba(102, 192, 244, 0.1), rgba(0, 240, 255, 0.02) 70%);
-            border: 1px solid rgba(102, 192, 244, 0.45);
-            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-            transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
-        }
-        .steam-strip:hover { color: var(--text); text-shadow: none; border-color: #66c0f4; box-shadow: 0 0 18px rgba(102, 192, 244, 0.3); background-color: rgba(102, 192, 244, 0.08); }
-        .steam-badge {
-            font-family: var(--font-mono); font-size: 0.62rem; font-weight: 800; letter-spacing: 1px; line-height: 1.25;
-            color: #0b1a26; background: #66c0f4;
-            padding: 0.4rem 0.55rem;
-            text-align: center;
-        }
-        .steam-text { display: flex; flex-direction: column; min-width: 0; font-size: 0.86rem; line-height: 1.6; }
-        .steam-text b { font-family: var(--font-mono); font-size: 0.95rem; color: var(--text-strong); letter-spacing: 0.5px; }
-        .steam-text .lang-en { display: block; font-size: 0.78rem; }
-        .steam-go {
-            font-family: var(--font-mono); font-size: 0.78rem; font-weight: 800; white-space: nowrap;
-            color: #66c0f4; border: 1px solid rgba(102, 192, 244, 0.6); padding: 0.45rem 0.8rem;
-        }
-        .steam-strip:hover .steam-go { background: #66c0f4; color: #0b1a26; }
-
-        /* ---------- 大陆模式：長段英文不顯示，頁面短一半 ---------- */
-        html[data-region="cn"] .bilingual-block .lang-en,
-        html[data-region="cn"] .tagline .lang-en,
-        html[data-region="cn"] .hub-line .lang-en,
-        html[data-region="cn"] .steam-text .lang-en,
-        html[data-region="cn"] .ios-hint .lang-en,
-        html[data-region="cn"] .cat-alert .lang-en,
-        html[data-region="cn"] .cmd-rules .shift-en,
-        html[data-region="cn"] .coin-card small,
-        html[data-region="cn"] .channel-desc .lang-en,
-        html[data-region="cn"] .status-sub .lang-en { display: none; }
-
-        @media (max-width: 768px) {
-            .steam-strip { grid-template-columns: auto minmax(0, 1fr); padding: 0.75rem 0.8rem; }
-            .steam-go { grid-column: 1 / -1; text-align: center; }
-        }
     </style>
 </head>
 <body>
@@ -2206,20 +1796,21 @@
             </div>
 
             <nav class="top-nav" aria-label="段落 Sections">
-                <a href="#guide"><span class="nav-no">01</span>COMMANDS</a>
-                <a href="#live"><span class="nav-no">02</span>LIVE</a>
+                <a href="#try"><span class="nav-no">00</span>TRY</a>
+                <a href="#live"><span class="nav-no">01</span>LIVE</a>
+                <a href="#guide"><span class="nav-no">02</span>PRICES</a>
                 <a href="#about"><span class="nav-no">03</span>ABOUT</a>
                 <a href="#donate"><span class="nav-no">04</span>DONATE</a>
             </nav>
 
             <div class="link-group">
-                <div class="lang-switch" role="group" aria-label="語言 Language" data-no-zh>
-                    <button type="button" data-set-lang="hant" title="繁體中文・台灣">繁</button>
-                    <button type="button" data-set-lang="hans" title="简体中文・中国大陆">简</button>
-                </div>
-                <button type="button" class="cyber-btn" onclick="openDonate(null, this)">
+                <button type="button" class="cyber-btn" onclick="openDonate('tw', this)">
                     <img src="images/happy-water-lg.gif" alt="" class="btn-water-icon" onerror="waterFallback(this)">
-                    投餵<span class="btn-en"> DONATE</span>
+                    台灣斗內
+                </button>
+                <button type="button" class="cyber-btn" onclick="openDonate('us', this)">
+                    <img src="images/happy-water-lg.gif" alt="" class="btn-water-icon" onerror="waterFallback(this)">
+                    DONATE
                 </button>
             </div>
         </div>
@@ -2228,7 +1819,7 @@
 
     <main class="container" id="main">
         <!-- 跑馬燈 -->
-        <div class="ticker" aria-hidden="true"><div class="ticker-track"><div class="ticker-group"><span><b>●</b> NEXT SHIFT 下一班 <span class="t-blue t-next">--</span></span><span>CAT DETECTED ON KEYBOARD // 鍵盤上偵測到貓</span><span class="t-amber">HAPPY WATER™ SUPPLY LINE ONLINE // 快樂水補給線運作中</span><span>RAIDERS INCOMING? 輸入 <b>!buy 襲擊</b></span><span>新人請先輸入 <b>!money</b></span><span>完整價目表 // FULL PRICE LIST → 01</span><span class="t-blue">ALL SYSTEMS NOMINAL // 沙發很軟</span></div><div class="ticker-group"><span><b>●</b> NEXT SHIFT 下一班 <span class="t-blue t-next">--</span></span><span>CAT DETECTED ON KEYBOARD // 鍵盤上偵測到貓</span><span class="t-amber">HAPPY WATER™ SUPPLY LINE ONLINE // 快樂水補給線運作中</span><span>RAIDERS INCOMING? 輸入 <b>!buy 襲擊</b></span><span>新人請先輸入 <b>!money</b></span><span>完整價目表 // FULL PRICE LIST → 01</span><span class="t-blue">ALL SYSTEMS NOMINAL // 沙發很軟</span></div></div></div>
+        <div class="ticker" aria-hidden="true"><div class="ticker-track"><div class="ticker-group"><span><b>●</b> NEXT SHIFT 下一班 <span class="t-blue t-next">--</span></span><span>CAT DETECTED ON KEYBOARD // 鍵盤上偵測到貓</span><span class="t-amber">HAPPY WATER™ SUPPLY LINE ONLINE // 快樂水補給線運作中</span><span>RAIDERS INCOMING? 輸入 <b>!buy 襲擊</b></span><span>新人請先輸入 <b>!money</b></span><span>完整價目表 // FULL PRICE LIST → 02</span><span class="t-blue">ALL SYSTEMS NOMINAL // 沙發很軟</span></div><div class="ticker-group"><span><b>●</b> NEXT SHIFT 下一班 <span class="t-blue t-next">--</span></span><span>CAT DETECTED ON KEYBOARD // 鍵盤上偵測到貓</span><span class="t-amber">HAPPY WATER™ SUPPLY LINE ONLINE // 快樂水補給線運作中</span><span>RAIDERS INCOMING? 輸入 <b>!buy 襲擊</b></span><span>新人請先輸入 <b>!money</b></span><span>完整價目表 // FULL PRICE LIST → 02</span><span class="t-blue">ALL SYSTEMS NOMINAL // 沙發很軟</span></div></div></div>
 
         <!-- HERO：簡介 + 即時直播狀態 -->
         <header class="hero">
@@ -2243,8 +1834,9 @@
                 </p>
 
                 <nav class="jump-nav" aria-label="目錄 Contents">
-                    <a href="#guide"><span class="jump-kicker">01</span>指令價目 COMMANDS</a>
-                    <a href="#live"><span class="jump-kicker">02</span>輪班表 LIVE</a>
+                    <a href="#try"><span class="jump-kicker">00</span>試玩 TRY</a>
+                    <a href="#live"><span class="jump-kicker">01</span>輪班表 LIVE</a>
+                    <a href="#guide"><span class="jump-kicker">02</span>指令價目 PRICES</a>
                     <a href="#about"><span class="jump-kicker">03</span>工廠 ABOUT</a>
                     <a href="#donate"><span class="jump-kicker">04</span>投餵 DONATE</a>
                 </nav>
@@ -2265,15 +1857,13 @@
                 </div>
                 <div class="status-sub" id="heroStatusSub">讀取輪班表中… <span class="lang-en">Loading schedule…</span></div>
                 <div class="mon-rows">
-                    <div class="mon-row"><span class="mon-k">HAPPY WATER™</span><span class="mon-bar"><i id="monWater"></i></span><span class="mon-v"><span id="monWaterV">78%</span> <button type="button" class="mon-feed" id="monFeed" hidden onclick="openDonate(null, this)">投餵</button></span></div>
+                    <div class="mon-row"><span class="mon-k">HAPPY WATER™</span><span class="mon-bar"><i id="monWater"></i></span><span class="mon-v"><span id="monWaterV">78%</span> <button type="button" class="mon-feed" id="monFeed" hidden onclick="openDonate('us', this)">投餵</button></span></div>
                     <div class="mon-row"><span class="mon-k">CAT.PROC</span><span class="mon-v mon-cats" id="monCats">-.-&nbsp;&nbsp;-.-</span><span class="mon-v" id="monCatsState">2 SLEEPING</span></div>
                     <div class="mon-row"><span class="mon-k">練習金幣 COINS</span><span class="mon-v" id="monCoins">100</span><span class="mon-v" style="color: var(--muted);">+10 / 5s</span></div>
                 </div>
                 <div class="status-actions">
-                    <a class="only-cn" href="https://space.bilibili.com/452768274" target="_blank" rel="noopener noreferrer">BILIBILI ↗</a>
-                    <a class="only-tw" href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">TWITCH ↗</a>
-                    <a class="only-tw" href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YOUTUBE ↗</a>
-                    <span class="only-cn alt-links">也在 <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">Twitch</a> · <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YouTube</a> 同步直播</span>
+                    <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">TWITCH ↗</a>
+                    <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YOUTUBE ↗</a>
                 </div>
             </aside>
         </header>
@@ -2303,43 +1893,111 @@
             </a>
         </div>
 
-        <!-- 01 指令中心：常用指令 + 試玩終端機 + 收合價目表 -->
-        <section class="terminal-window reveal" id="guide" aria-labelledby="guide-title" data-hub="closed">
+        <!-- 00 試玩終端機 -->
+        <section class="terminal-window reveal" id="try" aria-labelledby="try-title">
             <div class="window-header">
-                <span class="window-path"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>SHELL:~/factory/commands.sh</span>
-                <span class="window-mode">[OMNISTREAM]</span>
+                <span class="window-path"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>guest@couch-factory:~</span>
+                <span class="window-mode">[PRACTICE_MODE]</span>
             </div>
             <div class="window-content">
-                <div class="hub-head">
-                    <h2 class="section-title" id="guide-title"><span class="sec-no">01</span><span class="sec-zh">指令中心</span><span class="sec-en">COMMAND CENTER</span></h2>
-                    <button type="button" class="hub-toggle" id="hubToggle" aria-expanded="false" aria-controls="hubBody">
-                        <span class="hub-state" id="hubState">[ STANDBY ] 展開</span><span class="vault-chev" aria-hidden="true">▼</span>
-                    </button>
+                <h2 class="section-title" id="try-title"><span class="sec-no">00</span><span class="sec-zh">先來試玩終端機</span><span class="sec-en">TRY THE TERMINAL</span></h2>
+                <p class="lang-zh shell-intro">這台是練習機，指令和價錢跟直播聊天室的 OmniStream 一樣。開局送 100 金幣，待在這頁會繼續累積，可以拿來買食物、叫極光，或是摸摸貓。打錯也沒關係，這裡會告訴你哪裡錯。<span class="lang-en">A practice terminal with the same OmniStream commands and prices as the stream chat. Mistakes here tell you what went wrong.</span></p>
+                <div class="shell" id="shellBox">
+                    <div class="shell-log" id="shellLog" role="log" aria-live="polite" aria-label="終端機輸出 Terminal output"></div>
+                    <form class="shell-input" id="shellForm" autocomplete="off">
+                        <label for="shellIn" class="shell-ps1">guest@couch:~$</label>
+                        <input id="shellIn" type="text" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" placeholder="help">
+                    </form>
                 </div>
-                <!-- OmniStream 模組：收合、展開都看得到 -->
-                <a class="steam-strip" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3817038607" target="_blank" rel="noopener noreferrer">
-                    <span class="steam-badge" aria-hidden="true">STEAM<br>WORKSHOP</span>
-                    <span class="steam-text">
-                        <b>OmniStream 模組</b>
-                        <span>這些指令來自我做的 RimWorld 模組。你也在直播？免費訂閱，讓自己的聊天室一起玩。<span class="lang-en">Free mod: let your Twitch, YouTube or Bilibili chat play your colony.</span></span>
-                    </span>
-                    <span class="steam-go">訂閱 SUBSCRIBE ↗</span>
-                </a>
-                <!-- 收合時：一行說明 + 快捷列（查價錢、練習機、價目表） -->
-                <div class="hub-summary" id="hubSummary">
-                    <p class="hub-line">在 <strong>Twitch、YouTube、Bilibili</strong> 聊天室打 <code>!money</code>、<code>!lookup</code>、<code>!buy</code>，就能送東西進殖民地。<span class="lang-en">Chat commands for the colony: !money, !lookup, !buy.</span></p>
-                    <div class="hub-dock">
-                        <label class="cmd-search hub-search">
-                            <span class="sr-only">查價錢 Search prices</span>
-                            <input type="search" id="hubSearch" placeholder="查價錢：貓、極光、治療…" autocomplete="off">
-                        </label>
-                        <button type="button" class="dock-btn" data-hub-go="try"><b>▶</b> 練習機 <small>TERMINAL</small></button>
-                        <button type="button" class="dock-btn" data-hub-go="prices"><b>≡</b> 價目表 <small>55 ITEMS</small></button>
-                        <button type="button" class="dock-btn primary" data-hub-go="all"><b>▼</b> 展開全部 <small>EXPAND</small></button>
+                <div class="shell-chips" role="group" aria-label="快速指令 Quick commands">
+                    <button type="button" data-cmd="help">help</button>
+                    <button type="button" data-cmd="!money">!money</button>
+                    <button type="button" data-cmd="!buy 食物 5">!buy 食物 5</button>
+                    <button type="button" data-cmd="!buy 事件">!buy 事件</button>
+                    <button type="button" data-cmd="!buy 極光">!buy 極光</button>
+                    <button type="button" data-cmd="!lookup 貓">!lookup 貓</button>
+                    <button type="button" class="warm" data-cmd="pet">pet 摸貓</button>
+                    <button type="button" class="warm" data-cmd="donate">donate 投餵</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 01 直播輪班表 -->
+        <section class="terminal-window reveal" id="live" aria-labelledby="live-title">
+            <button type="button" class="ascii-cat" aria-label="摸摸貓 Pet the cat"><span class="cat-z" aria-hidden="true">zZ</span> /\_/\
+( <span class="cat-eyes">-.-</span> )
+ (")(")~</button>
+            <div class="window-header">
+                <span class="window-path"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>SHELL:~/factory/live.md</span>
+                <span class="window-mode">[CYBER_SURVIVAL]</span>
+            </div>
+            <div class="window-content">
+                <h2 class="section-title" id="live-title"><span class="sec-no">01</span><span class="sec-zh">直播輪班表</span><span class="sec-en">LIVE SCHEDULE</span></h2>
+                <div class="bilingual-block">
+                    <p class="lang-zh">
+                        以下是<strong>直播開台時間</strong>，不是實體店的營業時間。用下面兩個按鈕切換<strong>台灣時間</strong>和<strong>你的當地時間</strong>。早班、午班、晚班會跟著你正在看的時鐘改，夏令時間也算在裡面。
+                    </p>
+                    <p class="lang-en">
+                        These are <strong>livestream hours</strong>, not a shop's opening hours. Switch between <strong>Taiwan time</strong> and <strong>your local time</strong>. Morning, afternoon and evening follow the clock you are looking at, daylight saving included.
+                    </p>
+                </div>
+
+                <div class="tz-toggle" role="group" aria-label="時間顯示 Time display">
+                    <button type="button" class="tz-btn" id="tzTaiwan">台灣時間<span class="th-en">Taiwan (UTC+8)</span></button>
+                    <button type="button" class="tz-btn" id="tzLocal">你的當地時間<span class="th-en" id="shiftLocalTz">Your time</span></button>
+                </div>
+                <div><p class="shift-next-line" id="shiftNext"></p></div>
+                <div class="shift-board" id="shiftBoard"></div>
+                <p class="shift-note">
+                    * 開台的星期和鐘點如果有改，會更新在這一頁。請假日列在下方。<br>
+                    * Weekdays and hours update on this page. Days off are listed below.
+                </p>
+
+                <div class="watch-row">
+                    <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer" class="channel-card">
+                        <div class="channel-top">
+                            <span class="platform-name">Twitch<span class="ext">↗</span></span>
+                            <span class="badge">WATCH LIVE</span>
+                        </div>
+                        <p class="channel-desc">看直播、在聊天室下指令<span class="lang-en">Watch the stream and type commands in chat.</span></p>
+                    </a>
+                    <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer" class="channel-card">
+                        <div class="channel-top">
+                            <span class="platform-name">YouTube<span class="ext">↗</span></span>
+                            <span class="badge">WATCH LIVE</span>
+                        </div>
+                        <p class="channel-desc">同步直播與精華，聊天室也能下指令<span class="lang-en">Simulcast and highlights; chat commands work here too.</span></p>
+                    </a>
+                    <a href="https://space.bilibili.com/452768274" target="_blank" rel="noopener noreferrer" class="channel-card">
+                        <div class="channel-top">
+                            <span class="platform-name">Bilibili<span class="ext">↗</span></span>
+                            <span class="badge">彈幕 DANMAKU</span>
+                        </div>
+                        <p class="channel-desc">彈幕也能下指令<span class="lang-en">Commands work in Bilibili danmaku too.</span></p>
+                    </a>
+                </div>
+
+                <div id="daysOff" hidden>
+                    <div id="daysOffHas">
+                        <div class="bilingual-block" style="margin: 1.2rem 0 0.4rem;">
+                            <p class="lang-zh"><span class="highlight-blue">請假不開台</span>　下面的時間跟你上面選的時鐘一樣。</p>
+                            <p class="lang-en">Days off — no stream. Times below use the clock you selected.</p>
+                        </div>
+                        <ul class="off-list" id="daysOffList"></ul>
                     </div>
+                    <p class="shift-note" id="daysOffEmpty" hidden>這個月沒有請假，照表開台。 // No days off — streaming as scheduled.</p>
                 </div>
-                <div class="hub-body" id="hubBody" role="region" aria-labelledby="guide-title">
-                    <div class="hub-inner">
+            </div>
+        </section>
+
+        <!-- 02 新人報到指南 -->
+        <section class="terminal-window reveal" id="guide" aria-labelledby="guide-title">
+            <div class="window-header">
+                <span class="window-path"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>SHELL:~/factory/new-hire.md</span>
+                <span class="window-mode">[CHAT_COMMANDS]</span>
+            </div>
+            <div class="window-content">
+                <h2 class="section-title" id="guide-title"><span class="sec-no">02</span><span class="sec-zh">新人報到指南與價目表</span><span class="sec-en">NEW HIRE GUIDE &amp; PRICES</span></h2>
                 <div class="bilingual-block">
                     <p class="lang-zh">
                         在 <strong>Twitch、YouTube 或 Bilibili</strong> 的聊天室打指令，就能<span class="highlight-neon">送物資、新殖民者、自己取名的動物、治療、事件</span>進殖民地。開頭打 <code>!</code> 或全形 <code>！</code> 都可以，繁體、简体、English 都通，用什麼語言問就用什麼語言回。
@@ -2358,72 +2016,33 @@
                 </div>
                 <p class="shift-note">* 只看不講話領不到：聊天室不會通知誰進來，打聲招呼就開始累積。下面價目表的時間是「邊看邊聊」存到那個價錢大約要多久。</p>
 
-                
-                <div class="cmd-hub">
-                    <div class="hub-quick">
-                        <h3 class="sub-title">先從這幾個開始 <span class="sec-en">START HERE</span></h3>
-                        <p class="hub-hint">點指令<b>複製</b>，按 <b>▶ 試打</b> 在旁邊的練習機跑跑看。</p>
-                        <div class="cmd-list quick-list" data-quick>
-                            <div class="cmd-row"><span class="cmd-actions"><button type="button" class="cmd-code" data-copy="!money">!money</button><button type="button" class="run-cmd" data-run="!money" aria-label="在練習機試打 !money">▶ 試打</button></span><span class="cmd-desc">查自己的金幣<span class="shift-en">Check your coins</span></span><span class="cmd-price">免費</span></div>
-                            <div class="cmd-row"><span class="cmd-actions"><button type="button" class="cmd-code" data-copy="!lookup ">!lookup 貓</button><button type="button" class="run-cmd" data-run="!lookup 貓" aria-label="在練習機試打 !lookup 貓">▶ 試打</button></span><span class="cmd-desc">查怎麼買、多少錢。不打關鍵字會列出全部指令<span class="shift-en">Search how to buy and the price</span></span><span class="cmd-price">免費</span></div>
-                            <div class="cmd-row"><span class="cmd-actions"><button type="button" class="cmd-code" data-copy="!buy 事件">!buy 事件</button><button type="button" class="run-cmd" data-run="!buy 事件" aria-label="在練習機試打 !buy 事件">▶ 試打</button></span><span class="cmd-desc">列出常見事件和價錢；<code>!buy 動物</code> 也一樣<span class="shift-en">List common events / animals with prices</span></span><span class="cmd-price">免費</span></div>
-                            <div class="cmd-row"><span class="cmd-actions"><button type="button" class="cmd-code" data-copy="!buy 食物 ">!buy 食物 5</button><button type="button" class="run-cmd" data-run="!buy 食物 5" aria-label="在練習機試打 !buy 食物 5">▶ 試打</button></span><span class="cmd-desc">送 5 份簡單餐，數量放最後<span class="shift-en">Amount goes last, up to 20</span></span><span class="cmd-price">75</span></div>
-                            <div class="cmd-row"><span class="cmd-actions"><button type="button" class="cmd-code" data-copy="!buy 極光">!buy 極光</button><button type="button" class="run-cmd" data-run="!buy 極光" aria-label="在練習機試打 !buy 極光">▶ 試打</button></span><span class="cmd-desc">直接打事件名稱<span class="shift-en">Type the event name directly</span></span><span class="cmd-price">570</span></div>
-                            <div class="cmd-row"><span class="cmd-actions"><button type="button" class="cmd-code" data-copy="!buy 貓 ">!buy 貓 麻糬</button><button type="button" class="run-cmd" data-run="!buy 貓 麻糬" aria-label="在練習機試打 !buy 貓 麻糬">▶ 試打</button></span><span class="cmd-desc">買一隻貓，取名「麻糬」<span class="shift-en">Buy a cat named Mochi</span></span><span class="cmd-price">1,500</span></div>
-                        </div>
-                    </div>
-                    <div class="hub-shell" id="try">
-                        <h3 class="sub-title">練習機 <span class="sec-en">PRACTICE TERMINAL</span></h3>
-                        <p class="hub-hint">規則和價錢跟聊天室一樣，開局送 100 金幣。打錯會告訴你錯在哪。</p>
-                        <div class="shell" id="shellBox">
-                            <div class="shell-log" id="shellLog" role="log" aria-live="polite" aria-label="終端機輸出 Terminal output"></div>
-                            <form class="shell-input" id="shellForm" autocomplete="off">
-                                <label for="shellIn" class="shell-ps1">guest@couch:~$</label>
-                                <input id="shellIn" type="text" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send" placeholder="help">
-                            </form>
-                        </div>
-                        <div class="shell-chips" role="group" aria-label="快速指令 Quick commands">
-                            <button type="button" data-cmd="help">help</button>
-                            <button type="button" data-cmd="!buy 動物">!buy 動物</button>
-                            <button type="button" data-cmd="schedule">schedule</button>
-                            <button type="button" class="warm" data-cmd="pet">pet 摸貓</button>
-                            <button type="button" class="warm" data-cmd="donate">donate 投餵</button>
-                        </div>
-                    </div>
+                <h3 class="sub-title">先從這幾個開始 <span class="sec-en">START HERE</span></h3>
+                <div class="cmd-list" data-cmd-list data-quick>
+                    <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!money">!money</button><span class="cmd-desc">查自己的金幣<span class="shift-en">Check your coins</span></span><span class="cmd-price">免費 Free</span></div>
+                    <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!lookup ">!lookup 關鍵字</button><span class="cmd-desc">查怎麼買、要多少金幣。不打關鍵字會列出全部指令<span class="shift-en">Search how to buy and the price</span></span><span class="cmd-price">免費 Free</span></div>
+                    <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!buy 事件">!buy 事件</button><span class="cmd-desc">列出最常見的事件和價錢。<code>!buy 動物</code>、<code>!buy 家畜</code> 也一樣<span class="shift-en">Lists common events with prices; same for animal</span></span><span class="cmd-price">免費 Free</span></div>
+                    <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!buy 食物 ">!buy 食物 5</button><span class="cmd-desc">送 5 份簡單餐，數量放最後<span class="shift-en">Send 5 simple meals; amount goes last</span></span><span class="cmd-price">75</span></div>
+                    <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!buy 極光">!buy 極光</button><span class="cmd-desc">直接打事件名稱<span class="shift-en">Type the event name directly</span></span><span class="cmd-price">570</span></div>
+                    <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!buy 貓 ">!buy 貓 麻糬</button><span class="cmd-desc">買一隻貓，取名「麻糬」<span class="shift-en">Buy a cat named Mochi</span></span><span class="cmd-price">1,500</span></div>
                 </div>
 
-                <!-- 價目表與指令大全：預設收合；搜尋、分類一直看得到，一用就自動展開 -->
-                <div class="vault" id="prices" data-open="false">
-                    <div class="vault-bar">
-                        <button type="button" class="vault-toggle" id="vaultToggle" aria-expanded="false" aria-controls="vaultBody">
-                            <span class="vault-icon" aria-hidden="true"><b>55</b><small>ITEMS</small></span>
-                            <span class="vault-title">
-                                <small class="vault-prompt">&gt;_ cat ~/factory/prices.db</small>
-                                <b>完整價目表與指令大全</b>
-                                <small class="vault-en">FULL PRICE LIST &amp; ALL COMMANDS</small>
-                            </span>
-                            <span class="vault-meta"><span class="vault-state" id="vaultState">[ LOCKED ] 點擊展開</span><span class="vault-chev" aria-hidden="true">▼</span></span>
-                        </button>
-                        <div class="vault-tools">
-                            <label class="cmd-search">
-                                <span class="sr-only">搜尋價目表 Search the price list</span>
-                                <input type="search" id="cmdSearch" placeholder="搜尋 貓、horse、治療、極光…" autocomplete="off">
-                            </label>
-                            <div class="price-chips" role="group" aria-label="分類 Categories">
-                                <button type="button" class="active" data-filter="all">全部<span class="n">55</span></button>
-                                <button type="button" data-filter="goods">物資<span class="n">8</span></button>
-                                <button type="button" data-filter="life">殖民者<span class="n">2</span></button>
-                                <button type="button" data-filter="animal">動物<span class="n">31</span></button>
-                                <button type="button" data-filter="care">照顧<span class="n">3</span></button>
-                                <button type="button" data-filter="event">事件<span class="n">11</span></button>
-                            </div>
-                        </div>
-                        <p class="vault-teaser" aria-hidden="true"><span>熱門 HOT ›</span> 人類 8,500 · 貓 1,500 · 馬 6,600 · 敲擊獸 48,000 · 治療 300 · 復活 1,700 · 極光 570 · 襲擊 1,341 · 紀念碑 60,000 · 食物 15 …</p>
-                    </div>
-                    <div class="vault-body" id="vaultBody" role="region" aria-labelledby="vaultToggle">
-                        <div class="vault-inner">
-                            <div class="vault-pad">
-                                <p class="shift-note vault-note">* 以下是 OmniStream 預設價錢。實況主可以改價或切換「便宜（×0.6）／貴（×2）」，實際以聊天室 <code>!lookup</code> 查到的為準。部分動物需要 DLC，這局沒有的話 <code>!lookup</code> 查不到。點指令即可複製。</p>
+                <h3 class="sub-title" id="prices">完整價目表 <span class="sec-en">FULL PRICE LIST</span></h3>
+                <p class="shift-note" style="margin: -0.4rem 0 0.9rem;">* 以下是 OmniStream 預設價錢。實況主可以改價或切換「便宜（×0.6）／貴（×2）」，實際以聊天室 <code>!lookup</code> 查到的為準。部分動物需要 DLC，這局沒有的話 <code>!lookup</code> 查不到。</p>
+                <div class="cmd-tools">
+                    <label class="cmd-search">
+                        <span class="sr-only">搜尋指令 Search commands</span>
+                        <input type="search" id="cmdSearch" placeholder="搜尋，例如 貓、horse、治療、極光" autocomplete="off">
+                    </label>
+                    <span class="cmd-hint">點指令即可<b>複製</b> // click a command to <b>copy</b></span>
+                </div>
+                <div class="price-chips" role="group" aria-label="分類 Categories">
+                    <button type="button" class="active" data-filter="all">全部 ALL</button>
+                    <button type="button" data-filter="goods">物資</button>
+                    <button type="button" data-filter="life">殖民者</button>
+                    <button type="button" data-filter="animal">動物</button>
+                    <button type="button" data-filter="care">照顧</button>
+                    <button type="button" data-filter="event">事件</button>
+                </div>
                     <div class="price-block" data-cat="goods">
                         <h4 class="price-head"><span>物資</span><span class="sec-en">SUPPLIES</span></h4>
                         <p class="price-hint">數量放最後，不寫就是 1，一次最多 20。例如 <code>!buy 食物 5</code></p>
@@ -2522,11 +2141,6 @@
                         </div>
                     </div>
                 <p class="cmd-empty" id="cmdEmpty">&gt;_ 找不到符合的項目 // No match. 試試中文或英文名稱。</p>
-                                <div class="vault-foot"><button type="button" class="vault-close" id="vaultClose">▲ 收合價目表 COLLAPSE</button></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="cat-alert">
                     <span class="cat-alert-title">⚠ 使用須知 // HOUSE RULES</span>
@@ -2536,76 +2150,6 @@
                         <li><span class="lang-zh">人類、動物：全體觀眾每個遊戲日各限 1。名字最多 16 字，定了就不能改，不能跟指令字或殖民地已有的名字重複。<span class="shift-en">One human and one animal per in-game day for everyone. Names: up to 16 characters, permanent, unique.</span></span></li>
                         <li><span class="lang-zh">沒看到你想要的？在聊天室說一聲，廠長考慮加進下一版。<span class="shift-en">Missing something? Ask in chat.</span></span></li>
                     </ul>
-                </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 02 直播輪班表 -->
-        <section class="terminal-window reveal" id="live" aria-labelledby="live-title">
-            <button type="button" class="ascii-cat" aria-label="摸摸貓 Pet the cat"><span class="cat-z" aria-hidden="true">zZ</span> /\_/\
-( <span class="cat-eyes">-.-</span> )
- (")(")~</button>
-            <div class="window-header">
-                <span class="window-path"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>SHELL:~/factory/live.md</span>
-                <span class="window-mode">[CYBER_SURVIVAL]</span>
-            </div>
-            <div class="window-content">
-                <h2 class="section-title" id="live-title"><span class="sec-no">02</span><span class="sec-zh">直播輪班表</span><span class="sec-en">LIVE SCHEDULE</span></h2>
-                <div class="bilingual-block">
-                    <p class="lang-zh">
-                        以下是<strong>直播開台時間</strong>，不是實體店的營業時間。用下面兩個按鈕切換<strong>台灣時間</strong>和<strong>你的當地時間</strong>。早班、午班、晚班會跟著你正在看的時鐘改，夏令時間也算在裡面。
-                    </p>
-                    <p class="lang-en">
-                        These are <strong>livestream hours</strong>, not a shop's opening hours. Switch between <strong>Taiwan time</strong> and <strong>your local time</strong>. Morning, afternoon and evening follow the clock you are looking at, daylight saving included.
-                    </p>
-                </div>
-
-                <div class="tz-toggle" role="group" aria-label="時間顯示 Time display">
-                    <button type="button" class="tz-btn" id="tzTaiwan">台灣時間<span class="th-en">Taiwan (UTC+8)</span></button>
-                    <button type="button" class="tz-btn" id="tzLocal">你的當地時間<span class="th-en" id="shiftLocalTz">Your time</span></button>
-                </div>
-                <div><p class="shift-next-line" id="shiftNext"></p></div>
-                <div class="shift-board" id="shiftBoard"></div>
-                <p class="shift-note">
-                    * 開台的星期和鐘點如果有改，會更新在這一頁。請假日列在下方。<br>
-                    * Weekdays and hours update on this page. Days off are listed below.
-                </p>
-
-                <div class="watch-row">
-                    <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer" class="channel-card">
-                        <div class="channel-top">
-                            <span class="platform-name">Twitch<span class="ext">↗</span></span>
-                            <span class="badge">WATCH LIVE</span>
-                        </div>
-                        <p class="channel-desc">看直播、在聊天室下指令<span class="lang-en">Watch the stream and type commands in chat.</span></p>
-                    </a>
-                    <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer" class="channel-card">
-                        <div class="channel-top">
-                            <span class="platform-name">YouTube<span class="ext">↗</span></span>
-                            <span class="badge">WATCH LIVE</span>
-                        </div>
-                        <p class="channel-desc">同步直播與精華，聊天室也能下指令<span class="lang-en">Simulcast and highlights; chat commands work here too.</span></p>
-                    </a>
-                    <a href="https://space.bilibili.com/452768274" target="_blank" rel="noopener noreferrer" class="channel-card card-bili">
-                        <div class="channel-top">
-                            <span class="platform-name">Bilibili<span class="ext">↗</span></span>
-                            <span class="badge">彈幕 DANMAKU</span>
-                        </div>
-                        <p class="channel-desc">彈幕也能下指令<span class="lang-en">Commands work in Bilibili danmaku too.</span></p>
-                    </a>
-                </div>
-
-                <div id="daysOff" hidden>
-                    <div id="daysOffHas">
-                        <div class="bilingual-block" style="margin: 1.2rem 0 0.4rem;">
-                            <p class="lang-zh"><span class="highlight-blue">請假不開台</span>　下面的時間跟你上面選的時鐘一樣。</p>
-                            <p class="lang-en">Days off — no stream. Times below use the clock you selected.</p>
-                        </div>
-                        <ul class="off-list" id="daysOffList"></ul>
-                    </div>
-                    <p class="shift-note" id="daysOffEmpty" hidden>這個月沒有請假，照表開台。 // No days off — streaming as scheduled.</p>
                 </div>
             </div>
         </section>
@@ -2654,7 +2198,7 @@
                         <span class="term-line"><span class="term-prefix blue-prefix">&gt;_</span><span class="term-name">YOUTUBE</span></span>
                         <span class="term-desc">// 同步直播與精華</span>
                     </a>
-                    <a href="https://space.bilibili.com/452768274" target="_blank" rel="noopener noreferrer" class="terminal-line-link term-bili">
+                    <a href="https://space.bilibili.com/452768274" target="_blank" rel="noopener noreferrer" class="terminal-line-link">
                         <span class="term-line"><span class="term-prefix pink-prefix">&gt;_</span><span class="term-name">BILIBILI</span></span>
                         <span class="term-desc">// 賽博求生錄播</span>
                     </a>
@@ -2706,6 +2250,15 @@
                                 Every drop of Happy Water™ you feed me directly converts into the raw caffeine concentration needed for late-night debugging. <span class="highlight-neon">It’s the ultimate drive turning this simulation game from a paper prototype into reality!</span> And hey, if you drop a bite of Cat Kibble on the side, you not only feed this balding, overworked cyber-kitten, but also sponsor my two feline overlords. I’ll probably start purring and fix all the system bugs on the spot~
                             </p>
                         </div>
+                        <div class="pause-notice">
+                            <span class="pause-notice-title">// PAYMENT STATUS 支付狀態</span>
+                            <p class="lang-zh">
+                                今年台灣國內的街口、Line Pay、藍新（轉帳、信用卡）先暫停，<span class="highlight-blue">2027/1/1</span> 重新開放。可以先關注 <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YouTube</a> 或 <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">Twitch</a>，或用 <a href="https://ko-fi.com/lonsthx" target="_blank" rel="noopener noreferrer">Ko-fi</a>（PayPal、信用卡）贊助。支付寶持續開放。
+                            </p>
+                            <p class="lang-en">
+                                Follow on <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YouTube</a> or <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">Twitch</a>, or sponsor with <a href="https://ko-fi.com/lonsthx" target="_blank" rel="noopener noreferrer">Ko-fi</a> (PayPal and credit card). Alipay is open as well.
+                            </p>
+                        </div>
                     </div>
 
                     <!-- 旋轉快樂水 (大尺寸展示框：修復比例不失真 + 慢速 5.5s 半透明藍色光圈呼吸燈) -->
@@ -2719,21 +2272,21 @@
                             <span class="water-caption" aria-hidden="true">// HAPPY WATER™ UNIT 01 //</span>
                         </div>
                         <div class="ration-row">
-                            <button type="button" class="ration-btn" onclick="openDonate(null, this)">
+                            <button type="button" class="ration-btn" onclick="openDonate('tw', this)">
                                 <span class="hud-corner hud-tl"></span>
                                 <span class="hud-corner hud-tr"></span>
                                 <span class="hud-corner hud-bl"></span>
                                 <span class="hud-corner hud-br"></span>
                                 <img src="images/happy-water-lg.gif" alt="" class="btn-water-icon" onerror="waterFallback(this)">
-                                投餵
+                                台灣斗內
                             </button>
-                            <button type="button" class="ration-btn" onclick="openDonate('paypal', this)">
+                            <button type="button" class="ration-btn" onclick="openDonate('us', this)">
                                 <span class="hud-corner hud-tl"></span>
                                 <span class="hud-corner hud-tr"></span>
                                 <span class="hud-corner hud-bl"></span>
                                 <span class="hud-corner hud-br"></span>
                                 <img src="images/happy-water-lg.gif" alt="" class="btn-water-icon" onerror="waterFallback(this)">
-                                PayPal · Ko-fi
+                                DONATE
                             </button>
                         </div>
                     </div>
@@ -2751,7 +2304,6 @@
                 <a href="game.html">GAME DEV</a>
                 <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">TWITCH↗</a>
                 <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YOUTUBE↗</a>
-                <a href="https://space.bilibili.com/452768274" target="_blank" rel="noopener noreferrer">BILIBILI↗</a>
                 <a href="https://instagram.com/humanleathercouch" target="_blank" rel="noopener noreferrer">IG↗</a>
             </nav>
         </footer>
@@ -2767,32 +2319,35 @@
 
             <div class="modal-body">
                 <!--
-                    支付方式依「繁／简」模式自動排序、預選第一個（設定在下面 JS 的 PAY_ORDER）：
-                    - 繁體・台灣：2027/1/1 前是 Ko-fi、支付寶；時間一到自動加入街口 TWQR、LINE Pay、藍新，暫停說明也會自己消失。
-                      藍新要先在 SUPPORT_QR_CODES 貼上 https 收款網址才會出現。
-                    - 简体・大陆：爱发电、支付宝在前，Ko-fi 在後。
-                    開放日期改 TW_LOCAL_OPEN；建議金額改 SUPPORT_TIERS。
+                    2027/1/1 恢復台灣國內支付時：
+                    1. 刪掉 .pay-pause 這段說明
+                    2. #twPayTabs 拿掉 hidden
+                    3. 藍新 Credit Card 按鈕拿掉 hidden
+                    4. #usPayTabs 改回 3 欄（搜尋「恢復藍新」）
+                    5. openDonate('tw') 改回只顯示 #twPayTabs，並 switchSupportQR('jkopay')
+                    不要刪下面的街口、Line Pay、藍新程式。
                 -->
-                <div class="pay-pause only-tw" id="payPauseNote">
+                <div class="pay-pause" id="payPauseNote">
                     <p class="lang-zh">今年台灣國內的街口、Line Pay、藍新（轉帳、信用卡）先暫停，<span class="highlight-blue">2027/1/1</span> 重新開放。可以先關注 <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YouTube</a> 或 <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">Twitch</a>，或用 Ko-fi（PayPal、信用卡）贊助。支付寶持續開放。</p>
                     <p class="lang-en">Follow on <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YouTube</a> or <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">Twitch</a>, or sponsor with Ko-fi (PayPal and credit card). Alipay is open as well.</p>
                 </div>
                 <!-- STEP 1 支付選項 -->
                 <div>
                     <p class="step-label">STEP 1. 選擇支付方式 // SELECT PAYMENT PROTOCOL:</p>
-                    <div class="pay-tabs" id="payTabs">
-                        <button type="button" class="pay-tab" data-pay="jkopay" hidden>街口等<br>TWQR</button>
-                        <button type="button" class="pay-tab" data-pay="linepay" hidden>LINE Pay</button>
-                        <button type="button" class="pay-tab" data-pay="newebpay" hidden>信用卡 轉帳<br>Apple Pay</button>
-                        <button type="button" class="pay-tab" data-pay="afdian" hidden>愛發電<br>afdian</button>
-                        <button type="button" class="pay-tab" data-pay="alipay" hidden>支付寶<br>Alipay</button>
-                        <button type="button" class="pay-tab" data-pay="paypal" hidden>PayPal<br>Ko-fi</button>
-                        <button type="button" class="pay-tab" data-pay="newebpay_os" hidden>Credit Card<br>Apple Pay</button>
+
+                    <!-- 台灣本地選項。2026 暫停，2027/1/1 拿掉 hidden。 -->
+                    <div class="pay-tabs" id="twPayTabs" hidden>
+                        <button type="button" class="pay-tab active" onclick="switchSupportQR('jkopay', this)">街口等<br>TWQR</button>
+                        <button type="button" class="pay-tab" onclick="switchSupportQR('linepay', this)">Line Pay</button>
+                        <button type="button" class="pay-tab" onclick="switchSupportQR('newebpay', this)">信用卡 轉帳<br>Apple Pay</button>
                     </div>
 
-                    <div class="tier-block">
-                        <p class="tier-label">建議金額 <span>金額不限・點一下會寫進留言 // any amount works</span></p>
-                        <div class="tier-row" id="tierRow" role="group" aria-label="建議金額 Suggested amounts"></div>
+                    <!-- 海外選項。藍新按鈕先隱藏，Ko-fi 與支付寶維持開放。 -->
+                    <div class="pay-tabs" id="usPayTabs" style="display: none;">
+                        <button type="button" class="pay-tab" onclick="switchSupportQR('paypal', this)">PayPal<br>Ko-fi</button>
+                        <!-- 2027/1/1 恢復：拿掉 hidden -->
+                        <button type="button" class="pay-tab" hidden onclick="switchSupportQR('newebpay_os', this)">Credit Card<br>Apple Pay</button>
+                        <button type="button" class="pay-tab" onclick="switchSupportQR('alipay', this)">Alipay</button>
                     </div>
 
                     <div class="qr-display mode-qr">
@@ -2872,12 +2427,6 @@
                 btnText: "Go to NewebPay Secure Checkout ↗",
                 hint: "點擊下方按鈕前往藍新金流安全支付頁面，支援轉帳、跨國信用卡與 Apple Pay，金額不限，每一份支持都是推動我持續創作的動力。<br><br>Click the button below to pay securely via NewebPay, supporting international Credit Cards and Apple Pay. Enter any amount you wish—every little bit helps!"
             },
-            afdian: {
-                type: "link",
-                url: "https://afdian.com/a/lenglengbuleng",
-                btnText: "前往愛發電頁面 ↗",
-                hint: "點擊下方按鈕前往愛發電主頁，金額不限，每一份支持都是推動我持續創作的動力。"
-            },
             paypal: {
                 type: "link",
                 url: "https://ko-fi.com/lonsthx",
@@ -2886,80 +2435,7 @@
             }
         };
 
-        let currentPayMethod = '';
-        /* =========================================
-           支付方式：依地區排序、到期自動開放、建議金額
-        ========================================= */
-        // 台灣國內支付（街口 TWQR、LINE Pay、藍新）開放時間，台灣時間
-        const TW_LOCAL_OPEN = Date.parse('2027-01-01T00:00:00+08:00');
-        const TW_LOCAL = ['jkopay', 'linepay', 'newebpay', 'newebpay_os'];
-        // 各地區的排列順序，第一個可用的會被預選
-        const PAY_ORDER = {
-            tw: ['jkopay', 'linepay', 'newebpay', 'paypal', 'alipay', 'newebpay_os'],
-            cn: ['afdian', 'alipay', 'paypal']
-        };
-        const PAY_CURRENCY = { jkopay: 'TWD', linepay: 'TWD', newebpay: 'TWD', newebpay_os: 'TWD', alipay: 'CNY', afdian: 'CNY', paypal: 'USD' };
-        // 建議金額：改這裡就好。金額不限，只是給個參考。
-        const SUPPORT_TIERS = {
-            items: [
-                { icon: '🥤', zh: '一罐快樂水', en: 'Happy Water' },
-                { icon: '🐟', zh: '一包貓條', en: 'Cat treats' },
-                { icon: '⚡', zh: '一晚加班補給', en: 'Night-shift kit' }
-            ],
-            amounts: { CNY: [6, 15, 30], USD: [3, 5, 10], TWD: [50, 150, 300] },
-            symbol: { CNY: '¥', USD: 'US$', TWD: 'NT$' }
-        };
-        const PAY_REGION = document.documentElement.getAttribute('data-region') === 'cn' ? 'cn' : 'tw';
-        let currentPayKey = null;
-        let selectedTier = -1;
-
-        function payAvailable(key) {
-            const data = SUPPORT_QR_CODES[key];
-            if (!data) return false;
-            if (TW_LOCAL.indexOf(key) >= 0 && Date.now() < TW_LOCAL_OPEN) return false;
-            if (data.type === 'link' && !/^https?:\/\//.test(data.url)) return false;
-            return true;
-        }
-        function visiblePayKeys() { return PAY_ORDER[PAY_REGION].filter(payAvailable); }
-        (function setupPayTabs() {
-            const keys = visiblePayKeys();
-            document.querySelectorAll('#payTabs [data-pay]').forEach(function (btn) {
-                const key = btn.getAttribute('data-pay');
-                const at = keys.indexOf(key);
-                btn.hidden = at < 0;
-                btn.style.order = at;
-                btn.addEventListener('click', function () { switchSupportQR(key, btn); });
-            });
-            const paused = PAY_REGION === 'tw' && Date.now() < TW_LOCAL_OPEN;
-            ['payPauseNote', 'donatePause'].forEach(function (id) {
-                const el = document.getElementById(id);
-                if (el && !paused) el.hidden = true;
-            });
-        })();
-        function renderTiers() {
-            const row = document.getElementById('tierRow');
-            if (!row) return;
-            const cur = PAY_CURRENCY[currentPayKey] || 'USD';
-            const amounts = SUPPORT_TIERS.amounts[cur];
-            row.innerHTML = SUPPORT_TIERS.items.map(function (t, i) {
-                return '<button type="button" class="tier' + (i === selectedTier ? ' active' : '') + '" data-tier="' + i + '" aria-pressed="' + (i === selectedTier) + '">' +
-                    '<span class="tier-icon">' + t.icon + '</span><b>' + t.zh + '</b><small>' + t.en + '</small>' +
-                    '<span class="tier-amt">' + SUPPORT_TIERS.symbol[cur] + amounts[i] + '</span></button>';
-            }).join('');
-            row.querySelectorAll('[data-tier]').forEach(function (b) {
-                b.addEventListener('click', function () {
-                    const i = +b.getAttribute('data-tier');
-                    selectedTier = selectedTier === i ? -1 : i;
-                    renderTiers();
-                });
-            });
-        }
-        function tierText() {
-            if (selectedTier < 0) return '';
-            const cur = PAY_CURRENCY[currentPayKey] || 'USD';
-            return SUPPORT_TIERS.items[selectedTier].zh + ' ' + SUPPORT_TIERS.symbol[cur] + SUPPORT_TIERS.amounts[cur][selectedTier];
-        }
-
+        let currentPayMethod = 'TWQR 街口等';
         let lastFocused = null;
 
         // 智慧型多副檔名與多路徑自動探測載入器
@@ -2992,14 +2468,21 @@
             tryNext();
         }
 
-        // 打開投餵視窗。prefer 可以指定支付方式（例如 'paypal'），不指定就預選這個地區排第一的方式。
-        function openDonate(prefer, trigger) {
+        // 2026–2027/1/1：台灣國內支付暫停，兩個按鈕都打開 Ko-fi 與支付寶。
+        // 恢復時把 tw 分支改回：twTabs 顯示、usTabs 隱藏、switchSupportQR('jkopay', twTabs.querySelector('.pay-tab'))
+        function openDonate(regionKey, trigger) {
             const modal = document.getElementById('donateModal');
             const title = document.getElementById('modalHeaderTitle');
-            const keys = visiblePayKeys();
-            const key = keys.indexOf(prefer) >= 0 ? prefer : keys[0];
-            switchSupportQR(key, document.querySelector('#payTabs [data-pay="' + key + '"]'));
-            title.textContent = '🥤 HAPPY WATER™ SUPPLY // 投餵快樂水™與貓飯';
+            const twTabs = document.getElementById('twPayTabs');
+            const usTabs = document.getElementById('usPayTabs');
+
+            twTabs.style.display = 'none';
+            usTabs.style.display = 'grid';
+            const paypalBtn = usTabs.querySelector('.pay-tab:not([hidden])');
+            switchSupportQR('paypal', paypalBtn);
+            title.textContent = regionKey === 'tw'
+                ? '🥤 TAIWAN HAPPY WATER™ SUPPLY // 台灣投餵快樂水™'
+                : '🥤 OVERSEAS HAPPY WATER™ SUPPLY // 海外投餵快樂水™';
 
             lastFocused = trigger || document.activeElement;
             modal.classList.add('active');
@@ -3043,7 +2526,6 @@
             if (btn) { btn.classList.add('active'); btn.setAttribute('aria-pressed', 'true'); }
 
             currentPayMethod = btn ? btn.innerText.replace(/\n/g, ' ') : type;
-            currentPayKey = type;
 
             const data = SUPPORT_QR_CODES[type];
             const imgEl = document.getElementById('supportQrImage');
@@ -3064,9 +2546,6 @@
             document.getElementById('supportQrHint').innerHTML = data.hint;
             actionBtn.href = data.url;
             actionBtn.innerHTML = data.btnText;
-            // 沒有可跳轉的網址（例如只有 QR 的 TWQR、LINE Pay）就不顯示按鈕
-            actionBtn.style.display = /^https?:\/\//.test(data.url) ? '' : 'none';
-            renderTiers();
         }
 
         function submitSupportMessage(e) {
@@ -3075,18 +2554,16 @@
             const email = document.getElementById('supporterEmail').value.trim() || '未提供';
             const message = document.getElementById('supporterMessage').value.trim() || '（無額外留言，純贊助支持 🥤）';
 
-            const zh = window.zhConvert || function (s) { return s; };
-            const tier = tierText();
-            const subject = encodeURIComponent(zh(`[贊助與留言] 來自 ${name} 的支持`));
-            const body = encodeURIComponent(zh(
+            const subject = encodeURIComponent(`[贊助與留言] 來自 ${name} 的支持`);
+            const body = encodeURIComponent(
 `冷冷你好，我已透過「${currentPayMethod}」完成贊助！
-${tier ? '\n【贊助方案】' + tier + '\n' : ''}
+
 【支持者暱稱】${name}
 【聯絡信箱】${email}
 【想對你說的話】
 ${message}
 `
-            ));
+            );
 
             window.location.href = `mailto:arts.lonp@gmail.com?subject=${subject}&body=${body}`;
             closeModal();
@@ -3116,7 +2593,7 @@ ${message}
 
         (function () {
             const links = document.querySelectorAll('.top-nav a');
-            const sections = ['guide', 'live', 'about', 'donate'].map(function (id) { return document.getElementById(id); });
+            const sections = ['try', 'live', 'guide', 'about', 'donate'].map(function (id) { return document.getElementById(id); });
             if ('IntersectionObserver' in window) {
                 const spy = new IntersectionObserver(function (entries) {
                     entries.forEach(function (entry) {
@@ -3191,40 +2668,9 @@ ${message}
 
             const search = document.getElementById('cmdSearch');
             const empty = document.getElementById('cmdEmpty');
-            const vault = document.getElementById('prices');
-            const vaultToggle = document.getElementById('vaultToggle');
-            const vaultState = document.getElementById('vaultState');
-            const blocks = Array.prototype.slice.call(vault.querySelectorAll('.price-block'));
-            const chips = Array.prototype.slice.call(vault.querySelectorAll('.price-chips [data-filter]'));
-            const reducedMotion = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+            const blocks = Array.prototype.slice.call(document.querySelectorAll('.price-block'));
+            const chips = Array.prototype.slice.call(document.querySelectorAll('.price-chips [data-filter]'));
             let filter = 'all';
-            vault.querySelectorAll('.cmd-row').forEach(function (row, i) { row.style.setProperty('--i', Math.min(i, 24)); });
-
-            // 解鎖字：亂碼一下再定格
-            function scramble(el, text) {
-                if (reducedMotion) { el.textContent = text; return; }
-                const glyphs = '▓▒░#%&@01<>/\\';
-                let frame = 0;
-                clearInterval(el._scr);
-                el._scr = setInterval(function () {
-                    frame++;
-                    const keep = Math.floor(text.length * frame / 12);
-                    let outText = text.slice(0, keep);
-                    for (let i = keep; i < text.length; i++) outText += text[i] === ' ' ? ' ' : glyphs[Math.floor(Math.random() * glyphs.length)];
-                    el.textContent = outText;
-                    if (frame >= 12) { clearInterval(el._scr); el.textContent = text; }
-                }, 32);
-            }
-            function setOpen(open) {
-                if ((vault.getAttribute('data-open') === 'true') === open) return;
-                vault.setAttribute('data-open', open ? 'true' : 'false');
-                vaultToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-                if (open) scramble(vaultState, 'ACCESS GRANTED 已展開');
-                else { clearInterval(vaultState._scr); vaultState.textContent = '[ LOCKED ] 點擊展開'; }
-            }
-            function backToBar() {
-                if (vault.getBoundingClientRect().top < 0) vault.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
-            }
             function applyFilter() {
                 const q = search.value.trim().toLowerCase();
                 let shown = 0;
@@ -3242,125 +2688,17 @@ ${message}
                 });
                 empty.classList.toggle('show', shown === 0);
             }
-            function pick(cat) {
-                filter = cat;
-                chips.forEach(function (c) {
-                    const on = c.getAttribute('data-filter') === cat;
-                    c.classList.toggle('active', on);
-                    c.setAttribute('aria-pressed', on ? 'true' : 'false');
-                });
-                applyFilter();
-            }
-            vaultToggle.addEventListener('click', function () {
-                const open = vault.getAttribute('data-open') !== 'true';
-                setOpen(open);
-                if (!open) backToBar();
-            });
-            document.getElementById('vaultClose').addEventListener('click', function () { setOpen(false); backToBar(); });
             chips.forEach(function (chip) {
                 chip.addEventListener('click', function () {
-                    pick(chip.getAttribute('data-filter'));
-                    setOpen(true);
-                    backToBar();
+                    filter = chip.getAttribute('data-filter');
+                    chips.forEach(function (c) { c.classList.toggle('active', c === chip); c.setAttribute('aria-pressed', c === chip); });
+                    applyFilter();
                 });
             });
-            search.addEventListener('input', function () {
-                if (search.value.trim()) {
-                    setOpen(true);
-                    if (filter !== 'all') { pick('all'); return; }   // 搜尋一律找全部分類
-                }
-                applyFilter();
-            });
-            // 從遊戲或別處連到 #prices 時直接展開
-            window.openCatalog = function (cat) {
-                if (window.openHub) window.openHub(true);
-                if (cat) pick(cat);
-                setOpen(true);
-                requestAnimationFrame(function () { vault.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' }); });
-            };
-            function fromHash() { if (location.hash === '#prices') setOpen(true); }
-            fromHash();
-            window.addEventListener('hashchange', fromHash);
+            search.addEventListener('input', applyFilter);
             search.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') { search.value = ''; search.dispatchEvent(new Event('input')); }
             });
-        })();
-
-
-        /* =========================================
-           指令中心整區收合：預設收起，只留快捷列。
-           連到 #guide / #try / #prices、或點導覽，會直接展開到對應位置。
-        ========================================= */
-        (function () {
-            var section = document.getElementById('guide');
-            var toggle = document.getElementById('hubToggle');
-            var state = document.getElementById('hubState');
-            var hubSearch = document.getElementById('hubSearch');
-            if (!section || !toggle) return;
-            var reducedMotion = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
-            var settleTimer = null;
-            function isOpen() { return section.getAttribute('data-hub') === 'open'; }
-            function setHub(open, instant) {
-                if (isOpen() === open) return;
-                clearTimeout(settleTimer);
-                section.classList.toggle('hub-instant', !!instant || reducedMotion);
-                section.removeAttribute('data-settled');
-                section.setAttribute('data-hub', open ? 'open' : 'closed');
-                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-                state.textContent = open ? '[ ONLINE ] 收合' : '[ STANDBY ] 展開';
-                // 展開動畫結束後解除 overflow，價目表的黏性搜尋列才會黏住
-                if (open) settleTimer = setTimeout(function () { section.setAttribute('data-settled', 'true'); }, (instant || reducedMotion) ? 0 : 600);
-                try { sessionStorage.setItem('couch-hub', open ? '1' : '0'); } catch (e) {}
-            }
-            window.openHub = function (instant) { setHub(true, instant); };
-            function go(target) {
-                setHub(true, true);
-                if (target === 'prices') { window.openCatalog(); return; }
-                var el = target === 'try' ? document.getElementById('try') : section;
-                requestAnimationFrame(function () {
-                    el.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
-                    if (target === 'try' && window.matchMedia && matchMedia('(pointer: fine)').matches) {
-                        var input = document.getElementById('shellIn');
-                        if (input) setTimeout(function () { input.focus({ preventScroll: true }); }, 450);
-                    }
-                });
-            }
-
-            var saved = null;
-            try { saved = sessionStorage.getItem('couch-hub'); } catch (e) {}
-            if (saved === '1') setHub(true, true);
-
-            toggle.addEventListener('click', function () {
-                var open = !isOpen();
-                setHub(open, false);
-                if (!open && section.getBoundingClientRect().top < 0) section.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
-            });
-            document.querySelectorAll('[data-hub-go]').forEach(function (btn) {
-                btn.addEventListener('click', function () { go(btn.getAttribute('data-hub-go')); });
-            });
-            // 快捷列打字：展開、把字帶進價目表的搜尋框
-            hubSearch.addEventListener('input', function () {
-                var q = hubSearch.value;
-                if (!q.trim()) return;
-                hubSearch.value = '';
-                go('prices');
-                var search = document.getElementById('cmdSearch');
-                search.value = q;
-                search.dispatchEvent(new Event('input'));
-                setTimeout(function () { search.focus({ preventScroll: true }); }, 60);
-            });
-            // 導覽與錨點
-            var MAP = { '#guide': 'all', '#try': 'try', '#prices': 'prices' };
-            function fromHash() { if (MAP[location.hash]) go(MAP[location.hash]); }
-            document.querySelectorAll('a[href="#guide"], a[href="#try"], a[href="#prices"]').forEach(function (a) {
-                a.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    if (history.replaceState) history.replaceState(null, '', a.getAttribute('href'));
-                    go(MAP[a.getAttribute('href')]);
-                });
-            });
-            window.addEventListener('hashchange', fromHash);
-            fromHash();
         })();
 
         /* =========================================
@@ -3652,7 +2990,7 @@ ${message}
             else {
                 var tzName = "";
                 try { tzName = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e2) {}
-                mode = /^Asia\/(Taipei|Shanghai|Chongqing|Harbin|Hong_Kong|Macau)$/.test(tzName) ? "tw" : "local";
+                mode = (tzName === "Asia/Taipei") ? "tw" : "local";
             }
             var twBtn = document.getElementById("tzTaiwan");
             var localBtn = document.getElementById("tzLocal");
@@ -4133,7 +3471,7 @@ ${message}
                         later(function () { window.openDonate('us', input); }, 350);
                         break;
                     case 'ls': case 'dir':
-                        out(['commands.sh   prices.db   live.md   about.md   donate.md   shop.html   game.html']);
+                        out(['try.md   live.md   guide.md   prices.md   about.md   donate.md   shop.html   game.html']);
                         break;
                     case 'open': case 'cd': case 'less': case 'more':
                         if (!arg) { out([['用法 Usage: open prices', 'l-err']]); break; }
@@ -4169,7 +3507,7 @@ ${message}
                 }
             }
 
-            var FILES = { live: 'live', guide: 'guide', commands: 'guide', about: 'about', donate: 'donate', try: 'try' };
+            var FILES = { live: 'live', guide: 'guide', prices: 'prices', about: 'about', donate: 'donate', try: 'try' };
             var employeeNo = store('couch-emp') || String(1000 + Math.floor(Math.random() * 9000));
             store('couch-emp', employeeNo);
             function openFile(name) {
@@ -4179,14 +3517,8 @@ ${message}
                     later(function () { location.href = key + '.html'; }, 400);
                     return;
                 }
-                if (key === 'prices' && window.openCatalog) {
-                    out([['解鎖 ~/factory/prices.db …', 'l-ok']]);
-                    later(function () { window.openCatalog(); }, 250);
-                    return;
-                }
                 if (!FILES[key]) { out([[name + ': No such file // 找不到這個檔案，輸入 ls 看看', 'l-err']]); return; }
                 out([['開啟 ~/factory/' + key + '.md …', 'l-ok']]);
-                if ((key === 'guide' || key === 'commands' || key === 'try') && window.openHub) window.openHub(true);
                 later(function () { document.getElementById(FILES[key]).scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' }); }, 250);
             }
 
@@ -4213,14 +3545,6 @@ ${message}
             });
             document.querySelectorAll('.shell-chips [data-cmd]').forEach(function (btn) {
                 btn.addEventListener('click', function () { run(btn.getAttribute('data-cmd')); });
-            });
-            // 常用指令的「▶ 試打」：送進練習機，練習機不在畫面上就捲過去
-            document.querySelectorAll('[data-run]').forEach(function (btn) {
-                btn.addEventListener('click', function () {
-                    run(btn.getAttribute('data-run'));
-                    var r = box.getBoundingClientRect();
-                    if (r.top < 70 || r.bottom > window.innerHeight) box.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
-                });
             });
 
             out([

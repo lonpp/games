@@ -9,6 +9,8 @@
 //   直播,晚班,五六日,20:00,23:30,,
 //   直播,早班,六日,08:30,11:00,,
 // 星期可寫五六日、六日，或 5,6,0（日=0）。開始結束用 24 小時制。
+// 0:00:00、24:00 都當成午夜。試算表若把午夜發佈成 12:00:00，也會當成 00:00。
+// 中午請寫 12:00，不要寫成 12:00:00。
 //
 // 請假列：類型填請假，日期用純文字 YYYY-MM-DD（台灣日期），班別填早班、午班、晚班、夜班或全天。
 //   請假,夜班,,,,2026-10-17,請假
@@ -61,11 +63,24 @@ function normDate(value) {
 }
 
 function normTime(value) {
-  const m = String(value || "").trim().match(/^(\d{1,2})\s*[:：]\s*(\d{2})$/);
+  const raw = String(value || "").trim();
+  const m = raw.match(/^(上午|下午|am|pm)?\s*(\d{1,2})\s*[:：]\s*(\d{2})(?:\s*[:：]\s*(\d{2}))?\s*(上午|下午|am|pm)?$/i);
   if (!m) return "";
-  const h = parseInt(m[1], 10);
-  const min = parseInt(m[2], 10);
-  if (h > 23 || min > 59) return "";
+  let h = parseInt(m[2], 10);
+  const min = parseInt(m[3], 10);
+  const sec = m[4] ? parseInt(m[4], 10) : 0;
+  const mark = String(m[1] || m[5] || "").toLowerCase();
+  if (min > 59 || sec > 59) return "";
+  if (h === 24 && min === 0 && sec === 0) h = 0;
+  else if (h > 23) return "";
+  if (mark === "pm" || mark === "下午") {
+    if (h < 12) h += 12;
+  } else if (mark === "am" || mark === "上午" || mark === "凌晨") {
+    if (h === 12) h = 0;
+  } else if (h === 12 && min === 0 && sec === 0 && m[4]) {
+    // 試算表畫面是 0:00:00（午夜），發佈成 CSV 會變成 12:00:00。
+    h = 0;
+  }
   return `${String(h).padStart(2, "0")}:${String(min).padStart(2, "0")}`;
 }
 

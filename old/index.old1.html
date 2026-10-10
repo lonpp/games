@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>冷冷不冷的沙發工廠 | HUMAN LEATHER COUCH FACTORY</title>
+    <style>
+        /* =========================================
+           CYBERPUNK & NEON PINK RESET
+        ========================================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-color: #0b0710; /* 極深夜黑帶微紫 */
+            --surface-color: #150d1a;
+            --text-soft: #f4dce4; /* 低亮度粉白色 */
+            --text-muted: #a68a96;
+            --cyber-pink: #ff2a7f; /* 核心賽博霓虹粉 */
+            --cyber-blue: #00f0ff; /* 點綴用冷光青 */
+            --couch-crimson: #d91153; 
+            --border-thick: 2px solid var(--cyber-pink);
+            --border-thin: 1px solid rgba(255, 42, 127, 0.4);
+        }
+
+        html { 
+            scroll-behavior: smooth; 
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-soft);
+            font-family: 'JetBrains Mono', 'Courier New', 'PingFang TC', 'Microsoft JhengHei', monospace;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 8vh;
+            width: 100%;
+            overflow-x: hidden;
+            /* 賽博龐克網格背景 */
+            background-image: 
+                linear-gradient(rgba(255, 42, 127, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 42, 127, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        a { color: var(--cyber-pink); text-decoration: none; cursor: crosshair; transition: all 0.2s;}
+        a:hover { color: var(--cyber-blue); text-shadow: 0 0 8px var(--cyber-blue); }
+
+        /* =========================================
+           TOP WARNING BANNER (全端釘死固定於頂部)
+        ========================================= */
+        .support-banner {
+            position: fixed !important; 
+            top: 0 !important; 
+            left: 0 !important; 
+            right: 0 !important;
+            width: 100% !important;
+            z-index: 9999 !important; 
+            border-bottom: 2px solid var(--cyber-pink);
+            background: rgba(11, 7, 16, 0.95);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 0.8rem 1.5rem;
+            box-shadow: 0 4px 20px rgba(255, 42, 127, 0.3);
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+        }
+
+        .banner-inner {
+            max-width: 1040px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;
+        }
+
+        .banner-title {
+            font-size: 0.95rem; font-weight: 900; letter-spacing: 1px;
+            color: var(--cyber-pink);
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255, 42, 127, 0.6);
+            display: flex; flex-direction: column; line-height: 1.2;
+        }
+        
+        .banner-title-en { font-size: 0.75rem; color: var(--cyber-blue); text-shadow: none; font-style: italic;}
+
+        .link-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        /* 高亮賽博按鈕 */
+        .cyber-btn {
+            background-color: transparent; 
+            color: var(--cyber-pink);
+            border: 1px solid var(--cyber-pink); 
+            padding: 0.6rem 1.2rem;
+            font-weight: 900; font-family: inherit; font-size: 0.85rem;
+            cursor: pointer; 
+            text-transform: uppercase;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            transition: all 0.15s ease;
+            position: relative;
+            box-shadow: inset 0 0 10px rgba(255, 42, 127, 0.1);
+            animation: pulse-border 2.5s infinite;
+        }
+        
+        @keyframes pulse-border {
+            0% { box-shadow: inset 0 0 5px rgba(255, 42, 127, 0.2), 0 0 5px rgba(255, 42, 127, 0.2); }
+            50% { box-shadow: inset 0 0 15px rgba(255, 42, 127, 0.5), 0 0 15px rgba(255, 42, 127, 0.6); }
+            100% { box-shadow: inset 0 0 5px rgba(255, 42, 127, 0.2), 0 0 5px rgba(255, 42, 127, 0.2); }
+        }
+
+        .cyber-btn:hover {
+            background-color: var(--cyber-pink); color: #000;
+            box-shadow: 0 0 20px var(--cyber-pink);
+            border-color: transparent;
+        }
+
+        /* =========================================
+           MAIN CONTAINER & HEADER (預留上方避讓高度)
+        ========================================= */
+        .container { 
+            max-width: 960px; 
+            margin: 0 auto; 
+            padding: calc(75px + 2.5rem) 1.5rem 3rem 1.5rem; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 3.5rem; 
+        }
+
+        header { 
+            border: var(--border-thick); padding: 2.5rem;
+            background-color: var(--surface-color);
+            position: relative;
+            box-shadow: 10px 10px 0px rgba(255, 42, 127, 0.2);
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+        }
+        
+        .sys-tag { 
+            font-size: 0.85rem; font-weight: 900; 
+            background-color: var(--cyber-pink); color: #000; 
+            display: inline-block; padding: 0.2rem 0.6rem; margin-bottom: 1rem;
+            box-shadow: 0 0 10px var(--cyber-pink);
+        }
+
+        h1 { 
+            font-size: 2.3rem; font-weight: 900; line-height: 1.2; 
+            color: #fff; text-shadow: 0 0 8px var(--cyber-pink), 2px 2px 0px var(--cyber-blue); 
+            letter-spacing: -0.5px; margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            font-size: 0.95rem; color: var(--text-muted);
+            border-left: 3px solid var(--cyber-blue); padding-left: 1rem;
+            line-height: 1.8;
+        }
+
+        /* 跨平台實況矩陣 */
+        .social-matrix {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin-top: 1.5rem;
+        }
+
+        .channel-card {
+            border: var(--border-thin); padding: 1.2rem; background-color: #0d0610;
+            display: flex; flex-direction: column; gap: 0.4rem;
+            transition: all 0.15s ease;
+            position: relative; overflow: hidden;
+        }
+        .channel-card::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 42, 127, 0.1), transparent);
+            transition: 0.5s;
+        }
+        .channel-card:hover::before { left: 100%; }
+        .channel-card:hover {
+            border-color: var(--cyber-blue); box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .channel-top { display: flex; justify-content: space-between; align-items: center; }
+        .platform-name { font-weight: 900; font-size: 1.1rem; text-transform: uppercase; color: var(--text-soft); }
+        .badge { font-size: 0.7rem; padding: 0.1rem 0.4rem; font-weight: 800; border: 1px solid var(--cyber-pink); color: var(--cyber-pink); }
+        
+        .channel-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; margin-top: 0.3rem;}
+
+        /* =========================================
+           TERMINAL MANIFESTO (終端機視窗)
+        ========================================= */
+        .terminal-window {
+            border: var(--border-thick); background-color: #08040a;
+            position: relative;
+        }
+        .terminal-window::after {
+            content: ''; position: absolute; bottom: -5px; right: -5px; width: 100%; height: 100%;
+            border: 1px solid var(--cyber-blue); z-index: -1;
+        }
+
+        .window-header {
+            background-color: rgba(255, 42, 127, 0.1); color: var(--cyber-pink);
+            border-bottom: var(--border-thin);
+            padding: 0.6rem 1.2rem; font-weight: 900; 
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.85rem; letter-spacing: 0.5px;
+            gap: 0.5rem;
+        }
+
+        .window-path {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
+        }
+
+        .window-mode {
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .window-content { padding: 2.2rem; font-size: 0.98rem; line-height: 1.9; }
+
+        .log-section { margin-bottom: 2.8rem; }
+        .log-section:last-child { margin-bottom: 0; }
+
+        .log-section h3 {
+            font-size: 1.15rem; color: var(--cyber-blue);
+            border-bottom: 1px dashed rgba(0, 240, 255, 0.3); padding-bottom: 0.4rem; margin-bottom: 1rem; text-transform: uppercase;
+            text-shadow: 0 0 5px rgba(0, 240, 255, 0.5);
+        }
+
+        .bilingual-block { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
+        .lang-zh { color: var(--text-soft); font-weight: 500;}
+        .lang-en { color: var(--text-muted); font-size: 0.88rem; font-style: italic; }
+
+        .highlight-neon { background-color: rgba(255, 42, 127, 0.2); color: var(--cyber-pink); padding: 0 6px; border: 1px solid var(--cyber-pink); font-weight: bold; }
+        .highlight-blue { color: var(--cyber-blue); font-weight: bold; text-shadow: 0 0 5px var(--cyber-blue); }
+
+        /* 突發貓咪事件警告框 */
+        .cat-alert {
+            background: rgba(255, 42, 127, 0.05); border-left: 4px solid var(--cyber-pink);
+            padding: 1.2rem; margin: 1.8rem 0; font-size: 0.9rem;
+            position: relative;
+        }
+        .cat-alert-title { font-weight: 900; color: var(--cyber-pink); margin-bottom: 0.5rem; display: block; letter-spacing: 0.5px;}
+
+        /* =========================================
+           MODAL & MULTI-REGION DONATION
+        ========================================= */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(5, 2, 8, 0.95); backdrop-filter: blur(8px);
+            z-index: 20000; display: none; justify-content: center; align-items: center; padding: 1rem;
+        }
+        .modal-overlay.active { display: flex; }
+        
+        .modal-box {
+            background-color: var(--bg-color); color: var(--text-soft); border: 2px solid var(--cyber-blue);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.15); max-width: 540px; width: 100%; padding: 0;
+            display: flex; flex-direction: column;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-box::-webkit-scrollbar { width: 6px; }
+        .modal-box::-webkit-scrollbar-track { background: var(--bg-color); }
+        .modal-box::-webkit-scrollbar-thumb { background: var(--cyber-pink); }
+        
+        .modal-header { 
+            background-color: rgba(0, 240, 255, 0.1); color: var(--cyber-blue);
+            border-bottom: 1px solid var(--cyber-blue);
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 1rem 1.4rem;
+        }
+        .modal-header h2 { font-size: 1rem; margin: 0; font-weight: 900; text-shadow: 0 0 5px var(--cyber-blue); }
+        .close-btn { 
+            background: transparent; color: var(--cyber-blue); border: none; 
+            font-size: 1.5rem; font-weight: 900; cursor: pointer; transition: 0.2s;
+        }
+        .close-btn:hover { color: var(--cyber-pink); text-shadow: 0 0 10px var(--cyber-pink); transform: scale(1.1);}
+
+        .modal-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+
+        /* 支付方式切換按鈕區 (完全參照 index - 複製 邏輯) */
+        .pay-tabs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.6rem;
+        }
+        .pay-tab {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0.6rem 0.3rem;
+            min-height: 52px;
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-soft);
+            border: 1px solid rgba(0, 240, 255, 0.4);
+            font-family: inherit;
+            font-size: 0.82rem;
+            font-weight: bold;
+            cursor: pointer;
+            clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+            transition: all 0.15s ease;
+            text-align: center;
+            line-height: 1.3;
+        }
+        .pay-tab:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: var(--cyber-blue);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+            color: #fff;
+        }
+        .pay-tab.active { 
+            background: rgba(255, 42, 127, 0.25) !important; 
+            color: #fff !important; 
+            border-color: var(--cyber-pink) !important; 
+            box-shadow: 0 0 12px rgba(255, 42, 127, 0.4);
+        }
+
+        /* QR 碼與支付跳轉容器 */
+        .qr-display {
+            border: 1px dashed var(--cyber-blue); 
+            background-color: rgba(0, 0, 0, 0.6); 
+            padding: 1.4rem; 
+            text-align: center; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 1rem;
+        }
+        .qr-display img {
+            width: 180px;
+            height: 180px;
+            object-fit: contain;
+            background-color: #ffffff;
+            border: 2px solid var(--cyber-pink);
+            padding: 0.4rem;
+            box-shadow: 0 0 15px rgba(255, 42, 127, 0.3);
+        }
+
+        #supportQrHint {
+            font-size: 0.85rem;
+            color: var(--text-soft);
+            line-height: 1.8;
+            display: block;
+            width: 100%;
+        }
+
+        .cyber-launch-btn {
+            display: inline-block;
+            padding: 0.65rem 1.2rem;
+            background-color: rgba(255, 42, 127, 0.15);
+            color: var(--cyber-pink);
+            border: 1px solid var(--cyber-pink);
+            font-family: inherit;
+            font-size: 0.88rem;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+            box-shadow: 0 0 10px rgba(255, 42, 127, 0.2);
+            transition: all 0.15s ease;
+        }
+        .cyber-launch-btn:hover {
+            background-color: var(--cyber-pink);
+            color: #000;
+            box-shadow: 0 0 15px var(--cyber-pink);
+        }
+
+        .action-link-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 0.8rem 1.5rem; width: 100%; max-width: 320px;
+            background-color: transparent; border: 1px solid var(--cyber-blue);
+            color: var(--cyber-blue); font-weight: 900; text-transform: uppercase; 
+            transition: all 0.2s; font-size: 0.85rem;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+        }
+        .action-link-btn:hover { 
+            background-color: var(--cyber-blue); color: #000;
+            box-shadow: 0 0 15px var(--cyber-blue);
+        }
+
+        .btn-priority {
+            border-color: var(--cyber-pink); color: var(--cyber-pink);
+            background: rgba(255, 42, 127, 0.05);
+        }
+        .btn-priority:hover {
+            background-color: var(--cyber-pink); color: #000;
+            box-shadow: 0 0 15px var(--cyber-pink);
+        }
+
+        /* 贊助留言表單 */
+        .support-form { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 1rem; 
+            border-top: 1px dashed rgba(0, 240, 255, 0.3);
+            padding-top: 1.2rem;
+        }
+        .form-group { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.82rem; font-weight: bold; color: var(--text-soft); }
+        .form-group input, .form-group textarea {
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 42, 127, 0.4);
+            color: var(--text-soft);
+            padding: 0.65rem;
+            font-family: inherit;
+            font-size: 0.88rem;
+            resize: vertical;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--cyber-blue);
+            box-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.06);
+        }
+
+        footer { border-top: var(--border-thin); padding-top: 2rem; text-align: center; font-size: 0.85rem; color: var(--text-muted); }
+
+        /* =========================================
+           RWD 響應式配置
+        ========================================= */
+        @media (max-width: 768px) {
+            /* Banner 手機端固定與緊湊排版 (防溢出、防拖曳) */
+            .support-banner { 
+                padding: 0.55rem 0.8rem !important; 
+            }
+            .banner-inner { 
+                flex-direction: column; 
+                align-items: stretch; 
+                gap: 0.4rem; 
+            }
+            .banner-title { 
+                text-align: center; 
+                font-size: 0.82rem; 
+                line-height: 1.2;
+            }
+            .banner-title-en { 
+                font-size: 0.62rem; 
+                white-space: normal;
+                word-break: break-word;
+                line-height: 1.2;
+            }
+            .link-group { 
+                width: 100%; 
+                display: grid; 
+                grid-template-columns: 1fr 1fr; 
+                gap: 0.5rem; 
+            }
+            .cyber-btn { 
+                width: 100%;
+                padding: 0.45rem 0.2rem; 
+                font-size: 0.72rem; 
+                letter-spacing: 0px;
+                text-align: center; 
+                white-space: nowrap; 
+            }
+
+            /* Container 預留高度確保不被固定 Banner 遮擋 */
+            .container { 
+                padding-top: calc(88px + 1.5rem) !important;
+                padding-left: 1rem;
+                padding-right: 1rem;
+                gap: 2rem; 
+            }
+            h1 { font-size: 1.7rem; }
+            .window-content { padding: 1.2rem; }
+
+            /* 終端機 header 手機端防吃字 */
+            .window-header {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.72rem;
+                letter-spacing: 0px;
+            }
+            .window-path {
+                font-size: 0.72rem;
+            }
+            .window-mode {
+                font-size: 0.72rem;
+            }
+
+            .pay-tabs {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.4rem;
+            }
+            .pay-tab {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.1rem;
+            }
+            .action-link-btn { max-width: 100%; }
+            .modal-body { padding: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 頂部高亮警戒條：釘死固定在瀏覽器頂部 -->
+    <div class="support-banner">
+        <div class="banner-inner">
+            <div class="banner-title">
+                <span>⚠ 投餵快樂水與貓飯</span>
+                <span class="banner-title-en">CYBER RATIONS // Happy Water & Feline Fuel</span>
+            </div>
+            <div class="link-group">
+                <button class="cyber-btn" onclick="openDonate('tw')">🇹🇼 TAIWAN NODE</button>
+                <button class="cyber-btn" onclick="openDonate('us')">🌍 OVERSEAS NODE</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- 主頭像與簡介 -->
+        <header>
+            <div class="sys-tag">SYS.STATUS: NEON GRID // EXTREME SURVIVAL ACTIVE</div>
+            <h1>冷冷不冷的沙發工廠<br>HUMAN LEATHER COUCH FACTORY - lonlon</h1>
+            <p class="tagline">
+                白天是在神經網路裡撸代碼的數位藝術社畜；深夜是喝著熱茶、伴隨兩隻主子打呼聲開發模擬遊戲的賽博黑心廠長。<br>
+                <span style="font-size: 0.85rem; opacity: 0.7;">Digital art wage-slave grinding code by day; cyber deadpan director sipping tea & developing indie sims by night.</span>
+            </p>
+            
+            <!-- 跨平台實況矩陣 -->
+            <div class="social-matrix">
+                <!-- Twitch -->
+                <a href="https://www.twitch.tv" target="_blank" class="channel-card">
+                    <div class="channel-top">
+                        <span class="platform-name">Twitch</span>
+                        <span class="badge">CHILL LIVE</span>
+                    </div>
+                    <p class="channel-desc">
+                        【深夜鍵盤白噪音 / 極限求生直擊】<br>
+                        White noise, late-night mechanical clicks, cozy tea, and relentless cyber survival.
+                    </p>
+                </a>
+
+                <!-- YouTube -->
+                <a href="https://www.youtube.com" target="_blank" class="channel-card">
+                    <div class="channel-top">
+                        <span class="platform-name">YouTube</span>
+                        <span class="badge">CLIPS VOD</span>
+                    </div>
+                    <p class="channel-desc">
+                        【今天皮沙發工廠照常營業 / 直播精華】<br>
+                        Open as Usual at the Human Leather Couch Factory, Stream Highlights.
+                    </p>
+                </a>
+
+                <!-- Bilibili -->
+                <a href="https://space.bilibili.com/452768274" target="_blank" class="channel-card">
+                    <div class="channel-top">
+                        <span class="platform-name">Bilibili</span>
+                        <span class="badge">DATA RECAP</span>
+                    </div>
+                    <p class="channel-desc">
+                        【賽博求生錄播 / 工廠檔案庫】<br>
+                        原汁原味的無讀檔受虐回放與中文社群基地。
+                    </p>
+                </a>
+
+                <!-- 數位貓爬架 / 個人官網 -->
+                <a href="https://lonp.pages.dev" target="_blank" class="channel-card">
+                    <div class="channel-top">
+                        <span class="platform-name">Portfolio</span>
+                        <span class="badge">CAT NEST</span>
+                    </div>
+                    <p class="channel-desc">
+                        【廠長的賽博貓爬架 / 數位藝術】<br>
+                        Exhibitions, neural network archives, and digital media experiments.
+                    </p>
+                </a>
+            </div>
+        </header>
+
+        <!-- 終端文字區塊 (反差萌雙語對照) -->
+        <section class="terminal-window">
+            <div class="window-header">
+                <span class="window-path">SHELL:~/factory/manifesto.md</span>
+                <span class="window-mode">[CYBER_SURVIVAL]</span>
+            </div>
+            <div class="window-content">
+                
+                <div class="log-section">
+                    <h3>>_ 01. THE FACTORY // 皮沙發工廠</h3>
+                    <div class="bilingual-block">
+                        <p class="lang-zh">
+                            歡迎光臨皮沙發工廠。外頭是殘酷的賽博廢土與極限邊緣，但這裡有現泡的熱茶和 ASMR 級的鍵盤白噪音。隨便挑張沙發坐下吧——別問材質，這張<span class="highlight-neon">特級皮沙發</span>很軟，它生前也是個喜歡 Drop pod 突襲的超齡海盜，現在它只想給你最溫暖的擁抱。
+                        </p>
+                        <p class="lang-en">
+                            Welcome to the factory. Outside is a ruthless cyber wasteland, but inside we’ve got freshly brewed tea and chill white noise. Grab a seat on the tailored <span class="highlight-neon">Human Leather Couch</span>. Relax. Don’t ask about the upholstery—he was a based raider in life, now he just wants to keep you cozy.
+                        </p>
+                    </div>
+                    <div class="bilingual-block">
+                        <p class="lang-zh">
+                            在這裡，我們用最溫柔平靜的語氣，做著蘭迪隨機滅團邊緣最冷酷的系統資源調配。<span class="highlight-blue">歡迎按下追蹤加入神經網路，成為輪班兼職員工。</span>
+                        </p>
+                        <p class="lang-en">
+                            We manage brutal simulation bottlenecks with utmost calm. Hit follow, plug into the network, and consider yourself clocked in for the night shift. W chat.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 突發貓咪干擾事件 -->
+                <div class="cat-alert">
+                    <span class="cat-alert-title">⚠ SYSTEM ALERT: FELINE INTERFERENCE // 遭遇物理級不可抗力</span>
+                    <span class="lang-zh" style="display: block; margin-bottom: 0.5rem;">
+                        當我正在冷靜排查 C# 代碼報錯，或是佈署殺戮走廊時，如果畫面突然暫停或滑鼠亂飄，那絕對是<strong>兩隻貓咪主子</strong>又踩在我的鍵盤上討肉泥了。請各位員工喝口茶，等我繳完這筆「貓咪保護費」安撫完主子，即刻恢復系統運作。
+                    </span>
+                    <span class="lang-en">
+                        If I’m mid-sentence explaining a C# patch and the stream suddenly pauses—my two feline overlords just walked across my keyboard demanding treats. Take a sip of tea while I pay the cat tax. Resuming simulation logic shortly.
+                    </span>
+                </div>
+
+                <div class="log-section">
+                    <h3>>_ 02. DONATION HOOK // 賽博求生與快樂水投餵</h3>
+                    <div class="bilingual-block">
+                        <p class="lang-zh">
+                            隨著獨立維護 C# 補丁的工作量日益龐大，加上新遊戲開發所需的龐大精力與成本（經常深夜在神經網路裡撸代碼到頭禿），開啟投餵計畫是希望在這漫長的「賽博求生與獨立模擬遊戲築夢」之旅中，能得到大家的一點點支持。
+                            <br><br>
+                            你們投餵的每一口快樂水，都將直接化為廠長維持深夜除錯的血肉咖啡因濃度，更是支持我將這款模擬遊戲從最初的紙上原型變成現實的最大動力！
+                            當然，要是能順便投餵一口貓飯，不但餵飽了這隻深夜加班的禿頭小貓，還順便包養了身邊的兩隻小貓咪，大概能一邊呼嚕嚕一邊當場把系統 Bug 全給修了吧～
+                        </p>
+                        <p class="lang-en" style="margin-top: 0.8rem; border-left: 2px solid rgba(255,42,127,0.5); padding-left: 1rem;">
+                            As the workload of maintaining solo C# patches grows, compounded by the massive sanity and cost required to develop my new indie game (often grinding code late into the neon-lit night until I go bald), this feeding protocol is initiated to seek a tiny bit of support on this long journey of "Cyber-Survival & Indie Simulation Dreaming".
+                            <br><br>
+                            Every drop of Happy Water you feed me directly converts into the raw caffeine concentration needed for late-night debugging. It’s the ultimate drive turning this simulation game from a paper prototype into reality! And hey, if you drop a bite of Cat Kibble on the side, you not only feed this balding, overworked cyber-kitten, but also sponsor my two feline overlords. I’ll probably start purring and fix all the system bugs on the spot~
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>
+                冷冷不冷的沙發工廠 // HUMAN LEATHER COUCH FACTORY - lonlon<br>
+                <span style="font-size: 0.75rem; letter-spacing: 1px; color: var(--cyber-pink);">TRANSMITTING FROM CYBER WASTELAND. ALL SYSTEMS NOMINAL. &copy; 2026.</span>
+            </p>
+        </footer>
+    </div>
+
+    <!-- 投餵彈窗 (完全分開、各自獨立) -->
+    <div id="donateModal" class="modal-overlay" onclick="if(event.target === this) closeModal()">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2 id="modalHeaderTitle">🥤 TW HAPPY WATER SUPPLY // 台灣投餵快樂水與貓飯</h2>
+                <button class="close-btn" onclick="closeModal()">✕</button>
+            </div>
+
+            <div class="modal-body">
+                <!-- STEP 1 支付選項 -->
+                <div>
+                    <p style="font-size: 0.88rem; font-weight: bold; margin-bottom: 0.8rem; color: var(--cyber-blue);">STEP 1. 選擇支付方式並完成贊助：</p>
+                    
+                    <!-- 台灣本地選項 (獨立顯示，完全參照 index - 複製，已刪除綠界科技) -->
+                    <div class="pay-tabs" id="twPayTabs">
+                        <button type="button" class="pay-tab active" onclick="switchSupportQR('jkopay', this)">街口等<br>TWQR</button>
+                        <button type="button" class="pay-tab" onclick="switchSupportQR('linepay', this)">LinePay</button>
+                        <button type="button" class="pay-tab" onclick="switchSupportQR('newebpay', this)">信用卡 轉帳<br>ApplePay</button>
+                    </div>
+
+                    <!-- 海外選項 (獨立顯示，完全參照 index - 複製) -->
+                    <div class="pay-tabs" id="usPayTabs" style="display: none;">
+                        <button type="button" class="pay-tab active" onclick="switchSupportQR('newebpay_os', this)">CreditCard<br>ApplePay</button>
+                        <button type="button" class="pay-tab" onclick="switchSupportQR('paypal', this)">PayPal<br>Ko-fi</button>
+                        <button type="button" class="pay-tab" onclick="switchSupportQR('alipay', this)">Alipay</button>
+                    </div>
+
+                    <div class="qr-display" style="margin-top: 1rem;">
+                        <img id="supportQrImage" src="" alt="QR Code" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'180\' height=\'180\'><rect width=\'100%\' height=\'100%\' fill=\'%23fff\'/><text x=\'50%\' y=\'50%\' fill=\'%23000\' font-family=\'monospace\' font-size=\'14\' text-anchor=\'middle\'>QR CODE</text></svg>'">
+                        
+                        <div id="linkWrap" style="display:none; padding: 1.2rem 0; width: 100%;">
+                            <a id="linkBtn" href="#" target="_blank" class="action-link-btn btn-priority" style="display:inline-flex; width: 100%; max-width: 320px; text-align:center;">[ 前往安全支付頁面 ↗ ]</a>
+                        </div>
+
+                        <span id="supportQrHint"></span>
+                    </div>
+                </div>
+
+                <!-- STEP 2 留言表單 (完全參照 index - 複製 邏輯) -->
+                <form class="support-form" onsubmit="submitSupportMessage(event)">
+                    <p style="font-size: 0.88rem; font-weight: bold; color: var(--cyber-pink);">STEP 2. 留下你的資訊與想說的話（選填）：</p>
+                    
+                    <div class="form-group">
+                        <label>你的名字或暱稱 / Name (Optional)</label>
+                        <input type="text" id="supporterName" placeholder="匿名支持者">
+                    </div>
+
+                    <div class="form-group">
+                        <label>聯絡信箱 / Email (Optional)</label>
+                        <input type="email" id="supporterEmail" placeholder="若希望收到回覆可填寫">
+                    </div>
+
+                    <div class="form-group">
+                        <label>想和我說的話 / Message (Optional)</label>
+                        <textarea id="supporterMessage" rows="3" placeholder="無論是關於版畫創作、RimWorld 模組或實況的感想都歡迎留言..."></textarea>
+                    </div>
+
+                    <button type="submit" class="cyber-btn" style="width: 100%; padding: 0.8rem; margin-top: 0.5rem; text-align: center;">
+                        [ 寄出留言信件 / SEND MESSAGE ]
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 完全參照 index - 複製 裡的 QR 碼設定與文案
+        const SUPPORT_QR_CODES = {
+            jkopay:  { type: "qr", img: "images/qr-jkopay.jpg",  hint: "<br>請使用 街口、全支付、悠遊付、台灣Pay、台新Pay、玉山Wallet 等支援 TWQR 之 APP 掃描上方條碼，<span class='desktop-br-hint'><br></span>金額不限，每一份支持都是推動我持續創作的動力。<br><br><a href='http://www.jkos.com/index.html?j=S%2344234c39-bcaa-11f1-8ac0-c81f66f0c432%3AP%23' target='_blank' class='cyber-launch-btn'>手機端請點擊這裡喚起 APP 跳轉 ↗</a>" },
+            linepay: { type: "qr", img: "images/qr-linepay.jpg", hint: "<br>請使用 LinePay 掃描上方條碼，金額不限，每一份支持都是推動我持續創作的動力。<br><br><a href='https://qrcodepay.line.me/qr/payment/VZOOBJ5y7WSsSkslC9BcR3B0xvW49AvRzmQ3bA%252BUGlhnls2hfP6lLE5grrpI5xTE' target='_blank' class='cyber-launch-btn'>手機端請點擊這裡喚起 APP 跳轉 ↗</a>" },
+            alipay:  { type: "qr", img: "images/qr-alipay.jpg",  hint: "<br>請掃描上方條碼，金額不限，每一份支持都是推動我持續創作的動力。<br><br>Please scan the QR code above with Alipay to complete your payment. Enter any amount you wish—every little bit helps!<br><br><a href='https://qr.alipay.com/tsx19374p5wcn9a7dp9dwe4' target='_blank' class='cyber-launch-btn'>手機端請點擊這裡喚起 APP 跳轉 ↗</a>" },
+            newebpay: { type: "link", url: "請在這裡貼上你的藍新收款網址", btnText: "前往藍新安全支付頁面 ↗", hint: "點擊上方按鈕前往藍新金流安全支付頁面，支援轉帳、信用卡與 Apple Pay，金額不限，每一份支持都是推動我持續創作的動力。" },
+            newebpay_os: { type: "link", url: "請在這裡貼上你的藍新收款網址", btnText: "Go to NewebPay Secure Checkout ↗", hint: "點擊上方按鈕前往藍新金流安全支付頁面，支援轉帳、跨國信用卡與 Apple Pay，金額不限，每一份支持都是推動我持續創作的動力。<br><br>Click the button above to pay securely via NewebPay, supporting Transfer, international Credit Cards and Apple Pay. Enter any amount you wish—every little bit helps!" },
+            paypal: { type: "link", url: "https://ko-fi.com/lonsthx", btnText: "Go to Ko-fi / PayPal Checkout ↗", hint: "點擊上方按鈕前往 Ko-fi 頁面，支援 PayPal 與跨國信用卡，金額不限，每一份支持都是推動我持續創作的動力。<br><br>Click the button above to go to the Ko-fi page, supporting PayPal and international Credit Cards. Enter any amount you wish—every little bit helps!" }
+        };
+
+        let currentPayMethod = 'TWQR 街口等';
+
+        // 獨立分開：按台灣進去只顯示台灣，按海外進去只顯示海外
+        function openDonate(regionKey) {
+            const modal = document.getElementById('donateModal');
+            const title = document.getElementById('modalHeaderTitle');
+            const twTabs = document.getElementById('twPayTabs');
+            const usTabs = document.getElementById('usPayTabs');
+
+            if (regionKey === 'tw') {
+                title.textContent = '🥤 TW HAPPY WATER SUPPLY // 台灣投餵快樂水與貓飯';
+                twTabs.style.display = 'grid';
+                usTabs.style.display = 'none';
+                const firstBtn = twTabs.querySelector('.pay-tab');
+                switchSupportQR('jkopay', firstBtn);
+            } else {
+                title.textContent = '🥤 OVERSEAS HAPPY WATER SUPPLY // 海外投餵快樂水與貓飯';
+                twTabs.style.display = 'none';
+                usTabs.style.display = 'grid';
+                const firstBtn = usTabs.querySelector('.pay-tab');
+                switchSupportQR('newebpay_os', firstBtn);
+            }
+
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('donateModal').classList.remove('active');
+        }
+
+        function switchSupportQR(type, btn) {
+            document.querySelectorAll('#donateModal .pay-tab').forEach(el => el.classList.remove('active'));
+            if(btn) btn.classList.add('active');
+            
+            currentPayMethod = btn ? btn.innerText.replace(/\n/g, ' ') : type;
+            
+            const data = SUPPORT_QR_CODES[type];
+            const imgEl = document.getElementById('supportQrImage');
+            const linkWrap = document.getElementById('linkWrap');
+            const linkBtn = document.getElementById('linkBtn');
+            
+            if (data.type === 'link') {
+                imgEl.style.display = 'none';
+                linkWrap.style.display = 'block';
+                linkBtn.href = data.url;
+                linkBtn.innerHTML = data.btnText;
+            } else {
+                imgEl.style.display = 'block';
+                linkWrap.style.display = 'none';
+                imgEl.src = data.img;
+            }
+            
+            document.getElementById('supportQrHint').innerHTML = data.hint;
+        }
+
+        function submitSupportMessage(e) {
+            e.preventDefault();
+            const name = document.getElementById('supporterName').value.trim() || '匿名支持者';
+            const email = document.getElementById('supporterEmail').value.trim() || '未提供';
+            const message = document.getElementById('supporterMessage').value.trim() || '（無額外留言，純贊助支持 🥤）';
+
+            const subject = encodeURIComponent(`[贊助與留言] 來自 ${name} 的支持`);
+            const body = encodeURIComponent(
+`冷冷你好，我已透過「${currentPayMethod}」完成贊助！
+
+【支持者暱稱】${name}
+【聯絡信箱】${email}
+【想對你說的話】
+${message}
+`
+            );
+
+            window.location.href = `mailto:arts.lonp@gmail.com?subject=${subject}&body=${body}`;
+            closeModal();
+        }
+    </script>
+</body>
+</html>

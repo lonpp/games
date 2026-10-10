@@ -6,7 +6,28 @@
     <meta name="theme-color" content="#0b0710">
     <meta name="description" content="冷冷不冷的皮沙發工廠 HUMAN LEATHER COUCH FACTORY — 直播輪班表、OmniStream 聊天室指令與完整價目表、遊戲開發與快樂水™投餵。">
     <title>HUMAN LEATHER COUCH FACTORY</title>
-    <script src="assets/zh.js?v=20261011c"></script>
+    <script>
+        // 繁／简 模式：?lang= > 自己選過的 > lengcn 網址 > 瀏覽器語言。简＝大陆模式，繁＝台湾模式。
+        (function () {
+            var root = document.documentElement, lang = null, saved = null;
+            var q = (location.search.match(/[?&]lang=(hant|hans)\b/) || [])[1];
+            try { saved = localStorage.getItem('couch-lang'); } catch (e) {}
+            if (q) { lang = q; try { localStorage.setItem('couch-lang', q); } catch (e) {} }
+            else if (saved === 'hant' || saved === 'hans') lang = saved;
+            else if (/^lengcn\./i.test(location.hostname)) lang = 'hans';
+            else if (/^zh-(cn|sg|hans)/i.test(navigator.language || '')) lang = 'hans';
+            else lang = 'hant';
+            root.setAttribute('data-lang', lang);
+            root.setAttribute('data-region', lang === 'hans' ? 'cn' : 'tw');
+            root.lang = lang === 'hans' ? 'zh-Hans-CN' : 'zh-Hant-TW';
+            if (lang === 'hans') { root.classList.add('zh-pending'); return; }
+            // Google Fonts 在中國大陸常連不上：简体模式不載入；繁體模式非同步載入，不擋畫面
+            var l = document.createElement('link');
+            l.rel = 'stylesheet';
+            l.href = 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;0,800;1,400&family=Noto+Sans+TC:wght@400;500;700;900&display=swap';
+            document.head.appendChild(l);
+        })();
+    </script>
     <script>
         document.documentElement.classList.add('js');
         // 開機畫面：每個分頁只播一次；系統要求減少動態時不播
@@ -1042,7 +1063,7 @@
         .footer-brand { font-weight: 700; color: var(--text); }
         .footer-sig { display: block; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 1px; color: var(--pink); margin-top: 0.3rem; }
         .footer-links { display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; }
-        .footer-links a { color: var(--muted); display: inline-flex; align-items: center; min-height: 40px; }
+        .footer-links a { color: var(--muted); }
         .footer-links a:hover { color: var(--blue); }
 
         /* =========================================
@@ -1937,7 +1958,6 @@
 
         .vault-body {
             display: grid;
-            grid-template-columns: minmax(0, 1fr);
             grid-template-rows: 0fr;
             transition: grid-template-rows 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
@@ -1967,7 +1987,7 @@
         .vault-close:hover { background: var(--blue); color: #000; }
 
         @media (max-width: 900px) {
-            .cmd-hub { grid-template-columns: minmax(0, 1fr); }
+            .cmd-hub { grid-template-columns: 1fr; }
             .hub-shell { margin-top: 0.6rem; }
         }
         @media (max-width: 768px) {
@@ -1997,7 +2017,6 @@
         .hub-head .section-title { flex: 1 1 auto; min-width: 0; }
         .hub-toggle {
             flex-shrink: 0;
-            min-height: 40px;
             display: inline-flex; align-items: center; gap: 0.6rem;
             margin-top: 0.15rem;
             padding: 0;
@@ -2061,7 +2080,6 @@
 
         .hub-body {
             display: grid;
-            grid-template-columns: minmax(0, 1fr);
             grid-template-rows: 0fr;
             transition: grid-template-rows 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
@@ -2113,7 +2131,7 @@
         html[data-region="cn"] .sub-links-container .term-bili { order: -1; }
         html[data-region="cn"] .watch-row .channel-card:not(.card-bili) { opacity: 0.7; }
         html[data-region="cn"] .watch-row .channel-card:not(.card-bili):hover { opacity: 1; }
-        #payTabs { grid-template-columns: repeat(auto-fit, minmax(84px, 1fr)); }
+        #payTabs { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); }
 
         /* 建議金額 */
         .tier-block { margin-top: 1rem; }
@@ -2139,59 +2157,82 @@
         .tier-amt { font-family: var(--font-mono); font-size: 0.95rem; font-weight: 800; color: var(--amber); text-shadow: 0 0 8px rgba(255, 179, 71, 0.4); }
         @media (max-width: 768px) {
             .cyber-btn .btn-en { display: none; }
-            .lang-switch button { min-width: 36px; min-height: 38px; font-size: 0.82rem; }
+            .lang-switch button { min-width: 30px; min-height: 34px; font-size: 0.8rem; }
             .tier small { display: none; }
-        }
-
-        /* ---------- Steam 模組連結 ---------- */
-        .steam-strip {
-            display: grid;
-            grid-template-columns: auto minmax(0, 1fr) auto;
-            align-items: center;
-            gap: 0.9rem 1.1rem;
-            margin: 0 0 1.2rem;
-            padding: 0.8rem 1rem;
-            color: var(--text);
-            background: linear-gradient(90deg, rgba(102, 192, 244, 0.1), rgba(0, 240, 255, 0.02) 70%);
-            border: 1px solid rgba(102, 192, 244, 0.45);
-            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-            transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
-        }
-        .steam-strip:hover { color: var(--text); text-shadow: none; border-color: #66c0f4; box-shadow: 0 0 18px rgba(102, 192, 244, 0.3); background-color: rgba(102, 192, 244, 0.08); }
-        .steam-badge {
-            font-family: var(--font-mono); font-size: 0.62rem; font-weight: 800; letter-spacing: 1px; line-height: 1.25;
-            color: #0b1a26; background: #66c0f4;
-            padding: 0.4rem 0.55rem;
-            text-align: center;
-        }
-        .steam-text { display: flex; flex-direction: column; min-width: 0; font-size: 0.86rem; line-height: 1.6; }
-        .steam-text b { font-family: var(--font-mono); font-size: 0.95rem; color: var(--text-strong); letter-spacing: 0.5px; }
-        .steam-text .lang-en { display: block; font-size: 0.78rem; }
-        .steam-go {
-            font-family: var(--font-mono); font-size: 0.78rem; font-weight: 800; white-space: nowrap;
-            color: #66c0f4; border: 1px solid rgba(102, 192, 244, 0.6); padding: 0.45rem 0.8rem;
-        }
-        .steam-strip:hover .steam-go { background: #66c0f4; color: #0b1a26; }
-
-        /* ---------- 大陆模式：長段英文不顯示，頁面短一半 ---------- */
-        html[data-region="cn"] .bilingual-block .lang-en,
-        html[data-region="cn"] .tagline .lang-en,
-        html[data-region="cn"] .hub-line .lang-en,
-        html[data-region="cn"] .steam-text .lang-en,
-        html[data-region="cn"] .ios-hint .lang-en,
-        html[data-region="cn"] .cat-alert .lang-en,
-        html[data-region="cn"] .cmd-rules .shift-en,
-        html[data-region="cn"] .coin-card small,
-        html[data-region="cn"] .channel-desc .lang-en,
-        html[data-region="cn"] .status-sub .lang-en { display: none; }
-
-        @media (max-width: 768px) {
-            .steam-strip { grid-template-columns: auto minmax(0, 1fr); padding: 0.75rem 0.8rem; }
-            .steam-go { grid-column: 1 / -1; text-align: center; }
         }
     </style>
 </head>
 <body>
+    <!-- 繁→简：简体模式時把整頁（含之後 JS 產生的文字）轉成簡體。對照表由 Windows LCMapStringEx 產生，詞彙差異另列在 PHRASES。 -->
+    <script>
+        (function () {
+            var root = document.documentElement;
+            var hans = root.getAttribute('data-lang') === 'hans';
+            var T = "並亂佈來個們側偵備傷價內兩凍別則創劍動區參員問啟喚單嚕國圖團報場夠夾實寫寬寶將專尋對導屬帳帶幣幫幾廠廢張彈彙徑從復愛態慮應戲捲掃換撫擁擇擊擋擬攔敗數時暫暱會東條業極樂樣機橫檔欄權歡歸殘殺決沒況涼減測準溫滅滿濃瀏灣為烏無熱燈營爍爛爾狀獨獵獸獺現產畫異當療發盜監盤眾確碼禿稱積筆篩簡籤紀約純紙級終組結絕絡給統經維網綿線緣練繳繼續習聯聲職脅臨與舊艙華著蒼蓋藍藝藥蘭處蟲術衛補裝裡製複襲見規視覺覽觀計訊討記設訴詞試話認語說誰調請論講謝議護讀變讓豬貓貴買費貼貿資賣質購賽贊蹤軌軟載輕輪輯輸轉這連進遊運過遷選遺還邊邏鈕鋸錄錢錨錯鍵鎖鐘長門閃閉開間閱闆關陸隊際隨險隻雞電靈靜頁頂項順須預領頭額類顧顯飄飛飯飽養餘餵饌馬馴駝體鳥鴉鴨鵝鵡鵲鷺鸚麼點齒齡龐後於", S = "并乱布来个们侧侦备伤价内两冻别则创剑动区参员问启唤单噜国图团报场够夹实写宽宝将专寻对导属帐带币帮几厂废张弹汇径从复爱态虑应戏卷扫换抚拥择击挡拟拦败数时暂昵会东条业极乐样机横档栏权欢归残杀决没况凉减测准温灭满浓浏湾为乌无热灯营烁烂尔状独猎兽獭现产画异当疗发盗监盘众确码秃称积笔筛简签纪约纯纸级终组结绝络给统经维网绵线缘练缴继续习联声职胁临与旧舱华着苍盖蓝艺药兰处虫术卫补装里制复袭见规视觉览观计讯讨记设诉词试话认语说谁调请论讲谢议护读变让猪猫贵买费贴贸资卖质购赛赞踪轨软载轻轮辑输转这连进游运过迁选遗还边逻钮锯录钱锚错键锁钟长门闪闭开间阅板关陆队际随险只鸡电灵静页顶项顺须预领头额类顾显飘飞饭饱养余喂馔马驯驼体鸟鸦鸭鹅鹉鹊鹭鹦么点齿龄庞后于";
+            var PHRASES = [["Taiwan (UTC+8)", "Beijing (UTC+8)"], ["台灣時間 Taiwan", "北京时间 Beijing"], ["Taiwan time", "Beijing time"], ["Drop pod 突襲", "空投骑脸"], ["點個追蹤不迷路", "一键三连不迷路"], ["台灣時間", "北京时间"], ["殺戮走廊", "杀人廊"], ["實況主", "主播"], ["貓飯", "猫粮"], ["肉泥", "猫条"], ["佈署", "部署"], ["實況", "直播"], ["斗內", "投喂"], ["影片", "视频"], ["網路", "网络"], ["程式", "程序"], ["帳號", "账号"], ["訊息", "消息"], ["設定", "设置"], ["預設", "默认"], ["支援", "支持"], ["連結", "链接"], ["品質", "质量"], ["圖檔", "图片"], ["信箱", "邮箱"], ["回覆", "回复"], ["搜尋", "搜索"], ["介面", "界面"], ["資訊", "信息"], ["螢幕", "屏幕"], ["滑鼠", "鼠标"], ["數位", "数字"], ["偵測", "检测"]];
+            var map = {};
+            for (var i = 0; i < T.length; i++) map[T.charAt(i)] = S.charAt(i);
+            var cjk = /[㐀-鿿]/;
+            function conv(s) {
+                if (!s || !cjk.test(s)) return s;
+                for (var i = 0; i < PHRASES.length; i++) if (s.indexOf(PHRASES[i][0]) >= 0) s = s.split(PHRASES[i][0]).join(PHRASES[i][1]);
+                var out = '';
+                for (var j = 0; j < s.length; j++) { var c = s.charAt(j); out += map[c] || c; }
+                return out;
+            }
+            window.zhConvert = function (s) { return hans ? conv(s) : s; };
+            window.couchLang = hans ? 'hans' : 'hant';
+
+            function bindSwitch() {
+                document.querySelectorAll('[data-set-lang]').forEach(function (b) {
+                    var target = b.getAttribute('data-set-lang');
+                    b.setAttribute('aria-pressed', target === window.couchLang ? 'true' : 'false');
+                    b.addEventListener('click', function () {
+                        if (target === window.couchLang) return;
+                        try { localStorage.setItem('couch-lang', target); } catch (e) {}
+                        var url = location.pathname + '?lang=' + target + location.hash;
+                        location.replace(url);
+                    });
+                });
+            }
+            if (!hans) { document.addEventListener('DOMContentLoaded', bindSwitch); return; }
+
+            var ATTRS = ['placeholder', 'aria-label', 'title', 'alt', 'data-copy', 'data-run', 'data-cmd', 'data-text'];
+            var SKIP = { SCRIPT: 1, STYLE: 1, NOSCRIPT: 1 };
+            function skipped(el) {
+                for (; el && el.nodeType === 1; el = el.parentNode) if (SKIP[el.nodeName] || el.hasAttribute('data-no-zh')) return true;
+                return false;
+            }
+            function doText(n) { var v = n.nodeValue, c = conv(v); if (c !== v) n.nodeValue = c; }
+            function doEl(el) {
+                for (var i = 0; i < ATTRS.length; i++) {
+                    var a = el.getAttribute(ATTRS[i]);
+                    if (a) { var c = conv(a); if (c !== a) el.setAttribute(ATTRS[i], c); }
+                }
+            }
+            function walk(node) {
+                if (node.nodeType === 3) { if (!skipped(node.parentNode)) doText(node); return; }
+                if (node.nodeType !== 1 || skipped(node)) return;
+                doEl(node);
+                var w = document.createTreeWalker(node, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT, {
+                    acceptNode: function (x) {
+                        return x.nodeType === 1 && (SKIP[x.nodeName] || x.hasAttribute('data-no-zh')) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+                    }
+                });
+                var x;
+                while ((x = w.nextNode())) { if (x.nodeType === 3) doText(x); else doEl(x); }
+            }
+            new MutationObserver(function (list) {
+                list.forEach(function (m) {
+                    if (m.type === 'childList') m.addedNodes.forEach(walk);
+                    else if (m.type === 'characterData') { if (!skipped(m.target.parentNode)) doText(m.target); }
+                    else if (!skipped(m.target)) doEl(m.target);
+                });
+            }).observe(root, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ATTRS });
+            function ready() { walk(document.body); bindSwitch(); root.classList.remove('zh-pending'); }
+            if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ready); else ready();
+        })();
+    </script>
     <a class="skip-link" href="#main">跳到內容 Skip to content</a>
 
     <!-- 開機畫面（每個分頁只播一次，點一下或按任意鍵跳過） -->
@@ -2316,15 +2357,6 @@
                         <span class="hub-state" id="hubState">[ STANDBY ] 展開</span><span class="vault-chev" aria-hidden="true">▼</span>
                     </button>
                 </div>
-                <!-- OmniStream 模組：收合、展開都看得到 -->
-                <a class="steam-strip" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3817038607" target="_blank" rel="noopener noreferrer">
-                    <span class="steam-badge" aria-hidden="true">STEAM<br>WORKSHOP</span>
-                    <span class="steam-text">
-                        <b>OmniStream 模組</b>
-                        <span>這些指令來自我做的 RimWorld 模組。你也在直播？免費訂閱，讓自己的聊天室一起玩。<span class="lang-en">Free mod: let your Twitch, YouTube or Bilibili chat play your colony.</span></span>
-                    </span>
-                    <span class="steam-go">訂閱 SUBSCRIBE ↗</span>
-                </a>
                 <!-- 收合時：一行說明 + 快捷列（查價錢、練習機、價目表） -->
                 <div class="hub-summary" id="hubSummary">
                     <p class="hub-line">在 <strong>Twitch、YouTube、Bilibili</strong> 聊天室打 <code>!money</code>、<code>!lookup</code>、<code>!buy</code>，就能送東西進殖民地。<span class="lang-en">Chat commands for the colony: !money, !lookup, !buy.</span></p>
@@ -2704,6 +2736,15 @@
                                 As the workload of maintaining solo C# patches grows, compounded by the massive sanity and cost required to develop my new indie game (often grinding code late into the neon-lit night until I go bald), this feeding protocol is initiated to seek a tiny bit of support on this long journey of "Cyber-Survival &amp; Indie Simulation Developing".
                                 <br><br>
                                 Every drop of Happy Water™ you feed me directly converts into the raw caffeine concentration needed for late-night debugging. <span class="highlight-neon">It’s the ultimate drive turning this simulation game from a paper prototype into reality!</span> And hey, if you drop a bite of Cat Kibble on the side, you not only feed this balding, overworked cyber-kitten, but also sponsor my two feline overlords. I’ll probably start purring and fix all the system bugs on the spot~
+                            </p>
+                        </div>
+                        <div class="pause-notice only-tw" id="donatePause">
+                            <span class="pause-notice-title">// PAYMENT STATUS 支付狀態</span>
+                            <p class="lang-zh">
+                                今年台灣國內的街口、Line Pay、藍新（轉帳、信用卡）先暫停，<span class="highlight-blue">2027/1/1</span> 重新開放。可以先關注 <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YouTube</a> 或 <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">Twitch</a>，或用 <a href="https://ko-fi.com/lonsthx" target="_blank" rel="noopener noreferrer">Ko-fi</a>（PayPal、信用卡）贊助。支付寶持續開放。
+                            </p>
+                            <p class="lang-en">
+                                Follow on <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YouTube</a> or <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">Twitch</a>, or sponsor with <a href="https://ko-fi.com/lonsthx" target="_blank" rel="noopener noreferrer">Ko-fi</a> (PayPal and credit card). Alipay is open as well.
                             </p>
                         </div>
                     </div>
