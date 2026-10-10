@@ -1992,6 +1992,95 @@
             .vault-body { transition: none; }
             .vault[data-open="true"] .vault-pad .cmd-row { animation: none; }
         }
+
+        /* ---------- 指令中心整區收合 ---------- */
+        .hub-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.8rem 1rem; }
+        .hub-head .section-title { flex: 1 1 auto; min-width: 0; }
+        .hub-toggle {
+            flex-shrink: 0;
+            display: inline-flex; align-items: center; gap: 0.6rem;
+            margin-top: 0.15rem;
+            padding: 0;
+            background: none; border: none; cursor: pointer;
+            font: inherit; color: inherit;
+        }
+        .hub-state {
+            font-family: var(--font-mono); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.5px;
+            color: var(--amber);
+            border: 1px solid rgba(255, 179, 71, 0.45);
+            padding: 0.25rem 0.6rem;
+            white-space: nowrap;
+        }
+        .hub-toggle:hover .hub-state { background: rgba(255, 179, 71, 0.1); }
+        .hub-toggle:hover .vault-chev { background: rgba(0, 240, 255, 0.12); }
+        #guide[data-hub="open"] .hub-state { color: var(--green); border-color: rgba(61, 255, 154, 0.5); }
+        #guide[data-hub="open"] .hub-toggle .vault-chev { transform: rotate(180deg); }
+        #guide .section-title { margin-bottom: 1.2rem; }
+
+        .hub-summary { display: flex; flex-direction: column; gap: 0.9rem; }
+        #guide[data-hub="open"] .hub-summary { display: none; }
+        .hub-line { font-size: 0.95rem; color: var(--text); }
+        .hub-line .lang-en { display: block; font-size: 0.82rem; margin-top: 0.2rem; }
+        .hub-dock {
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(0, 1fr));
+            gap: 0.6rem;
+            padding: 0.75rem;
+            border: 1px solid var(--line-pink);
+            background:
+                linear-gradient(90deg, rgba(255, 42, 127, 0.07), rgba(0, 240, 255, 0.04)),
+                #09040c;
+        }
+        .hub-dock::before {
+            content: '';
+            position: absolute; left: -1px; top: -1px; bottom: -1px;
+            width: 3px;
+            background: var(--pink);
+            box-shadow: 0 0 10px var(--pink);
+        }
+        .hub-search { max-width: none; }
+        .dock-btn {
+            display: flex; align-items: center; justify-content: center; gap: 0.45rem;
+            min-height: 44px;
+            padding: 0.4rem 0.7rem;
+            font-family: var(--font-mono); font-size: 0.82rem; font-weight: 800;
+            color: var(--blue);
+            background: rgba(0, 240, 255, 0.05);
+            border: 1px solid var(--line-blue);
+            cursor: pointer;
+            white-space: nowrap;
+            clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px);
+            transition: background-color 0.15s, color 0.15s, box-shadow 0.15s;
+        }
+        .dock-btn b { font-size: 0.8rem; }
+        .dock-btn small { font-size: 0.6rem; letter-spacing: 0.8px; opacity: 0.65; }
+        .dock-btn:hover { background: var(--blue); color: #000; box-shadow: 0 0 14px rgba(0, 240, 255, 0.4); }
+        .dock-btn.primary { color: var(--pink); border-color: var(--pink); background: rgba(255, 42, 127, 0.08); animation: pulse-border 3.2s ease-in-out infinite; }
+        .dock-btn.primary:hover { background: var(--pink); color: #000; box-shadow: 0 0 16px var(--pink); }
+
+        .hub-body {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        #guide[data-hub="open"] .hub-body { grid-template-rows: 1fr; }
+        #guide.hub-instant .hub-body { transition: none; }
+        .hub-inner { min-height: 0; overflow: hidden; }
+        #guide[data-hub="closed"] .hub-inner { visibility: hidden; transition: visibility 0s linear 0.55s; }
+        #guide.hub-instant[data-hub="closed"] .hub-inner { transition: none; }
+        #guide[data-settled="true"] .hub-inner { overflow: visible; }
+        #guide[data-hub="open"] .hub-inner > :first-child { animation: hub-in 0.5s ease both; }
+        @keyframes hub-in { from { opacity: 0; transform: translateY(-6px); } }
+
+        @media (max-width: 768px) {
+            .hub-head { flex-direction: column; gap: 0; }
+            .hub-toggle { margin: -0.4rem 0 1rem; }
+            .hub-dock { grid-template-columns: 1fr 1fr; padding: 0.65rem; }
+            .hub-search { grid-column: 1 / -1; }
+            .dock-btn.primary { grid-column: 1 / -1; }
+            .dock-btn small { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -2105,13 +2194,33 @@
         </div>
 
         <!-- 01 指令中心：常用指令 + 試玩終端機 + 收合價目表 -->
-        <section class="terminal-window reveal" id="guide" aria-labelledby="guide-title">
+        <section class="terminal-window reveal" id="guide" aria-labelledby="guide-title" data-hub="closed">
             <div class="window-header">
                 <span class="window-path"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>SHELL:~/factory/commands.sh</span>
                 <span class="window-mode">[OMNISTREAM]</span>
             </div>
             <div class="window-content">
-                <h2 class="section-title" id="guide-title"><span class="sec-no">01</span><span class="sec-zh">指令中心</span><span class="sec-en">COMMAND CENTER</span></h2>
+                <div class="hub-head">
+                    <h2 class="section-title" id="guide-title"><span class="sec-no">01</span><span class="sec-zh">指令中心</span><span class="sec-en">COMMAND CENTER</span></h2>
+                    <button type="button" class="hub-toggle" id="hubToggle" aria-expanded="false" aria-controls="hubBody">
+                        <span class="hub-state" id="hubState">[ STANDBY ] 展開</span><span class="vault-chev" aria-hidden="true">▼</span>
+                    </button>
+                </div>
+                <!-- 收合時：一行說明 + 快捷列（查價錢、練習機、價目表） -->
+                <div class="hub-summary" id="hubSummary">
+                    <p class="hub-line">在 <strong>Twitch、YouTube、Bilibili</strong> 聊天室打 <code>!money</code>、<code>!lookup</code>、<code>!buy</code>，就能送東西進殖民地。<span class="lang-en">Chat commands for the colony: !money, !lookup, !buy.</span></p>
+                    <div class="hub-dock">
+                        <label class="cmd-search hub-search">
+                            <span class="sr-only">查價錢 Search prices</span>
+                            <input type="search" id="hubSearch" placeholder="查價錢：貓、極光、治療…" autocomplete="off">
+                        </label>
+                        <button type="button" class="dock-btn" data-hub-go="try"><b>▶</b> 練習機 <small>TERMINAL</small></button>
+                        <button type="button" class="dock-btn" data-hub-go="prices"><b>≡</b> 價目表 <small>55 ITEMS</small></button>
+                        <button type="button" class="dock-btn primary" data-hub-go="all"><b>▼</b> 展開全部 <small>EXPAND</small></button>
+                    </div>
+                </div>
+                <div class="hub-body" id="hubBody" role="region" aria-labelledby="guide-title">
+                    <div class="hub-inner">
                 <div class="bilingual-block">
                     <p class="lang-zh">
                         在 <strong>Twitch、YouTube 或 Bilibili</strong> 的聊天室打指令，就能<span class="highlight-neon">送物資、新殖民者、自己取名的動物、治療、事件</span>進殖民地。開頭打 <code>!</code> 或全形 <code>！</code> 都可以，繁體、简体、English 都通，用什麼語言問就用什麼語言回。
@@ -2308,6 +2417,8 @@
                         <li><span class="lang-zh">人類、動物：全體觀眾每個遊戲日各限 1。名字最多 16 字，定了就不能改，不能跟指令字或殖民地已有的名字重複。<span class="shift-en">One human and one animal per in-game day for everyone. Names: up to 16 characters, permanent, unique.</span></span></li>
                         <li><span class="lang-zh">沒看到你想要的？在聊天室說一聲，廠長考慮加進下一版。<span class="shift-en">Missing something? Ask in chat.</span></span></li>
                     </ul>
+                </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -2976,9 +3087,10 @@ ${message}
             });
             // 從遊戲或別處連到 #prices 時直接展開
             window.openCatalog = function (cat) {
+                if (window.openHub) window.openHub(true);
                 if (cat) pick(cat);
                 setOpen(true);
-                vault.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+                requestAnimationFrame(function () { vault.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' }); });
             };
             function fromHash() { if (location.hash === '#prices') setOpen(true); }
             fromHash();
@@ -2986,6 +3098,83 @@ ${message}
             search.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') { search.value = ''; search.dispatchEvent(new Event('input')); }
             });
+        })();
+
+
+        /* =========================================
+           指令中心整區收合：預設收起，只留快捷列。
+           連到 #guide / #try / #prices、或點導覽，會直接展開到對應位置。
+        ========================================= */
+        (function () {
+            var section = document.getElementById('guide');
+            var toggle = document.getElementById('hubToggle');
+            var state = document.getElementById('hubState');
+            var hubSearch = document.getElementById('hubSearch');
+            if (!section || !toggle) return;
+            var reducedMotion = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+            var settleTimer = null;
+            function isOpen() { return section.getAttribute('data-hub') === 'open'; }
+            function setHub(open, instant) {
+                if (isOpen() === open) return;
+                clearTimeout(settleTimer);
+                section.classList.toggle('hub-instant', !!instant || reducedMotion);
+                section.removeAttribute('data-settled');
+                section.setAttribute('data-hub', open ? 'open' : 'closed');
+                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                state.textContent = open ? '[ ONLINE ] 收合' : '[ STANDBY ] 展開';
+                // 展開動畫結束後解除 overflow，價目表的黏性搜尋列才會黏住
+                if (open) settleTimer = setTimeout(function () { section.setAttribute('data-settled', 'true'); }, (instant || reducedMotion) ? 0 : 600);
+                try { sessionStorage.setItem('couch-hub', open ? '1' : '0'); } catch (e) {}
+            }
+            window.openHub = function (instant) { setHub(true, instant); };
+            function go(target) {
+                setHub(true, true);
+                if (target === 'prices') { window.openCatalog(); return; }
+                var el = target === 'try' ? document.getElementById('try') : section;
+                requestAnimationFrame(function () {
+                    el.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+                    if (target === 'try' && window.matchMedia && matchMedia('(pointer: fine)').matches) {
+                        var input = document.getElementById('shellIn');
+                        if (input) setTimeout(function () { input.focus({ preventScroll: true }); }, 450);
+                    }
+                });
+            }
+
+            var saved = null;
+            try { saved = sessionStorage.getItem('couch-hub'); } catch (e) {}
+            if (saved === '1') setHub(true, true);
+
+            toggle.addEventListener('click', function () {
+                var open = !isOpen();
+                setHub(open, false);
+                if (!open && section.getBoundingClientRect().top < 0) section.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+            });
+            document.querySelectorAll('[data-hub-go]').forEach(function (btn) {
+                btn.addEventListener('click', function () { go(btn.getAttribute('data-hub-go')); });
+            });
+            // 快捷列打字：展開、把字帶進價目表的搜尋框
+            hubSearch.addEventListener('input', function () {
+                var q = hubSearch.value;
+                if (!q.trim()) return;
+                hubSearch.value = '';
+                go('prices');
+                var search = document.getElementById('cmdSearch');
+                search.value = q;
+                search.dispatchEvent(new Event('input'));
+                setTimeout(function () { search.focus({ preventScroll: true }); }, 60);
+            });
+            // 導覽與錨點
+            var MAP = { '#guide': 'all', '#try': 'try', '#prices': 'prices' };
+            function fromHash() { if (MAP[location.hash]) go(MAP[location.hash]); }
+            document.querySelectorAll('a[href="#guide"], a[href="#try"], a[href="#prices"]').forEach(function (a) {
+                a.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (history.replaceState) history.replaceState(null, '', a.getAttribute('href'));
+                    go(MAP[a.getAttribute('href')]);
+                });
+            });
+            window.addEventListener('hashchange', fromHash);
+            fromHash();
         })();
 
         /* =========================================
@@ -3811,6 +4000,7 @@ ${message}
                 }
                 if (!FILES[key]) { out([[name + ': No such file // 找不到這個檔案，輸入 ls 看看', 'l-err']]); return; }
                 out([['開啟 ~/factory/' + key + '.md …', 'l-ok']]);
+                if ((key === 'guide' || key === 'commands' || key === 'try') && window.openHub) window.openHub(true);
                 later(function () { document.getElementById(FILES[key]).scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' }); }, 250);
             }
 
