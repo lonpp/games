@@ -4,18 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#0b0710">
-    <meta name="description" content="冷冷不冷的皮沙發工廠：獨立模擬遊戲的製作進度與開發紀錄。">
+    <meta name="description" content="冷冷不冷的皮沙發工廠：獨立模擬遊戲的製作進度，以及 Steam 工作坊上的 RimWorld 模組。">
     <title>GAME DEV // 遊戲製作 · HUMAN LEATHER COUCH FACTORY</title>
     <script src="assets/en.js?v=20261011d"></script>
     <script src="assets/zh.js?v=20261011d"></script>
     <link rel="stylesheet" href="assets/site.css?v=20261011d">
     <style>
+        /* ---------- 首屏：兩個「現在進行中」區塊 ---------- */
+        .now-block { margin-top: 2rem; }
+        .now-h {
+            display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 0.7rem;
+            font-size: 1.02rem; font-weight: 900; color: var(--text-strong); letter-spacing: 0.5px;
+        }
+        .now-h::before { content: '▸'; color: var(--pink); text-shadow: 0 0 8px var(--pink); }
+        .now-h small { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 800; letter-spacing: 1.5px; color: var(--blue); }
+        .now-h a { margin-left: auto; font-family: var(--font-mono); font-size: 0.74rem; font-weight: 800; letter-spacing: 0.5px; }
+
         /* ---------- 製作階段 ---------- */
         .stages {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 0;
-            margin: 1.6rem 0 0.4rem;
+            margin: 0.9rem 0 0.4rem;
             counter-reset: stage;
         }
         .stage {
@@ -50,6 +60,75 @@
         .stage-bar { position: relative; height: 3px; margin-top: -1px; background: rgba(255, 255, 255, 0.06); overflow: hidden; }
         .stage-bar i { position: absolute; inset: 0 auto 0 0; background: linear-gradient(90deg, var(--blue), var(--pink)); box-shadow: 0 0 10px var(--pink); }
 
+        /* ---------- 模組：共用 ---------- */
+        .mod-thumb { position: relative; display: block; aspect-ratio: 16 / 9; background: #000; overflow: hidden; border-bottom: 1px solid var(--line-pink); }
+        .mod-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease, filter 0.4s ease; }
+        .mod-thumb:hover img { transform: scale(1.03); filter: saturate(1.15); }
+        .mod-thumb:hover { text-shadow: none; }
+        .badges { position: absolute; right: 0.6rem; bottom: 0.6rem; display: flex; gap: 0.35rem; }
+        .badge { font-family: var(--font-mono); font-size: 0.64rem; font-weight: 800; letter-spacing: 0.8px; padding: 0.1rem 0.45rem; background: rgba(0, 0, 0, 0.78); color: var(--blue); border: 1px solid var(--line-blue); }
+        .badge.warn { background: rgba(0, 0, 0, 0.85); color: var(--amber); border-color: rgba(255, 179, 71, 0.6); }
+        .badge.hot { background: var(--pink); color: #000; border-color: var(--pink); box-shadow: 0 0 12px rgba(255, 42, 127, 0.7); }
+        .mod-title { font-size: 1.12rem; font-weight: 900; line-height: 1.35; color: var(--text-strong); }
+        .mod-sub { display: block; margin-top: 0.15rem; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.3px; color: var(--blue); line-height: 1.5; }
+        .mod-tagline { margin-top: 0.55rem; font-size: 0.95rem; font-weight: 800; color: var(--amber); line-height: 1.55; }
+        .mod-sum { margin-top: 0.4rem; font-size: 0.86rem; color: var(--muted); line-height: 1.7; }
+        .mod-feat { list-style: none; margin-top: 0.6rem; display: grid; gap: 0.2rem; font-size: 0.82rem; color: var(--text); }
+        .mod-feat li { position: relative; padding-left: 1.1rem; line-height: 1.55; }
+        .mod-feat li::before { content: '>'; position: absolute; left: 0; font-family: var(--font-mono); font-weight: 800; color: var(--pink); }
+        /* 訂閱、最愛：要一眼看得到 */
+        .mod-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.9rem; }
+        .stat { padding: 0.55rem 0.7rem 0.5rem; border: 1px solid var(--line-blue); background: rgba(0, 240, 255, 0.05); display: flex; align-items: baseline; gap: 0.5rem; }
+        .stat b { font-family: var(--font-mono); font-size: 1.6rem; font-weight: 800; line-height: 1; color: var(--blue); text-shadow: 0 0 12px rgba(0, 240, 255, 0.55); font-variant-numeric: tabular-nums; }
+        .stat span { font-size: 0.74rem; font-weight: 800; color: var(--text); line-height: 1.3; }
+        .stat span small { display: block; font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 1px; color: var(--muted); }
+        .stat.fav { border-color: var(--line-pink); background: rgba(255, 42, 127, 0.06); }
+        .stat.fav b { color: var(--pink); text-shadow: 0 0 12px rgba(255, 42, 127, 0.6); }
+        .mod-meta { margin-top: 0.6rem; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.3px; color: var(--muted); }
+        .mod-actions { margin-top: 0.9rem; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+        .mod-actions .cyber-btn { flex: 1 1 auto; }
+
+        /* ---------- 首屏：最新上傳的模組 ---------- */
+        .spotlight {
+            display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+            margin-top: 0.9rem;
+            background: var(--surface-deep);
+            border: 1px solid var(--pink);
+            box-shadow: 0 0 22px rgba(255, 42, 127, 0.2);
+        }
+        .spotlight { align-items: start; }
+        .spotlight .mod-thumb { border-bottom: 1px solid var(--line-pink); border-right: 1px solid var(--line-pink); }
+        .spotlight .mod-body { padding: 1.2rem 1.3rem 1.3rem; }
+        .spotlight .mod-title { font-size: 1.3rem; }
+
+        /* ---------- RimWorld 模組區 ---------- */
+        .mods-top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem 2rem; margin-bottom: 1.3rem; }
+        .mods-intro { max-width: 34em; font-size: 0.92rem; }
+        .totals { display: flex; gap: 0.5rem; }
+        .total { min-width: 92px; padding: 0.5rem 0.75rem; border: 1px solid var(--line-pink); background: rgba(255, 42, 127, 0.05); text-align: center; }
+        .total b { display: block; font-family: var(--font-mono); font-size: 1.35rem; font-weight: 800; line-height: 1.1; color: var(--text-strong); text-shadow: 0 0 10px rgba(255, 42, 127, 0.6); }
+        .total span { font-family: var(--font-mono); font-size: 0.6rem; font-weight: 800; letter-spacing: 1px; color: var(--muted); }
+        .mods-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.6rem 1rem; margin-bottom: 1rem; font-family: var(--font-mono); font-size: 0.74rem; }
+        .sorter { display: inline-flex; border: 1px solid var(--line-blue); }
+        .sorter button { min-height: 36px; padding: 0 0.8rem; background: none; border: none; color: var(--muted); font: inherit; font-weight: 800; cursor: pointer; }
+        .sorter button[aria-pressed="true"] { background: var(--blue); color: #000; }
+        .data-note { color: var(--muted); }
+        .mod-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+        .mod-card {
+            display: flex; flex-direction: column;
+            background: var(--surface-deep);
+            border: 1px solid var(--line-pink);
+            transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+        }
+        .mod-card:hover { border-color: var(--blue); box-shadow: 0 0 18px rgba(0, 240, 255, 0.2); transform: translateY(-3px); }
+        .mod-card .mod-body { display: flex; flex-direction: column; flex: 1; padding: 1rem 1.05rem 1.1rem; }
+        .mod-card .mod-foot { margin-top: auto; }
+        .mod-card.skeleton { min-height: 420px; }
+        .mod-card.skeleton .mod-thumb { animation: scan 1.6s ease-in-out infinite; }
+        @keyframes scan { 50% { opacity: 0.45; } }
+        .mods-msg { font-family: var(--font-mono); font-size: 0.82rem; color: var(--muted); }
+        .mods-msg a { font-weight: 800; }
+
         /* ---------- 開發紀錄 ---------- */
         .log { position: relative; display: flex; flex-direction: column; gap: 1rem; padding-left: 1.4rem; }
         .log::before { content: ''; position: absolute; left: 0.3rem; top: 0.4rem; bottom: 0.4rem; width: 1px; background: linear-gradient(var(--pink), rgba(0, 240, 255, 0.3)); }
@@ -64,7 +143,7 @@
         .log-empty { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); padding-left: 1.4rem; }
 
         /* ---------- 跟進進度 ---------- */
-        .follow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.8rem; }
+        .follow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.8rem; }
         .follow a {
             display: flex; flex-direction: column; gap: 0.25rem;
             padding: 1rem 1.1rem;
@@ -77,6 +156,7 @@
         .follow b { font-family: var(--font-mono); font-size: 1rem; letter-spacing: 1px; color: var(--text-strong); }
         .follow b i { font-style: normal; color: var(--blue); margin-left: 0.3rem; }
         .follow span { font-size: 0.84rem; color: var(--muted); }
+        .follow .f-steam b { color: var(--steam); }
         html[data-region="cn"] .follow .f-bili { order: -1; }
         .support-cta {
             display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;
@@ -87,11 +167,21 @@
         .support-cta p { font-size: 0.9rem; }
         .support-cta p b { color: var(--amber); }
 
+        @media (max-width: 900px) {
+            .mod-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .follow { grid-template-columns: 1fr 1fr; }
+        }
         @media (max-width: 768px) {
             .stages { grid-template-columns: 1fr 1fr; }
             .stage + .stage { border-left: 1px solid rgba(255, 255, 255, 0.08); }
             .stage:nth-child(n+3) { border-top: none; }
+            .spotlight { grid-template-columns: 1fr; }
+            .spotlight .mod-thumb { border-right: none; border-bottom: 1px solid var(--line-pink); aspect-ratio: 16 / 9; min-height: 0; }
+            .spotlight .mod-body { padding: 1rem 1rem 1.1rem; }
+            .mod-grid { grid-template-columns: minmax(0, 1fr); }
             .follow { grid-template-columns: 1fr; }
+            .totals { width: 100%; }
+            .total { flex: 1; min-width: 0; }
             .support-cta .cyber-btn { width: 100%; }
         }
     </style>
@@ -113,6 +203,7 @@
     </header>
 
     <main class="page">
+        <!-- 首屏：正在做的獨立遊戲 + 最新上傳的模組 -->
         <section class="terminal-window">
             <div class="window-header">
                 <span class="window-path"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>SHELL:~/factory/game.md</span>
@@ -120,18 +211,29 @@
             </div>
             <div class="window-content">
                 <div class="sys-tag">STATUS: PAPER PROTOTYPE</div>
-                <h1 class="page-title">遊戲開發<small>GAME DEV // INDIE SIMULATION</small></h1>
-                <p class="lang-zh" style="margin-top: 1.1rem; max-width: 40em;">這一頁只記錄那款模擬遊戲的製作進度。它還在從紙上原型走向可玩的版本，有新的進度會直接寫在下面。</p>
-                <p class="lang-en long" style="margin-top: 0.3rem; max-width: 46em;">This page is the build log for the simulation. It is still on the way from a paper prototype to something you can play. New progress gets written here.</p>
+                <h1 class="page-title">遊戲開發<small>GAME DEV // INDIE SIM + RIMWORLD MODS</small></h1>
+                <p class="lang-zh" style="margin-top: 1.1rem; max-width: 40em;">這一頁記錄兩件事：正在做的獨立模擬遊戲，以及已經上架 Steam 工作坊的 RimWorld 模組。</p>
+                <p class="lang-en long" style="margin-top: 0.3rem; max-width: 46em;">Two things live here: the indie simulation game in progress, and the RimWorld mods already on the Steam Workshop.</p>
 
-                <!-- 製作階段：進到下一階段時，把 class="stage now" 移到下一格，前面的改成 "stage done"，並調整 stage-bar 的寬度 -->
-                <div class="stages" aria-label="製作階段 Stages">
-                    <div class="stage now"><b>紙上原型</b><small>PAPER</small><span class="state">NOW 進行中</span></div>
-                    <div class="stage"><b>可玩原型</b><small>PLAYABLE</small><span class="state">NEXT</span></div>
-                    <div class="stage"><b>測試</b><small>TESTING</small><span class="state">—</span></div>
-                    <div class="stage"><b>正式版</b><small>RELEASE</small><span class="state">—</span></div>
+                <div class="now-block">
+                    <h2 class="now-h"><span class="lang-zh">獨立遊戲</span><span class="lang-en">Indie simulation</span><small>INDIE SIM // NOW</small></h2>
+                    <!-- 製作階段：進到下一階段時，把 class="stage now" 移到下一格，前面的改成 "stage done"，並調整 stage-bar 的寬度 -->
+                    <div class="stages" aria-label="製作階段 Stages">
+                        <div class="stage now"><b>紙上原型</b><small>PAPER</small><span class="state">NOW 進行中</span></div>
+                        <div class="stage"><b>可玩原型</b><small>PLAYABLE</small><span class="state">NEXT</span></div>
+                        <div class="stage"><b>測試</b><small>TESTING</small><span class="state">—</span></div>
+                        <div class="stage"><b>正式版</b><small>RELEASE</small><span class="state">—</span></div>
+                    </div>
+                    <div class="stage-bar" aria-hidden="true"><i style="width: 12%;"></i></div>
                 </div>
-                <div class="stage-bar" aria-hidden="true"><i style="width: 12%;"></i></div>
+
+                <div class="now-block">
+                    <h2 class="now-h"><span class="lang-zh">最新上傳的模組</span><span class="lang-en">Latest mod</span><small>LATEST UPLOAD // STEAM WORKSHOP</small><a href="#mods"><span class="lang-zh">全部模組 ↓</span><span class="lang-en">All mods ↓</span></a></h2>
+                    <div class="spotlight" id="latestMod">
+                        <div class="mod-thumb"></div>
+                        <div class="mod-body"><p class="mods-msg">&gt;_ 正在讀取 Steam 工作坊… // fetching workshop_</p></div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -154,17 +256,48 @@
             </div>
         </section>
 
+        <!-- RimWorld 模組：卡片資料由 /api/workshop 從 Steam 讀取（functions/api/workshop.js） -->
+        <section class="terminal-window" id="mods">
+            <div class="window-header">
+                <span class="window-path"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>SHELL:~/factory/rimworld-mods/</span>
+                <span class="window-mode">[STEAM_WORKSHOP]</span>
+            </div>
+            <div class="window-content">
+                <h2 class="section-title"><span class="sec-no">02</span><span class="sec-zh">RimWorld 模組</span><span class="sec-en">RIMWORLD MODS</span></h2>
+                <div class="mods-top">
+                    <p class="mods-intro">
+                        <span class="lang-zh">實況時遇到的問題，順手修好分享出來。全部免費，在 Steam 工作坊訂閱就能用。</span>
+                        <span class="lang-en">Fixes for problems I ran into on stream, shared for everyone. All free: subscribe on the Steam Workshop and they just work.</span>
+                    </p>
+                    <div class="totals" id="modTotals" aria-live="polite"></div>
+                </div>
+                <div class="mods-bar">
+                    <div class="sorter" role="group" aria-label="排序 Sort">
+                        <button type="button" data-sort="new" aria-pressed="true"><span class="lang-zh">最新</span><span class="lang-en">Newest</span></button>
+                        <button type="button" data-sort="subs" aria-pressed="false"><span class="lang-zh">最多訂閱</span><span class="lang-en">Most subscribed</span></button>
+                    </div>
+                    <span class="data-note" id="dataNote"></span>
+                </div>
+                <div class="mod-grid" id="modGrid">
+                    <article class="mod-card skeleton"><div class="mod-thumb"></div></article>
+                    <article class="mod-card skeleton"><div class="mod-thumb"></div></article>
+                    <article class="mod-card skeleton"><div class="mod-thumb"></div></article>
+                </div>
+            </div>
+        </section>
+
         <section class="terminal-window">
             <div class="window-header">
                 <span class="window-path"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>SHELL:~/factory/follow.md</span>
                 <span class="window-mode">[SUBSCRIBE]</span>
             </div>
             <div class="window-content">
-                <h2 class="section-title"><span class="sec-no">02</span><span class="sec-zh">跟上進度</span><span class="sec-en">FOLLOW THE BUILD</span></h2>
+                <h2 class="section-title"><span class="sec-no">03</span><span class="sec-zh">跟上進度</span><span class="sec-en">FOLLOW THE BUILD</span></h2>
                 <div class="follow">
                     <a class="f-bili" href="https://space.bilibili.com/452768274" target="_blank" rel="noopener noreferrer"><b>BILIBILI<i>↗</i></b><span>錄播與中文社群</span></a>
                     <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer"><b>YOUTUBE<i>↗</i></b><span>直播與精華</span></a>
                     <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer"><b>TWITCH<i>↗</i></b><span>看直播、邊看邊下指令</span></a>
+                    <a class="f-steam" href="https://steamcommunity.com/id/couchinc/myworkshopfiles?appid=294100" target="_blank" rel="noopener noreferrer"><b>STEAM<i>↗</i></b><span class="lang-zh">工作坊：所有模組</span><span class="lang-en">Workshop: all mods</span></a>
                 </div>
                 <div class="support-cta">
                     <p>每一口<b>快樂水™</b>都會變成深夜除錯的咖啡因。想讓它早點從紙上走出來？</p>
@@ -179,7 +312,8 @@
                 <a href="index.html">HOME</a>
                 <a href="index.html#guide">COMMANDS</a>
                 <a href="shop.html">SHOP</a>
-                <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3817038607" target="_blank" rel="noopener noreferrer">OMNISTREAM↗</a>
+                <a href="#mods">MODS</a>
+                <a href="https://steamcommunity.com/id/couchinc/myworkshopfiles?appid=294100" target="_blank" rel="noopener noreferrer">WORKSHOP↗</a>
             </nav>
         </footer>
     </main>
@@ -189,6 +323,213 @@
         (function () {
             var btn = document.getElementById('backToTop');
             window.addEventListener('scroll', function () { btn.classList.toggle('visible', window.scrollY > 300); }, { passive: true });
+        })();
+    </script>
+    <script>
+        /* =========================================
+           RimWorld 模組卡片
+           資料：/api/workshop（Cloudflare 代讀 Steam，1 小時更新一次）
+                 連不上時用 assets/workshop.json（備用，數字可能比較舊）
+           標題、說明：照語言讀 Steam 的 english / tchinese / schinese 版本；
+                       同一篇說明裡中英文用 --- 分開的也能自動挑出對的語言。
+        ========================================= */
+        (function () {
+            const API = '/api/workshop';
+            const FALLBACK = 'assets/workshop.json';
+            const WORKSHOP = 'https://steamcommunity.com/sharedfiles/filedetails/?id=';
+            const lang = window.couchLang || 'hant';
+            const want = lang === 'en' ? 'en' : 'zh';
+            const T = (zh, en) => (window.couchT ? window.couchT(zh, en) : zh);
+
+            // Steam 上還沒有中文說明的模組，中文模式先用這裡的文字（在 Steam 補上中文說明後可以刪掉）
+            const ZH_OVERRIDE = {
+                '3817038607': {
+                    title: 'OmniStream 多平台聊天室互動',
+                    tagline: '讓直播聊天室一起玩你的殖民地',
+                    summary: '把 Twitch、YouTube 直播和 Bilibili 的聊天室接進 RimWorld。觀眾邊看邊聊就能累積金幣，再用 !buy 換食物、藥品、新殖民者、取名寵物、治療、復活、襲擊、事件，或刻上名字的紀念碑。完全免費，不讀取任何斗內。',
+                    features: ['三個平台同時連線，同一個殖民地', '打開 OBS 就自動連線', '金幣靠聊天累積，不靠付費']
+                }
+            };
+
+            const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+            const num = n => Number(n || 0).toLocaleString('en-US');
+            const day = t => { const d = new Date(t * 1000); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
+            const isZh = s => { const c = (String(s).match(/[㐀-鿿]/g) || []).length; const l = (String(s).match(/[A-Za-z]/g) || []).length; return c > 0 && c * 3 >= l; };
+
+            // Steam 的 BBCode（API 給的原始說明）→ 跟社群頁一樣的 HTML 結構
+            function bbcode(s) {
+                return esc(s)
+                    .replace(/\[h1\]([\s\S]*?)\[\/h1\]/gi, '<div class="bb_h1">$1</div>')
+                    .replace(/\[h[23]\]([\s\S]*?)\[\/h[23]\]/gi, '<div class="bb_h2">$1</div>')
+                    .replace(/\[hr\](\[\/hr\])?/gi, '<hr>')
+                    .replace(/\[o?list\]/gi, '<ul>').replace(/\[\/o?list\]/gi, '</ul>')
+                    .replace(/\[\*\]/g, '<li>')
+                    .replace(/\[url=[^\]]*\]([\s\S]*?)\[\/url\]/gi, '$1')
+                    .replace(/\[\/?[a-z0-9]+(=[^\]]*)?\]/gi, '')
+                    .replace(/\n/g, '<br>');
+            }
+            // 說明 HTML → 一段一段（標題、段落、清單、分隔線）；只取文字，不把 Steam 的 HTML 放進頁面
+            function blocks(html) {
+                const root = new DOMParser().parseFromString('<div>' + html + '</div>', 'text/html').body.firstChild;
+                const out = [];
+                let line = '';
+                const flush = () => {
+                    const t = line.replace(/\s+/g, ' ').trim(); line = '';
+                    if (!t) return;
+                    if (/^-{3,}$/.test(t)) out.push({ t: 'hr' });
+                    else if (/^[-•・]\s*/.test(t) && t.length > 2) out.push({ t: 'li', s: t.replace(/^[-•・]\s*/, '') });
+                    else out.push({ t: 'p', s: t });
+                };
+                (function walk(n) {
+                    n.childNodes.forEach(c => {
+                        if (c.nodeType === 3) { line += c.nodeValue; return; }
+                        if (c.nodeType !== 1) return;
+                        const cls = c.className || '';
+                        if (c.tagName === 'BR') flush();
+                        else if (/bb_h1/.test(cls)) { flush(); out.push({ t: 'h1', s: c.textContent.trim() }); }
+                        else if (/bb_h[23]/.test(cls)) { flush(); out.push({ t: 'h2', s: c.textContent.trim() }); }
+                        else if (c.tagName === 'HR') { flush(); out.push({ t: 'hr' }); }
+                        else if (c.tagName === 'LI') { flush(); out.push({ t: 'li', s: c.textContent.replace(/\s+/g, ' ').trim() }); }
+                        else if (c.tagName === 'UL' || c.tagName === 'OL') { flush(); walk(c); flush(); }
+                        else walk(c);
+                    });
+                })(root);
+                flush();
+                return out.filter(b => b.t === 'hr' || b.s);
+            }
+            // 中英文寫在同一篇、用分隔線隔開時，只留要的語言
+            function pickLang(bl) {
+                const segs = [[]];
+                bl.forEach(b => (b.t === 'hr' ? segs.push([]) : segs[segs.length - 1].push(b)));
+                const langOf = s => (s.length ? (isZh(s.map(b => b.s).join(' ')) ? 'zh' : 'en') : null);
+                const ls = segs.map(langOf);
+                if (new Set(ls.filter(Boolean)).size > 1) return segs.filter((s, i) => ls[i] === want).flat();
+                return bl.filter(b => b.t !== 'hr');
+            }
+            const TIP = /☕|tip jar|tips are|投餵|投喂|咖啡|coffee|cat food|貓主子|猫主子|pages\.dev/i;
+            const clip = (s, n) => (s.length > n ? s.slice(0, n).replace(/[\s，,、]+\S*$/, '') + '…' : s);
+            function shortFeat(s) {
+                const head = s.split(/:\s|：|（|\s\(|\.\s|。/)[0].replace(/[。.]$/, '');
+                return head.length >= 4 ? head : s;
+            }
+            function summarize(bl) {
+                let tagline = '', i = 0;
+                const h1 = bl.findIndex(b => b.t === 'h1');
+                if (h1 >= 0) { tagline = bl[h1].s; i = h1 + 1; }
+                const sum = [];
+                for (; i < bl.length && sum.length < 2; i++) {
+                    const b = bl[i];
+                    if (b.t !== 'p') { if (sum.length || b.t === 'h2') break; else continue; }
+                    if (TIP.test(b.s) || /[:：]$/.test(b.s)) continue;
+                    if (!tagline) { tagline = b.s; continue; }
+                    sum.push(b.s);
+                }
+                const firstLi = bl.findIndex(b => b.t === 'li');
+                const feats = [];
+                for (let j = firstLi; firstLi >= 0 && j < bl.length && bl[j].t === 'li' && feats.length < 3; j++) feats.push(shortFeat(bl[j].s));
+                const limit = want === 'zh' ? 120 : 230;
+                return { tagline, summary: clip(sum.join(' '), limit), features: feats };
+            }
+            function titles(raw) {
+                const parts = String(raw).split(/\s*[｜|]\s*/).filter(Boolean);
+                const zh = parts.find(isZh) || '';
+                const en = parts.find(p => !/[㐀-鿿]/.test(p)) || parts[0] || '';
+                if (want === 'zh' && zh) return { main: zh, sub: en };
+                const m = en.match(/^(.{2,28}?):\s+(.+)$/);
+                return m ? { main: m[1], sub: m[2] } : { main: en, sub: '' };
+            }
+            function textFor(item) {
+                const key = lang === 'en' ? 'english' : lang === 'hans' ? 'schinese' : 'tchinese';
+                const loc = item.loc || {};
+                const src = loc[key] || (want === 'zh' && (loc.tchinese || loc.schinese)) || loc.english;
+                const html = src ? src.html : bbcode(item.apiDesc || '');
+                const bl = pickLang(blocks(html));
+                const t = titles(src ? src.title : item.apiTitle);
+                const sm = summarize(bl);
+                const ov = ZH_OVERRIDE[item.id];
+                if (want === 'zh' && ov && !isZh(bl.map(b => b.s).join(' '))) {
+                    return { main: ov.title, sub: t.main + (t.sub ? ': ' + t.sub : ''), tagline: ov.tagline, summary: ov.summary, features: ov.features };
+                }
+                return Object.assign(t, sm);
+            }
+
+            let DATA = null, LIVE = false, sortBy = 'new';
+            function imgSrc(item) {
+                const direct = item.preview + '?imw=960&imh=540&ima=fit&impolicy=Letterbox';
+                return { src: LIVE ? API + '?img=' + item.id : direct, direct };
+            }
+            function cardInner(item, isLatest) {
+                const t = textFor(item);
+                const im = imgSrc(item);
+                const ver = (item.tags || []).filter(x => /^\d/.test(x)).map(x => '<span class="badge">RW ' + esc(x) + '</span>').join('');
+                const url = WORKSHOP + item.id;
+                // Steam 頁面打不開（例如審核中）：三種語言的頁面都讀不到時標示出來
+                const loc = item.loc || {};
+                const pending = !loc.english && !loc.tchinese && !loc.schinese;
+                return '<a class="mod-thumb" href="' + url + '" target="_blank" rel="noopener noreferrer" aria-label="' + esc(t.main) + ' on Steam">'
+                    + '<img src="' + esc(im.src) + '" data-direct="' + esc(im.direct) + '" alt="' + esc(t.main) + '" loading="lazy" width="960" height="540">'
+                    + '<span class="badges">' + (isLatest ? '<span class="badge hot">' + esc(T('最新', 'NEW')) + '</span>' : '') + (pending ? '<span class="badge warn">' + esc(T('Steam 審核中', 'IN REVIEW')) + '</span>' : '') + ver + '</span></a>'
+                    + '<div class="mod-body">'
+                    + '<h3 class="mod-title">' + esc(t.main) + (t.sub ? '<span class="mod-sub">' + esc(t.sub) + '</span>' : '') + '</h3>'
+                    + (t.tagline ? '<p class="mod-tagline">' + esc(t.tagline) + '</p>' : '')
+                    + (t.summary ? '<p class="mod-sum">' + esc(t.summary) + '</p>' : '')
+                    + (t.features && t.features.length ? '<ul class="mod-feat">' + t.features.map(f => '<li>' + esc(f) + '</li>').join('') + '</ul>' : '')
+                    + '<div class="mod-foot">'
+                    + '<div class="mod-stats">'
+                    + '<div class="stat"><b>' + num(item.subs) + '</b><span>' + esc(T('訂閱', 'Subscribers')) + (want === 'zh' ? '<small>SUBSCRIBERS</small>' : '') + '</span></div>'
+                    + '<div class="stat fav"><b>' + num(item.favs) + '</b><span>' + esc(T('最愛', 'Favorites')) + (want === 'zh' ? '<small>FAVORITES</small>' : '') + '</span></div>'
+                    + '</div>'
+                    + '<p class="mod-meta">' + esc(T('更新', 'UPDATED')) + ' ' + day(item.updated) + ' · ' + esc(T('累計訂閱', 'lifetime')) + ' ' + num(item.lifetimeSubs) + ' · ' + esc(T('瀏覽', 'views')) + ' ' + num(item.views) + '</p>'
+                    + '<div class="mod-actions"><a class="cyber-btn blue" href="' + url + '" target="_blank" rel="noopener noreferrer">' + esc(pending ? T('Steam 審核中，通過後即可訂閱', 'In Steam review, available soon') : T('到 Steam 訂閱', 'Subscribe on Steam')) + ' ↗</a></div>'
+                    + '</div></div>';
+            }
+            function bindImgFallback(root) {
+                root.querySelectorAll('img[data-direct]').forEach(img => img.addEventListener('error', () => {
+                    if (img.src !== img.dataset.direct) img.src = img.dataset.direct;
+                }, { once: false }));
+            }
+            function render() {
+                const items = DATA.items.slice();
+                const latest = items.reduce((a, b) => (b.created > a.created ? b : a), items[0]);
+                // 首屏：最新上傳
+                const spot = document.getElementById('latestMod');
+                spot.innerHTML = cardInner(latest, true);
+                bindImgFallback(spot);
+                // 全部模組
+                items.sort(sortBy === 'subs' ? (a, b) => b.subs - a.subs || b.created - a.created : (a, b) => b.created - a.created);
+                const grid = document.getElementById('modGrid');
+                grid.innerHTML = items.map(it => '<article class="mod-card">' + cardInner(it, it === latest) + '</article>').join('');
+                bindImgFallback(grid);
+                const sum = k => items.reduce((n, it) => n + (Number(it[k]) || 0), 0);
+                document.getElementById('modTotals').innerHTML =
+                    '<div class="total"><b>' + items.length + '</b><span>MODS</span></div>'
+                    + '<div class="total"><b>' + num(sum('subs')) + '</b><span>SUBSCRIBERS</span></div>'
+                    + '<div class="total"><b>' + num(sum('favs')) + '</b><span>FAVORITES</span></div>';
+                const d = new Date(DATA.fetched * 1000);
+                document.getElementById('dataNote').textContent = 'STEAM DATA // ' + day(DATA.fetched) + ' ' + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0') + (LIVE ? '' : ' (CACHE)');
+            }
+            function fail() {
+                const msg = '<p class="mods-msg">&gt;_ ' + esc(T('暫時讀不到 Steam 資料。', 'Could not reach Steam right now.')) + ' <a href="https://steamcommunity.com/id/couchinc/myworkshopfiles?appid=294100" target="_blank" rel="noopener noreferrer">' + esc(T('直接到 Steam 工作坊看', 'Open the Steam Workshop')) + ' ↗</a></p>';
+                document.getElementById('modGrid').innerHTML = msg;
+                document.querySelector('#latestMod .mod-body').innerHTML = msg;
+            }
+            document.querySelectorAll('[data-sort]').forEach(b => b.addEventListener('click', () => {
+                sortBy = b.dataset.sort;
+                document.querySelectorAll('[data-sort]').forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
+                if (DATA) render();
+            }));
+
+            (async function load() {
+                for (const url of [API, FALLBACK]) {
+                    try {
+                        const res = await fetch(url, { cache: 'no-cache' });
+                        if (!res.ok) continue;
+                        const d = await res.json();
+                        if (d && d.items && d.items.length) { DATA = d; LIVE = url === API; break; }
+                    } catch (e) {}
+                }
+                if (DATA) render(); else fail();
+            })();
         })();
     </script>
 </body>

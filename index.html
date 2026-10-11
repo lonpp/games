@@ -2291,6 +2291,32 @@
             #donateModal .tier { height: 64px; flex-direction: column; gap: 0; }
             #donateModal .tier-amt { min-width: 0; text-align: center; }
         }
+
+        /* ---------- 投餵視窗：手機（iPhone 16e 等）一打開就看得到付款按鈕 ----------
+           iOS Safari 的 vh 會把底部工具列算進去，視窗底部被遮住；改用 dvh（實際看得到的高度）。
+           手機上把標題、說明、金額、QR 區塊壓矮一點，按鈕位置仍然在每種支付方式都一樣。 */
+        .modal-box { max-height: min(92vh, 960px); max-height: min(92dvh, 960px); }
+        @media (max-width: 768px) {
+            .modal-overlay { padding: 0.4rem 0.4rem max(0.4rem, env(safe-area-inset-bottom)); }
+            .modal-box { max-height: 96vh; max-height: 96dvh; }
+            #donateModal .modal-header { padding: 0.55rem 0.8rem 0.55rem 1rem; }
+            #donateModal .modal-header h2 { font-size: 0.82rem; line-height: 1.35; }
+            #donateModal .modal-body { padding: 0.8rem 0.9rem 1rem; }
+            #payPauseNote { padding: 0.4rem 0.7rem; }
+            #payPauseNote p { font-size: 0.76rem; line-height: 1.5; }
+            #donateModal .step-label { font-size: 0.72rem; line-height: 1.4; margin-bottom: 0.4rem; }
+            #donateModal .pay-tab { min-height: 42px; }
+            #donateModal .tier-block { margin-top: 0.55rem; }
+            #donateModal .tier-label { font-size: 0.7rem; line-height: 1.4; margin-bottom: 0.3rem; }
+            #donateModal .tier-label span { display: none; }
+            #donateModal .tier { height: 50px; padding: 0.2rem 0.2rem; }
+            #donateModal .tier b { font-size: 0.7rem; }
+            #donateModal .qr-display,
+            #donateModal .qr-display.mode-link,
+            #donateModal .qr-display.mode-qr { height: 290px; grid-template-rows: 116px minmax(0, 1fr) 46px; gap: 8px; padding: 12px 0.8rem; margin-top: 0.55rem; }
+            #donateModal .qr-display img#supportQrImage { width: 116px; height: 116px; }
+            #donateModal .qr-display #supportQrHint { font-size: 0.76rem; line-height: 1.5; }
+        }
     </style>
 </head>
 <body>
