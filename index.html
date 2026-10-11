@@ -6,7 +6,8 @@
     <meta name="theme-color" content="#0b0710">
     <meta name="description" content="冷冷不冷的皮沙發工廠 HUMAN LEATHER COUCH FACTORY — 直播輪班表、OmniStream 聊天室指令與完整價目表、遊戲開發與快樂水™投餵。">
     <title>HUMAN LEATHER COUCH FACTORY</title>
-    <script src="assets/zh.js?v=20261011c"></script>
+    <script src="assets/en.js?v=20261011d"></script>
+    <script src="assets/zh.js?v=20261011d"></script>
     <script>
         document.documentElement.classList.add('js');
         // 開機畫面：每個分頁只播一次；系統要求減少動態時不播
@@ -2189,6 +2190,107 @@
             .steam-strip { grid-template-columns: auto minmax(0, 1fr); padding: 0.75rem 0.8rem; }
             .steam-go { grid-column: 1 / -1; text-align: center; }
         }
+
+        /* ---------- 三語：繁（台灣）／简（大陆）／EN（海外） ---------- */
+        html:not([data-region="tw"]) .only-tw { display: none !important; }
+        html:not([data-region="cn"]) .only-cn { display: none !important; }
+        html[data-region="cn"] .not-cn { display: none !important; }
+        .shift-en-line { display: none; }
+        /* 中文模式：長段英文搬到 EN 模式，只留裝飾用的短標籤 */
+        html:not([data-lang="en"]) .lang-en,
+        html:not([data-lang="en"]) .quick-list .shift-en,
+        html:not([data-lang="en"]) .cmd-rules .shift-en,
+        html:not([data-lang="en"]) .shift-next-line .shift-en,
+        html:not([data-lang="en"]) .coin-card small { display: none !important; }
+        /* EN：藏中文，英文用正常字級 */
+        html[data-lang="en"] .lang-zh:has(~ .lang-en),
+        html[data-lang="en"] .zh-only { display: none !important; }
+        html[data-lang="en"] .lang-en { color: var(--text); font-size: inherit; font-style: normal; }
+        html[data-lang="en"] .tagline .lang-en { margin-top: 0; }
+        html[data-lang="en"] .section-title .sec-en,
+        html[data-lang="en"] .sub-title .sec-en,
+        html[data-lang="en"] .price-head .sec-en,
+        html[data-lang="en"] .vault-en,
+        html[data-lang="en"] .dock-btn small,
+        html[data-lang="en"] .coin-card small,
+        html[data-lang="en"] .h1-en,
+        html[data-lang="en"] .shift-en { display: none !important; }
+        html[data-lang="en"] .cmd-rules .lang-zh { visibility: hidden; font-size: 0; }
+        html[data-lang="en"] .cmd-rules .shift-en { visibility: visible; display: block !important; font-size: 0.9rem; color: var(--text); }
+        html[data-lang="en"] .sec-zh, html[data-lang="en"] .vault-title b { letter-spacing: 0.5px; }
+        html[data-lang="en"] .cmd-hint { display: none; }
+        @media (max-width: 768px) {
+            /* 頂部列：標題可以縮短，語言與投餵按鈕永遠留在畫面內 */
+            .banner-title { flex: 1 1 auto; min-width: 0; overflow: hidden; }
+            .banner-title > span:first-child { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+            .link-group { flex-shrink: 0; }
+            .lang-switch button { min-width: 32px; }
+            .link-group .cyber-btn .btn-water-icon { display: none; }
+        }
+
+        /* ---------- 投餵視窗：一打開就看得到付款按鈕（不用捲動） ---------- */
+        #donateModal .modal-body { gap: 1rem; padding-top: 1.1rem; }
+        #donateModal .pay-pause { padding: 0.55rem 0.85rem; font-size: 0.84rem; }
+        #donateModal .step-label { margin-bottom: 0.6rem; }
+        #donateModal .tier-block { margin-top: 0.8rem; }
+        #donateModal .tier-label { margin-bottom: 0.4rem; }
+        #donateModal .tier { padding: 0.4rem 0.3rem; flex-direction: row; justify-content: center; gap: 0.4rem; flex-wrap: wrap; }
+        #donateModal .tier small { display: none; }
+        #donateModal .tier-icon { font-size: 0.95rem; }
+        #donateModal .tier-amt { font-size: 0.9rem; }
+        #donateModal .qr-display {
+            height: auto; min-height: 0;
+            margin-top: 0.8rem;
+            padding: 1.1rem 1.2rem 1.2rem;
+            gap: 0.85rem;
+            justify-content: center;
+        }
+        #donateModal .qr-display.mode-link { min-height: 190px; }
+        #donateModal .qr-display.mode-qr { min-height: 330px; }
+        #donateModal .qr-display::before { background-size: auto 95%; }
+        #donateModal .qr-display img#supportQrImage { position: relative; top: auto; left: auto; transform: none; width: 150px; height: 150px; margin: 0 auto; }
+        #donateModal .qr-display.mode-qr #supportQrHint,
+        #donateModal .qr-display.mode-link #supportQrHint { position: relative; top: auto; bottom: auto; left: auto; right: auto; padding: 0; }
+        #donateModal .qr-display #actionBtn { position: relative; left: auto; bottom: auto; transform: none; width: 100%; max-width: 320px; margin: 0 auto; flex-shrink: 0; }
+        #donateModal .qr-display #actionBtn:active { transform: translateY(2px); }
+        /* 投餵視窗開著時，提示改到畫面上方，不要蓋住付款按鈕 */
+        #donateModal.active ~ .toast { top: max(1rem, env(safe-area-inset-top)); bottom: auto; }
+        @media (max-width: 768px) {
+            #donateModal .tier { flex-direction: column; gap: 0; }
+            #donateModal .qr-display.mode-qr { min-height: 300px; }
+            #donateModal .qr-display img#supportQrImage { width: 140px; height: 140px; }
+        }
+
+        /* ---------- 投餵視窗：切換支付方式時所有東西的位置與大小完全不動 ---------- */
+        #donateModal .qr-display,
+        #donateModal .qr-display.mode-link,
+        #donateModal .qr-display.mode-qr {
+            height: 344px; min-height: 0;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            grid-template-rows: 150px minmax(0, 1fr) 46px;
+            justify-items: center;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 1.2rem;
+        }
+        #donateModal .qr-display::before { inset: 10px; background-size: contain; background-position: center; }
+        #donateModal .qr-display img#supportQrImage { display: block !important; width: 150px; height: 150px; }
+        #donateModal .qr-display.mode-link img#supportQrImage { background: #0b0710; padding: 0; border-color: var(--blue); box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); }
+        #donateModal .qr-display #supportQrHint { height: 100%; width: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; font-size: 0.85rem; line-height: 1.6; }
+        #donateModal .qr-display #actionBtn { align-self: stretch; height: 46px; }
+        #donateModal .tier { height: 46px; flex-wrap: nowrap; white-space: nowrap; gap: 0.35rem; }
+        #donateModal .tier b { font-size: 0.78rem; }
+        #donateModal .tier-amt { font-size: 0.85rem; min-width: 3.6em; text-align: left; }
+        @media (max-width: 768px) {
+            #donateModal .qr-display,
+            #donateModal .qr-display.mode-link,
+            #donateModal .qr-display.mode-qr { height: 352px; grid-template-rows: 140px minmax(0, 1fr) 46px; padding: 16px 0.9rem; }
+            #donateModal .qr-display img#supportQrImage { width: 140px; height: 140px; }
+            #donateModal .qr-display #supportQrHint { font-size: 0.8rem; line-height: 1.55; }
+            #donateModal .tier { height: 64px; flex-direction: column; gap: 0; }
+            #donateModal .tier-amt { min-width: 0; text-align: center; }
+        }
     </style>
 </head>
 <body>
@@ -2216,6 +2318,7 @@
                 <div class="lang-switch" role="group" aria-label="語言 Language" data-no-zh>
                     <button type="button" data-set-lang="hant" title="繁體中文・台灣">繁</button>
                     <button type="button" data-set-lang="hans" title="简体中文・中国大陆">简</button>
+                    <button type="button" data-set-lang="en" title="English">EN</button>
                 </div>
                 <button type="button" class="cyber-btn" onclick="openDonate(null, this)">
                     <img src="images/happy-water-lg.gif" alt="" class="btn-water-icon" onerror="waterFallback(this)">
@@ -2271,8 +2374,8 @@
                 </div>
                 <div class="status-actions">
                     <a class="only-cn" href="https://space.bilibili.com/452768274" target="_blank" rel="noopener noreferrer">BILIBILI ↗</a>
-                    <a class="only-tw" href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">TWITCH ↗</a>
-                    <a class="only-tw" href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YOUTUBE ↗</a>
+                    <a class="not-cn" href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">TWITCH ↗</a>
+                    <a class="not-cn" href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YOUTUBE ↗</a>
                     <span class="only-cn alt-links">也在 <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">Twitch</a> · <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YouTube</a> 同步直播</span>
                 </div>
             </aside>
@@ -2327,7 +2430,7 @@
                 </a>
                 <!-- 收合時：一行說明 + 快捷列（查價錢、練習機、價目表） -->
                 <div class="hub-summary" id="hubSummary">
-                    <p class="hub-line">在 <strong>Twitch、YouTube、Bilibili</strong> 聊天室打 <code>!money</code>、<code>!lookup</code>、<code>!buy</code>，就能送東西進殖民地。<span class="lang-en">Chat commands for the colony: !money, !lookup, !buy.</span></p>
+                    <p class="hub-line"><span class="lang-zh">在 <strong>Twitch、YouTube、Bilibili</strong> 聊天室打 <code>!money</code>、<code>!lookup</code>、<code>!buy</code>，就能送東西進殖民地。</span><span class="lang-en">Type <code>!money</code>, <code>!lookup</code> or <code>!buy</code> in the <strong>Twitch, YouTube or Bilibili</strong> chat to send things into the colony.</span></p>
                     <div class="hub-dock">
                         <label class="cmd-search hub-search">
                             <span class="sr-only">查價錢 Search prices</span>
@@ -2690,7 +2793,7 @@
                 <h2 class="section-title" id="donate-title"><span class="sec-no">04</span><span class="sec-zh">賽博求生與快樂水™投餵</span><span class="sec-en">DONATION HOOK</span></h2>
                 <div class="donate-grid">
                     <div class="donate-copy">
-                        <div class="bilingual-block">
+                        <div class="bilingual-block zh-only">
                             <p class="lang-zh">
                                 隨著獨立維護 C# 補丁的工作量日益龐大，加上新遊戲開發所需的龐大精力與成本（經常深夜在神經網路裡撸代碼到頭禿），開啟投餵計畫是希望在這漫長的「賽博求生與獨立模擬遊戲製作」之旅中，能得到大家的一點點支持。
                             </p>
@@ -2768,14 +2871,14 @@
             <div class="modal-body">
                 <!--
                     支付方式依「繁／简」模式自動排序、預選第一個（設定在下面 JS 的 PAY_ORDER）：
-                    - 繁體・台灣：2027/1/1 前是 Ko-fi、支付寶；時間一到自動加入街口 TWQR、LINE Pay、藍新，暫停說明也會自己消失。
+                    - 繁體・台灣：2027/1/1 前只有 Ko-fi（不放支付寶）；時間一到自動加入街口 TWQR、LINE Pay、藍新，暫停說明也會自己消失。
                       藍新要先在 SUPPORT_QR_CODES 貼上 https 收款網址才會出現。
-                    - 简体・大陆：爱发电、支付宝在前，Ko-fi 在後。
+                    - 简体・大陆：支付宝、爱发电在前，Ko-fi 在後。
                     開放日期改 TW_LOCAL_OPEN；建議金額改 SUPPORT_TIERS。
                 -->
                 <div class="pay-pause only-tw" id="payPauseNote">
-                    <p class="lang-zh">今年台灣的街口、Line Pay、藍新（轉帳、信用卡）先暫停，<span class="highlight-blue">2027/1/1</span> 重新開放。可以先關注 <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YouTube</a> 或 <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">Twitch</a>，或用 Ko-fi（PayPal、信用卡）贊助。支付寶持續開放。</p>
-                    <p class="lang-en">Follow on <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YouTube</a> or <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">Twitch</a>, or sponsor with Ko-fi (PayPal and credit card). Alipay is open as well.</p>
+                    <p class="lang-zh">台灣的街口、LINE Pay、藍新 <span class="highlight-blue">2027/1/1</span> 開放，現在請用 Ko-fi（PayPal、信用卡）。</p>
+                    <p class="lang-en">Follow on <a href="https://www.youtube.com/@HumanLeatherCouchInc" target="_blank" rel="noopener noreferrer">YouTube</a> or <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">Twitch</a>, or sponsor with Ko-fi (PayPal and credit card).</p>
                 </div>
                 <!-- STEP 1 支付選項 -->
                 <div>
@@ -2785,7 +2888,7 @@
                         <button type="button" class="pay-tab" data-pay="linepay" hidden>LINE Pay</button>
                         <button type="button" class="pay-tab" data-pay="newebpay" hidden>信用卡 轉帳<br>Apple Pay</button>
                         <button type="button" class="pay-tab" data-pay="afdian" hidden>愛發電<br>afdian</button>
-                        <button type="button" class="pay-tab" data-pay="alipay" hidden>支付寶<br>Alipay</button>
+                        <button type="button" class="pay-tab" data-pay="alipay" hidden><span class="zh-only">支付寶<br></span>Alipay</button>
                         <button type="button" class="pay-tab" data-pay="paypal" hidden>PayPal<br>Ko-fi</button>
                         <button type="button" class="pay-tab" data-pay="newebpay_os" hidden>Credit Card<br>Apple Pay</button>
                     </div>
@@ -2840,7 +2943,7 @@
             jkopay: {
                 type: "qr",
                 img: "images/qr-jkopay.jpg",
-                hint: "請使用 街口、全支付、悠遊付、台灣Pay、台新Pay、玉山Wallet 等支援 TWQR 之 APP 掃描上方條碼，<span class='desktop-br-hint'><br></span>金額不限，每一份支持都是推動我持續創作的動力。",
+                hint: "用支援 TWQR 的 APP（街口、全支付、悠遊付、台灣Pay 等）掃描上方條碼，金額不限，每一份支持都是推動我持續創作的動力。",
                 url: "",
                 btnText: "手機端請點擊這裡喚起 APP 跳轉 ↗"
                 //http://www.jkos.com/index.html?j=S%2344234c39-bcaa-11f1-8ac0-c81f66f0c432%3AP%23
@@ -2895,8 +2998,9 @@
         const TW_LOCAL = ['jkopay', 'linepay', 'newebpay', 'newebpay_os'];
         // 各地區的排列順序，第一個可用的會被預選
         const PAY_ORDER = {
-            tw: ['jkopay', 'linepay', 'newebpay', 'paypal', 'alipay', 'newebpay_os'],
-            cn: ['afdian', 'alipay', 'paypal']
+            tw: ['jkopay', 'linepay', 'newebpay', 'paypal', 'newebpay_os'],
+            cn: ['alipay', 'afdian', 'paypal'],
+            intl: ['paypal', 'alipay', 'newebpay_os']
         };
         const PAY_CURRENCY = { jkopay: 'TWD', linepay: 'TWD', newebpay: 'TWD', newebpay_os: 'TWD', alipay: 'CNY', afdian: 'CNY', paypal: 'USD' };
         // 建議金額：改這裡就好。金額不限，只是給個參考。
@@ -2909,7 +3013,7 @@
             amounts: { CNY: [6, 15, 30], USD: [3, 5, 10], TWD: [50, 150, 300] },
             symbol: { CNY: '¥', USD: 'US$', TWD: 'NT$' }
         };
-        const PAY_REGION = document.documentElement.getAttribute('data-region') === 'cn' ? 'cn' : 'tw';
+        const PAY_REGION = PAY_ORDER[document.documentElement.getAttribute('data-region')] ? document.documentElement.getAttribute('data-region') : 'tw';
         let currentPayKey = null;
         let selectedTier = -1;
 
@@ -2943,7 +3047,7 @@
             const amounts = SUPPORT_TIERS.amounts[cur];
             row.innerHTML = SUPPORT_TIERS.items.map(function (t, i) {
                 return '<button type="button" class="tier' + (i === selectedTier ? ' active' : '') + '" data-tier="' + i + '" aria-pressed="' + (i === selectedTier) + '">' +
-                    '<span class="tier-icon">' + t.icon + '</span><b>' + t.zh + '</b><small>' + t.en + '</small>' +
+                    '<span class="tier-icon">' + t.icon + '</span><b>' + (window.couchLang === 'en' ? t.en : t.zh) + '</b>' + (window.couchLang === 'en' ? '' : '<small>' + t.en + '</small>') +
                     '<span class="tier-amt">' + SUPPORT_TIERS.symbol[cur] + amounts[i] + '</span></button>';
             }).join('');
             row.querySelectorAll('[data-tier]').forEach(function (b) {
@@ -2957,7 +3061,7 @@
         function tierText() {
             if (selectedTier < 0) return '';
             const cur = PAY_CURRENCY[currentPayKey] || 'USD';
-            return SUPPORT_TIERS.items[selectedTier].zh + ' ' + SUPPORT_TIERS.symbol[cur] + SUPPORT_TIERS.amounts[cur][selectedTier];
+            return SUPPORT_TIERS.items[selectedTier][window.couchLang === 'en' ? 'en' : 'zh'] + ' ' + SUPPORT_TIERS.symbol[cur] + SUPPORT_TIERS.amounts[cur][selectedTier];
         }
 
         let lastFocused = null;
@@ -2999,7 +3103,7 @@
             const keys = visiblePayKeys();
             const key = keys.indexOf(prefer) >= 0 ? prefer : keys[0];
             switchSupportQR(key, document.querySelector('#payTabs [data-pay="' + key + '"]'));
-            title.textContent = '🥤 HAPPY WATER™ SUPPLY // 投餵快樂水™與貓飯';
+            title.textContent = window.couchLang === 'en' ? '🥤 HAPPY WATER™ SUPPLY // FEED THE FACTORY' : '🥤 HAPPY WATER™ SUPPLY // 投餵快樂水™與貓飯';
 
             lastFocused = trigger || document.activeElement;
             modal.classList.add('active');
@@ -3034,6 +3138,18 @@
             else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
         });
 
+        // 連結型支付方式的佔位卡（跟 QR Code 同尺寸）
+        function linkBadge(type) {
+            const label = { paypal: 'Ko-fi', afdian: 'afdian', newebpay: 'NewebPay', newebpay_os: 'NewebPay' }[type] || 'LINK';
+            const svg = "<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 150 150'>" +
+                "<rect width='150' height='150' fill='#0b0710'/>" +
+                "<rect x='10' y='10' width='130' height='130' fill='none' stroke='#00f0ff' stroke-opacity='0.35' stroke-dasharray='4 4'/>" +
+                "<text x='75' y='66' text-anchor='middle' font-family='monospace' font-size='20' font-weight='700' fill='#00f0ff'>" + label + "</text>" +
+                "<text x='75' y='92' text-anchor='middle' font-family='monospace' font-size='10' letter-spacing='1' fill='#a68a96'>NO QR NEEDED</text>" +
+                "<text x='75' y='124' text-anchor='middle' font-family='monospace' font-size='22' font-weight='700' fill='#ff2a7f'>↓</text></svg>";
+            return 'data:image/svg+xml,' + encodeURIComponent(svg);
+        }
+
         // 統一切換邏輯：確保 QR Code、說明文字與底部按鈕絕對定位統一不跳動
         function switchSupportQR(type, btn) {
             document.querySelectorAll('#donateModal .pay-tab').forEach(el => {
@@ -3051,21 +3167,29 @@
             const qrDisplay = document.querySelector('.qr-display');
 
             if (data.type === 'link') {
-                imgEl.style.display = 'none';
+                // 沒有 QR 的方式也放一張同尺寸的卡片，讓文字與按鈕的位置完全不動
+                imgEl.style.display = 'block';
+                imgEl.style.visibility = 'hidden';
                 qrDisplay.classList.add('mode-link');
                 qrDisplay.classList.remove('mode-qr');
             } else {
                 imgEl.style.display = 'block';
+                imgEl.style.visibility = '';
                 loadQrWithFallback(imgEl, data.img);
                 qrDisplay.classList.add('mode-qr');
                 qrDisplay.classList.remove('mode-link');
             }
 
-            document.getElementById('supportQrHint').innerHTML = data.hint;
+            let hint = data.hint;
+            if (window.couchLang === 'en' && hint.indexOf('<br><br>') >= 0) hint = hint.split('<br><br>').pop();
+            else if (window.couchLang !== 'en' && hint.indexOf('<br><br>') >= 0) hint = hint.split('<br><br>')[0];
+            document.getElementById('supportQrHint').innerHTML = hint;
             actionBtn.href = data.url;
             actionBtn.innerHTML = data.btnText;
             // 沒有可跳轉的網址（例如只有 QR 的 TWQR、LINE Pay）就不顯示按鈕
-            actionBtn.style.display = /^https?:\/\//.test(data.url) ? '' : 'none';
+            // 沒有可跳轉的網址（只有 QR 的街口、LINE Pay）：按鈕隱形但保留位置
+            actionBtn.style.display = '';
+            actionBtn.style.visibility = /^https?:\/\//.test(data.url) ? '' : 'hidden';
             renderTiers();
         }
 
@@ -3075,6 +3199,17 @@
             const email = document.getElementById('supporterEmail').value.trim() || '未提供';
             const message = document.getElementById('supporterMessage').value.trim() || '（無額外留言，純贊助支持 🥤）';
 
+            if (window.couchLang === 'en') {
+                const nm = document.getElementById('supporterName').value.trim() || 'Anonymous';
+                const em = document.getElementById('supporterEmail').value.trim() || 'not given';
+                const msg = document.getElementById('supporterMessage').value.trim() || '(no message, just support 🥤)';
+                const plan = tierText();
+                const subj = encodeURIComponent(`[Support] from ${nm}`);
+                const bod = encodeURIComponent(`Hi lonlon, I just sent support via "${currentPayMethod}"!\n${plan ? '\nPlan: ' + plan + '\n' : ''}\nName: ${nm}\nEmail: ${em}\nMessage:\n${msg}\n`);
+                window.location.href = `mailto:arts.lonp@gmail.com?subject=${subj}&body=${bod}`;
+                closeModal();
+                return;
+            }
             const zh = window.zhConvert || function (s) { return s; };
             const tier = tierText();
             const subject = encodeURIComponent(zh(`[贊助與留言] 來自 ${name} 的支持`));
@@ -3178,14 +3313,14 @@ ${message}
                 });
             }
             document.querySelectorAll('.cmd-code').forEach(function (btn) {
-                btn.title = '複製 Copy';
+                btn.title = (window.couchT || function (a) { return a; })('複製', 'Copy');
                 btn.addEventListener('click', function () {
                     const text = btn.getAttribute('data-copy') || btn.textContent;
                     copyText(text).then(function () {
                         btn.classList.add('copied');
                         setTimeout(function () { btn.classList.remove('copied'); }, 1200);
-                        showToast('已複製 COPIED  ' + text.trim());
-                    }).catch(function () { showToast('複製失敗，請手動輸入 // Copy failed'); });
+                        showToast((window.couchT || function (a) { return a; })('已複製  ', 'COPIED  ') + text.trim());
+                    }).catch(function () { showToast((window.couchT || function (a) { return a; })('複製失敗，請手動輸入', 'Copy failed, please type it')); });
                 });
             });
 
@@ -3219,8 +3354,8 @@ ${message}
                 if ((vault.getAttribute('data-open') === 'true') === open) return;
                 vault.setAttribute('data-open', open ? 'true' : 'false');
                 vaultToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-                if (open) scramble(vaultState, 'ACCESS GRANTED 已展開');
-                else { clearInterval(vaultState._scr); vaultState.textContent = '[ LOCKED ] 點擊展開'; }
+                if (open) scramble(vaultState, window.couchLang === 'en' ? 'ACCESS GRANTED' : 'ACCESS GRANTED 已展開');
+                else { clearInterval(vaultState._scr); vaultState.textContent = window.couchLang === 'en' ? '[ LOCKED ] CLICK TO OPEN' : '[ LOCKED ] 點擊展開'; }
             }
             function backToBar() {
                 if (vault.getBoundingClientRect().top < 0) vault.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
@@ -3307,7 +3442,7 @@ ${message}
                 section.removeAttribute('data-settled');
                 section.setAttribute('data-hub', open ? 'open' : 'closed');
                 toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-                state.textContent = open ? '[ ONLINE ] 收合' : '[ STANDBY ] 展開';
+                state.textContent = window.couchLang === 'en' ? (open ? '[ ONLINE ] COLLAPSE' : '[ STANDBY ] EXPAND') : (open ? '[ ONLINE ] 收合' : '[ STANDBY ] 展開');
                 // 展開動畫結束後解除 overflow，價目表的黏性搜尋列才會黏住
                 if (open) settleTimer = setTimeout(function () { section.setAttribute('data-settled', 'true'); }, (instant || reducedMotion) ? 0 : 600);
                 try { sessionStorage.setItem('couch-hub', open ? '1' : '0'); } catch (e) {}
@@ -3379,6 +3514,7 @@ ${message}
                 evening: { zh: "晚班", en: "Evening" },
                 late: { zh: "深夜", en: "Late night" }
             };
+            var ENG = window.couchLang === "en";
             var DEFAULT_SLOTS = [
                 { days: [5, 6, 0], start: "20:00", end: "23:30" },
                 { days: [6, 0], start: "08:30", end: "11:00" }
@@ -3473,12 +3609,12 @@ ${message}
             }
             function dayBits(days) {
                 return {
-                    zh: days.map(function (d) { return ZH[d]; }).join(""),
+                    zh: ENG ? days.map(function (d) { return EN[d]; }).join(" ") : days.map(function (d) { return ZH[d]; }).join(""),
                     en: days.map(function (d) { return EN[d]; }).join(" ")
                 };
             }
             function clockLine(v) {
-                var end = v.crosses ? ("次日 " + v.endClock) : v.endClock;
+                var end = v.crosses ? ((ENG ? "next day " : "次日 ") + v.endClock) : v.endClock;
                 var endEn = v.crosses ? ("next day " + v.endClock) : v.endClock;
                 return { zh: v.startClock + " – " + end, en: v.startClock + " – " + endEn };
             }
@@ -3521,7 +3657,9 @@ ${message}
                         var nv = viewOf(soonest.occ, mode);
                         var nb = BANDS[nv.band];
                         var nc = clockLine(nv);
-                        nextEl.innerHTML = "<span class=\"highlight-blue\">下一班</span><span class=\"shift-en\">Next</span> · " +
+                        nextEl.innerHTML = ENG
+                            ? "<span class=\"highlight-blue\">Next</span> · " + EN[nv.dow] + " · " + nb.en + " · " + nc.en
+                            : "<span class=\"highlight-blue\">下一班</span><span class=\"shift-en\">Next</span> · " +
                             ZH[nv.dow] + " " + EN[nv.dow] + " · " + nb.zh + " " + nb.en + " · " + nc.zh;
                     }
                 }
@@ -3547,17 +3685,17 @@ ${message}
                         var dow = new Date(Date.UTC(+o.date.slice(0, 4), +o.date.slice(5, 7) - 1, +o.date.slice(8, 10))).getUTCDay();
                         if (slot.days.indexOf(dow) < 0) return;
                         var v = viewOf(onDate(o.date, slot.start, slot.end), mode);
-                        var label = v.date.slice(5).replace("-", "/") + " " + ZH[v.dow];
+                        var label = v.date.slice(5).replace("-", "/") + " " + (ENG ? EN[v.dow] : ZH[v.dow]);
                         if (offLabels.indexOf(label) < 0) offLabels.push(label);
                     });
                     return groups.map(function (g) {
                         var bits = dayBits(g.days);
                         var band = BANDS[g.v.band];
                         var clocks = clockLine(g.v);
-                        var tag = offLabels.length ? '<span class="shift-off-tag">請假 DAY OFF · ' + esc(offLabels.join("、")) + "</span>" : "";
+                        var tag = offLabels.length ? '<span class="shift-off-tag">' + (ENG ? "DAY OFF · " : "請假 DAY OFF · ") + esc(offLabels.join(ENG ? ", " : "、")) + "</span>" : "";
                         var enClock = clocks.zh === clocks.en ? "" : '<div class="shift-en-line">' + esc(clocks.en) + "</div>";
                         return '<article class="shift-block">' +
-                            '<div class="shift-head"><span class="shift-days">' + esc(bits.zh) + '</span><span class="shift-kind">' + band.zh + " " + band.en + "</span></div>" +
+                            '<div class="shift-head"><span class="shift-days">' + esc(bits.zh) + '</span><span class="shift-kind">' + (ENG ? band.en : band.zh + " " + band.en) + "</span></div>" +
                             '<div class="shift-en-line">' + esc(bits.en) + "</div>" +
                             '<div class="shift-clock">' + esc(clocks.zh) + "</div>" +
                             enClock +
@@ -3586,8 +3724,8 @@ ${message}
                         var clocks = clockLine(v);
                         offItems.push({
                             start: occ.start,
-                            html: esc(v.date.slice(5).replace("-", "/")) + " " + ZH[v.dow] + " " + EN[v.dow] +
-                                " · " + band.zh + " " + band.en + " · " + esc(clocks.zh) +
+                            html: esc(v.date.slice(5).replace("-", "/")) + " " + (ENG ? EN[v.dow] : ZH[v.dow] + " " + EN[v.dow]) +
+                                " · " + (ENG ? band.en : band.zh + " " + band.en) + " · " + esc(clocks.zh) +
                                 (o.note ? " · " + esc(o.note) : "")
                         });
                     });
@@ -3636,7 +3774,9 @@ ${message}
                 kicker.innerHTML = live
                     ? "直播中・剩餘 <span class=\"lang-en\" style=\"display:inline\">Live now · ends in</span>"
                     : "下一班倒數 <span class=\"lang-en\" style=\"display:inline\">Next shift in</span>";
-                sub.innerHTML = ZH[v.dow] + "　" + band.zh + "　" + esc(c.zh) +
+                sub.innerHTML = ENG
+                    ? EN[v.dow] + " · " + band.en + " · " + esc(c.en) + " <span class=\"lang-en\">" + (mode === "tw" ? "Taiwan time" : "your time") + "</span>"
+                    : ZH[v.dow] + "　" + band.zh + "　" + esc(c.zh) +
                     " <span class=\"lang-en\">" + EN[v.dow] + " · " + band.en + " · " + (mode === "tw" ? "Taiwan time" : "your time") + "</span>";
             }
 
@@ -3680,6 +3820,9 @@ ${message}
         ========================================= */
         (function () {
             var reduced = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+            var T = window.couchT || function (a) { return a; };
+            var ENG = window.couchLang === 'en';
+            function L(zh, en) { return ENG ? en : zh; }
             function store(k, v) {
                 try {
                     if (v === undefined) return sessionStorage.getItem(k);
@@ -3694,13 +3837,13 @@ ${message}
                 var bootLog = document.getElementById('bootLog');
                 var LINES = [
                     ['COUCH-OS BIOS v2.6.10   (c) HUMAN LEATHER COUCH FACTORY', 'b-pink'],
-                    ['CPU   : 1x 禿頭廠長 @ 3:00 AM ............ ', '', 'OK'],
-                    ['MEM   : 快樂水™ 330ml x 2 ................ ', '', 'OK'],
+                    ['CPU   : 1x ' + T('禿頭廠長', 'BALDING DIRECTOR') + ' @ 3:00 AM ............ ', '', 'OK'],
+                    ['MEM   : ' + T('快樂水™', 'HAPPY WATER™') + ' 330ml x 2 ................ ', '', 'OK'],
                     ['SCAN  : FELINE UNITS ..................... ', '', '2 FOUND (ON KEYBOARD)', 'b-warn'],
                     ['MOUNT : /factory/couch ................... ', '', 'OK'],
                     ['LOAD  : RIMWORLD COLONY .................. ', '', 'OK'],
                     [''],
-                    ['> WELCOME BACK, NIGHT-SHIFT EMPLOYEE. 歡迎回來，夜班員工。', 'b-pink']
+                    ['> WELCOME BACK, NIGHT-SHIFT EMPLOYEE.' + T(' 歡迎回來，夜班員工。', ''), 'b-pink']
                 ];
                 var li = 0, bootTimer = null, bootDone = false;
                 var finishBoot = function () {
@@ -3766,7 +3909,7 @@ ${message}
                     water = 100;
                     store('couch-water', water);
                     renderMon();
-                    showToast('快樂水™ 已補滿 ♥ 謝謝老闆 // REFILLED');
+                    showToast(T('快樂水™ 已補滿 ♥ 謝謝老闆', 'Happy Water™ refilled ♥ thank you, boss'));
                 }
             };
 
@@ -3776,7 +3919,7 @@ ${message}
                 var main = document.getElementById('heroStatusMain');
                 var panel = document.getElementById('heroStatus');
                 var text = panel && panel.classList.contains('is-live')
-                    ? 'ON AIR 直播中 · ' + (main ? main.textContent : '')
+                    ? T('ON AIR 直播中 · ', 'ON AIR · ') + (main ? main.textContent : '')
                     : (next && next.textContent.trim()) || 'TBA';
                 document.querySelectorAll('.t-next').forEach(function (el) { el.textContent = text; });
             }
@@ -3866,10 +4009,19 @@ ${message}
                 'chicken', 'cat', 'cow', 'horse', 'husky', 'panda', 'scimitar', 'thrumbo', 'pig', 'sheep', 'yorkie', 'labrador', 'elephant'];
             var RESERVED = ['buy', 'lookup', 'money', 'give', 'ban', 'unban', 'event', 'animal', 'name', 'amount',
                 '事件', '動物', '动物', '取名', '名字', '數量', '数量', 'livestock', 'prized', 'mythic', '家畜', '珍獸', '珍兽', '靈獸', '灵兽'];
-            var MORE = '更多：本頁「完整價目表」';
+            var MORE = L('更多：本頁「完整價目表」', 'more: full price list on this page');
+            function nameOf(it) { return ENG ? it.en[0] : it.hant[0]; }
+            function cmdOf(it) {
+                if (!ENG) return it.cmd;
+                var w = it.en[0];
+                if (it.name === 'new') return '!buy ' + w + ' name';
+                if (it.name === 'target') return '!buy ' + w + ' name' + (it.qty ? ' amount' : '');
+                return '!buy ' + w + (it.qty ? ' amount' : '');
+            }
+            function bandWord(b) { return ENG ? BANDS[b].en : BANDS[b].hant; }
 
             // 練習殖民地
-            var colony = { '冷冷': 'hurt', '阿呆': 'ok', '老海盜': 'couch' };
+            var colony = ENG ? { 'Lonlon': 'hurt', 'Adai': 'ok', 'Old Raider': 'couch' } : { '冷冷': 'hurt', '阿呆': 'ok', '老海盜': 'couch' };
             var humanToday = false, animalToday = false, failHinted = false;
 
             function eq(a, b) { return String(a).toLowerCase() === String(b).toLowerCase(); }
@@ -3918,19 +4070,21 @@ ${message}
 
             function menu(hint, extra, items) {
                 var list = items.slice().sort(function (a, b) { return rank(a) - rank(b); }).slice(0, 8);
-                return hint + '｜' + list.map(function (it) { return it.hant[0] + it.price; }).join(' ') +
+                return hint + '｜' + list.map(function (it) { return nameOf(it) + (ENG ? ' ' : '') + it.price; }).join(ENG ? ', ' : ' ') +
                     '｜' + (extra ? extra + '｜' : '') + MORE;
             }
             function bareMenu(args) {
                 if (args.length !== 1) return null;
                 var w = args[0];
-                if (has(EVENT_WORDS, w)) return menu('!buy 事件名稱', '', CATALOG.filter(function (it) { return it.group === 'event'; }));
-                if (has(ANIMAL_WORDS, w)) return menu('!buy 動物名 取名', '隨機: !buy 家畜/珍獸/靈獸 取名', CATALOG.filter(function (it) { return it.band; }));
+                if (has(EVENT_WORDS, w)) return menu(L('!buy 事件名稱', '!buy <event>'), '', CATALOG.filter(function (it) { return it.group === 'event'; }));
+                if (has(ANIMAL_WORDS, w)) return menu(L('!buy 動物名 取名', '!buy <animal> name'), L('隨機: !buy 家畜/珍獸/靈獸 取名', 'random: !buy livestock/prized/mythic name'), CATALOG.filter(function (it) { return it.band; }));
                 var b = bandOf(w);
-                if (b) return menu('!buy ' + BANDS[b].hant + ' 取名', '或 !buy 動物名 取名', CATALOG.filter(function (it) { return it.band === b; }));
+                if (b) return menu('!buy ' + bandWord(b) + L(' 取名', ' name'), L('或 !buy 動物名 取名', 'or !buy <animal> name'), CATALOG.filter(function (it) { return it.band === b; }));
                 return null;
             }
-            var PIN = ['!money', '!lookup 關鍵字', '!lookup 動物', '!buy 食物 數量', '!buy 草藥 數量', '!buy 大衣', '!buy 夾克',
+            var PIN = ENG ? ['!money', '!lookup keyword', '!lookup animal', '!buy food amount', '!buy medicine amount', '!buy coat', '!buy jacket',
+                '!buy human name', '!buy livestock name', '!buy prized name', '!buy mythic name', '!buy raid', '!buy hunt', '!buy <event>',
+                '!buy heal name amount', '!buy comfort name amount', '!buy revive name', '!buy monument name'] : ['!money', '!lookup 關鍵字', '!lookup 動物', '!buy 食物 數量', '!buy 草藥 數量', '!buy 大衣', '!buy 夾克',
                 '!buy 人類 取名', '!buy 家畜 取名', '!buy 珍獸 取名', '!buy 靈獸 取名', '!buy 襲擊', '!buy 獵殺', '!buy 事件名稱',
                 '!buy 治療 名字 數量', '!buy 安撫 名字 數量', '!buy 復活 名字', '!buy 紀念碑 取名'];
 
@@ -3938,7 +4092,7 @@ ${message}
                 var lines = [['✗ ' + text, 'l-err']];
                 if (!failHinted) {
                     failHinted = true;
-                    lines.push(['（真正的聊天室：沒成功就不回覆、不扣金幣，只有實況主看得到這句）', 'l-dim']);
+                    lines.push([L('（真正的聊天室：沒成功就不回覆、不扣金幣，只有實況主看得到這句）', '(In real chat, failed commands get no reply and cost nothing; only the streamer sees this line)'), 'l-dim']);
                 }
                 out(lines);
             }
@@ -3953,7 +4107,21 @@ ${message}
                 if (colony[name]) return 'taken';
                 return null;
             }
-            var ERR = {
+            var ERR = ENG ? {
+                badname: 'that name cannot be used (max 16 characters, no !)',
+                reserved: 'that name is a command',
+                taken: 'that name is taken',
+                nomoney: 'not enough coins',
+                amount: 'amount is 1 to 20',
+                nostack: 'this one has no amount',
+                extra: 'too many words',
+                pick: 'pick an animal or a group first, e.g. !buy livestock name',
+                notarget: 'nobody by that name (practice colony: Lonlon, Adai, Old Raider)',
+                healthy: 'nothing to treat',
+                alive: 'they are alive',
+                humancap: 'one human a day (type sleep to pass a day)',
+                animalcap: 'one animal a day (type sleep to pass a day)'
+            } : {
                 badname: '這個不能當名字（最多 16 字、不能有 !）',
                 reserved: '這個名字是指令',
                 taken: '這個名字已經有了',
@@ -3981,12 +4149,12 @@ ${message}
                         return it.en.concat(it.hant, it.hans).some(function (w) { return w.toLowerCase().indexOf(ql) >= 0; });
                     });
                 }
-                if (!hits.length) { fail('找不到 ' + MORE); return; }
-                ok(hits.slice(0, 3).map(function (it) { return it.hant[0] + '｜' + it.price + '｜' + it.cmd; }).join(' / '));
+                if (!hits.length) { fail(L('找不到 ', 'no match · ') + MORE); return; }
+                ok(hits.slice(0, 3).map(function (it) { return nameOf(it) + '｜' + it.price + '｜' + cmdOf(it); }).join(' / '));
             }
 
             function doBuy(args) {
-                if (!args.length) { ok('!buy 食物 / 草藥 / 人類 / 動物 / 事件，試試 !buy 事件 或 !buy 動物 | ' + MORE); return; }
+                if (!args.length) { ok(L('!buy 食物 / 草藥 / 人類 / 動物 / 事件，試試 !buy 事件 或 !buy 動物 | ', '!buy food / medicine / human / animal / event. Try !buy event or !buy animal | ') + MORE); return; }
                 var m = bareMenu(args);
                 if (m) { ok(m); return; }
                 var body = unglue(args);
@@ -3997,7 +4165,7 @@ ${message}
                 }
                 var band = bandOf(body[0]);
                 var item = band ? null : exact(body[0]);
-                if (!band && !item) { fail('找不到 ' + MORE); return; }
+                if (!band && !item) { fail(L('找不到 ', 'no match · ') + MORE); return; }
                 var qty = 1, count = body.length;
                 var allowsQty = !band && item.qty;
                 if (allowsQty && count >= 2 && isAmount(body[count - 1])) {
@@ -4007,7 +4175,7 @@ ${message}
                 } else if (count >= 2 && isAmount(body[count - 1])) { fail(ERR.nostack); return; }
                 var name = body.slice(1, count).join(' ').trim();
                 var needsName = !!band || !!item.name;
-                if (needsName && !name) { fail('少了取名 ' + (band ? '!buy ' + BANDS[band].hant + ' 取名' : item.cmd)); return; }
+                if (needsName && !name) { fail(L('少了取名 ', 'name missing · ') + (band ? '!buy ' + bandWord(band) + L(' 取名', ' name') : cmdOf(item))); return; }
                 if (!needsName && name) { fail(ERR.extra); return; }
                 var isNew = band || item.name === 'new';
                 if (isNew) { var bad = validNewName(name); if (bad) { fail(ERR[bad]); return; } }
@@ -4027,34 +4195,38 @@ ${message}
                     if (item.id === 'revive') {
                         if (who !== 'couch') { fail(ERR.alive); return; }
                     } else if (who === 'couch') {
-                        fail('對方已經死了（現在是一張沙發）'); return;
+                        fail(L('對方已經死了（現在是一張沙發）', 'they are dead (and currently a couch)')); return;
                     } else if (item.id === 'heal' && who !== 'hurt') { fail(ERR.healthy); return; }
                 }
                 var cost = item.price * qty;
-                if (coins < cost) { fail(ERR.nomoney + '：需要 ' + cost + '，你有 ' + coins + '。多待一下，喝口快樂水 ☕'); return; }
+                if (coins < cost) { fail(ERR.nomoney + L('：需要 ' + cost + '，你有 ' + coins + '。多待一下，喝口快樂水 ☕', ': need ' + cost + ', you have ' + coins + '. Stick around and sip some Happy Water ☕')); return; }
                 coins -= cost;
                 store('couch-coins4', coins);
                 renderMon();
 
-                var thing = item.hant[0] + (name && isNew ? '「' + name + '」' : name ? ' ' + name : qty > 1 ? ' x' + qty : '');
+                var thing = nameOf(item) + (name && isNew ? L('「' + name + '」', ' "' + name + '"') : name ? ' ' + name : qty > 1 ? ' x' + qty : '');
                 var extra = [];
                 if (isNew) colony[name] = 'ok';
                 if (item.use === 'human') humanToday = true;
                 if (item.band) {
                     animalToday = true;
-                    if (band) extra.push(['抽到的是：' + item.hant[0] + '（' + item.price + ' 金幣）', 'l-warm']);
-                    if (item.id === 'cat') { extra.push(['工廠的貓又多了一隻 =^.^=', 'l-warm']); later(function () { petCat(); }, 200); }
+                    if (band) extra.push([L('抽到的是：' + item.hant[0] + '（' + item.price + ' 金幣）', 'You drew: ' + item.en[0] + ' (' + item.price + ' coins)'), 'l-warm']);
+                    if (item.id === 'cat') { extra.push([L('工廠的貓又多了一隻 =^.^=', 'One more cat in the factory =^.^='), 'l-warm']); later(function () { petCat(); }, 200); }
                 }
                 if (item.id === 'heal') colony[name] = 'ok';
-                if (item.id === 'revive') { extra.push(['……沙發動了一下。老海盜決定繼續當沙發。', 'l-warm']); }
-                if (item.id === 'raid') extra.push(['⚠ 小型襲擊從地圖邊緣走進來了。廠長：「等等，殺戮走廊還沒蓋好——」', 'l-err']);
-                if (item.id === 'hunt') extra.push(['⚠ 1–3 隻溫和動物暫時發狂了。', 'l-err']);
-                if (item.id === 'monument') extra.push(['空投包裝的紀念碑落地，上面刻著「' + name + '」和你的名字。', 'l-warm']);
-                extra.push(['剩 ' + coins + ' 金幣（練習模式）', 'l-dim']);
-                ok('買了 ' + thing + '，已經送到殖民地。', extra);
+                if (item.id === 'revive') { extra.push([L('……沙發動了一下。老海盜決定繼續當沙發。', '...the couch twitched. The old raider decided to stay a couch.'), 'l-warm']); }
+                if (item.id === 'raid') extra.push([L('⚠ 小型襲擊從地圖邊緣走進來了。廠長：「等等，殺戮走廊還沒蓋好——」', '⚠ A small raid walks in from the map edge. Director: "wait, the killbox is not done yet..."'), 'l-err']);
+                if (item.id === 'hunt') extra.push([L('⚠ 1–3 隻溫和動物暫時發狂了。', '⚠ 1–3 docile animals went berserk for a while.'), 'l-err']);
+                if (item.id === 'monument') extra.push([L('空投包裝的紀念碑落地，上面刻著「' + name + '」和你的名字。', 'A crated monument drops in, engraved with "' + name + '" and your name.'), 'l-warm']);
+                extra.push([L('剩 ' + coins + ' 金幣（練習模式）', coins + ' coins left (practice)'), 'l-dim']);
+                ok(L('買了 ' + thing + '，已經送到殖民地。', 'bought ' + thing + ' for the colony.'), extra);
             }
 
-            var OLD = {
+            var OLD = ENG ? {
+                '!bal': '!money', '!pawn': '!buy human name', '!event': '!buy <event>, e.g. !buy aurora',
+                '!pricecheck': '!lookup keyword', '!purchaselist': '!lookup', '!healpawn': '!buy heal name',
+                '!revivepawn': '!buy revive name', '!rescueme': '(removed)', '!surgery': '(removed)'
+            } : {
                 '!bal': '!money', '!pawn': '!buy 人類 取名', '!event': '!buy 事件名稱，例如 !buy 極光',
                 '!pricecheck': '!lookup 關鍵字', '!purchaselist': '!lookup', '!healpawn': '!buy 治療 名字',
                 '!revivepawn': '!buy 復活 名字', '!rescueme': '（已移除）', '!surgery': '（已移除）'
@@ -4069,13 +4241,13 @@ ${message}
 
                 var bang = parseBang(cmd);
                 if (bang) {
-                    if (bang.verb === 'money') { ok(coins + ' 金幣', [['觀看時每分鐘 +10，最近 5 分鐘有發言再 +10（練習機加速：每 5 秒 +10）', 'l-dim']]); return; }
+                    if (bang.verb === 'money') { ok(coins + L(' 金幣', ' coins'), [[L('觀看時每分鐘 +10，最近 5 分鐘有發言再 +10（練習機加速：每 5 秒 +10）', '+10 per minute while watching, +10 more if you chatted in the last 5 minutes (sped up here: +10 every 5 s)'), 'l-dim']]); return; }
                     if (bang.verb === 'lookup') { doLookup(bang.args); return; }
                     if (bang.verb === 'buy') { doBuy(bang.args); return; }
-                    if (bang.verb === 'give' || bang.verb === 'ban' || bang.verb === 'unban') { fail('!' + bang.verb + ' 只有實況主能用（在遊戲裡的直播視窗輸入）'); return; }
+                    if (bang.verb === 'give' || bang.verb === 'ban' || bang.verb === 'unban') { fail('!' + bang.verb + L(' 只有實況主能用（在遊戲裡的直播視窗輸入）', ' is streamer-only (typed in the in-game stream window)')); return; }
                     var old = OLD['!' + bang.head];
-                    if (old) { out([['舊指令。OmniStream 現在用：' + old, 'l-warm']]); return; }
-                    out([['!' + bang.head + '：不是 OmniStream 指令。輸入 help 看看', 'l-err']]);
+                    if (old) { out([[L('舊指令。OmniStream 現在用：', 'Old command. OmniStream uses: ') + old, 'l-warm']]); return; }
+                    out([['!' + bang.head + L('：不是 OmniStream 指令。輸入 help 看看', ': not an OmniStream command. Try help'), 'l-err']]);
                     return;
                 }
 
@@ -4085,7 +4257,19 @@ ${message}
 
                 switch (head) {
                     case 'help': case '?': case '說明': case '幫助': case '帮助':
-                        out([
+                        out(ENG ? [
+                            ['CHAT COMMANDS (start with !)', 'l-warm'],
+                            '  !money                     check your coins',
+                            '  !lookup keyword            how to buy it and the price',
+                            '  !buy food 5                supplies, amount last (max 20)',
+                            '  !buy event / !buy animal   list common choices and prices',
+                            '  !buy aurora                type the event name directly',
+                            '  !buy cat Mochi             pick an animal and name it',
+                            '  !buy livestock Mochi       draw a livestock animal you can afford',
+                            '  !buy heal Lonlon           heal (practice colony: Lonlon, Adai, Old Raider)',
+                            ['PRACTICE ONLY', 'l-warm'],
+                            '  schedule · pet · donate · ls · open <file> · sleep · clear'
+                        ] : [
                             ['聊天室指令 // CHAT COMMANDS（開頭打 ! 或 ！）', 'l-warm'],
                             '  !money                 查金幣',
                             '  !lookup 關鍵字          查怎麼買、多少錢',
@@ -4100,11 +4284,11 @@ ${message}
                         ]);
                         break;
                     case 'money': case 'lookup': case 'buy':
-                        out([['聊天室指令要用 ! 開頭：!' + head + (arg ? ' ' + arg : ''), 'l-warm']]);
+                        out([[L('聊天室指令要用 ! 開頭：', 'Chat commands start with !: ') + '!' + head + (arg ? ' ' + arg : ''), 'l-warm']]);
                         break;
                     case 'sleep': case '睡覺': case '睡觉':
                         humanToday = false; animalToday = false;
-                        out([['殖民地過了一天。今天的人和動物名額重新開放。', 'l-ok']]);
+                        out([[L('殖民地過了一天。今天的人和動物名額重新開放。', 'A day passes. The human and animal slots are open again.'), 'l-ok']]);
                         break;
                     case 'schedule': case 'live': case '直播': case '輪班':
                         var k = document.getElementById('heroStatusKicker');
@@ -4113,13 +4297,13 @@ ${message}
                         out([
                             [(k ? k.textContent.trim() : '') + '  ' + (m ? m.textContent : ''), 'l-warm'],
                             s ? s.textContent.trim() : '',
-                            ['完整輪班表：open live', 'l-dim']
+                            [L('完整輪班表：open live', 'full schedule: open live'), 'l-dim']
                         ]);
                         break;
                     case 'pet': case '摸貓': case '摸猫': case 'meow': case '喵':
                         out([
                             [' /\\_/\\', 'l-warm'],
-                            ['( ^.^ )   呼嚕嚕… purrrrr', 'l-warm'],
+                            [L('( ^.^ )   呼嚕嚕… purrrrr', '( ^.^ )   purrrrr...'), 'l-warm'],
                             [' (")(")~', 'l-warm']
                         ]);
                         later(function () { petCat(); }, 100);
@@ -4129,43 +4313,43 @@ ${message}
                         else run('pet');
                         return;
                     case 'donate': case '投餵': case '投喂': case 'feed':
-                        out([['開啟投餵視窗… // Opening the feeding protocol', 'l-ok']]);
+                        out([[L('開啟投餵視窗…', 'Opening the feeding protocol...'), 'l-ok']]);
                         later(function () { window.openDonate('us', input); }, 350);
                         break;
                     case 'ls': case 'dir':
                         out(['commands.sh   prices.db   live.md   about.md   donate.md   shop.html   game.html']);
                         break;
                     case 'open': case 'cd': case 'less': case 'more':
-                        if (!arg) { out([['用法 Usage: open prices', 'l-err']]); break; }
+                        if (!arg) { out([[L('用法：open prices', 'usage: open prices'), 'l-err']]); break; }
                         openFile(arg);
                         break;
                     case 'shop': case 'game':
                         openFile(head);
                         break;
                     case 'whoami':
-                        out([['night-shift employee #' + employeeNo + ' // 夜班兼職員工', 'l-ok']]);
+                        out([['night-shift employee #' + employeeNo + L(' // 夜班兼職員工', ' // part-time'), 'l-ok']]);
                         break;
                     case 'date': case 'time':
                         var tw = new Date(Date.now() + 8 * 3600000);
-                        out(['台灣時間 Taiwan ' + tw.toISOString().slice(0, 16).replace('T', ' ') + '  ·  你的時間 Local ' + new Date().toLocaleString()]);
+                        out([L('台灣時間 ', 'Taiwan ') + tw.toISOString().slice(0, 16).replace('T', ' ') + L('  ·  你的時間 ', '  ·  your time ') + new Date().toLocaleString()]);
                         break;
                     case 'sudo': case 'su':
-                        out([['權限不足：root 權限只屬於兩位貓咪主子。', 'l-err'], ['Permission denied: only the cats have root.', 'l-dim']]);
+                        out([[L('權限不足：root 權限只屬於兩位貓咪主子。', 'Permission denied: only the two cats have root.'), 'l-err']]);
                         break;
                     case 'rm':
-                        out([['已攔截。沙發不能拆。// Nice try.', 'l-err']]);
+                        out([[L('已攔截。沙發不能拆。', 'Blocked. The couch cannot be taken apart. Nice try.'), 'l-err']]);
                         break;
                     case 'exit': case 'logout': case 'quit':
-                        out([['下班打卡失敗：夜班還沒結束。// You cannot clock out yet.', 'l-warm']]);
+                        out([[L('下班打卡失敗：夜班還沒結束。', 'Clock-out failed: the night shift is not over yet.'), 'l-warm']]);
                         break;
                     case 'hi': case 'hello': case '你好': case '嗨': case 'w':
-                        out([['嗨～歡迎來到皮沙發工廠，隨便找張沙發坐 🛋', 'l-warm']]);
+                        out([[L('嗨～歡迎來到皮沙發工廠，隨便找張沙發坐 🛋', 'Hey, welcome to the Couch Factory. Grab a couch 🛋'), 'l-warm']]);
                         break;
                     case 'clear': case 'cls':
                         queue = queue.then(function () { log.innerHTML = ''; });
                         break;
                     default:
-                        out([[head + ': command not found // 找不到指令，輸入 help 看看', 'l-err']]);
+                        out([[head + L(': command not found // 找不到指令，輸入 help 看看', ': command not found. Try help'), 'l-err']]);
                 }
             }
 
@@ -4175,17 +4359,17 @@ ${message}
             function openFile(name) {
                 var key = String(name || '').toLowerCase().replace(/^\.?\/?/, '').replace(/\.(md|html)$/, '');
                 if (key === 'shop' || key === 'game') {
-                    out([['正在前往 ' + key + '.html …', 'l-ok']]);
+                    out([[L('正在前往 ', 'opening ') + key + '.html …', 'l-ok']]);
                     later(function () { location.href = key + '.html'; }, 400);
                     return;
                 }
                 if (key === 'prices' && window.openCatalog) {
-                    out([['解鎖 ~/factory/prices.db …', 'l-ok']]);
+                    out([[L('解鎖 ', 'unlocking ') + '~/factory/prices.db …', 'l-ok']]);
                     later(function () { window.openCatalog(); }, 250);
                     return;
                 }
-                if (!FILES[key]) { out([[name + ': No such file // 找不到這個檔案，輸入 ls 看看', 'l-err']]); return; }
-                out([['開啟 ~/factory/' + key + '.md …', 'l-ok']]);
+                if (!FILES[key]) { out([[name + L(': No such file // 找不到這個檔案，輸入 ls 看看', ': no such file. Try ls'), 'l-err']]); return; }
+                out([[L('開啟 ', 'opening ') + '~/factory/' + key + '.md …', 'l-ok']]);
                 if ((key === 'guide' || key === 'commands' || key === 'try') && window.openHub) window.openHub(true);
                 later(function () { document.getElementById(FILES[key]).scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' }); }, 250);
             }
@@ -4223,7 +4407,11 @@ ${message}
                 });
             });
 
-            out([
+            out(ENG ? [
+                ['OmniStream PRACTICE MODE', 'l-dim'],
+                ['Same commands and prices as the stream chat, but nothing is spent for real. You start with 100 coins, like a first chat message.', 'l-dim'],
+                ['Type help to start, or tap a button below', 'l-warm']
+            ] : [
                 ['OmniStream 練習機 // PRACTICE MODE', 'l-dim'],
                 ['指令、價錢都跟直播聊天室一樣，但這裡不會真的花到金幣。開局送 100 金幣（跟首次發言一樣）。', 'l-dim'],
                 ['輸入 help 開始，或點下面的按鈕 ↓', 'l-warm']

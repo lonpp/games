@@ -24,7 +24,15 @@
     --cut: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
 }
 html[data-lang="hans"] { --font-body: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif; }
-html[data-region="cn"] .only-tw, html[data-region="tw"] .only-cn { display: none !important; }
+html:not([data-region="tw"]) .only-tw { display: none !important; }
+html:not([data-region="cn"]) .only-cn { display: none !important; }
+html[data-region="cn"] .not-cn { display: none !important; }
+/* 中文模式：長段英文搬到 EN 模式；EN 模式藏掉有英文對照的中文 */
+html:not([data-lang="en"]) .lang-en { display: none !important; }
+html[data-lang="en"] .lang-zh:has(~ .lang-en), html[data-lang="en"] .zh-only { display: none !important; }
+html[data-lang="en"] .lang-en { color: var(--text); font-size: inherit; }
+html[data-lang="en"] .section-title .sec-en { display: none; }
+html[data-lang="en"] .site-nav .en, html[data-lang="en"] .site-back .mono { display: none; }
 html.zh-pending body { visibility: hidden; animation: zh-failsafe 0s linear 1.5s forwards; }
 @keyframes zh-failsafe { to { visibility: visible; } }
 
