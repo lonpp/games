@@ -359,6 +359,7 @@
         }
         .jump-kicker { color: var(--blue); }
         .jump-nav a:hover .jump-kicker { color: #000; }
+        .jump-nav .lang-zh, .jump-nav .lang-en { color: inherit; font-size: inherit; line-height: inherit; }
 
         /* HERO 右側：即時直播狀態面板 */
         .status-panel {
@@ -1360,7 +1361,9 @@
             .status-main { font-size: 1.55rem; }
 
             .jump-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem; }
-            .jump-nav a { justify-content: center; font-size: 0.72rem; padding: 0.55rem 0.4rem; }
+            .jump-nav a { justify-content: center; font-size: 0.78rem; padding: 0.6rem 0.4rem; white-space: nowrap; }
+            /* 手機：中文版只留中文、英文版只留英文，按鈕不會擠成兩行 */
+            .jump-nav .jn-en { display: none; }
 
             .social-matrix { grid-template-columns: 1fr; gap: 0.9rem; }
             .gate-card { min-height: 0; }
@@ -2320,6 +2323,157 @@
             #donateModal .qr-display img#supportQrImage { width: 116px; height: 116px; }
             #donateModal .qr-display #supportQrHint { font-size: 0.76rem; line-height: 1.5; }
         }
+
+        /* ---------- 旋轉快樂水 ----------
+           iPhone 開「低耗電模式」或關掉「自動播放動態影像」時，GIF 會停在第一格。
+           改用分格圖（images/happy-water-sprite.webp，91 格）＋ CSS 動畫，不受這兩個設定影響。
+           只有開「減少動態效果」的人會看到靜止的罐子（尊重他們的設定）。 */
+        .water-anim {
+            display: inline-block;
+            aspect-ratio: 141 / 256;
+            background: url('images/happy-water-sprite.webp?v=5') 0 0 / 1300% 700% no-repeat;
+            image-rendering: pixelated;
+            animation: water-spin 7.58s step-end infinite;
+        }
+        span.btn-water-icon { width: auto; }
+        span.water-img-lg { height: 230px; width: auto; max-width: 85%; }
+        .qr-display::before,
+        #donateModal .qr-display::before,
+        #donateModal .qr-display.mode-link::before,
+        #donateModal .qr-display.mode-qr::before {
+            inset: auto; top: 10px; left: 50%; height: calc(100% - 20px); width: auto;
+            aspect-ratio: 141 / 256;
+            transform: translateX(-50%);
+            background: url('images/happy-water-sprite.webp?v=5') 0 0 / 1300% 700% no-repeat;
+            image-rendering: pixelated;
+            animation: modal-bg-aura 5.5s infinite ease-in-out, water-spin 7.58s step-end infinite;
+        }
+        @keyframes water-spin {
+            0.0% { background-position: 0.0% 0.0%; }
+            1.055% { background-position: 8.333% 0.0%; }
+            2.111% { background-position: 16.667% 0.0%; }
+            3.298% { background-position: 25.0% 0.0%; }
+            4.354% { background-position: 33.333% 0.0%; }
+            5.409% { background-position: 41.667% 0.0%; }
+            6.596% { background-position: 50.0% 0.0%; }
+            7.652% { background-position: 58.333% 0.0%; }
+            8.707% { background-position: 66.667% 0.0%; }
+            9.894% { background-position: 75.0% 0.0%; }
+            10.95% { background-position: 83.333% 0.0%; }
+            12.005% { background-position: 91.667% 0.0%; }
+            13.193% { background-position: 100.0% 0.0%; }
+            14.248% { background-position: 0.0% 16.667%; }
+            15.303% { background-position: 8.333% 16.667%; }
+            16.491% { background-position: 16.667% 16.667%; }
+            17.546% { background-position: 25.0% 16.667%; }
+            18.602% { background-position: 33.333% 16.667%; }
+            19.789% { background-position: 41.667% 16.667%; }
+            20.844% { background-position: 50.0% 16.667%; }
+            21.9% { background-position: 58.333% 16.667%; }
+            23.087% { background-position: 66.667% 16.667%; }
+            24.142% { background-position: 75.0% 16.667%; }
+            25.198% { background-position: 83.333% 16.667%; }
+            26.385% { background-position: 91.667% 16.667%; }
+            27.441% { background-position: 100.0% 16.667%; }
+            28.496% { background-position: 0.0% 33.333%; }
+            29.683% { background-position: 8.333% 33.333%; }
+            30.739% { background-position: 16.667% 33.333%; }
+            31.794% { background-position: 25.0% 33.333%; }
+            32.982% { background-position: 33.333% 33.333%; }
+            34.037% { background-position: 41.667% 33.333%; }
+            35.092% { background-position: 50.0% 33.333%; }
+            36.28% { background-position: 58.333% 33.333%; }
+            37.335% { background-position: 66.667% 33.333%; }
+            38.391% { background-position: 75.0% 33.333%; }
+            39.578% { background-position: 83.333% 33.333%; }
+            40.633% { background-position: 91.667% 33.333%; }
+            41.689% { background-position: 100.0% 33.333%; }
+            42.876% { background-position: 0.0% 50.0%; }
+            43.931% { background-position: 8.333% 50.0%; }
+            44.987% { background-position: 16.667% 50.0%; }
+            46.174% { background-position: 25.0% 50.0%; }
+            47.23% { background-position: 33.333% 50.0%; }
+            48.285% { background-position: 41.667% 50.0%; }
+            49.472% { background-position: 50.0% 50.0%; }
+            50.528% { background-position: 58.333% 50.0%; }
+            51.583% { background-position: 66.667% 50.0%; }
+            52.77% { background-position: 75.0% 50.0%; }
+            53.826% { background-position: 83.333% 50.0%; }
+            54.881% { background-position: 91.667% 50.0%; }
+            56.069% { background-position: 100.0% 50.0%; }
+            57.124% { background-position: 0.0% 66.667%; }
+            58.179% { background-position: 8.333% 66.667%; }
+            59.367% { background-position: 16.667% 66.667%; }
+            60.422% { background-position: 25.0% 66.667%; }
+            61.478% { background-position: 33.333% 66.667%; }
+            62.665% { background-position: 41.667% 66.667%; }
+            63.72% { background-position: 50.0% 66.667%; }
+            64.776% { background-position: 58.333% 66.667%; }
+            65.963% { background-position: 66.667% 66.667%; }
+            67.018% { background-position: 75.0% 66.667%; }
+            68.074% { background-position: 83.333% 66.667%; }
+            69.261% { background-position: 91.667% 66.667%; }
+            70.317% { background-position: 100.0% 66.667%; }
+            71.372% { background-position: 0.0% 83.333%; }
+            72.559% { background-position: 8.333% 83.333%; }
+            73.615% { background-position: 16.667% 83.333%; }
+            74.67% { background-position: 25.0% 83.333%; }
+            75.858% { background-position: 33.333% 83.333%; }
+            76.913% { background-position: 41.667% 83.333%; }
+            77.968% { background-position: 50.0% 83.333%; }
+            79.156% { background-position: 58.333% 83.333%; }
+            80.211% { background-position: 66.667% 83.333%; }
+            81.266% { background-position: 75.0% 83.333%; }
+            82.454% { background-position: 83.333% 83.333%; }
+            83.509% { background-position: 91.667% 83.333%; }
+            84.565% { background-position: 100.0% 83.333%; }
+            85.752% { background-position: 0.0% 100.0%; }
+            86.807% { background-position: 8.333% 100.0%; }
+            87.863% { background-position: 16.667% 100.0%; }
+            89.05% { background-position: 25.0% 100.0%; }
+            90.106% { background-position: 33.333% 100.0%; }
+            91.161% { background-position: 41.667% 100.0%; }
+            92.348% { background-position: 50.0% 100.0%; }
+            93.404% { background-position: 58.333% 100.0%; }
+            94.459% { background-position: 66.667% 100.0%; }
+            95.646% { background-position: 75.0% 100.0%; }
+            96.702% { background-position: 83.333% 100.0%; }
+            97.757% { background-position: 91.667% 100.0%; }
+            98.945% { background-position: 100.0% 100.0%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        /* 快樂水展示框：裡面的呼吸燈（框內青光慢慢亮暗，邊框光暈跟著呼吸） */
+        .water-showcase-box { animation: box-breathe 3.6s ease-in-out infinite; isolation: isolate; }
+        .water-showcase-box::before {
+            content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+            background: radial-gradient(ellipse 60% 55% at 50% 52%, rgba(0, 240, 255, 0.30), rgba(0, 240, 255, 0.08) 55%, transparent 75%);
+            animation: box-breathe-glow 3.6s ease-in-out infinite;
+        }
+        @keyframes box-breathe-glow { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+        @keyframes box-breathe {
+            0%, 100% { box-shadow: 0 0 14px rgba(0, 240, 255, 0.12), inset 0 0 10px rgba(0, 240, 255, 0.05); border-color: rgba(0, 240, 255, 0.3); }
+            50% { box-shadow: 0 0 34px rgba(0, 240, 255, 0.38), inset 0 0 28px rgba(0, 240, 255, 0.2); border-color: rgba(0, 240, 255, 0.75); }
+        }
+
+        /* 快樂水展示：柔和光暈（貼著罐子輪廓、均勻、外緣漸淡）＋一道沿著罐子繞圈的亮光
+           光暈用 CSS 畫，不會有像素鋸齒，也不會在罐子和光之間留縫 */
+        @property --orbit { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+        .water-stack { position: relative; display: inline-block; line-height: 0; }
+        .water-stack .water-img-lg {
+            position: relative; z-index: 1; max-width: none;
+            filter: drop-shadow(0 0 2px rgba(0, 240, 255, 0.55)) drop-shadow(0 0 9px rgba(0, 240, 255, 0.32)) drop-shadow(0 0 22px rgba(0, 240, 255, 0.16));
+        }
+        .water-orbit {
+            position: absolute; inset: -32px; padding: 32px; box-sizing: border-box;
+            background-origin: content-box; background-clip: content-box;
+            filter: brightness(0) drop-shadow(0 0 6px #22eeff) drop-shadow(0 0 14px rgba(0, 240, 255, 0.85));
+            -webkit-mask-image: conic-gradient(from var(--orbit), #000 0deg, rgba(0, 0, 0, 0.35) 70deg, transparent 130deg, transparent 230deg, rgba(0, 0, 0, 0.35) 290deg, #000 360deg);
+            mask-image: conic-gradient(from var(--orbit), #000 0deg, rgba(0, 0, 0, 0.35) 70deg, transparent 130deg, transparent 230deg, rgba(0, 0, 0, 0.35) 290deg, #000 360deg);
+            animation: water-spin 7.58s step-end infinite, orbit-spin 3.79s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes orbit-spin { to { --orbit: 360deg; } }
     </style>
 </head>
 <body>
@@ -2350,7 +2504,7 @@
                     <button type="button" data-set-lang="en" title="English">EN</button>
                 </div>
                 <button type="button" class="cyber-btn" onclick="openDonate(null, this)">
-                    <img src="images/happy-water-lg.gif" alt="" class="btn-water-icon" onerror="waterFallback(this)">
+                    <span class="btn-water-icon water-anim" aria-hidden="true"></span>
                     投餵<span class="btn-en"> DONATE</span>
                 </button>
             </div>
@@ -2375,10 +2529,10 @@
                 </p>
 
                 <nav class="jump-nav" aria-label="目錄 Contents">
-                    <a href="#guide"><span class="jump-kicker">01</span>指令價目 COMMANDS</a>
-                    <a href="#live"><span class="jump-kicker">02</span>輪班表 LIVE</a>
-                    <a href="#about"><span class="jump-kicker">03</span>工廠 ABOUT</a>
-                    <a href="#donate"><span class="jump-kicker">04</span>投餵 DONATE</a>
+                    <a href="#guide"><span class="jump-kicker">01</span><span class="lang-zh">指令價目<span class="jn-en"> COMMANDS</span></span><span class="lang-en">Commands</span></a>
+                    <a href="#live"><span class="jump-kicker">02</span><span class="lang-zh">輪班表<span class="jn-en"> LIVE</span></span><span class="lang-en">Schedule</span></a>
+                    <a href="#about"><span class="jump-kicker">03</span><span class="lang-zh">工廠<span class="jn-en"> ABOUT</span></span><span class="lang-en">About</span></a>
+                    <a href="#donate"><span class="jump-kicker">04</span><span class="lang-zh">投餵<span class="jn-en"> DONATE</span></span><span class="lang-en">Feed</span></a>
                 </nav>
             </div>
 
@@ -2847,7 +3001,7 @@
                             <div class="hud-corner hud-tr"></div>
                             <div class="hud-corner hud-bl"></div>
                             <div class="hud-corner hud-br"></div>
-                            <img src="images/happy-water-lg.gif" alt="旋轉快樂水展示" class="water-img-lg" onerror="waterFallback(this, true)">
+                            <span class="water-stack"><span class="water-orbit water-anim" aria-hidden="true"></span><span class="water-img-lg water-anim" role="img" aria-label="旋轉快樂水展示"></span></span>
                             <span class="water-caption" aria-hidden="true">// HAPPY WATER™ UNIT 01 //</span>
                         </div>
                         <div class="ration-row">
@@ -2856,7 +3010,7 @@
                                 <span class="hud-corner hud-tr"></span>
                                 <span class="hud-corner hud-bl"></span>
                                 <span class="hud-corner hud-br"></span>
-                                <img src="images/happy-water-lg.gif" alt="" class="btn-water-icon" onerror="waterFallback(this)">
+                                <span class="btn-water-icon water-anim" aria-hidden="true"></span>
                                 投餵
                             </button>
                             <button type="button" class="ration-btn" onclick="openDonate('paypal', this)">
@@ -2864,7 +3018,7 @@
                                 <span class="hud-corner hud-tr"></span>
                                 <span class="hud-corner hud-bl"></span>
                                 <span class="hud-corner hud-br"></span>
-                                <img src="images/happy-water-lg.gif" alt="" class="btn-water-icon" onerror="waterFallback(this)">
+                                <span class="btn-water-icon water-anim" aria-hidden="true"></span>
                                 PayPal · Ko-fi
                             </button>
                         </div>
@@ -3741,23 +3895,31 @@ ${message}
                 if (!box || !ul) return;
                 if (!configured) { box.hidden = true; return; }
                 box.hidden = false;
-                var offItems = [];
+                // 請假列表：同一天的請假合成一行；那天的班都請了（或填全天）就寫「全天」；不列時間（上面卡片已有）
+                var byDate = {};
                 liveOffs.forEach(function (o) {
                     var matched = slots.filter(function (slot) { return offHits(slot, o); });
-                    if (!matched.length) return;
                     matched.forEach(function (slot) {
                         var occ = onDate(o.date, slot.start, slot.end);
                         if (occ.end <= Date.now()) return;
                         var v = viewOf(occ, mode);
-                        var band = BANDS[v.band];
-                        var clocks = clockLine(v);
-                        offItems.push({
-                            start: occ.start,
-                            html: esc(v.date.slice(5).replace("-", "/")) + " " + (ENG ? EN[v.dow] : ZH[v.dow] + " " + EN[v.dow]) +
-                                " · " + (ENG ? band.en : band.zh + " " + band.en) + " · " + esc(clocks.zh) +
-                                (o.note ? " · " + esc(o.note) : "")
-                        });
+                        var g = byDate[o.date] || (byDate[o.date] = { start: occ.start, v: v, bands: [], all: false, notes: [] });
+                        if (occ.start < g.start) { g.start = occ.start; g.v = v; }
+                        if (g.bands.indexOf(v.band) < 0) g.bands.push(v.band);
+                        if (o.shift === "all") g.all = true;
+                        if (o.note && o.note !== "請假" && g.notes.indexOf(o.note) < 0) g.notes.push(o.note);  // 「請假」不用重複寫
                     });
+                });
+                var offItems = Object.keys(byDate).map(function (k) {
+                    var g = byDate[k], v = g.v;
+                    var label = (g.all || g.bands.length > 1)
+                        ? (ENG ? "All day" : "全天 All day")
+                        : (ENG ? BANDS[g.bands[0]].en : BANDS[g.bands[0]].zh + " " + BANDS[g.bands[0]].en);
+                    return {
+                        start: g.start,
+                        html: esc(v.date.slice(5).replace("-", "/")) + " " + (ENG ? EN[v.dow] : ZH[v.dow] + " " + EN[v.dow]) +
+                            " · " + label + (g.notes.length ? " · " + esc(g.notes.join("、")) : "")
+                    };
                 });
                 offItems.sort(function (a, b) { return a.start - b.start; });
                 if (!offItems.length) {
