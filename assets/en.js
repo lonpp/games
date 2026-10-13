@@ -112,7 +112,6 @@ window.COUCH_EN = {
 "彈幕也能下指令": "",
 "這個月沒有請假，照表開台。 // No days off — streaming as scheduled.": "No days off — streaming as scheduled.",
 "皮沙發工廠": "The Factory",
-"如果你用 iPhone 看到這裡，記得確認瀏覽器設置有打開播放所有動畫，就在底部網址左邊的三條線那裡設定。": "",
 "// 看直播下指令": "// watch & send commands",
 "// 同步直播與精華": "// simulcast & highlights",
 "// 賽博求生錄播": "// stream VODs",

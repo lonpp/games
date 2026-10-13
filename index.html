@@ -7,6 +7,8 @@
     <link rel="icon" href="favicon.ico" sizes="any">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="preload" as="image" href="images/happy-water-sprite-a.webp?v=15">
+    <link rel="preload" as="image" href="images/happy-water-sprite-b.webp?v=15">
     <meta name="description" content="冷冷不冷的皮沙發工廠 HUMAN LEATHER COUCH FACTORY — 直播輪班表、OmniStream 聊天室指令與完整價目表、遊戲開發與快樂水™投餵。">
     <title>HUMAN LEATHER COUCH FACTORY</title>
     <script src="assets/en.js?v=20261011d"></script>
@@ -1173,7 +1175,7 @@
         .qr-display::before {
             content: '';
             position: absolute; inset: 0;
-            background: url('images/happy-water-lg.gif') no-repeat center / contain;
+            background: url('images/happy-water-lg.gif?v=15') no-repeat center / contain;
             pointer-events: none;
             z-index: 0;
             animation: modal-bg-aura 5.5s infinite ease-in-out;
@@ -2326,12 +2328,12 @@
 
         /* ---------- 旋轉快樂水 ----------
            iPhone 開「低耗電模式」或關掉「自動播放動態影像」時，GIF 會停在第一格。
-           改用分格圖（images/happy-water-sprite.webp，91 格）＋ CSS 動畫，不受這兩個設定影響。
+           改用分格圖（images/happy-water-sprite-a.webp、-b.webp，共 182 格）＋ CSS 動畫，不受這兩個設定影響。
            只有開「減少動態效果」的人會看到靜止的罐子（尊重他們的設定）。 */
         .water-anim {
             display: inline-block;
             aspect-ratio: 141 / 256;
-            background: url('images/happy-water-sprite.webp?v=5') 0 0 / 1300% 700% no-repeat;
+            background: url('images/happy-water-sprite-a.webp?v=15') 0 0 / 1300% 700% no-repeat;
             image-rendering: pixelated;
             animation: water-spin 7.58s step-end infinite;
         }
@@ -2344,103 +2346,195 @@
             inset: auto; top: 10px; left: 50%; height: calc(100% - 20px); width: auto;
             aspect-ratio: 141 / 256;
             transform: translateX(-50%);
-            background: url('images/happy-water-sprite.webp?v=5') 0 0 / 1300% 700% no-repeat;
+            background: url('images/happy-water-sprite-a.webp?v=15') 0 0 / 1300% 700% no-repeat;
             image-rendering: pixelated;
             animation: modal-bg-aura 5.5s infinite ease-in-out, water-spin 7.58s step-end infinite;
         }
+        /* 182 格全部播放（約每秒 24 格），直接用原始影格，分成兩張圖：單數格在 b、雙數格在 a */
         @keyframes water-spin {
-            0.0% { background-position: 0.0% 0.0%; }
-            1.055% { background-position: 8.333% 0.0%; }
-            2.111% { background-position: 16.667% 0.0%; }
-            3.298% { background-position: 25.0% 0.0%; }
-            4.354% { background-position: 33.333% 0.0%; }
-            5.409% { background-position: 41.667% 0.0%; }
-            6.596% { background-position: 50.0% 0.0%; }
-            7.652% { background-position: 58.333% 0.0%; }
-            8.707% { background-position: 66.667% 0.0%; }
-            9.894% { background-position: 75.0% 0.0%; }
-            10.95% { background-position: 83.333% 0.0%; }
-            12.005% { background-position: 91.667% 0.0%; }
-            13.193% { background-position: 100.0% 0.0%; }
-            14.248% { background-position: 0.0% 16.667%; }
-            15.303% { background-position: 8.333% 16.667%; }
-            16.491% { background-position: 16.667% 16.667%; }
-            17.546% { background-position: 25.0% 16.667%; }
-            18.602% { background-position: 33.333% 16.667%; }
-            19.789% { background-position: 41.667% 16.667%; }
-            20.844% { background-position: 50.0% 16.667%; }
-            21.9% { background-position: 58.333% 16.667%; }
-            23.087% { background-position: 66.667% 16.667%; }
-            24.142% { background-position: 75.0% 16.667%; }
-            25.198% { background-position: 83.333% 16.667%; }
-            26.385% { background-position: 91.667% 16.667%; }
-            27.441% { background-position: 100.0% 16.667%; }
-            28.496% { background-position: 0.0% 33.333%; }
-            29.683% { background-position: 8.333% 33.333%; }
-            30.739% { background-position: 16.667% 33.333%; }
-            31.794% { background-position: 25.0% 33.333%; }
-            32.982% { background-position: 33.333% 33.333%; }
-            34.037% { background-position: 41.667% 33.333%; }
-            35.092% { background-position: 50.0% 33.333%; }
-            36.28% { background-position: 58.333% 33.333%; }
-            37.335% { background-position: 66.667% 33.333%; }
-            38.391% { background-position: 75.0% 33.333%; }
-            39.578% { background-position: 83.333% 33.333%; }
-            40.633% { background-position: 91.667% 33.333%; }
-            41.689% { background-position: 100.0% 33.333%; }
-            42.876% { background-position: 0.0% 50.0%; }
-            43.931% { background-position: 8.333% 50.0%; }
-            44.987% { background-position: 16.667% 50.0%; }
-            46.174% { background-position: 25.0% 50.0%; }
-            47.23% { background-position: 33.333% 50.0%; }
-            48.285% { background-position: 41.667% 50.0%; }
-            49.472% { background-position: 50.0% 50.0%; }
-            50.528% { background-position: 58.333% 50.0%; }
-            51.583% { background-position: 66.667% 50.0%; }
-            52.77% { background-position: 75.0% 50.0%; }
-            53.826% { background-position: 83.333% 50.0%; }
-            54.881% { background-position: 91.667% 50.0%; }
-            56.069% { background-position: 100.0% 50.0%; }
-            57.124% { background-position: 0.0% 66.667%; }
-            58.179% { background-position: 8.333% 66.667%; }
-            59.367% { background-position: 16.667% 66.667%; }
-            60.422% { background-position: 25.0% 66.667%; }
-            61.478% { background-position: 33.333% 66.667%; }
-            62.665% { background-position: 41.667% 66.667%; }
-            63.72% { background-position: 50.0% 66.667%; }
-            64.776% { background-position: 58.333% 66.667%; }
-            65.963% { background-position: 66.667% 66.667%; }
-            67.018% { background-position: 75.0% 66.667%; }
-            68.074% { background-position: 83.333% 66.667%; }
-            69.261% { background-position: 91.667% 66.667%; }
-            70.317% { background-position: 100.0% 66.667%; }
-            71.372% { background-position: 0.0% 83.333%; }
-            72.559% { background-position: 8.333% 83.333%; }
-            73.615% { background-position: 16.667% 83.333%; }
-            74.67% { background-position: 25.0% 83.333%; }
-            75.858% { background-position: 33.333% 83.333%; }
-            76.913% { background-position: 41.667% 83.333%; }
-            77.968% { background-position: 50.0% 83.333%; }
-            79.156% { background-position: 58.333% 83.333%; }
-            80.211% { background-position: 66.667% 83.333%; }
-            81.266% { background-position: 75.0% 83.333%; }
-            82.454% { background-position: 83.333% 83.333%; }
-            83.509% { background-position: 91.667% 83.333%; }
-            84.565% { background-position: 100.0% 83.333%; }
-            85.752% { background-position: 0.0% 100.0%; }
-            86.807% { background-position: 8.333% 100.0%; }
-            87.863% { background-position: 16.667% 100.0%; }
-            89.05% { background-position: 25.0% 100.0%; }
-            90.106% { background-position: 33.333% 100.0%; }
-            91.161% { background-position: 41.667% 100.0%; }
-            92.348% { background-position: 50.0% 100.0%; }
-            93.404% { background-position: 58.333% 100.0%; }
-            94.459% { background-position: 66.667% 100.0%; }
-            95.646% { background-position: 75.0% 100.0%; }
-            96.702% { background-position: 83.333% 100.0%; }
-            97.757% { background-position: 91.667% 100.0%; }
-            98.945% { background-position: 100.0% 100.0%; }
-            100% { background-position: 0% 0%; }
+            0.0% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 0.0% 0.0%; }
+            0.528% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 0.0% 0.0%; }
+            1.055% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 8.333% 0.0%; }
+            1.583% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 8.333% 0.0%; }
+            2.111% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 16.667% 0.0%; }
+            2.639% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 16.667% 0.0%; }
+            3.298% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 25.0% 0.0%; }
+            3.826% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 25.0% 0.0%; }
+            4.354% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 33.333% 0.0%; }
+            4.881% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 33.333% 0.0%; }
+            5.409% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 41.667% 0.0%; }
+            5.937% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 41.667% 0.0%; }
+            6.596% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 50.0% 0.0%; }
+            7.124% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 50.0% 0.0%; }
+            7.652% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 58.333% 0.0%; }
+            8.179% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 58.333% 0.0%; }
+            8.707% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 66.667% 0.0%; }
+            9.235% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 66.667% 0.0%; }
+            9.894% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 75.0% 0.0%; }
+            10.422% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 75.0% 0.0%; }
+            10.95% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 83.333% 0.0%; }
+            11.478% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 83.333% 0.0%; }
+            12.005% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 91.667% 0.0%; }
+            12.533% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 91.667% 0.0%; }
+            13.193% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 100.0% 0.0%; }
+            13.72% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 100.0% 0.0%; }
+            14.248% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 0.0% 16.667%; }
+            14.776% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 0.0% 16.667%; }
+            15.303% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 8.333% 16.667%; }
+            15.831% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 8.333% 16.667%; }
+            16.491% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 16.667% 16.667%; }
+            17.018% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 16.667% 16.667%; }
+            17.546% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 25.0% 16.667%; }
+            18.074% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 25.0% 16.667%; }
+            18.602% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 33.333% 16.667%; }
+            19.129% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 33.333% 16.667%; }
+            19.789% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 41.667% 16.667%; }
+            20.317% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 41.667% 16.667%; }
+            20.844% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 50.0% 16.667%; }
+            21.372% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 50.0% 16.667%; }
+            21.9% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 58.333% 16.667%; }
+            22.427% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 58.333% 16.667%; }
+            23.087% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 66.667% 16.667%; }
+            23.615% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 66.667% 16.667%; }
+            24.142% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 75.0% 16.667%; }
+            24.67% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 75.0% 16.667%; }
+            25.198% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 83.333% 16.667%; }
+            25.726% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 83.333% 16.667%; }
+            26.385% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 91.667% 16.667%; }
+            26.913% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 91.667% 16.667%; }
+            27.441% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 100.0% 16.667%; }
+            27.968% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 100.0% 16.667%; }
+            28.496% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 0.0% 33.333%; }
+            29.024% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 0.0% 33.333%; }
+            29.683% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 8.333% 33.333%; }
+            30.211% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 8.333% 33.333%; }
+            30.739% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 16.667% 33.333%; }
+            31.266% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 16.667% 33.333%; }
+            31.794% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 25.0% 33.333%; }
+            32.322% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 25.0% 33.333%; }
+            32.982% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 33.333% 33.333%; }
+            33.509% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 33.333% 33.333%; }
+            34.037% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 41.667% 33.333%; }
+            34.565% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 41.667% 33.333%; }
+            35.092% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 50.0% 33.333%; }
+            35.62% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 50.0% 33.333%; }
+            36.28% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 58.333% 33.333%; }
+            36.807% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 58.333% 33.333%; }
+            37.335% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 66.667% 33.333%; }
+            37.863% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 66.667% 33.333%; }
+            38.391% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 75.0% 33.333%; }
+            38.918% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 75.0% 33.333%; }
+            39.578% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 83.333% 33.333%; }
+            40.106% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 83.333% 33.333%; }
+            40.633% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 91.667% 33.333%; }
+            41.161% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 91.667% 33.333%; }
+            41.689% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 100.0% 33.333%; }
+            42.216% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 100.0% 33.333%; }
+            42.876% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 0.0% 50.0%; }
+            43.404% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 0.0% 50.0%; }
+            43.931% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 8.333% 50.0%; }
+            44.459% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 8.333% 50.0%; }
+            44.987% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 16.667% 50.0%; }
+            45.515% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 16.667% 50.0%; }
+            46.174% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 25.0% 50.0%; }
+            46.702% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 25.0% 50.0%; }
+            47.23% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 33.333% 50.0%; }
+            47.757% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 33.333% 50.0%; }
+            48.285% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 41.667% 50.0%; }
+            48.813% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 41.667% 50.0%; }
+            49.472% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 50.0% 50.0%; }
+            50.0% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 50.0% 50.0%; }
+            50.528% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 58.333% 50.0%; }
+            51.055% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 58.333% 50.0%; }
+            51.583% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 66.667% 50.0%; }
+            52.111% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 66.667% 50.0%; }
+            52.77% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 75.0% 50.0%; }
+            53.298% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 75.0% 50.0%; }
+            53.826% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 83.333% 50.0%; }
+            54.354% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 83.333% 50.0%; }
+            54.881% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 91.667% 50.0%; }
+            55.409% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 91.667% 50.0%; }
+            56.069% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 100.0% 50.0%; }
+            56.596% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 100.0% 50.0%; }
+            57.124% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 0.0% 66.667%; }
+            57.652% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 0.0% 66.667%; }
+            58.179% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 8.333% 66.667%; }
+            58.707% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 8.333% 66.667%; }
+            59.367% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 16.667% 66.667%; }
+            59.894% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 16.667% 66.667%; }
+            60.422% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 25.0% 66.667%; }
+            60.95% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 25.0% 66.667%; }
+            61.478% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 33.333% 66.667%; }
+            62.005% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 33.333% 66.667%; }
+            62.665% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 41.667% 66.667%; }
+            63.193% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 41.667% 66.667%; }
+            63.72% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 50.0% 66.667%; }
+            64.248% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 50.0% 66.667%; }
+            64.776% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 58.333% 66.667%; }
+            65.303% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 58.333% 66.667%; }
+            65.963% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 66.667% 66.667%; }
+            66.491% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 66.667% 66.667%; }
+            67.018% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 75.0% 66.667%; }
+            67.546% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 75.0% 66.667%; }
+            68.074% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 83.333% 66.667%; }
+            68.602% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 83.333% 66.667%; }
+            69.261% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 91.667% 66.667%; }
+            69.789% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 91.667% 66.667%; }
+            70.317% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 100.0% 66.667%; }
+            70.844% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 100.0% 66.667%; }
+            71.372% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 0.0% 83.333%; }
+            71.9% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 0.0% 83.333%; }
+            72.559% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 8.333% 83.333%; }
+            73.087% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 8.333% 83.333%; }
+            73.615% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 16.667% 83.333%; }
+            74.142% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 16.667% 83.333%; }
+            74.67% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 25.0% 83.333%; }
+            75.198% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 25.0% 83.333%; }
+            75.858% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 33.333% 83.333%; }
+            76.385% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 33.333% 83.333%; }
+            76.913% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 41.667% 83.333%; }
+            77.441% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 41.667% 83.333%; }
+            77.968% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 50.0% 83.333%; }
+            78.496% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 50.0% 83.333%; }
+            79.156% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 58.333% 83.333%; }
+            79.683% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 58.333% 83.333%; }
+            80.211% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 66.667% 83.333%; }
+            80.739% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 66.667% 83.333%; }
+            81.266% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 75.0% 83.333%; }
+            81.794% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 75.0% 83.333%; }
+            82.454% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 83.333% 83.333%; }
+            82.982% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 83.333% 83.333%; }
+            83.509% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 91.667% 83.333%; }
+            84.037% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 91.667% 83.333%; }
+            84.565% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 100.0% 83.333%; }
+            85.092% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 100.0% 83.333%; }
+            85.752% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 0.0% 100.0%; }
+            86.28% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 0.0% 100.0%; }
+            86.807% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 8.333% 100.0%; }
+            87.335% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 8.333% 100.0%; }
+            87.863% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 16.667% 100.0%; }
+            88.391% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 16.667% 100.0%; }
+            89.05% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 25.0% 100.0%; }
+            89.578% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 25.0% 100.0%; }
+            90.106% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 33.333% 100.0%; }
+            90.633% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 33.333% 100.0%; }
+            91.161% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 41.667% 100.0%; }
+            91.689% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 41.667% 100.0%; }
+            92.348% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 50.0% 100.0%; }
+            92.876% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 50.0% 100.0%; }
+            93.404% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 58.333% 100.0%; }
+            93.931% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 58.333% 100.0%; }
+            94.459% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 66.667% 100.0%; }
+            94.987% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 66.667% 100.0%; }
+            95.646% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 75.0% 100.0%; }
+            96.174% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 75.0% 100.0%; }
+            96.702% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 83.333% 100.0%; }
+            97.23% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 83.333% 100.0%; }
+            97.757% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 91.667% 100.0%; }
+            98.285% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 91.667% 100.0%; }
+            98.945% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 100.0% 100.0%; }
+            99.472% { background-image: url('images/happy-water-sprite-b.webp?v=15'); background-position: 100.0% 100.0%; }
+            100% { background-image: url('images/happy-water-sprite-a.webp?v=15'); background-position: 0% 0%; }
         }
 
         /* 快樂水展示框：裡面的呼吸燈（框內青光慢慢亮暗，邊框光暈跟著呼吸） */
@@ -2459,21 +2553,30 @@
         /* 快樂水展示：柔和光暈（貼著罐子輪廓、均勻、外緣漸淡）＋一道沿著罐子繞圈的亮光
            光暈用 CSS 畫，不會有像素鋸齒，也不會在罐子和光之間留縫 */
         @property --orbit { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
-        .water-stack { position: relative; display: inline-block; line-height: 0; }
+        /* 外框固定成罐子的大小，光暈層和罐子才會完全重疊（不會有黑塊露出來） */
+        .water-stack { position: relative; display: block; flex: none; height: 230px; aspect-ratio: 141 / 256; line-height: 0; }
         .water-stack .water-img-lg {
-            position: relative; z-index: 1; max-width: none;
+            position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 1; max-width: none;
             filter: drop-shadow(0 0 2px rgba(0, 240, 255, 0.55)) drop-shadow(0 0 9px rgba(0, 240, 255, 0.32)) drop-shadow(0 0 22px rgba(0, 240, 255, 0.16));
         }
         .water-orbit {
-            position: absolute; inset: -32px; padding: 32px; box-sizing: border-box;
+            position: absolute; inset: -32px; padding: 32px; box-sizing: border-box; aspect-ratio: auto; width: auto; height: auto;
             background-origin: content-box; background-clip: content-box;
             filter: brightness(0) drop-shadow(0 0 6px #22eeff) drop-shadow(0 0 14px rgba(0, 240, 255, 0.85));
-            -webkit-mask-image: conic-gradient(from var(--orbit), #000 0deg, rgba(0, 0, 0, 0.35) 70deg, transparent 130deg, transparent 230deg, rgba(0, 0, 0, 0.35) 290deg, #000 360deg);
-            mask-image: conic-gradient(from var(--orbit), #000 0deg, rgba(0, 0, 0, 0.35) 70deg, transparent 130deg, transparent 230deg, rgba(0, 0, 0, 0.35) 290deg, #000 360deg);
+            -webkit-mask-image: conic-gradient(from var(--orbit), #000 0deg, rgba(0,0,0,0.85) 30deg, rgba(0,0,0,0.55) 60deg, rgba(0,0,0,0.25) 90deg, rgba(0,0,0,0.07) 120deg, transparent 150deg, transparent 210deg, rgba(0,0,0,0.07) 240deg, rgba(0,0,0,0.25) 270deg, rgba(0,0,0,0.55) 300deg, rgba(0,0,0,0.85) 330deg, #000 360deg);
+            mask-image: conic-gradient(from var(--orbit), #000 0deg, rgba(0,0,0,0.85) 30deg, rgba(0,0,0,0.55) 60deg, rgba(0,0,0,0.25) 90deg, rgba(0,0,0,0.07) 120deg, transparent 150deg, transparent 210deg, rgba(0,0,0,0.07) 240deg, rgba(0,0,0,0.25) 270deg, rgba(0,0,0,0.55) 300deg, rgba(0,0,0,0.85) 330deg, #000 360deg);
             animation: water-spin 7.58s step-end infinite, orbit-spin 3.79s linear infinite;
             pointer-events: none;
         }
         @keyframes orbit-spin { to { --orbit: 360deg; } }
+
+        /* 快樂水展示框不要被全頁的掃描線（橫向細線）和暗角蓋到，罐子保持原始清晰度
+           掃描線在 z-index 30000，展示框放到它上面；頂部列、投餵視窗、提示訊息、回到頂部再放更上面，才不會被展示框擋住 */
+        .water-showcase-box { z-index: 30001; }
+        .support-banner { z-index: 30002; }
+        .back-to-top { z-index: 30002; }
+        .modal-overlay { z-index: 30003; }
+        .toast { z-index: 30004; }
     </style>
 </head>
 <body>
@@ -2925,11 +3028,6 @@
                         <a href="https://instagram.com/humanleathercouch" class="highlight-neon" target="_blank" rel="noopener noreferrer">IG↗</a>
                     </p>
                 </div>
-
-                <p class="ios-hint" id="iosHint">
-                    <span>如果你用 iPhone 看到這裡，記得確認瀏覽器設置有打開播放所有動畫，就在底部網址左邊的三條線那裡設定。
-                    <span class="lang-en">If you're reading this on an iPhone, make sure your browser is set to play all animations. You can find that setting by tapping the three-line menu icon to the left of the address bar at the bottom.</span></span>
-                </p>
 
                 <div class="sub-links-container">
                     <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer" class="terminal-line-link">
@@ -3458,11 +3556,6 @@ ${message}
                 document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
             }
 
-            // 只有 iPhone / iPad 才顯示播放動畫提示
-            const ua = navigator.userAgent || '';
-            const isIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-            const iosHint = document.getElementById('iosHint');
-            if (iosHint && !isIOS) iosHint.hidden = true;
         })();
 
         const toastEl = document.getElementById('toast');
