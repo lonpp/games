@@ -3154,7 +3154,7 @@
                     支付方式依「繁／简」模式自動排序、預選第一個（設定在下面 JS 的 PAY_ORDER）：
                     - 繁體・台灣：2027/1/1 前只有 Ko-fi（不放支付寶）；時間一到自動加入街口 TWQR、LINE Pay、藍新，暫停說明也會自己消失。
                       藍新要先在 SUPPORT_QR_CODES 貼上 https 收款網址才會出現。
-                    - 简体・大陆：支付宝、爱发电在前，Ko-fi 在後。
+                    - 简体・大陆：支付宝、微信支付、爱发电在前，Ko-fi 在後。
                     開放日期改 TW_LOCAL_OPEN；建議金額改 SUPPORT_TIERS。
                 -->
                 <div class="pay-pause only-tw" id="payPauseNote">
@@ -3170,6 +3170,7 @@
                         <button type="button" class="pay-tab" data-pay="newebpay" hidden>信用卡 轉帳<br>Apple Pay</button>
                         <button type="button" class="pay-tab" data-pay="afdian" hidden>愛發電<br>afdian</button>
                         <button type="button" class="pay-tab" data-pay="alipay" hidden><span class="zh-only">支付寶<br></span>Alipay</button>
+                        <button type="button" class="pay-tab" data-pay="wechat" hidden><span class="zh-only">微信支付<br></span>WeChat Pay</button>
                         <button type="button" class="pay-tab" data-pay="paypal" hidden>PayPal<br>Ko-fi</button>
                         <button type="button" class="pay-tab" data-pay="newebpay_os" hidden>Credit Card<br>Apple Pay</button>
                     </div>
@@ -3244,6 +3245,13 @@
                 url: "https://qr.alipay.com/tsx19374p5wcn9a7dp9dwe4",
                 btnText: "手機端請點擊這裡喚起 APP 跳轉 ↗"
             },
+            wechat: {
+                type: "qr",
+                img: "images/qr-wechat.jpg",
+                hint: "請使用微信掃描上方條碼，金額不限，每一份支持都是推動我持續創作的動力。<br><br>Please scan the QR code above with WeChat Pay to complete your payment. Enter any amount you wish—every little bit helps!",
+                url: "",
+                btnText: ""
+            },
             newebpay: {
                 type: "link",
                 url: "請在這裡貼上你的藍新收款網址",
@@ -3280,10 +3288,10 @@
         // 各地區的排列順序，第一個可用的會被預選
         const PAY_ORDER = {
             tw: ['jkopay', 'linepay', 'newebpay', 'paypal', 'newebpay_os'],
-            cn: ['alipay', 'afdian', 'paypal'],
-            intl: ['paypal', 'alipay', 'newebpay_os']
+            cn: ['alipay', 'wechat', 'afdian', 'paypal'],
+            intl: ['paypal', 'alipay', 'wechat', 'newebpay_os']
         };
-        const PAY_CURRENCY = { jkopay: 'TWD', linepay: 'TWD', newebpay: 'TWD', newebpay_os: 'TWD', alipay: 'CNY', afdian: 'CNY', paypal: 'USD' };
+        const PAY_CURRENCY = { jkopay: 'TWD', linepay: 'TWD', newebpay: 'TWD', newebpay_os: 'TWD', alipay: 'CNY', wechat: 'CNY', afdian: 'CNY', paypal: 'USD' };
         // 建議金額：改這裡就好。金額不限，只是給個參考。
         const SUPPORT_TIERS = {
             items: [

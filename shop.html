@@ -359,6 +359,7 @@
                         <button type="button" id="tabNewebpay" class="pay-tab" data-pay="newebpay" hidden>信用卡 轉帳<br>Apple Pay</button>
                         <button type="button" class="pay-tab" data-pay="paypal" hidden>PayPal<br>Ko-fi</button>
                         <button type="button" id="tabAlipay" class="pay-tab" data-pay="alipay" hidden>支付寶<br>Alipay</button>
+                        <button type="button" id="tabWechat" class="pay-tab" data-pay="wechat" hidden>微信支付<br>WeChat Pay</button>
                     </div>
                     <div class="qr-display">
                         <img id="qrImage" src="" alt="QR Code">
@@ -423,6 +424,12 @@
                 hint_en: "Scan with Alipay. Add overseas shipping!<br><a href='https://qr.alipay.com...' target='_blank' style='color:var(--blue);'>Open App ↗</a>",
                 hint_de: "Scannen mit Alipay. Inkl. Versand!<br><a href='https://qr.alipay.com...' target='_blank' style='color:var(--blue);'>App öffnen ↗</a>" 
             },
+            wechat: { 
+                type: "qr", img: "images/qr-wechat.jpg", 
+                hint_zh: "請使用微信掃描支付。記得加上海外運費！", 
+                hint_en: "Scan with WeChat Pay. Add overseas shipping!",
+                hint_de: "Scannen mit WeChat Pay. Inkl. Versand!" 
+            },
             newebpay: { 
                 type: "link", url: "請在這裡貼上你的藍新收款網址", 
                 btnText_zh: "前往藍新金流 ↗", btnText_en: "NewebPay Checkout ↗", btnText_de: "NewebPay Kasse ↗", 
@@ -439,7 +446,7 @@
         // 支付方式：依「繁／简」排序；台灣支付 2027/1/1（台灣時間）自動開放
         const TW_LOCAL_OPEN = Date.parse('2027-01-01T00:00:00+08:00');
         const TW_LOCAL = ['jkopay', 'linepay', 'newebpay'];
-        const PAY_ORDER = { tw: ['jkopay', 'linepay', 'newebpay', 'paypal'], cn: ['alipay', 'paypal'], intl: ['paypal', 'alipay'] };
+        const PAY_ORDER = { tw: ['jkopay', 'linepay', 'newebpay', 'paypal'], cn: ['alipay', 'wechat', 'paypal'], intl: ['paypal', 'alipay', 'wechat'] };
         const PAY_REGION = PAY_ORDER[document.documentElement.getAttribute('data-region')] ? document.documentElement.getAttribute('data-region') : 'tw';
         function payAvailable(key) {
             const d = QR_CODES[key];
@@ -470,7 +477,7 @@
                 modalTitle: "ORDER_SYS // 結帳程序",
                 modalItem: (id, t, p, f) => `> ITEM: <strong>[${id}] ${t}</strong><br>> PRICE: <strong style="color:var(--blue);">${p}</strong> ${f ? '(含框)' : ''}<br><span style="color:var(--muted);">> 台灣免運 / 海外需自行加計 NT$ 500</span>`,
                 step1Title: "STEP 1. 選擇支付方式 // SELECT PAYMENT:",
-                tabNewebpay: "信用卡 轉帳<br>Apple Pay", tabAlipay: "支付寶<br>Alipay",
+                tabNewebpay: "信用卡 轉帳<br>Apple Pay", tabAlipay: "支付寶<br>Alipay", tabWechat: "微信支付<br>WeChat Pay",
                 step2Title: "STEP 2. 填寫收件資訊 // SHIPPING DATA:",
                 labelName: "姓名 / Name *", labelContact: "信箱與電話 / Email & Phone *",
                 labelAddress: "收件地址 (海外請填英文) / Address *", labelPayNote: "對帳資訊 (付款方式+帳號末五碼) *",
@@ -484,7 +491,7 @@
                 modalTitle: "ORDER_SYS // CHECKOUT",
                 modalItem: (id, t, p, f) => `> ITEM: <strong>[${id}] ${t}</strong><br>> PRICE: <strong style="color:var(--blue);">${p}</strong> ${f ? '(Framed)' : ''}<br><span style="color:var(--muted);">> Add flat NT$ 500 for overseas shipping</span>`,
                 step1Title: "STEP 1. SELECT PAYMENT METHOD:",
-                tabNewebpay: "Credit Card<br>Apple Pay", tabAlipay: "Alipay",
+                tabNewebpay: "Credit Card<br>Apple Pay", tabAlipay: "Alipay", tabWechat: "WeChat Pay",
                 step2Title: "STEP 2. SHIPPING DETAILS:",
                 labelName: "Name *", labelContact: "Email & Phone *",
                 labelAddress: "Shipping Address *", labelPayNote: "Payment Verification (Method + Last 5) *",
@@ -511,6 +518,7 @@
             document.getElementById('step1Title').textContent = t.step1Title;
             document.getElementById('tabNewebpay').innerHTML = t.tabNewebpay;
             document.getElementById('tabAlipay').innerHTML = t.tabAlipay;
+            document.getElementById('tabWechat').innerHTML = t.tabWechat;
             document.getElementById('step2Title').textContent = t.step2Title;
             document.getElementById('labelBuyerName').textContent = t.labelName;
             document.getElementById('labelBuyerContact').textContent = t.labelContact;
