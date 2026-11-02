@@ -1775,11 +1775,14 @@
         .cmd-price small { display: block; font-size: 0.66rem; font-weight: 700; color: var(--muted); }
         .price-block .cmd-row { grid-template-columns: 13.5rem minmax(0, 1fr) 5.5rem; padding: 0.5rem 0.95rem; }
         .price-block .cmd-price { text-align: right; }
+        .touch-block { margin: 1.6rem 0 1.4rem; }
+        .touch-block .cmd-row { grid-template-columns: 13.5rem minmax(0, 1fr) 5.5rem; padding: 0.5rem 0.95rem; }
+        .touch-block .cmd-price { text-align: right; }
         .cmd-desc code { font-size: 0.82rem; }
         .watch-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
         @media (max-width: 768px) {
             .coin-grid { grid-template-columns: 1fr 1fr; }
-            .price-block .cmd-row { grid-template-columns: minmax(0, 1fr) auto; }
+            .price-block .cmd-row, .touch-block .cmd-row { grid-template-columns: minmax(0, 1fr) auto; }
             .cmd-row .cmd-price { grid-column: 2; grid-row: 1; align-self: center; }
             .cmd-row .cmd-desc { grid-row: 2; }
             .coin-card b { font-size: 1.25rem; }
@@ -2731,10 +2734,10 @@
                     <div class="hub-inner">
                 <div class="bilingual-block">
                     <p class="lang-zh">
-                        在 <strong>Twitch、YouTube 或 Bilibili</strong> 的聊天室打指令，就能<span class="highlight-neon">送物資、新殖民者、自己取名的動物、治療、事件</span>進殖民地。開頭打 <code>!</code> 或全形 <code>！</code> 都可以，繁體、简体、English 都通，用什麼語言問就用什麼語言回。
+                        在 <strong>Twitch、YouTube 或 Bilibili</strong> 的聊天室打指令，就能<span class="highlight-neon">送物資、新殖民者、自己取名的動物、治療、事件</span>進殖民地。開頭打 <code>!</code> 或全形 <code>！</code> 都可以，繁體、简体、English 都通，指令字也能打中文（<code>!買</code>、<code>!查</code>、<code>!摸</code>、<code>!戳</code>），用什麼語言問就用什麼語言回。
                     </p>
                     <p class="lang-en">
-                        Type commands in the <strong>Twitch, YouTube or Bilibili</strong> chat to <span class="highlight-neon">send supplies, new colonists, animals you name, healing and events</span> into the colony. Commands work in Traditional Chinese, Simplified Chinese and English.
+                        Type commands in the <strong>Twitch, YouTube or Bilibili</strong> chat to <span class="highlight-neon">send supplies, new colonists, animals you name, healing and events</span> into the colony. Commands work in Traditional Chinese, Simplified Chinese and English, and the command words themselves can be typed in Chinese too (<code>!買</code>, <code>!摸</code>).
                     </p>
                 </div>
 
@@ -2759,6 +2762,8 @@
                             <div class="cmd-row"><span class="cmd-actions"><button type="button" class="cmd-code" data-copy="!buy 食物 ">!buy 食物 5</button><button type="button" class="run-cmd" data-run="!buy 食物 5" aria-label="在練習機試打 !buy 食物 5">▶ 試打</button></span><span class="cmd-desc">送 5 份簡單餐，數量放最後<span class="shift-en">Amount goes last, up to 20</span></span><span class="cmd-price">75</span></div>
                             <div class="cmd-row"><span class="cmd-actions"><button type="button" class="cmd-code" data-copy="!buy 極光">!buy 極光</button><button type="button" class="run-cmd" data-run="!buy 極光" aria-label="在練習機試打 !buy 極光">▶ 試打</button></span><span class="cmd-desc">直接打事件名稱<span class="shift-en">Type the event name directly</span></span><span class="cmd-price">570</span></div>
                             <div class="cmd-row"><span class="cmd-actions"><button type="button" class="cmd-code" data-copy="!buy 貓 ">!buy 貓 麻糬</button><button type="button" class="run-cmd" data-run="!buy 貓 麻糬" aria-label="在練習機試打 !buy 貓 麻糬">▶ 試打</button></span><span class="cmd-desc">買一隻貓，取名「麻糬」<span class="shift-en">Buy a cat named Mochi</span></span><span class="cmd-price">1,500</span></div>
+                            <div class="cmd-row"><span class="cmd-actions"><button type="button" class="cmd-code" data-copy="!pet ">!pet 阿呆</button><button type="button" class="run-cmd" data-run="!pet 阿呆" aria-label="在練習機試打 !pet 阿呆">▶ 試打</button></span><span class="cmd-desc">摸一下動物或殖民者，也可以打 <code>!摸 阿呆</code><span class="shift-en">Pet an animal or colonist, free</span></span><span class="cmd-price">免費</span></div>
+                            <div class="cmd-row"><span class="cmd-actions"><button type="button" class="cmd-code" data-copy="!阿呆 ">!阿呆 你好</button><button type="button" class="run-cmd" data-run="!阿呆 你好" aria-label="在練習機試打 !阿呆 你好">▶ 試打</button></span><span class="cmd-desc">對小人說話，人類會回話；<code>!戳 阿呆</code> 是戳一下<span class="shift-en">Talk to a pawn by name</span></span><span class="cmd-price">免費</span></div>
                         </div>
                     </div>
                     <div class="hub-shell" id="try">
@@ -2774,11 +2779,24 @@
                         <div class="shell-chips" role="group" aria-label="快速指令 Quick commands">
                             <button type="button" data-cmd="help">help</button>
                             <button type="button" data-cmd="!buy 動物">!buy 動物</button>
+                            <button type="button" data-cmd="!pet 阿呆">!pet 阿呆</button>
                             <button type="button" data-cmd="schedule">schedule</button>
                             <button type="button" class="warm" data-cmd="pet">pet 摸貓</button>
                             <button type="button" class="warm" data-cmd="donate">donate 投餵</button>
                         </div>
                     </div>
+                </div>
+
+                <!-- 摸、戳、說話：免費互動指令（OmniStream 新增） -->
+                <div class="touch-block" id="touch">
+                    <h3 class="sub-title">摸、戳、說話 <span class="sec-en">PET · POKE · TALK</span></h3>
+                    <p class="hub-hint">免費、不扣金幣，每位觀眾每 20 秒一次。動物回叫聲和動作，人類依狀態、個性回話；殖民者、訪客、敵人都行。</p>
+                    <div class="cmd-list">
+                        <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!pet ">!pet 名字</button><span class="cmd-desc">摸一下（也可以打 <code>!摸 名字</code>、<code>!pat 名字</code>）<span class="shift-en">Pet someone · !摸 · !pat</span></span><span class="cmd-price">免費</span></div>
+                        <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!poke ">!poke 名字</button><span class="cmd-desc">戳一下，對方依個性隨機回應（<code>!戳 名字</code>）<span class="shift-en">Poke someone · !戳</span></span><span class="cmd-price">免費</span></div>
+                        <div class="cmd-row"><button type="button" class="cmd-code" data-copy="!麻糬 你好">!名字 想說的話</button><span class="cmd-desc">對小人或動物說話，例如 <code>!麻糬 你好</code>。動物只有叫聲和動作，人類會回話；<code>!名字 摸</code>、<code>!名字 戳</code> 也行<span class="shift-en">Talk to a pawn by name. Animals only make sounds.</span></span><span class="cmd-price">免費</span></div>
+                    </div>
+                    <p class="shift-note">* 實況主有安裝 <b>RimTalk</b> 的話，對人類說話、摸、戳會由它的 AI 以那位小人的人格回答；沒裝或不能回答時用內建台詞，動物不用 AI。<span class="shift-en">With RimTalk installed, colonists answer in their own persona; without it, built-in lines are used.</span></p>
                 </div>
 
                 <!-- 價目表與指令大全：預設收合；搜尋、分類一直看得到，一用就自動展開 -->
@@ -2923,6 +2941,8 @@
                         <li><span class="lang-zh">指令<strong>成功</strong>才會回覆並 @ 你；沒成功不回覆、也不扣金幣。<span class="shift-en">Only successful commands get a reply (with your @name). Failed ones are silent and free.</span></span></li>
                         <li><span class="lang-zh">沒回應通常是：打錯名稱、金幣不夠、名字重複、今天名額滿了，或殖民地現在接不下。先用 <code>!lookup</code> 查一下。<span class="shift-en">No reply usually means a typo, not enough coins, a taken name, today's slot is used, or the colony can't take it yet.</span></span></li>
                         <li><span class="lang-zh">人類、動物：全體觀眾每個遊戲日各限 1。名字最多 16 字，定了就不能改，不能跟指令字或殖民地已有的名字重複。<span class="shift-en">One human and one animal per in-game day for everyone. Names: up to 16 characters, permanent, unique.</span></span></li>
+                        <li><span class="lang-zh">指令字也能打中文：<code>!買</code>＝!buy、<code>!查</code>＝!lookup、<code>!給</code>＝!give、<code>!摸</code>＝!pet、<code>!戳</code>＝!poke，中英可混打（<code>!買 cat 麻糬</code>）。<span class="shift-en">Command words also work in Chinese: !買 = !buy, !查 = !lookup, !摸 = !pet, !戳 = !poke.</span></span></li>
+                        <li><span class="lang-zh">實況主專用：在遊戲裡按 <code>Ctrl+V</code> 叫出「直播」視窗，輸入 <code>!give</code>（不扣金幣）、<code>!give 帳號 500</code>、<code>!money 帳號</code>、<code>!ban</code>／<code>!unban</code>。聊天室打這些沒有作用。<span class="shift-en">Streamer-only: press Ctrl+V in game to open the stream window for !give, !ban and !unban.</span></span></li>
                         <li><span class="lang-zh">沒看到你想要的？在聊天室說一聲，廠長考慮加進下一版。<span class="shift-en">Missing something? Ask in chat.</span></span></li>
                     </ul>
                 </div>
@@ -4299,7 +4319,7 @@ ${message}
             var ANIMAL_WORDS = ['animal', '動物', '动物'];
             var COMMON = ['raid', 'hunt', 'trader', 'orbital', 'meet', 'aurora', 'ship', 'ambrosia',
                 'chicken', 'cat', 'cow', 'horse', 'husky', 'panda', 'scimitar', 'thrumbo', 'pig', 'sheep', 'yorkie', 'labrador', 'elephant'];
-            var RESERVED = ['buy', 'lookup', 'money', 'give', 'ban', 'unban', 'event', 'animal', 'name', 'amount',
+            var RESERVED = ['buy', 'lookup', 'money', 'give', 'ban', 'unban', 'pet', 'poke', 'pat', '摸', '戳', '買', '买', '查', '給', '给', 'event', 'animal', 'name', 'amount',
                 '事件', '動物', '动物', '取名', '名字', '數量', '数量', 'livestock', 'prized', 'mythic', '家畜', '珍獸', '珍兽', '靈獸', '灵兽'];
             var MORE = L('更多：本頁「完整價目表」', 'more: full price list on this page');
             function nameOf(it) { return ENG ? it.en[0] : it.hant[0]; }
@@ -4343,21 +4363,38 @@ ${message}
                 if (!best) return body;
                 return [best, t.slice(best.length)].concat(body.slice(1));
             }
+            // 與 OmniStream CommandText.VerbWords 同步：指令字也能打中文
+            var VERB_WORDS = [
+                ['unban', 'unban'], ['解除封鎖', 'unban'], ['解除封锁', 'unban'], ['解封', 'unban'],
+                ['lookup', 'lookup'], ['查詢', 'lookup'], ['查询', 'lookup'], ['查', 'lookup'],
+                ['money', 'money'], ['金幣', 'money'], ['金币', 'money'], ['錢', 'money'], ['钱', 'money'],
+                ['give', 'give'], ['給', 'give'], ['给', 'give'],
+                ['buy', 'buy'], ['購買', 'buy'], ['购买', 'buy'], ['買', 'buy'], ['买', 'buy'],
+                ['ban', 'ban'], ['封鎖', 'ban'], ['封锁', 'ban'], ['封', 'ban'],
+                ['pet', 'pet'], ['摸摸', 'pet'], ['撫摸', 'pet'], ['抚摸', 'pet'], ['摸', 'pet'], ['pat', 'pet'],
+                ['poke', 'poke'], ['戳戳', 'poke'], ['nudge', 'poke'], ['prod', 'poke'], ['戳', 'poke']
+            ].sort(function (a, b) { return b[0].length - a[0].length; });
+            function verbOf(word) {
+                var w = String(word).toLowerCase();
+                for (var i = 0; i < VERB_WORDS.length; i++) if (VERB_WORDS[i][0] === w) return VERB_WORDS[i][1];
+                return null;
+            }
             function parseBang(raw) {
-                var body = String(raw).trim().replace(/[　 ]/g, ' ');
+                var body = String(raw).trim().replace(/[　 ]/g, ' ');
                 if (body.charAt(0) === '！') body = '!' + body.slice(1);
                 if (body.charAt(0) !== '!') return null;
                 var parts = body.slice(1).split(/\s+/).filter(Boolean);
                 if (!parts.length) return { verb: null, head: '' };
-                var verbs = ['unban', 'lookup', 'money', 'give', 'buy', 'ban'];
                 var head = parts[0].toLowerCase();
-                if (verbs.indexOf(head) >= 0) return { verb: head, args: parts.slice(1) };
-                for (var i = 0; i < verbs.length; i++) {
-                    if (head.indexOf(verbs[i]) === 0 && head.length > verbs[i].length) {
-                        return { verb: verbs[i], args: [parts[0].slice(verbs[i].length)].concat(parts.slice(1)) };
+                var exactVerb = verbOf(head);
+                if (exactVerb) return { verb: exactVerb, args: parts.slice(1) };
+                for (var i = 0; i < VERB_WORDS.length; i++) {
+                    var w = VERB_WORDS[i][0];
+                    if (head.indexOf(w) === 0 && head.length > w.length) {
+                        return { verb: VERB_WORDS[i][1], args: [parts[0].slice(w.length)].concat(parts.slice(1)) };
                     }
                 }
-                return { verb: null, head: head };
+                return { verb: null, head: head, parts: parts };
             }
 
             function menu(hint, extra, items) {
@@ -4499,6 +4536,7 @@ ${message}
                 var thing = nameOf(item) + (name && isNew ? L('「' + name + '」', ' "' + name + '"') : name ? ' ' + name : qty > 1 ? ' x' + qty : '');
                 var extra = [];
                 if (isNew) colony[name] = 'ok';
+                if (item.band) beasts[name] = true;
                 if (item.use === 'human') humanToday = true;
                 if (item.band) {
                     animalToday = true;
@@ -4512,6 +4550,72 @@ ${message}
                 if (item.id === 'monument') extra.push([L('空投包裝的紀念碑落地，上面刻著「' + name + '」和你的名字。', 'A crated monument drops in, engraved with "' + name + '" and your name.'), 'l-warm']);
                 extra.push([L('剩 ' + coins + ' 金幣（練習模式）', coins + ' coins left (practice)'), 'l-dim']);
                 ok(L('買了 ' + thing + '，已經送到殖民地。', 'bought ' + thing + ' for the colony.'), extra);
+            }
+
+            // 摸、戳、說話（練習機用的簡化版；真正的台詞在遊戲裡）
+            var beasts = {};
+            var TOUCH = ENG ? {
+                human: {
+                    pet: ['Hm... fine, you can pet me this once.', 'Careful with the hair!', 'Thanks. I needed that today.'],
+                    poke: ['Poking me? I am working here.', 'Hey! That tickles!', 'Poke me again and I go on strike.'],
+                    talk: ['Heard you. I will remember that.', 'Sorry, what? I was hauling stuff.', 'Haha, thanks for telling me.'],
+                    hurt: ['Ow... could someone heal me first?']
+                },
+                beast: {
+                    pet: ['purrs and rolls over to show its belly (=^.^=)', 'nuzzles your hand and wags happily.'],
+                    poke: ['flinches and flicks an ear.', 'glances back at you, then slowly walks away.'],
+                    talk: ['tilts its head and makes a sound.', 'answers with a cheerful noise.']
+                },
+                gone: 'is no longer with us (currently a couch).'
+            } : {
+                human: {
+                    pet: ['欸…好啦，這次讓你摸。', '頭髮別弄亂！', '謝謝，我今天需要這個。'],
+                    poke: ['戳我幹嘛？我在工作。', '哎！很癢欸！', '再戳我就罷工喔。'],
+                    talk: ['聽到了，我會記得的。', '你說什麼？我剛在搬東西。', '哈哈，謝謝你特地跟我說。'],
+                    hurt: ['痛…可以先幫我治療嗎？']
+                },
+                beast: {
+                    pet: ['發出呼嚕聲，翻出肚子 (=^･ω･^=)', '蹭了蹭你的手，開心地搖尾巴。'],
+                    poke: ['嚇了一跳，抖了一下耳朵。', '回頭看了你一眼，慢慢走開。'],
+                    talk: ['歪著頭看你，叫了一聲。', '用開心的聲音回應你。']
+                },
+                gone: '已經不在了（現在是一張沙發）。'
+            };
+            function pick(list) { return list[Math.floor(Math.random() * list.length)]; }
+            function colonyKey(name) {
+                var n = String(name).trim().toLowerCase();
+                for (var k in colony) if (k.toLowerCase() === n) return k;
+                return null;
+            }
+            function touchReply(kind, key) {
+                if (colony[key] === 'couch') { fail(key + ' ' + TOUCH.gone); return; }
+                if (beasts[key]) { ok(key + ' ' + pick(TOUCH.beast[kind])); return; }
+                var say = (colony[key] === 'hurt' && kind !== 'talk') ? TOUCH.human.hurt : TOUCH.human[kind];
+                ok(key + (ENG ? ': "' : '：「') + pick(say) + (ENG ? '"' : '」'));
+            }
+            function doTouch(kind, nameText) {
+                if (!nameText.trim()) { fail(L('少了名字 ', 'name missing · ') + '!' + kind + L(' 名字', ' name')); return; }
+                var key = colonyKey(nameText);
+                if (!key) { fail(ERR.notarget); return; }
+                touchReply(kind, key);
+            }
+            // "!阿呆 你好"：第一個字是殖民地裡的名字就當作對他說話；中文沒有空白，名字（2 字以上）後面可以直接接話
+            function nameCommand(parts) {
+                var head = parts[0], low = head.toLowerCase(), cjk = /[\u2E80-\u9FFF]/.test(head);
+                for (var k in colony) {
+                    var kl = k.toLowerCase();
+                    if (low === kl) return { key: k, rest: parts.slice(1) };
+                    if (cjk && kl.length >= 2 && low.length > kl.length && low.indexOf(kl) === 0) {
+                        return { key: k, rest: [head.slice(k.length)].concat(parts.slice(1)) };
+                    }
+                }
+                return null;
+            }
+            function doNameCommand(hit) {
+                if (!hit.rest.length) return;
+                var kind = 'talk';
+                if (hit.rest.length === 1) { var v = verbOf(hit.rest[0]); if (v === 'pet' || v === 'poke') kind = v; }
+                touchReply(kind, hit.key);
             }
 
             var OLD = ENG ? {
@@ -4537,6 +4641,8 @@ ${message}
                     if (bang.verb === 'lookup') { doLookup(bang.args); return; }
                     if (bang.verb === 'buy') { doBuy(bang.args); return; }
                     if (bang.verb === 'give' || bang.verb === 'ban' || bang.verb === 'unban') { fail('!' + bang.verb + L(' 只有實況主能用（在遊戲裡的直播視窗輸入）', ' is streamer-only (typed in the in-game stream window)')); return; }
+                    if (bang.verb === 'pet' || bang.verb === 'poke') { doTouch(bang.verb, bang.args.join(' ')); return; }
+                    if (!bang.verb && bang.parts) { var named = nameCommand(bang.parts); if (named) { doNameCommand(named); return; } }
                     var old = OLD['!' + bang.head];
                     if (old) { out([[L('舊指令。OmniStream 現在用：', 'Old command. OmniStream uses: ') + old, 'l-warm']]); return; }
                     out([['!' + bang.head + L('：不是 OmniStream 指令。輸入 help 看看', ': not an OmniStream command. Try help'), 'l-err']]);
@@ -4559,6 +4665,8 @@ ${message}
                             '  !buy cat Mochi             pick an animal and name it',
                             '  !buy livestock Mochi       draw a livestock animal you can afford',
                             '  !buy heal Lonlon           heal (practice colony: Lonlon, Adai, Old Raider)',
+                            '  !pet Adai / !poke Adai     pet or poke someone, free (!摸 / !戳 work too)',
+                            '  !Adai hello                talk to a pawn by name, free',
                             ['PRACTICE ONLY', 'l-warm'],
                             '  schedule · pet · donate · ls · open <file> · sleep · clear'
                         ] : [
@@ -4571,6 +4679,8 @@ ${message}
                             '  !buy 貓 麻糬            指定動物並取名',
                             '  !buy 家畜 麻糬          在買得起的家畜裡抽一隻',
                             '  !buy 治療 冷冷          治療（練習殖民地：冷冷、阿呆、老海盜）',
+                            '  !pet 阿呆 / !poke 阿呆   摸、戳一下，免費（也可打 !摸 !戳）',
+                            '  !阿呆 你好              對小人說話，免費',
                             ['練習機專用 // PRACTICE ONLY', 'l-warm'],
                             '  schedule · pet · donate · ls · open <檔名> · sleep · clear'
                         ]);

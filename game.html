@@ -145,6 +145,31 @@
         .log-row p { margin-top: 0.35rem; }
         .log-empty { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); padding-left: 1.4rem; }
 
+        /* ---------- 開發紀錄卷軸（收在「獨立遊戲」裡，預設收起） ---------- */
+        .devlog-fold { margin-top: 1.1rem; border: 1px solid var(--line-pink); background: var(--surface-deep); }
+        .devlog-fold.open { border-color: var(--pink); box-shadow: 0 0 18px rgba(255, 42, 127, 0.18); }
+        .devlog-toggle {
+            display: flex; align-items: center; gap: 0.8rem; width: 100%; min-height: 48px;
+            padding: 0.55rem 0.9rem; background: none; border: none; cursor: pointer;
+            color: var(--text); font: inherit; text-align: left;
+        }
+        .devlog-toggle:hover { background: rgba(255, 42, 127, 0.07); }
+        .devlog-toggle:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
+        .devlog-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.1rem 0.7rem; min-width: 0; }
+        .devlog-title b { font-size: 0.98rem; font-weight: 900; color: var(--text-strong); letter-spacing: 0.5px; }
+        .devlog-title small { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 800; letter-spacing: 1.4px; color: var(--blue); }
+        .devlog-count { margin-left: auto; font-family: var(--font-mono); font-size: 0.68rem; font-weight: 800; letter-spacing: 0.8px; padding: 0.05rem 0.5rem; color: var(--pink); border: 1px solid var(--line-pink); white-space: nowrap; }
+        .devlog-chev { flex: none; display: inline-grid; place-items: center; width: 26px; height: 26px; font-family: var(--font-mono); font-size: 0.8rem; color: var(--blue); border: 1px solid var(--line-blue); transition: transform 0.3s ease; }
+        .devlog-fold.open .devlog-chev { transform: rotate(180deg); }
+        .devlog-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.35s ease; }
+        .devlog-fold.open .devlog-body { grid-template-rows: 1fr; }
+        .devlog-inner { min-height: 0; overflow: hidden; visibility: hidden; transition: visibility 0s 0.35s; }
+        .devlog-fold.open .devlog-inner { visibility: visible; transition-delay: 0s; }
+        .devlog-inner > div { padding: 0.4rem 1rem 1.1rem; }
+        @media (prefers-reduced-motion: reduce) {
+            .devlog-body, .devlog-chev { transition: none; }
+        }
+
         /* ---------- 跟進進度 ---------- */
         .follow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.8rem; }
         .follow a {
@@ -228,6 +253,29 @@
                         <div class="stage"><b>正式版</b><small>RELEASE</small><span class="state">—</span></div>
                     </div>
                     <div class="stage-bar" aria-hidden="true"><i style="width: 12%;"></i></div>
+
+                    <!-- 開發紀錄卷軸（預設收起）。新紀錄加在 .log 最上面：複製一整個 log-row 改日期和內容，並把 devlog-count 的數字加 1 -->
+                    <div class="devlog-fold" id="devlog">
+                        <button type="button" class="devlog-toggle" id="devlogToggle" aria-expanded="false" aria-controls="devlogBody">
+                            <span class="devlog-title"><b><span class="lang-zh">開發紀錄</span><span class="lang-en">Devlog</span></b><small>DEVLOG // APPEND_ONLY</small></span>
+                            <span class="devlog-count" id="devlogCount">1 ENTRY</span>
+                            <span class="devlog-chev" aria-hidden="true">▼</span>
+                        </button>
+                        <div class="devlog-body" id="devlogBody" role="region" aria-label="開發紀錄 Devlog">
+                            <div class="devlog-inner">
+                                <div>
+                                    <div class="log">
+                                        <article class="log-row">
+                                            <span class="log-date">2026-10</span><span class="log-tag">PAGE OPEN</span>
+                                            <p class="lang-zh">頁面建立。目前階段：紙上原型，可玩版本還沒有。</p>
+                                            <p class="lang-en">Page opened. Current stage: paper prototype. Nothing playable yet.</p>
+                                        </article>
+                                    </div>
+                                    <p class="log-empty" style="margin-top: 1rem;">&gt;_ 更多紀錄撰寫中 // more entries soon_</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -252,25 +300,6 @@
             </div>
         </section>
 
-        <section class="terminal-window">
-            <div class="window-header">
-                <span class="window-path"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>SHELL:~/factory/devlog.md</span>
-                <span class="window-mode">[APPEND_ONLY]</span>
-            </div>
-            <div class="window-content">
-                <h2 class="section-title"><span class="sec-no">02</span><span class="sec-zh">開發紀錄</span><span class="sec-en">DEVLOG</span></h2>
-                <!-- 新紀錄加在最上面：複製一整個 log-row 改日期和內容 -->
-                <div class="log">
-                    <article class="log-row">
-                        <span class="log-date">2026-10</span><span class="log-tag">PAGE OPEN</span>
-                        <p class="lang-zh">頁面建立。目前階段：紙上原型，可玩版本還沒有。</p>
-                        <p class="lang-en">Page opened. Current stage: paper prototype. Nothing playable yet.</p>
-                    </article>
-                </div>
-                <p class="log-empty" style="margin-top: 1rem;">&gt;_ 更多紀錄撰寫中 // more entries soon_</p>
-            </div>
-        </section>
-
         <!-- RimWorld 模組：卡片資料由 /api/workshop 從 Steam 讀取（functions/api/workshop.js） -->
         <section class="terminal-window" id="mods">
             <div class="window-header">
@@ -278,7 +307,7 @@
                 <span class="window-mode">[STEAM_WORKSHOP]</span>
             </div>
             <div class="window-content">
-                <h2 class="section-title"><span class="sec-no">03</span><span class="sec-zh">RimWorld 模組</span><span class="sec-en">RIMWORLD MODS</span></h2>
+                <h2 class="section-title"><span class="sec-no">02</span><span class="sec-zh">RimWorld 模組</span><span class="sec-en">RIMWORLD MODS</span></h2>
                 <div class="mods-top">
                     <p class="mods-intro">
                         <span class="lang-zh">實況時遇到的問題，順手修好分享出來。全部免費，在 Steam 工作坊訂閱就能用。</span>
@@ -316,6 +345,18 @@
 
     <button type="button" class="back-to-top" id="backToTop" aria-label="回到頂部 Back to top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"><b>↑</b>TOP</button>
     <script>
+        /* 開發紀錄卷軸：預設收起；網址帶 #devlog 時自動展開 */
+        (function () {
+            var fold = document.getElementById('devlog'), btn = document.getElementById('devlogToggle');
+            if (!fold || !btn) return;
+            var n = fold.querySelectorAll('.log-row').length;
+            document.getElementById('devlogCount').textContent = n + (n === 1 ? ' ENTRY' : ' ENTRIES');
+            function set(open) { fold.classList.toggle('open', open); btn.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+            btn.addEventListener('click', function () { set(!fold.classList.contains('open')); });
+            function fromHash() { if (location.hash === '#devlog') { set(true); fold.scrollIntoView({ block: 'start' }); } }
+            fromHash();
+            window.addEventListener('hashchange', fromHash);
+        })();
         (function () {
             var btn = document.getElementById('backToTop');
             window.addEventListener('scroll', function () { btn.classList.toggle('visible', window.scrollY > 300); }, { passive: true });
@@ -342,8 +383,8 @@
                 '3817038607': {
                     title: 'OmniStream 多平台聊天室互動',
                     tagline: '讓直播聊天室一起玩你的殖民地',
-                    summary: '把 Twitch、YouTube 直播和 Bilibili 的聊天室接進 RimWorld。觀眾邊看邊聊就能累積金幣，再用 !buy 換食物、藥品、新殖民者、取名寵物、治療、復活、襲擊、事件，或刻上名字的紀念碑。完全免費，不讀取任何斗內。',
-                    features: ['三個平台同時連線，同一個殖民地', '打開 OBS 就自動連線', '金幣靠聊天累積，不靠付費']
+                    summary: '把 Twitch、YouTube 直播和 Bilibili 的聊天室接進 RimWorld。觀眾邊看邊聊就能累積金幣，再用 !buy 換食物、藥品、新殖民者、取名寵物、治療、復活、襲擊、事件，或刻上名字的紀念碑；也能用 !pet、!poke、!名字 說話，摸摸戳戳動物和小人。指令字可打中文，不讀取任何斗內。',
+                    features: ['三個平台同時連線，打開 OBS 就自動連線', '金幣靠聊天累積，指令也能打中文（!買、!摸）', '摸、戳、說話：動物回叫聲，小人回話（選配 RimTalk）']
                 }
             };
 
