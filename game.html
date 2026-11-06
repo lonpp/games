@@ -167,6 +167,9 @@
         .devlog-inner { min-height: 0; overflow: hidden; visibility: hidden; transition: visibility 0s 0.35s; }
         .devlog-fold.open .devlog-inner { visibility: visible; transition-delay: 0s; }
         .devlog-inner > div { padding: 0.4rem 1rem 1.1rem; }
+        #modMore { margin-top: 1.2rem; }
+        #modMore[hidden] { display: none; }
+        #modMore .mod-grid { padding-top: 0.5rem; }
         @media (prefers-reduced-motion: reduce) {
             .devlog-body, .devlog-chev { transition: none; }
         }
@@ -333,6 +336,22 @@
                     <article class="mod-card skeleton"><div class="mod-thumb"></div></article>
                     <article class="mod-card skeleton"><div class="mod-thumb"></div></article>
                 </div>
+
+                <!-- 第 4 個以後的模組收在這個卷軸裡（預設收起；樣式和開發紀錄相同），由下面的 render() 填入 -->
+                <div class="devlog-fold" id="modMore" hidden>
+                    <button type="button" class="devlog-toggle" id="modMoreToggle" aria-expanded="false" aria-controls="modMoreBody">
+                        <span class="devlog-title"><b id="modMoreTitle">更多模組</b><small>MORE MODS</small></span>
+                        <span class="devlog-count" id="modMoreCount"></span>
+                        <span class="devlog-chev" aria-hidden="true">▼</span>
+                    </button>
+                    <div class="devlog-body" id="modMoreBody" role="region" aria-label="更多模組 More mods">
+                        <div class="devlog-inner">
+                            <div>
+                                <div class="mod-grid" id="modGridMore"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -357,7 +376,7 @@
             var cnt = document.getElementById('devlogCount');
             if (cnt) cnt.textContent = n + (n === 1 ? ' ENTRY' : ' ENTRIES');
             var folds = [];
-            ['devlog', 'follow'].forEach(function (id) {
+            ['devlog', 'follow', 'modMore'].forEach(function (id) {
                 var fold = document.getElementById(id), btn = fold && fold.querySelector('.devlog-toggle');
                 if (!fold || !btn) return;
                 function set(open) { fold.classList.toggle('open', open); btn.setAttribute('aria-expanded', open ? 'true' : 'false'); }
@@ -545,9 +564,21 @@
                 const latest = items.reduce((a, b) => (b.created > a.created ? b : a), items[0]);
                 // 全部模組
                 items.sort(sortBy === 'subs' ? (a, b) => b.subs - a.subs || b.created - a.created : (a, b) => b.created - a.created);
+                // 前 3 個直接顯示，其餘放進「更多模組」卷軸
+                const SHOW = 3;
+                const card = it => '<article class="mod-card">' + cardInner(it, it === latest) + '</article>';
                 const grid = document.getElementById('modGrid');
-                grid.innerHTML = items.map(it => '<article class="mod-card">' + cardInner(it, it === latest) + '</article>').join('');
+                grid.innerHTML = items.slice(0, SHOW).map(card).join('');
                 bindImgFallback(grid);
+                const more = items.slice(SHOW), moreBox = document.getElementById('modMore');
+                moreBox.hidden = !more.length;
+                if (more.length) {
+                    const gm = document.getElementById('modGridMore');
+                    gm.innerHTML = more.map(card).join('');
+                    bindImgFallback(gm);
+                    document.getElementById('modMoreTitle').textContent = T('更多模組', 'More mods');
+                    document.getElementById('modMoreCount').textContent = '+' + more.length + (more.length === 1 ? ' MOD' : ' MODS');
+                }
                 const sum = k => items.reduce((n, it) => n + (Number(it[k]) || 0), 0);
                 document.getElementById('modTotals').innerHTML =
                     '<div class="total"><b>' + items.length + '</b><span>MODS</span></div>'
