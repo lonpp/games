@@ -81,14 +81,15 @@
         .mod-feat li::before { content: '>'; position: absolute; left: 0; font-family: var(--font-mono); font-weight: 800; color: var(--pink); }
         /* 訂閱、最愛：要一眼看得到 */
         .mod-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; margin-top: 0.9rem; }
-        .stat { min-width: 0; padding: 0.55rem 0.7rem 0.5rem; border: 1px solid var(--line-blue); background: rgba(0, 240, 255, 0.05); display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.15rem 0.5rem; }
+        /* 數字在上、文字在下，每個方塊固定同樣大小，不論數字多大都對齊 */
+        .stat { min-width: 0; padding: 0.6rem 0.7rem 0.55rem; border: 1px solid var(--line-blue); background: rgba(0, 240, 255, 0.05); display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 0.4rem; min-height: 5.2rem; }
         .stat span { min-width: 0; overflow-wrap: anywhere; }
-        .stat b { font-family: var(--font-mono); font-size: clamp(1.15rem, 2.2vw + 0.5rem, 1.6rem); font-weight: 800; line-height: 1; color: var(--blue); text-shadow: 0 0 12px rgba(0, 240, 255, 0.55); font-variant-numeric: tabular-nums; }
+        .stat b { font-family: var(--font-mono); font-size: 1.5rem; font-weight: 800; line-height: 1; color: var(--blue); text-shadow: 0 0 12px rgba(0, 240, 255, 0.55); font-variant-numeric: tabular-nums; }
         .stat span { font-size: 0.74rem; font-weight: 800; color: var(--text); line-height: 1.3; }
         .stat span small { display: block; font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 1px; color: var(--muted); }
         .stat.fav { border-color: var(--line-pink); background: rgba(255, 42, 127, 0.06); }
         .stat.fav b { color: var(--pink); text-shadow: 0 0 12px rgba(255, 42, 127, 0.6); }
-        .mod-meta { margin-top: 0.6rem; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.3px; color: var(--muted); }
+        .mod-meta { margin-top: 0.6rem; min-height: 3.2em; line-height: 1.6; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.3px; color: var(--muted); }
         .mod-actions { margin-top: 0.9rem; display: flex; flex-wrap: wrap; gap: 0.6rem; }
         .mod-actions .cyber-btn { flex: 1 1 auto; }
 
@@ -108,7 +109,8 @@
         /* ---------- RimWorld 模組區 ---------- */
         .mods-top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem 2rem; margin-bottom: 1.3rem; }
         .mods-intro { max-width: 34em; font-size: 0.92rem; }
-        .mods-all { margin-top: 0.5rem; font-family: var(--font-mono); font-size: 0.82rem; font-weight: 800; }
+        .mods-all { font-family: var(--font-mono); font-size: 0.9rem; font-weight: 800; }
+        #modMore .mods-intro { margin: 0.2rem 0 1rem; }
         .totals { display: flex; gap: 0.5rem; }
         .total { min-width: 92px; padding: 0.5rem 0.75rem; border: 1px solid var(--line-pink); background: rgba(255, 42, 127, 0.05); text-align: center; }
         .total b { display: block; font-family: var(--font-mono); font-size: 1.35rem; font-weight: 800; line-height: 1.1; color: var(--text-strong); text-shadow: 0 0 10px rgba(255, 42, 127, 0.6); }
@@ -168,8 +170,7 @@
         .devlog-inner { min-height: 0; overflow: hidden; visibility: hidden; transition: visibility 0s 0.35s; }
         .devlog-fold.open .devlog-inner { visibility: visible; transition-delay: 0s; }
         .devlog-inner > div { padding: 0.4rem 1rem 1.1rem; }
-        #modMore { margin-top: 1.2rem; }
-        #modMore[hidden] { display: none; }
+        #modMore { margin-top: 0.2rem; }
         #modMore .mod-grid { padding-top: 0.5rem; }
         @media (prefers-reduced-motion: reduce) {
             .devlog-body, .devlog-chev { transition: none; }
@@ -318,40 +319,40 @@
             </div>
             <div class="window-content">
                 <h2 class="section-title"><span class="sec-no">01</span><span class="sec-zh">RimWorld 模組</span><span class="sec-en">RIMWORLD MODS</span></h2>
+                <!-- 收起時只看得到：我的 RimWorld 模組 Steam 工作坊頁面連結 + 總數字 -->
                 <div class="mods-top">
-                    <div class="mods-intro">
-                        <p>
-                            <span class="lang-zh">有改玩法的，像是讓敵人先隱形的「封閉陣地」；有修小毛病的，像是脫水致死、地圖變黃、任務亂碼；也有把 Twitch、YouTube、Bilibili 聊天室接進遊戲的 OmniStream。在 Steam 工作坊訂閱就能用。</span>
-                            <span class="lang-en">Some change how the game plays, like the hidden-enemy Killbox mod. Some fix small bugs: dehydration deaths, the yellow-screen map, garbled quest text. And OmniStream plugs Twitch, YouTube and Bilibili chat into the game. Subscribe on the Steam Workshop and they just work.</span>
-                        </p>
-                        <p class="mods-all"><a href="https://steamcommunity.com/id/couchinc/myworkshopfiles?appid=294100" target="_blank" rel="noopener noreferrer"><span class="lang-zh">我做的全部模組：Steam 工作坊</span><span class="lang-en">All my mods on the Steam Workshop</span> ↗</a></p>
-                    </div>
+                    <p class="mods-all"><a href="https://steamcommunity.com/id/couchinc/myworkshopfiles?appid=294100" target="_blank" rel="noopener noreferrer"><span class="lang-zh">我的 RimWorld 模組 Steam 工作坊頁面</span><span class="lang-en">My RimWorld mods on the Steam Workshop</span> ↗</a></p>
                     <div class="totals" id="modTotals" aria-live="polite"></div>
                 </div>
-                <div class="mods-bar">
-                    <div class="sorter" role="group" aria-label="排序 Sort">
-                        <button type="button" data-sort="new" aria-pressed="true"><span class="lang-zh">最新</span><span class="lang-en">Newest</span></button>
-                        <button type="button" data-sort="subs" aria-pressed="false"><span class="lang-zh">最多訂閱</span><span class="lang-en">Most subscribed</span></button>
-                    </div>
-                    <span class="data-note" id="dataNote"></span>
-                </div>
-                <div class="mod-grid" id="modGrid">
-                    <article class="mod-card skeleton"><div class="mod-thumb"></div></article>
-                    <article class="mod-card skeleton"><div class="mod-thumb"></div></article>
-                    <article class="mod-card skeleton"><div class="mod-thumb"></div></article>
-                </div>
 
-                <!-- 第 4 個以後的模組收在這個卷軸裡（預設收起；樣式和開發紀錄相同），由下面的 render() 填入 -->
-                <div class="devlog-fold" id="modMore" hidden>
+                <!-- 所有模組的簡介都收在這個卷軸裡（預設收起；樣式和開發紀錄相同），由下面的 render() 填入 -->
+                <div class="devlog-fold" id="modMore">
                     <button type="button" class="devlog-toggle" id="modMoreToggle" aria-expanded="false" aria-controls="modMoreBody">
-                        <span class="devlog-title"><b id="modMoreTitle">更多模組</b><small>MORE MODS</small></span>
-                        <span class="devlog-count" id="modMoreCount"></span>
+                        <span class="devlog-title"><b><span class="lang-zh">模組簡介</span><span class="lang-en">Mod details</span></b><small>MOD LIST</small></span>
+                        <span class="devlog-count" id="modMoreCount">MODS</span>
                         <span class="devlog-chev" aria-hidden="true">▼</span>
                     </button>
-                    <div class="devlog-body" id="modMoreBody" role="region" aria-label="更多模組 More mods">
+                    <div class="devlog-body" id="modMoreBody" role="region" aria-label="模組簡介 Mod details">
                         <div class="devlog-inner">
                             <div>
-                                <div class="mod-grid" id="modGridMore"></div>
+                                <div class="mods-intro">
+                                    <p>
+                                        <span class="lang-zh">有改玩法的，像是讓敵人先隱形的「封閉陣地」；有修小毛病的，像是脫水致死、地圖變黃、任務亂碼；也有把 Twitch、YouTube、Bilibili 聊天室接進遊戲的 OmniStream。在 Steam 工作坊訂閱就能用。</span>
+                                        <span class="lang-en">Some change how the game plays, like the hidden-enemy Killbox mod. Some fix small bugs: dehydration deaths, the yellow-screen map, garbled quest text. And OmniStream plugs Twitch, YouTube and Bilibili chat into the game. Subscribe on the Steam Workshop and they just work.</span>
+                                    </p>
+                                </div>
+                                <div class="mods-bar">
+                                    <div class="sorter" role="group" aria-label="排序 Sort">
+                                        <button type="button" data-sort="new" aria-pressed="true"><span class="lang-zh">最新</span><span class="lang-en">Newest</span></button>
+                                        <button type="button" data-sort="subs" aria-pressed="false"><span class="lang-zh">最多訂閱</span><span class="lang-en">Most subscribed</span></button>
+                                    </div>
+                                    <span class="data-note" id="dataNote"></span>
+                                </div>
+                                <div class="mod-grid" id="modGrid">
+                                    <article class="mod-card skeleton"><div class="mod-thumb"></div></article>
+                                    <article class="mod-card skeleton"><div class="mod-thumb"></div></article>
+                                    <article class="mod-card skeleton"><div class="mod-thumb"></div></article>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -568,21 +569,11 @@
                 const latest = items.reduce((a, b) => (b.created > a.created ? b : a), items[0]);
                 // 全部模組
                 items.sort(sortBy === 'subs' ? (a, b) => b.subs - a.subs || b.created - a.created : (a, b) => b.created - a.created);
-                // 前 3 個直接顯示，其餘放進「更多模組」卷軸
-                const SHOW = 3;
-                const card = it => '<article class="mod-card">' + cardInner(it, it === latest) + '</article>';
+                // 全部模組都放在「模組簡介」卷軸裡（預設收起）
                 const grid = document.getElementById('modGrid');
-                grid.innerHTML = items.slice(0, SHOW).map(card).join('');
+                grid.innerHTML = items.map(it => '<article class="mod-card">' + cardInner(it, it === latest) + '</article>').join('');
                 bindImgFallback(grid);
-                const more = items.slice(SHOW), moreBox = document.getElementById('modMore');
-                moreBox.hidden = !more.length;
-                if (more.length) {
-                    const gm = document.getElementById('modGridMore');
-                    gm.innerHTML = more.map(card).join('');
-                    bindImgFallback(gm);
-                    document.getElementById('modMoreTitle').textContent = T('更多模組', 'More mods');
-                    document.getElementById('modMoreCount').textContent = '+' + more.length + (more.length === 1 ? ' MOD' : ' MODS');
-                }
+                document.getElementById('modMoreCount').textContent = items.length + (items.length === 1 ? ' MOD' : ' MODS');
                 const sum = k => items.reduce((n, it) => n + (Number(it[k]) || 0), 0);
                 document.getElementById('modTotals').innerHTML =
                     '<div class="total"><b>' + items.length + '</b><span>MODS</span></div>'
