@@ -108,6 +108,7 @@
         /* ---------- RimWorld 模組區 ---------- */
         .mods-top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem 2rem; margin-bottom: 1.3rem; }
         .mods-intro { max-width: 34em; font-size: 0.92rem; }
+        .mods-all { margin-top: 0.5rem; font-family: var(--font-mono); font-size: 0.82rem; font-weight: 800; }
         .totals { display: flex; gap: 0.5rem; }
         .total { min-width: 92px; padding: 0.5rem 0.75rem; border: 1px solid var(--line-pink); background: rgba(255, 42, 127, 0.05); text-align: center; }
         .total b { display: block; font-family: var(--font-mono); font-size: 1.35rem; font-weight: 800; line-height: 1.1; color: var(--text-strong); text-shadow: 0 0 10px rgba(255, 42, 127, 0.6); }
@@ -318,10 +319,13 @@
             <div class="window-content">
                 <h2 class="section-title"><span class="sec-no">01</span><span class="sec-zh">RimWorld 模組</span><span class="sec-en">RIMWORLD MODS</span></h2>
                 <div class="mods-top">
-                    <p class="mods-intro">
-                        <span class="lang-zh">實況時遇到的問題，順手修好分享出來。全部免費，在 Steam 工作坊訂閱就能用。</span>
-                        <span class="lang-en">Fixes for problems I ran into on stream, shared for everyone. All free: subscribe on the Steam Workshop and they just work.</span>
-                    </p>
+                    <div class="mods-intro">
+                        <p>
+                            <span class="lang-zh">有改玩法的，像是讓敵人先隱形的「封閉陣地」；有修小毛病的，像是脫水致死、地圖變黃、任務亂碼；也有把 Twitch、YouTube、Bilibili 聊天室接進遊戲的 OmniStream。在 Steam 工作坊訂閱就能用。</span>
+                            <span class="lang-en">Some change how the game plays, like the hidden-enemy Killbox mod. Some fix small bugs: dehydration deaths, the yellow-screen map, garbled quest text. And OmniStream plugs Twitch, YouTube and Bilibili chat into the game. Subscribe on the Steam Workshop and they just work.</span>
+                        </p>
+                        <p class="mods-all"><a href="https://steamcommunity.com/id/couchinc/myworkshopfiles?appid=294100" target="_blank" rel="noopener noreferrer"><span class="lang-zh">我做的全部模組：Steam 工作坊</span><span class="lang-en">All my mods on the Steam Workshop</span> ↗</a></p>
+                    </div>
                     <div class="totals" id="modTotals" aria-live="polite"></div>
                 </div>
                 <div class="mods-bar">
