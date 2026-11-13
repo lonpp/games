@@ -3172,13 +3172,13 @@
             <div class="modal-body">
                 <!--
                     支付方式依「繁／简」模式自動排序、預選第一個（設定在下面 JS 的 PAY_ORDER）：
-                    - 繁體・台灣：2027/1/1 前只有 Ko-fi（不放支付寶）；時間一到自動加入街口 TWQR、LINE Pay、藍新，暫停說明也會自己消失。
+                    - 繁體・台灣：街口 TWQR、藍新、Ko-fi（2026-11-14 起已開放；不放支付寶）。
                       藍新要先在 SUPPORT_QR_CODES 貼上 https 收款網址才會出現。
                     - 简体・大陆：支付宝、微信支付、爱发电在前，Ko-fi 在後。
                     開放日期改 TW_LOCAL_OPEN；建議金額改 SUPPORT_TIERS。
                 -->
                 <div class="pay-pause only-tw" id="payPauseNote">
-                    <p class="lang-zh">台灣的街口、LINE Pay、藍新 <span class="highlight-blue">2027/1/1</span> 開放，現在請用 Ko-fi（PayPal、信用卡）。</p>
+                    <p class="lang-zh">台灣的街口、藍新尚未開放時，請用 Ko-fi（PayPal、信用卡）。</p>
                     <p class="lang-en">Follow on <a href="https://www.youtube.com/@lonlon_couchinc" target="_blank" rel="noopener noreferrer">YouTube</a> or <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer">Twitch</a>, or sponsor with Ko-fi (PayPal and credit card).</p>
                 </div>
                 <!-- STEP 1 支付選項 -->
@@ -3186,7 +3186,6 @@
                     <p class="step-label">STEP 1. 選擇支付方式 // SELECT PAYMENT PROTOCOL:</p>
                     <div class="pay-tabs" id="payTabs">
                         <button type="button" class="pay-tab" data-pay="jkopay" hidden>街口等<br>TWQR</button>
-                        <button type="button" class="pay-tab" data-pay="linepay" hidden>LINE Pay</button>
                         <button type="button" class="pay-tab" data-pay="newebpay" hidden>信用卡 轉帳<br>Apple Pay</button>
                         <button type="button" class="pay-tab" data-pay="afdian" hidden>愛發電<br>afdian</button>
                         <button type="button" class="pay-tab" data-pay="alipay" hidden><span class="zh-only">支付寶<br></span>Alipay</button>
@@ -3244,19 +3243,10 @@
         const SUPPORT_QR_CODES = {
             jkopay: {
                 type: "qr",
-                img: "images/qr-jkopay.jpg",
+                img: "images/qr-twqr.jpg",
                 hint: "用支援 TWQR 的 APP（街口、全支付、悠遊付、台灣Pay 等）掃描上方條碼，金額不限，每一份支持都是推動我持續創作的動力。",
-                url: "",
-                btnText: "手機端請點擊這裡喚起 APP 跳轉 ↗"
-                //http://www.jkos.com/index.html?j=S%2344234c39-bcaa-11f1-8ac0-c81f66f0c432%3AP%23
-            },
-            linepay: {
-                type: "qr",
-                img: "images/qr-linepay.jpg",
-                hint: "請使用 Line Pay 掃描上方條碼，金額不限，每一份支持都是推動我持續創作的動力。",
-                url: "",
-                btnText: "手機端請點擊這裡喚起 APP 跳轉 ↗"
-                //https://qrcodepay.line.me/qr/payment/VZOOBJ5y7WSsSkslC9BcR3B0xvW49AvRzmQ3bA%252BUGlhnls2hfP6lLE5grrpI5xTE
+                url: "http://www.jkos.com/index.html?j=S%23f06b4e6f-da7d-11f1-8ac0-c81f66f0c432%3AP%23",
+                btnText: "手機端請點擊這裡喚起街口 APP ↗"
             },
             alipay: {
                 type: "qr",
@@ -3274,13 +3264,13 @@
             },
             newebpay: {
                 type: "link",
-                url: "請在這裡貼上你的藍新收款網址",
+                url: "https://core.newebpay.com/EPG/lonlon/ZPIH5v",
                 btnText: "前往藍新安全支付頁面 ↗",
                 hint: "點擊下方按鈕前往藍新金流安全支付頁面，支援轉帳、信用卡與 Apple Pay，金額不限，每一份支持都是推動我持續創作的動力。"
             },
             newebpay_os: {
                 type: "link",
-                url: "請在這裡貼上你的藍新收款網址",
+                url: "https://core.newebpay.com/EPG/lonlon/ZPIH5v",
                 btnText: "Go to NewebPay Secure Checkout ↗",
                 hint: "點擊下方按鈕前往藍新金流安全支付頁面，支援轉帳、跨國信用卡與 Apple Pay，金額不限，每一份支持都是推動我持續創作的動力。<br><br>Click the button below to pay securely via NewebPay, supporting international Credit Cards and Apple Pay. Enter any amount you wish—every little bit helps!"
             },
@@ -3302,16 +3292,16 @@
         /* =========================================
            支付方式：依地區排序、到期自動開放、建議金額
         ========================================= */
-        // 台灣支付（街口 TWQR、LINE Pay、藍新）開放時間，台灣時間
-        const TW_LOCAL_OPEN = Date.parse('2027-01-01T00:00:00+08:00');
-        const TW_LOCAL = ['jkopay', 'linepay', 'newebpay', 'newebpay_os'];
+        // 台灣支付（街口 TWQR、藍新）開放時間，台灣時間（2026-11-14 起已開放）
+        const TW_LOCAL_OPEN = Date.parse('2026-11-14T00:00:00+08:00');
+        const TW_LOCAL = ['jkopay', 'newebpay', 'newebpay_os'];
         // 各地區的排列順序，第一個可用的會被預選
         const PAY_ORDER = {
-            tw: ['jkopay', 'linepay', 'newebpay', 'paypal', 'newebpay_os'],
+            tw: ['jkopay', 'newebpay', 'paypal', 'newebpay_os'],
             cn: ['alipay', 'wechat', 'afdian', 'paypal'],
             intl: ['paypal', 'alipay', 'wechat', 'newebpay_os']
         };
-        const PAY_CURRENCY = { jkopay: 'TWD', linepay: 'TWD', newebpay: 'TWD', newebpay_os: 'TWD', alipay: 'CNY', wechat: 'CNY', afdian: 'CNY', paypal: 'USD' };
+        const PAY_CURRENCY = { jkopay: 'TWD', newebpay: 'TWD', newebpay_os: 'TWD', alipay: 'CNY', wechat: 'CNY', afdian: 'CNY', paypal: 'USD' };
         // 建議金額：改這裡就好。金額不限，只是給個參考。
         const SUPPORT_TIERS = {
             items: [
@@ -3495,8 +3485,7 @@
             document.getElementById('supportQrHint').innerHTML = hint;
             actionBtn.href = data.url;
             actionBtn.innerHTML = data.btnText;
-            // 沒有可跳轉的網址（例如只有 QR 的 TWQR、LINE Pay）就不顯示按鈕
-            // 沒有可跳轉的網址（只有 QR 的街口、LINE Pay）：按鈕隱形但保留位置
+            // 沒有可跳轉的網址：按鈕隱形但保留位置
             actionBtn.style.display = '';
             actionBtn.style.visibility = /^https?:\/\//.test(data.url) ? '' : 'hidden';
             renderTiers();
