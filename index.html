@@ -9,8 +9,8 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="preload" as="image" href="images/happy-water-sprite-a.webp?v=15">
     <link rel="preload" as="image" href="images/happy-water-sprite-b.webp?v=15">
-    <meta name="description" content="冷冷不冷的皮沙發工廠 HUMAN LEATHER COUCH FACTORY — 直播輪班表、OmniStream 聊天室指令與完整價目表、遊戲開發與快樂水™投餵。">
-    <title>HUMAN LEATHER COUCH FACTORY</title>
+    <meta name="description" content="冷冷皮沙發工廠 COUCH INC —直播輪班表、OmniStream 聊天室指令與完整價目表、遊戲開發與快樂水™投餵。">
+    <title>COUCH INC</title>
     <script src="assets/en.js?v=20261011d"></script>
     <script src="assets/zh.js?v=20261011d"></script>
     <script>
@@ -2028,6 +2028,10 @@
         #guide[data-hub="open"] .hub-state { color: var(--green); border-color: rgba(61, 255, 154, 0.5); }
         #guide[data-hub="open"] .hub-toggle .vault-chev { transform: rotate(180deg); }
         #guide .section-title { margin-bottom: 1.2rem; }
+        /* 收合時只留「指令中心 COMMAND CENTER」標題列 */
+        #guide[data-hub="closed"] .steam-strip,
+        #guide[data-hub="closed"] .hub-summary { display: none; }
+        #guide[data-hub="closed"] .section-title { margin-bottom: 0; }
 
         .hub-summary { display: flex; flex-direction: column; gap: 0.9rem; }
         #guide[data-hub="open"] .hub-summary { display: none; }
@@ -2628,7 +2632,7 @@
             <div class="hero-copy">
                 <!--SYS.STATUS: NEON GRID // IOS.SET:PLAYALLANIMATION  EXTREME SURVIVAL ACTIVE -->
                 <div class="sys-tag">SYS.STATUS: NEON GRID // EXTREME SURVIVAL ACTIVE</div>
-                <h1><span class="glitch" data-text="冷冷不冷的皮沙發工廠">冷冷不冷的皮沙發工廠</span><span class="h1-en">HUMAN LEATHER COUCH FACTORY <span class="h1-handle">- lonlon</span></span></h1>
+                <h1><span class="glitch" data-text="冷冷皮沙發工廠">冷冷皮沙發工廠</span><span class="h1-en">COUCH INC <span class="h1-handle">- lonlon</span></span></h1>
                 <p class="tagline">
                     白天是在神經網路裡撸代碼的數位藝術社畜；深夜是喝著快樂水™、伴隨兩隻主子呼嚕聲開發模擬遊戲的賽博黑心廠長。
                     <span class="lang-en">Digital art wage-slave grinding code by day; cyber deadpan director sipping Happy Water™ [Synthetic Energy Drink] &amp; developing indie sims by night.</span>
@@ -2982,30 +2986,6 @@
                     * Weekdays and hours update on this page. Days off are listed below.
                 </p>
 
-                <div class="watch-row">
-                    <a href="https://www.twitch.tv/lonlonsgaming" target="_blank" rel="noopener noreferrer" class="channel-card">
-                        <div class="channel-top">
-                            <span class="platform-name">Twitch<span class="ext">↗</span></span>
-                            <span class="badge">WATCH LIVE</span>
-                        </div>
-                        <p class="channel-desc">看直播、在聊天室下指令<span class="lang-en">Watch the stream and type commands in chat.</span></p>
-                    </a>
-                    <a href="https://www.youtube.com/@lonlon_couchinc" target="_blank" rel="noopener noreferrer" class="channel-card">
-                        <div class="channel-top">
-                            <span class="platform-name">YouTube<span class="ext">↗</span></span>
-                            <span class="badge">WATCH LIVE</span>
-                        </div>
-                        <p class="channel-desc">同步直播與精華，聊天室也能下指令<span class="lang-en">Simulcast and highlights; chat commands work here too.</span></p>
-                    </a>
-                    <a href="https://space.bilibili.com/452768274" target="_blank" rel="noopener noreferrer" class="channel-card card-bili">
-                        <div class="channel-top">
-                            <span class="platform-name">Bilibili<span class="ext">↗</span></span>
-                            <span class="badge">彈幕 DANMAKU</span>
-                        </div>
-                        <p class="channel-desc">彈幕也能下指令<span class="lang-en">Commands work in Bilibili danmaku too.</span></p>
-                    </a>
-                </div>
-
                 <div id="daysOff" hidden>
                     <div id="daysOffHas">
                         <div class="bilingual-block" style="margin: 1.2rem 0 0.4rem;">
@@ -3147,7 +3127,7 @@
 
         <footer>
             <p>
-                <span class="footer-brand">冷冷不冷的皮沙發工廠 // HUMAN LEATHER COUCH FACTORY - lonlon</span>
+                <span class="footer-brand">冷冷皮沙發工廠 // COUCH INC - lonlon</span>
                 <span class="footer-sig">TRANSMITTING FROM CYBER WASTELAND. ALL SYSTEMS NOMINAL. &copy; 2026.</span>
             </p>
             <nav class="footer-links" aria-label="站內連結 Site links">
@@ -4137,7 +4117,7 @@ ${message}
             if (boot && !document.documentElement.classList.contains('no-boot')) {
                 var bootLog = document.getElementById('bootLog');
                 var LINES = [
-                    ['COUCH-OS BIOS v2.6.10   (c) HUMAN LEATHER COUCH FACTORY', 'b-pink'],
+                    ['COUCH-OS BIOS v2.6.10   (c) COUCH INC', 'b-pink'],
                     ['CPU   : 1x ' + T('禿頭廠長', 'BALDING DIRECTOR') + ' @ 3:00 AM ............ ', '', 'OK'],
                     ['MEM   : ' + T('快樂水™', 'HAPPY WATER™') + ' 330ml x 2 ................ ', '', 'OK'],
                     ['SCAN  : FELINE UNITS ..................... ', '', '2 FOUND (ON KEYBOARD)', 'b-warn'],
