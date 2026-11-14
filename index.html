@@ -3297,9 +3297,9 @@
         const TW_LOCAL = ['jkopay', 'newebpay', 'newebpay_os'];
         // 各地區的排列順序，第一個可用的會被預選
         const PAY_ORDER = {
-            tw: ['jkopay', 'newebpay', 'paypal', 'newebpay_os'],
+            tw: ['jkopay', 'newebpay', 'paypal'],
             cn: ['alipay', 'wechat', 'afdian', 'paypal'],
-            intl: ['paypal', 'alipay', 'wechat', 'newebpay_os']
+            intl: ['paypal', 'newebpay_os', 'alipay', 'wechat']
         };
         const PAY_CURRENCY = { jkopay: 'TWD', newebpay: 'TWD', newebpay_os: 'TWD', alipay: 'CNY', wechat: 'CNY', afdian: 'CNY', paypal: 'USD' };
         // 建議金額：改這裡就好。金額不限，只是給個參考。
